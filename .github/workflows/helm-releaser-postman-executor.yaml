@@ -15,7 +15,7 @@ on:
       
 jobs:
 
-  release:
+  release_posyman_executor:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,6 +36,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: postman-executor/charts
+          charts_dir: postman-executor
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

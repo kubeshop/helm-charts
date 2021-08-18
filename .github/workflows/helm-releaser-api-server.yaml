@@ -36,6 +36,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: api-server/charts
+          charts_dir: api-server
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
