@@ -1,0 +1,34 @@
+name: Refresh GitHib Pages.
+
+on:
+  push:
+    paths:
+      - 'postman-executor/**'
+      - 'api-server/**'
+      - 'kubetest-operator/**'
+      - 'kubetest/**'
+    branches:
+      - main
+
+  pull_request:
+    paths:
+      - 'postman-executor/**'
+      - 'api-server/**'
+      - 'kubetest-operator/**'
+      - 'kubetest/**'
+    branches:
+      - main
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger GitHub pages rebuild
+        run: |
+          curl --fail --request POST \
+            --url https://api.github.com/repos/kubeshop/helm-charts/pages/builds \
+            --header "Authorization: Bearer $USER_TOKEN"
+        env:
+          # You must create a personal token with repo access as GitHub does
+          # not yet support server-to-server page builds.
+          USER_TOKEN: ${{ secrets.USER_TOKEN }}

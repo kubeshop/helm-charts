@@ -6,10 +6,10 @@ on:
       - 'postman-executor/**'
     branches:
       - main
-
+      
 jobs:
 
-  release:
+  release_posyman_executor:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
