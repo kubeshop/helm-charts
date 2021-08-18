@@ -11,6 +11,18 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.0/api-server-0.5.0.tgz
     version: 0.5.0
+  kubetest-operator:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-08-18T15:18:18.406270338Z"
+    description: A Helm chart for the kubetest-operator (installs needed CRDs only
+      for now)
+    digest: 5f041c5020aac5c5c13602070433dd9857558ce059a149085c2f6684df2d29f3
+    name: kubetest-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubetest-operator-0.5.0/kubetest-operator-0.5.0.tgz
+    version: 0.5.0
   postman-executor:
   - apiVersion: v2
     appVersion: 0.5.0
@@ -22,4 +34,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-08-18T13:44:30.544437232Z"
+generated: "2021-08-18T15:18:18.406283138Z"
