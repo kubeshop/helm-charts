@@ -7,7 +7,7 @@ on:
     branches:
       - main
 
-  pull:
+  pull_request:
     paths:
       - 'kubetest/**'
     branches:
