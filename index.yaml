@@ -11,6 +11,30 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.0/api-server-0.5.0.tgz
     version: 0.5.0
+  kubetest:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-08-18T15:37:48.269945171Z"
+    dependencies:
+    - name: kubetest-operator
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.0
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.0
+    - name: postman-executor
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.0
+    description: A Helm chart for Kubetest.
+    digest: 4a49696f93db6110e835b96ef2bd77dbdfd4636fbe0ef6641e18f36fe13dd9c7
+    name: kubetest
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubetest-0.5.0/kubetest-0.5.0.tgz
+    version: 0.5.0
   kubetest-operator:
   - apiVersion: v2
     appVersion: 0.5.0
@@ -34,4 +58,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-08-18T15:18:18.406283138Z"
+generated: "2021-08-18T15:37:48.269957871Z"
