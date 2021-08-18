@@ -36,7 +36,7 @@ jobs:
 
       - name: Installing repositories
         run: |
-          helm repo add kubetest https://kubeshop.github.io/helm-charts
+          helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run chart-releaser
