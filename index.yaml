@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  kubetest-operator:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-08-18T12:58:29.036492292Z"
+    description: A Helm chart for the kubetest-operator (installs needed CRDs only
+      for now)
+    digest: af434746e5db102a4f62a717a4f863f23827d79d7d52ba2f195bac20dd4e28f7
+    name: kubetest-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubetest-operator-0.5.0/kubetest-operator-0.5.0.tgz
+    version: 0.5.0
+generated: "2021-08-18T12:58:29.036497993Z"
