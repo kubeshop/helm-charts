@@ -7,6 +7,12 @@ on:
     branches:
       - main
 
+  pull:
+    paths:
+      - 'postman-executor/**'
+    branches:
+      - main
+      
 jobs:
 
   release:

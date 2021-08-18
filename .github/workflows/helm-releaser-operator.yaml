@@ -7,6 +7,12 @@ on:
     branches:
       - main
 
+  pull:
+    paths:
+      - 'kubetest-operator/**'
+    branches:
+      - main
+
 jobs:
 
   release:
