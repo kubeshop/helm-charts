@@ -1,4 +1,7 @@
 # TOC 
+
+![Known Vulnerabilities](https://snyk.io/test/github/kubeshop/helm-charts/badge.svg)
+
 - [Helm charts installation](#helm-installation)
     * [Helm defaults used with the chart](#helm-defaults-used-with-the-chart)
 
