@@ -34,7 +34,7 @@ spec:
             value: "{{ .Values.service.port }}"
           - name: EXECUTOR_MONGO_DSN
             value: "{{ .Values.mongoDSN }}"
-          - name: KUBETEST_API_URI
+          - name: kubtest_API_URI
             value: "{{ .Values.apiServerURI }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

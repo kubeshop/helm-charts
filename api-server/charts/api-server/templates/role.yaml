@@ -3,6 +3,6 @@ kind: Role
 metadata:
   name: scripts.operator.api-server
 rules:
-- apiGroups: ["tests.kubetest.io"]
+- apiGroups: ["tests.kubtest.io"]
   resources: ["scripts"]
   verbs: ["get", "watch", "list", "create", "delete"]

@@ -5,8 +5,8 @@ on:
     paths:
       - 'postman-executor/**'
       - 'api-server/**'
-      - 'kubetest-operator/**'
-      - 'kubetest/**'
+      - 'kubtest-operator/**'
+      - 'kubtest/**'
     branches:
       - main
 
@@ -14,8 +14,8 @@ on:
     paths:
       - 'postman-executor/**'
       - 'api-server/**'
-      - 'kubetest-operator/**'
-      - 'kubetest/**'
+      - 'kubtest-operator/**'
+      - 'kubtest/**'
     branches:
       - main
 

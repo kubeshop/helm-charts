@@ -5,17 +5,17 @@
 replicaCount: 1
 
 image:
-  repository: kubeshop/kubetest-api-server
+  repository: kubeshop/kubtest-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
 imagePullSecrets: []
 nameOverride: "api-server"
-fullnameOverride: "kubetest-api-server"
+fullnameOverride: "kubtest-api-server"
 
-mongoDSN: "mongodb://kubetest-mongodb:27017"
-postmanExecutorURI: "http://kubetest-postman-executor:8082"
+mongoDSN: "mongodb://kubtest-mongodb:27017"
+postmanExecutorURI: "http://kubtest-postman-executor:8082"
 
 serviceAccount:
   # Specifies whether a service account should be created
