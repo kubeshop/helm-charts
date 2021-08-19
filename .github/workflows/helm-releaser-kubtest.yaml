@@ -1,15 +1,15 @@
-name: Release kubtest api-server chart.
+name: Release kubtest kubtest chart.
 
 on:
   push:
     paths:
-      - 'api-server/**'
+      - 'kubtest/**'
     branches:
       - main
 
 jobs:
 
-  release_api_server:
+  release_kubtest:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,9 +27,14 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Installing repositories
+        run: |
+          helm repo add helm-charts https://kubeshop.github.io/helm-charts
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: api-server/charts
+          charts_dir:  kubtest/charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
