@@ -7,6 +7,12 @@ on:
     branches:
       - main
 
+  pull_request:
+    paths:
+      - 'kubtest/**'
+    branches:
+      - main
+
 jobs:
 
   release_kubtest:
