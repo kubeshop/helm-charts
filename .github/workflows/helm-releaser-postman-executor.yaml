@@ -6,12 +6,6 @@ on:
       - 'postman-executor/**'
     branches:
       - main
-  
-  pull_request:
-    paths:
-      - 'postman-executor/**'
-    branches:
-      - main 
 
 jobs:
 
