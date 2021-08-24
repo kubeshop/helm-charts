@@ -31,8 +31,24 @@ The following [Kubtest](https://github.com/kubeshop/kubtest/) Helm Charts are in
 
 > Please note that the kubtest Helm chart will install all the needed charts. Including CRDs. It's an umbrella chart.
 
+## Promehteus service monitor 
+
+If have already configured Prometheus stack you can enble service monitor 
+for kubtest API server to scrape metrics from it. 
+
+you'll need to add `prometheus.enabled=true` value to do this
+
+e.g. 
+
+```
+helm install my-kubtest kubeshop/kubtest --set prometheus.ebaled=true
+```
+
+## Other projects
+
 If you're interested to see what these Helm Charts install you can use [Monokle](https://github.com/kubeshop/monokle) to 
 load and preview all of them:
 - clone this repository 
 - load the project folder into Monokle
 - select and preview each of the Helm charts as described at [Working with Helm](https://kubeshop.github.io/monokle/helm/)
+
