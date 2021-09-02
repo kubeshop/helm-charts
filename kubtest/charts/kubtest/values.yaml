@@ -103,6 +103,7 @@ api-server:
     repository: kubeshop/kubtest-api-server
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
+    # TODO we should stick to static version
     tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
@@ -111,12 +112,14 @@ api-server:
   postmanExecutorURI: "http://kubtest-postman-executor:8082"
 
 postman-executor:
+  enabled: true
   nameOverride: "postman-executor"
   fullnameOverride: "kubtest-postman-executor"
   image:
     repository: kubeshop/kubtest-postman-executor
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
+    # TODO we should stick to static version
     tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
@@ -124,5 +127,23 @@ postman-executor:
   mongoDSN: "mongodb://kubtest-mongodb:27017"
   apiServerURI: "http://kubtest-api-server:8080"
 
+cypress-executor:
+  enabled: true
+  nameOverride: "postman-executor"
+  fullnameOverride: "kubtest-postman-executor"
+  image:
+    repository: kubeshop/kubtest-postman-executor
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    # TODO we should stick to static version
+    tag: "latest"
+  service:
+    type: NodePort # for working with real k8s we should use "ClusterIP" type.
+    port: 8084
+  mongoDSN: "mongodb://kubtest-mongodb:27017"
+  apiServerURI: "http://kubtest-api-server:8080"
+
 prometheus:
   enabled: false
+
+
