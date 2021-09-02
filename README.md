@@ -27,6 +27,7 @@ The following [Kubtest](https://github.com/kubeshop/kubtest/) Helm Charts are in
 - `api-server`: the Kubtest API Server
 - `kubtest-operator`: the Kubtest Operator
 - `postman-executor`: the Postman Executor used for running Postman Collections
+- `cypress-executor`: the Cypress Executor used for running Cypress projects (checked out from Git)
 - `kubtest`: the main Kubtest chart - [Installation Instructions](https://kubeshop.github.io/kubtest/installing/#manual-kubtest-helm-charts-installation)
 
 > Please note that the kubtest Helm chart will install all the needed charts. Including CRDs. It's an umbrella chart.
