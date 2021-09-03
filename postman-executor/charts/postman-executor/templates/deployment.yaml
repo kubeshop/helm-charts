@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-          - name: POSTMANEXECUTOR_PORT
+          - name: EXECUTOR_PORT
             value: "{{ .Values.service.port }}"
           - name: EXECUTOR_MONGO_DSN
             value: "{{ .Values.mongoDSN }}"
