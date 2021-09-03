@@ -13,7 +13,7 @@ Helm's [documentation](https://helm.sh/docs) to get started.
 Once Helm has been set up correctly, add the repo as follows:
 
 ```sh
-helm repo add kubtest-helm-charts https://kubeshop.github.io/helm-charts
+helm repo add kubeshop https://kubeshop.github.io/helm-charts
 ```
 
 If you had already added this repo earlier, run `helm repo update` to retrieve
@@ -42,7 +42,7 @@ you'll need to add `prometheus.enabled=true` value to do this
 e.g. 
 
 ```
-helm install my-kubtest kubeshop/kubtest --set prometheus.ebaled=true
+helm install kubtest kubeshop/kubtest --set prometheus.enabled=true
 ```
 
 ## Other projects
