@@ -1,0 +1,8 @@
+apiVersion: executor.kubtest.io/v1
+kind: Executor
+metadata:
+  name: postman-executor
+spec:
+  uri: http://{{ include "postman-executor.fullname" . }}:{{ .Values.service.port }}
+  types:
+  - postman/collection

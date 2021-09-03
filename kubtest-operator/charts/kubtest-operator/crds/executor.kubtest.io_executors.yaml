@@ -36,10 +36,18 @@ spec:
           spec:
             description: ExecutorSpec defines the desired state of Executor
             properties:
-              name:
-                type: string
+              types:
+                description: Types defines what types can be handled by executor e.g.
+                  "postman/collection", ":curl/command" etc
+                items:
+                  type: string
+                type: array
               uri:
+                description: URI defines executor URI
                 type: string
+            required:
+            - types
+            - uri
             type: object
           status:
             description: ExecutorStatus defines the observed state of Executor
