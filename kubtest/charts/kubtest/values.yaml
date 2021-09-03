@@ -129,10 +129,10 @@ postman-executor:
 
 cypress-executor:
   enabled: true
-  nameOverride: "postman-executor"
-  fullnameOverride: "kubtest-postman-executor"
+  nameOverride: "cypress-executor"
+  fullnameOverride: "kubtest-cypress-executor"
   image:
-    repository: kubeshop/kubtest-postman-executor
+    repository: kubeshop/kubtest-cypress-executor
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
