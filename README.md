@@ -37,9 +37,7 @@ The following [Kubtest](https://github.com/kubeshop/kubtest/) Helm Charts are in
 If have already configured Prometheus stack you can enble service monitor 
 for kubtest API server to scrape metrics from it. 
 
-you'll need to add `prometheus.enabled=true` value to do this
-
-e.g. 
+you'll need to add `prometheus.enabled=true` value to do this e.g. 
 
 ```
 helm install kubtest kubeshop/kubtest --set prometheus.enabled=true
