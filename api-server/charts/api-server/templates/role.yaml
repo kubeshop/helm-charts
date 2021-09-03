@@ -6,7 +6,7 @@ rules:
 - apiGroups: ["tests.kubtest.io"]
   resources: ["scripts"]
   verbs: ["get", "watch", "list", "create", "delete"]
-- apiGroups: ["tests.kubtest.io"]
+- apiGroups: ["executor.kubtest.io"]
   resources: ["executors"]
   verbs: ["get", "watch", "list", "create", "delete"]
 
