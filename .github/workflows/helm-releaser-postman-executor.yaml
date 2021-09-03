@@ -9,7 +9,7 @@ on:
 
 jobs:
 
-  release_posyman_executor:
+  release_postman_executor:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
