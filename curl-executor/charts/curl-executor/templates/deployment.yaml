@@ -32,8 +32,6 @@ spec:
           env:
           - name: EXECUTOR_PORT
             value: "{{ .Values.service.port }}"
-          - name: EXECUTOR_MONGO_DSN
-            value: "{{ .Values.mongoDSN }}"
           - name: KUBTEST_API_URI
             value: "{{ .Values.apiServerURI }}"
           securityContext:
