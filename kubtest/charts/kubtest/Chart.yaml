@@ -42,6 +42,6 @@ dependencies:
     condition: postman-executor.enabled
 
   - name: cypress-executor
-    version: "0.5.5"
+    version: "0.5.3-beta2"
     repository: https://kubeshop.github.io/helm-charts
     condition: cypress-executor.enabled
