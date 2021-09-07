@@ -26,3 +26,5 @@ testbin/*
 
 # Helm lock file for charts.
 Chart.lock
+
+.kube
