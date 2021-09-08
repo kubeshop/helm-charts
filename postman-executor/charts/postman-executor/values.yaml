@@ -15,7 +15,7 @@ nameOverride: "postman-executor"
 fullnameOverride: "kubtest-postman-executor"
 
 mongoDSN: "mongodb://kubtest-mongodb:27017"
-apiServerURI: "http://kubtest-api-server:8080"
+apiServerURI: "http://kubtest-api-server:8888"
 
 serviceAccount:
   # Specifies whether a service account should be created
