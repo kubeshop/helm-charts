@@ -2,8 +2,6 @@ name: Release kubtest api-server chart.
 
 on:
   push:
-    paths:
-      - 'api-server/**'
     branches:
       - main
 
