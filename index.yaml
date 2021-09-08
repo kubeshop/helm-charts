@@ -51,6 +51,17 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.0/api-server-0.5.0.tgz
     version: 0.5.0
+  curl-executor:
+  - apiVersion: v2
+    appVersion: 0.5.5
+    created: "2021-09-08T06:46:56.509277065Z"
+    description: A Helm chart for curl-executor
+    digest: 9203be48f2edaf5b2fbd32dfd8225c3abaee70af6a5fe6bbe0afdf72b16107a4
+    name: curl-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.5/curl-executor-0.5.5.tgz
+    version: 0.5.5
   cypress-executor:
   - apiVersion: v2
     appVersion: 0.5.7
@@ -550,4 +561,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-08T06:42:17.764090044Z"
+generated: "2021-09-08T06:46:56.509345966Z"
