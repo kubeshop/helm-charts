@@ -41,7 +41,7 @@ securityContext: {}
 
 service:
   type: NodePort # for working with real k8s we should use "ClusterIP" type.
-  port: 8080
+  port: 8088
 
 ingress:
   enabled: false
