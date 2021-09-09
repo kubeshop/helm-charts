@@ -3,6 +3,16 @@ entries:
   api-server:
   - apiVersion: v2
     appVersion: 0.5.8
+    created: "2021-09-09T12:42:52.289511301Z"
+    description: A Helm chart for Api-server
+    digest: 9e0170ab7fda904042e2b4b66b0e1bf117140a7f833f74bcd80306a3474e2674
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.9/api-server-0.5.9.tgz
+    version: 0.5.9
+  - apiVersion: v2
+    appVersion: 0.5.8
     created: "2021-09-08T06:21:31.904892723Z"
     description: A Helm chart for Api-server
     digest: 917cc5082dc0b443c1b9df017ba7a6cb0416413ff0fc31bc64e14a35fad5acbd
@@ -561,4 +571,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-08T06:46:56.509345966Z"
+generated: "2021-09-09T12:42:52.289642205Z"
