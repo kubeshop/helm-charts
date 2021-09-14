@@ -2,7 +2,7 @@ apiVersion: v2
 name: kubtest
 description: A Helm chart for kubtest.
 type: application
-version: 0.5.18-beta002
+version: 0.5.18-beta003
 dependencies:
 - name: kubtest-operator
   version: 0.5.7
@@ -11,7 +11,7 @@ dependencies:
   version: 10.0.0
   repository: https://charts.bitnami.com/bitnami
 - name: api-server
-  version: 0.5.16-beta015
+  version: 0.5.16-beta016
   repository: https://kubeshop.github.io/helm-charts
 - name: postman-executor
   version: 0.5.7
