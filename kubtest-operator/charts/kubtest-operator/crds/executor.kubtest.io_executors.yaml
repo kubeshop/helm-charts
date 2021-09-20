@@ -5,7 +5,6 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
-  creationTimestamp: null
   name: executors.executor.kubtest.io
 spec:
   group: executor.kubtest.io
@@ -36,18 +35,31 @@ spec:
           spec:
             description: ExecutorSpec defines the desired state of Executor
             properties:
+              executor_type:
+                description: ExecutorType one of "openapi" for rest based executors
+                  or "job" which will be default runners for kubtest soon
+                type: string
+              image:
+                description: Image for kube-job
+                type: string
               types:
                 description: Types defines what types can be handled by executor e.g.
-                  "postman/collection", ":curl/command" etc
+                  "postman/collection", "curl/command" etc
                 items:
                   type: string
                 type: array
               uri:
-                description: URI defines executor URI
+                description: URI for rest based executors
+                type: string
+              volume_mount_path:
+                description: VolumeMountPath - where should PV be monted inside job
+                  pod for e.g. artifacts
+                type: string
+              volume_quantity:
+                description: VolumeQuantity for kube-job PersistentVolume
                 type: string
             required:
             - types
-            - uri
             type: object
           status:
             description: ExecutorStatus defines the observed state of Executor
