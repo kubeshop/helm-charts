@@ -120,7 +120,7 @@ postman-executor:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
-    tag: "latest"
+    # tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8082
@@ -136,7 +136,7 @@ cypress-executor:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
-    tag: "latest"
+    # tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8084
@@ -152,7 +152,7 @@ curl-executor:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
-    tag: "latest"
+    # tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8086
