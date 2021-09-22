@@ -2,4 +2,4 @@ apiVersion: v2
 name: postman-executor
 description: A Helm chart for Postman-executor
 type: application
-version: 0.5.9
+version: 0.5.10
