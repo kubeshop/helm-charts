@@ -983,6 +983,16 @@ entries:
     version: 0.5.0
   kubtest-operator:
   - apiVersion: v2
+    created: "2021-09-22T10:08:18.145267911Z"
+    description: A Helm chart for the kubtest-operator (installs needed CRDs only
+      for now)
+    digest: 519f49f47cb7dd5defafce580b439d0f3ce94c097e7dc2a14043e7515b1b7398
+    name: kubtest-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubtest-operator-0.5.8/kubtest-operator-0.5.8.tgz
+    version: 0.5.8
+  - apiVersion: v2
     created: "2021-09-09T14:02:39.956941579Z"
     description: A Helm chart for the kubtest-operator (installs needed CRDs only
       for now)
@@ -1085,4 +1095,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-22T08:40:20.561197382Z"
+generated: "2021-09-22T10:08:18.145725812Z"
