@@ -22,6 +22,6 @@ dependencies:
   repository: https://kubeshop.github.io/helm-charts
   condition: cypress-executor.enabled
 - name: curl-executor
-  version: 0.5.6
+  version: 0.5.7
   repository: https://kubeshop.github.io/helm-charts
   condition: curl-executor.enabled

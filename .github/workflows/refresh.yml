@@ -3,6 +3,7 @@ name: Refresh GitHib Pages.
 on:
   push:
     paths:
+      - 'curl-executor/**'
       - 'postman-executor/**'
       - 'cypress-executor/**'
       - 'api-server/**'
@@ -13,6 +14,7 @@ on:
 
   pull_request:
     paths:
+      - 'curl-executor/**'
       - 'cypress-executor/**'
       - 'postman-executor/**'
       - 'api-server/**'
