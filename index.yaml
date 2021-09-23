@@ -498,6 +498,37 @@ entries:
     version: 0.5.0
   kubtest:
   - apiVersion: v2
+    created: "2021-09-23T10:14:32.761123347Z"
+    dependencies:
+    - name: kubtest-operator
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.8
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.8
+    - condition: postman-executor.enabled
+      name: postman-executor
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.10
+    - condition: cypress-executor.enabled
+      name: cypress-executor
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.10
+    - condition: curl-executor.enabled
+      name: curl-executor
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.5.7
+    description: A Helm chart for kubtest.
+    digest: 3b0f35ecf8e242201826220f04637e0d90820ef80912618f0461f1379a788257
+    name: kubtest
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubtest-0.5.32/kubtest-0.5.32.tgz
+    version: 0.5.32
+  - apiVersion: v2
     created: "2021-09-23T10:08:23.374000683Z"
     dependencies:
     - name: kubtest-operator
@@ -1256,4 +1287,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-23T10:08:23.374829087Z"
+generated: "2021-09-23T10:14:32.761825351Z"
