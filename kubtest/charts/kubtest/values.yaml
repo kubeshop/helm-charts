@@ -120,7 +120,7 @@ api-server:
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
     hosts:
       - paths:
-          - path: /kubtest-dash/(v\dexecutions.*)
+          - path: /kubtest-dash/(v\d/executions.*)
             pathType: Prefix
   mongoDSN: "mongodb://kubtest-mongodb:27017"
   postmanExecutorURI: "http://kubtest-postman-executor:8082"

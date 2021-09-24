@@ -55,7 +55,7 @@ ingress:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
   hosts:
     - paths:
-        - path: /kubtest-dash/(v\dexecutions.*)
+        - path: /kubtest-dash/(v\d/executions.*)
           pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
