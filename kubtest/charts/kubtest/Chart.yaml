@@ -2,7 +2,7 @@ apiVersion: v2
 name: kubtest
 description: A Helm chart for kubtest.
 type: application
-version: 0.5.44
+version: 0.5.45
 dependencies:
 - name: kubtest-operator
   version: 0.5.8
@@ -14,7 +14,7 @@ dependencies:
   version: 0.5.26
   repository: https://kubeshop.github.io/helm-charts
 - name: postman-executor
-  version: 0.5.10
+  version: 0.5.14
   repository: https://kubeshop.github.io/helm-charts
   condition: postman-executor.enabled
 - name: cypress-executor
