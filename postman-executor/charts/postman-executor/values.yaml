@@ -8,7 +8,7 @@ image:
   repository: kubeshop/kubtest-postman-executor
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.5.14"
+  tag: "0.5.15"
 
 imagePullSecrets: []
 nameOverride: "postman-executor"
