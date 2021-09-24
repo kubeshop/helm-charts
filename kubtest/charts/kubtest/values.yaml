@@ -104,7 +104,7 @@ api-server:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
-    tag: "latest"
+    # tag: "latest"
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
