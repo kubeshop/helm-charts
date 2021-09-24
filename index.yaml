@@ -482,6 +482,15 @@ entries:
     version: 0.5.5
   cypress-executor:
   - apiVersion: v2
+    created: "2021-09-24T12:13:57.756337049Z"
+    description: A Helm chart for cypress-executor
+    digest: f61d097c88478e9cf2821910d7805efcb498a7479b6eec793c317da71cd8b5d4
+    name: cypress-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/cypress-executor-0.5.11/cypress-executor-0.5.11.tgz
+    version: 0.5.11
+  - apiVersion: v2
     created: "2021-09-22T11:25:45.365221127Z"
     description: A Helm chart for cypress-executor
     digest: 45f9e1d7c7971b9fd7ac6a0da9d2913b0ef87d3f7624abe62280f0e57e59bab0
@@ -1634,4 +1643,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-24T12:13:07.045149732Z"
+generated: "2021-09-24T12:13:57.757225654Z"
