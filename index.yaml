@@ -453,6 +453,15 @@ entries:
     version: 0.5.0
   curl-executor:
   - apiVersion: v2
+    created: "2021-09-24T12:12:13.847406151Z"
+    description: A Helm chart for curl-executor
+    digest: ef62eb1b03002df1078217d74fd54f15fe09168fc598a75714a02ca15edeed4e
+    name: curl-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.12/curl-executor-0.5.12.tgz
+    version: 0.5.12
+  - apiVersion: v2
     created: "2021-09-22T11:54:42.836289748Z"
     description: A Helm chart for curl-executor
     digest: c875d57cbe5c2315abc9b0b69228e7a3f675917dc7d4abf60f50bc018a0c5802
@@ -1615,4 +1624,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-24T12:10:39.693001591Z"
+generated: "2021-09-24T12:12:13.848047754Z"
