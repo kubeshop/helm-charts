@@ -1724,6 +1724,17 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/kubtest-0.5.0/kubtest-0.5.0.tgz
     version: 0.5.0
+  kubtest-dashboard:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-09-29T12:14:00.71123321Z"
+    description: A Helm chart for Kubernetes
+    digest: 6a792615acac63973cb42e78c16067a1e3f312b82b0eb496473eeae3c1165a80
+    name: kubtest-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kubtest-dashboard-0.5.0/kubtest-dashboard-0.5.0.tgz
+    version: 0.5.0
   kubtest-operator:
   - apiVersion: v2
     created: "2021-09-22T10:08:18.145267911Z"
@@ -1867,4 +1878,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-09-29T06:49:42.701772481Z"
+generated: "2021-09-29T12:14:00.712278223Z"
