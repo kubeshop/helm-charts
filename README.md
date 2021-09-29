@@ -25,6 +25,7 @@ kubtest-helm-charts` to see the charts.
 The following [Kubtest](https://github.com/kubeshop/kubtest/) Helm Charts are in this project
  
 - `api-server`: the Kubtest API Server
+- `kubtest-dashboard`: the Kubtest Dashboard for UI interactions with the API Server
 - `kubtest-operator`: the Kubtest Operator
 - `postman-executor`: the Postman Executor used for running Postman Collections
 - `cypress-executor`: the Cypress Executor used for running Cypress projects (checked out from Git)
