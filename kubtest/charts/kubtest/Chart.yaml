@@ -25,3 +25,7 @@ dependencies:
   version: 0.5.12
   repository: https://kubeshop.github.io/helm-charts
   condition: curl-executor.enabled
+- name: kubtest-dashboard
+  version: 0.5.0
+  repository: https://kubeshop.github.io/helm-charts
+  condition: kubtest-dashboard.enabled
