@@ -2,7 +2,7 @@ apiVersion: v2
 name: kubtest
 description: A Helm chart for kubtest.
 type: application
-version: 0.5.56
+version: 0.5.57
 dependencies:
 - name: kubtest-operator
   version: 0.5.8
