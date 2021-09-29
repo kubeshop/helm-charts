@@ -109,19 +109,20 @@ api-server:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
   ingress:
-    enabled: "true"
+    enabled: false
     annotations: 
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: false
+      nginx.ingress.kubernetes.io/ssl-redirect: false
+      nginx.ingress.kubernetes.io/enable-cors: true
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-      nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      nginx.ingress.kubernetes.io/cors-allow-credentials: false
     hosts:
       - paths:
           - path: /kubtest-dash/(v\d/executions.*)
             pathType: Prefix
+    tls: []
   mongoDSN: "mongodb://kubtest-mongodb:27017"
   postmanExecutorURI: "http://kubtest-postman-executor:8082"
 
@@ -175,5 +176,32 @@ curl-executor:
 
 prometheus:
   enabled: false
+
+kubtest-dashboard:
+  enabled: false
+  nameOverride: "dashboard"
+  fullnameOverride: "kubtest-dashboard"
+  image:
+    repository: kubeshop/kubtest-dashboard
+    pullPolicy: Always
+  service:
+    type: NodePort
+    port: 8090
+  ingress:
+    enabled: false
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/force-ssl-redirect: false
+      nginx.ingress.kubernetes.io/ssl-redirect: false
+      nginx.ingress.kubernetes.io/enable-cors: true
+      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+      nginx.ingress.kubernetes.io/cors-allow-credentials: false
+    hosts:
+      - paths:
+          - path: /kubtest-dashboard/(.*)
+            pathType: Prefix
+    tls: []
+  apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
 
 
