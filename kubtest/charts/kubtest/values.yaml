@@ -202,5 +202,6 @@ kubtest-dashboard:
           - path: /kubtest-dashboard/(.*)
             pathType: Prefix
     tls: []
+  apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
 
 
