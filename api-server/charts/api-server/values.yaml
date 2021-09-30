@@ -54,8 +54,7 @@ ingress:
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
   hosts:
-    - api-server.domain.com
-      paths:
+    paths:
       - path: /kubtest-dash/(v\d/executions.*)
         pathType: Prefix
   tls: []
