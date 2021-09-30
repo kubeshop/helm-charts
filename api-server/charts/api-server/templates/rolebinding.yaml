@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 # You need to already have a Role named "scripts.operator.api-server" in that namespace.
 kind: RoleBinding
 metadata:
-  name: manage-scripts
+  name: manage-scripts-{{ .Release.Name }}
 subjects:
 # You can specify more than one "subject"
 - kind: User
@@ -12,19 +12,19 @@ subjects:
 roleRef:
   # "roleRef" specifies the binding to a Role / ClusterRole
   kind: Role #this must be Role or ClusterRole
-  name: scripts.operator.api-server # this must match the name of the Role or ClusterRole you wish to bind to
+  name: scripts.operator.api-server-{{ .Release.Name }} # this must match the name of the Role or ClusterRole you wish to bind to
   apiGroup: rbac.authorization.k8s.io
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: executors-crb
+  name: executors-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: executors-cluster-role
+  name: executors-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: kubtest-api-server
+  name: kubtest-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
