@@ -201,7 +201,7 @@ kubtest-dashboard:
     enabled: "false"
     annotations: 
       kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/rewrite-target: $1
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -214,15 +214,13 @@ kubtest-dashboard:
       # controls whether the ingress is modified ‘in-place’,
       # or a new one is created specifically for the HTTP01 challenge.
       acme.cert-manager.io/http01-edit-in-place: "true"
+    path: /kubtest-dashboard(.*)
     hosts:
       - demo.kubtest.io
-      - paths:
-          - path: /kubtest-dashboard/(.*)
-            pathType: Prefix
     tls: # < placing a host in the TLS config will indicate a certificate should be created
-      - hosts:
-        - demo.kubtest.io
-        secretName: kubtest-demo-cert-secret
+    - hosts:
+      - demo.kubtest.io
+      secretName: kubtest-demo-cert-secret
     apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
 
 
