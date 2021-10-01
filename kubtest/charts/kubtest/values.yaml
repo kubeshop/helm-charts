@@ -118,10 +118,20 @@ api-server:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
+      kubernetes.io/ingress.global-static-ip-name: kubtest-demo
+      # add an annotation indicating the issuer to use.
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      # controls whether the ingress is modified ‘in-place’,
+      # or a new one is created specifically for the HTTP01 challenge.
+      acme.cert-manager.io/http01-edit-in-place: "true"
     path: /kubtest-dash/(v\d/executions.*)
     hosts:
-      - www.example.com
-    tls: []
+      - demo.kubtest.io
+    tls: # < placing a host in the TLS config will indicate a certificate should be created
+    - hosts:
+      - demo.kubtest.io
+      secretName: kubtest-demo-cert-secret
 
   mongoDSN: "mongodb://kubtest-mongodb:27017"
   postmanExecutorURI: "http://kubtest-postman-executor:8082"
@@ -186,7 +196,7 @@ kubtest-dashboard:
     pullPolicy: Always
   service:
     type: NodePort
-    port: 8090
+    port: 80
   ingress:
     enabled: "false"
     annotations: 
@@ -197,11 +207,22 @@ kubtest-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
+      kubernetes.io/ingress.global-static-ip-name: kubtest-demo
+      # add an annotation indicating the issuer to use.
+      cert-manager.io/cluster-issuer: letsencrypt-staging
+      # controls whether the ingress is modified ‘in-place’,
+      # or a new one is created specifically for the HTTP01 challenge.
+      acme.cert-manager.io/http01-edit-in-place: "true"
     hosts:
+      - demo.kubtest.io
       - paths:
           - path: /kubtest-dashboard/(.*)
             pathType: Prefix
-    tls: []
-  apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
+    tls: # < placing a host in the TLS config will indicate a certificate should be created
+      - hosts:
+        - demo.kubtest.io
+        secretName: kubtest-demo-cert-secret
+    apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
 
 
