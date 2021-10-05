@@ -41,7 +41,7 @@ service:
   port: 80
 
 ingress:
-  enabled: "true"
+  enabled: "false"
   annotations: 
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
@@ -49,10 +49,16 @@ ingress:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
+    kubernetes.io/ingress.global-static-ip-name: kubtest-demo
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # controls whether the ingress is modified ‘in-place’,
+    # or a new one is created specifically for the HTTP01 challenge.
+    acme.cert-manager.io/http01-edit-in-place: "true"
+  path: /
   hosts:
-    - paths:
-        - path: /
-          pathType: Prefix
+    - demo.kubtest.io
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
