@@ -47,12 +47,13 @@ ingress:
   enabled: "false"
   annotations: 
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-  path: /v\d/executions/
+  path: /results/(v\d/executions.*)
   hosts:
     - demo.kubtest.io
   tlsenabled: "false"

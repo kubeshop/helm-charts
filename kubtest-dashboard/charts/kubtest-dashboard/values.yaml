@@ -8,7 +8,7 @@ image:
   repository: kubeshop/kubtest-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest" #TODO: add versioning here when the dashboard has it.
+  tag: "main" #TODO: add versioning here when the dashboard has it.
 
 imagePullSecrets: []
 nameOverride: "dashboard"
