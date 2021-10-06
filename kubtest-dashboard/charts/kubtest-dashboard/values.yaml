@@ -8,7 +8,7 @@ image:
   repository: kubeshop/kubtest-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "latest" #TODO: add versioning here when the dashboard has it.
 
 imagePullSecrets: []
 nameOverride: "dashboard"
@@ -38,26 +38,25 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 8090
+  port: 80
 
 ingress:
-  enabled: "true"
+  enabled: "false"
   annotations: 
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+  path: /
   hosts:
-    - paths:
-        - path: /kubtest-dashboard/(.*)
-          pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - demo.kubtest.io
+  tlsenabled: "false"
+  tls: # < placing a host in the TLS config will indicate a certificate should be created
+  - hosts:
+    - demo.kubtest.io
+    secretName: kubtest-demo-cert-secret
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
