@@ -8,7 +8,7 @@ image:
   repository: kubeshop/kubtest-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.5.14"
+  tag: "0.5.39"
 
 imagePullSecrets: []
 nameOverride: "api-server"
@@ -53,7 +53,7 @@ ingress:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-  path: /kubtest-dash/(v\d/executions.*)
+  path: /kubtest-results/(v\d/executions.*)
   hosts:
     - www.example.com
   tls: []
