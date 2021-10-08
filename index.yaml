@@ -1976,6 +1976,16 @@ entries:
     version: 0.5.0
   postman-executor:
   - apiVersion: v2
+    appVersion: 0.5.18
+    created: "2021-10-08T09:20:40.47053112Z"
+    description: A Helm chart for Postman-executor
+    digest: a8ce741b2c0e6c30fce057d5a2a2919dd085705638650f40a6797fc36704f5ee
+    name: postman-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.18/postman-executor-0.5.18.tgz
+    version: 0.5.18
+  - apiVersion: v2
     appVersion: 0.5.15
     created: "2021-09-24T12:36:04.764960612Z"
     description: A Helm chart for Postman-executor
@@ -2074,4 +2084,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
     version: 0.5.8
-generated: "2021-10-08T09:19:54.421096787Z"
+generated: "2021-10-08T09:20:40.471483559Z"
