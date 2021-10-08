@@ -2,4 +2,4 @@ apiVersion: v2
 name: cypress-executor
 description: A Helm chart for cypress-executor
 type: application
-version: 0.5.17
+version: 0.5.18
