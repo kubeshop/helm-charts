@@ -1,18 +1,18 @@
 # For local development and debugging:
 # - just uncomment local repositories definitions 
 # - and comment out repositories with remote urls.
-# - then just run `helm dep up ./kubtest/charts/kubtest`
+# - then just run `helm dep up ./testkube/charts/testkube`
 # - once there were any changes to update and re-build local helm charts and its dependencies.
 apiVersion: v2
-name: kubtest
-description: A Helm chart for kubtest.
+name: testkube
+description: A Helm chart for testkube.
 type: application
 version: 0.5.60
 dependencies:
-- name: kubtest-operator
+- name: testkube-operator
   version: 0.5.8
   repository: https://kubeshop.github.io/helm-charts
-  #repository: "file://../../../kubtest-operator/charts/kubtest-operator"
+  #repository: "file://../../../testkube-operator/charts/testkube-operator"
 - name: mongodb
   version: 10.0.0
   repository: https://charts.bitnami.com/bitnami
@@ -35,8 +35,8 @@ dependencies:
   repository: https://kubeshop.github.io/helm-charts
   #repository: "file://../../../curl-executor/charts/curl-executor"
   condition: curl-executor.enabled
-- name: kubtest-dashboard
+- name: testkube-dashboard
   version: 0.5.0
   repository: https://kubeshop.github.io/helm-charts
-  #repository: "file://../../../kubtest-dashboard/charts/kubtest-dashboard"
-  condition: kubtest-dashboard.enabled
+  #repository: "file://../../../testkube-dashboard/charts/testkube-dashboard"
+  condition: testkube-dashboard.enabled

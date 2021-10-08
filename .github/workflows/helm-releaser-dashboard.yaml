@@ -1,9 +1,9 @@
-name: Release kubtest dashboard chart.
+name: Release testkube dashboard chart.
 
 on:
   push:
     paths:
-      - 'kubtest-dashboard/**'
+      - 'testkube-dashboard/**'
     branches:
       - main
 
@@ -30,6 +30,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: kubtest-dashboard/charts
+          charts_dir: testkube-dashboard/charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

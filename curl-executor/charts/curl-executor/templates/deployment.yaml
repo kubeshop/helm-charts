@@ -32,7 +32,7 @@ spec:
           env:
           - name: EXECUTOR_PORT
             value: "{{ .Values.service.port }}"
-          - name: KUBTEST_API_URI
+          - name: TESTKUBE_API_URI
             value: "{{ .Values.apiServerURI }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

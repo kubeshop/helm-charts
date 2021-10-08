@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "kubtest-dashboard.name" -}}
+{{- define "testkube-dashboard.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "kubtest-dashboard.fullname" -}}
+{{- define "testkube-dashboard.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "kubtest-dashboard.chart" -}}
+{{- define "testkube-dashboard.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "kubtest-dashboard.labels" -}}
-helm.sh/chart: {{ include "kubtest-dashboard.chart" . }}
-{{ include "kubtest-dashboard.selectorLabels" . }}
+{{- define "testkube-dashboard.labels" -}}
+helm.sh/chart: {{ include "testkube-dashboard.chart" . }}
+{{ include "testkube-dashboard.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "kubtest-dashboard.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "kubtest-dashboard.name" . }}
+{{- define "testkube-dashboard.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "testkube-dashboard.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "kubtest-dashboard.serviceAccountName" -}}
+{{- define "testkube-dashboard.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "kubtest-dashboard.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "testkube-dashboard.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

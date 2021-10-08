@@ -1,18 +1,18 @@
-# Default values for kubtest-dashboard. 
+# Default values for testkube-dashboard. 
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: kubeshop/kubtest-dashboard
+  repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "main" #TODO: add versioning here when the dashboard has it.
 
 imagePullSecrets: []
 nameOverride: "dashboard"
-fullnameOverride: "kubtest-dashboard"
+fullnameOverride: "testkube-dashboard"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -51,12 +51,12 @@ ingress:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
   path: /
   hosts:
-    - demo.kubtest.io
+    - demo.testkube.io
   tlsenabled: "false"
   tls: # < placing a host in the TLS config will indicate a certificate should be created
   - hosts:
-    - demo.kubtest.io
-    secretName: kubtest-demo-cert-secret
+    - demo.testkube.io
+    secretName: testkube-demo-cert-secret
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

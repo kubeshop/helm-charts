@@ -1,4 +1,4 @@
-# Default values for kubtest. 
+# Default values for testkube. 
 # This is a YAML-formatted file. 
 # Declare variables to be passed into your templates.
 
@@ -11,8 +11,8 @@ image:
   tag: ""
 
 imagePullSecrets: []
-nameOverride: "kubtest"
-fullnameOverride: "kubtest"
+nameOverride: "testkube"
+fullnameOverride: "testkube"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -85,7 +85,7 @@ affinity: {}
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
   nameOverride: "mongodb"
-  fullnameOverride: "kubtest-mongodb"
+  fullnameOverride: "testkube-mongodb"
   architecture: "standalone"
   auth:
     enabled: false
@@ -98,9 +98,9 @@ mongodb:
 
 api-server:
   nameOverride: "api-server"
-  fullnameOverride: "kubtest-api-server"
+  fullnameOverride: "testkube-api-server"
   image:
-    repository: kubeshop/kubtest-api-server
+    repository: kubeshop/testkube-api-server
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
@@ -119,7 +119,7 @@ api-server:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: kubtest-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-demo
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -127,22 +127,22 @@ api-server:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /results/(v\d/executions.*)
     hosts:
-      - demo.kubtest.io
+      - demo.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
-      - demo.kubtest.io
-      secretName: kubtest-demo-cert-secret
+      - demo.testkube.io
+      secretName: testkube-demo-cert-secret
 
-  mongoDSN: "mongodb://kubtest-mongodb:27017"
-  postmanExecutorURI: "http://kubtest-postman-executor:8082"
+  mongoDSN: "mongodb://testkube-mongodb:27017"
+  postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 postman-executor:
   enabled: true
   nameOverride: "postman-executor"
-  fullnameOverride: "kubtest-postman-executor"
+  fullnameOverride: "testkube-postman-executor"
   image:
-    repository: kubeshop/kubtest-postman-executor
+    repository: kubeshop/testkube-postman-executor
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
@@ -150,15 +150,15 @@ postman-executor:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8082
-  mongoDSN: "mongodb://kubtest-mongodb:27017"
-  apiServerURI: "http://kubtest-api-server:8088"
+  mongoDSN: "mongodb://testkube-mongodb:27017"
+  apiServerURI: "http://testkube-api-server:8088"
 
 cypress-executor:
   enabled: true
   nameOverride: "cypress-executor"
-  fullnameOverride: "kubtest-cypress-executor"
+  fullnameOverride: "testkube-cypress-executor"
   image:
-    repository: kubeshop/kubtest-cypress-executor
+    repository: kubeshop/testkube-cypress-executor
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
@@ -166,15 +166,15 @@ cypress-executor:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8084
-  mongoDSN: "mongodb://kubtest-mongodb:27017"
-  apiServerURI: "http://kubtest-api-server:8088"
+  mongoDSN: "mongodb://testkube-mongodb:27017"
+  apiServerURI: "http://testkube-api-server:8088"
 
 curl-executor:
   enabled: true
   nameOverride: "curl-executor"
-  fullnameOverride: "kubtest-curl-executor"
+  fullnameOverride: "testkube-curl-executor"
   image:
-    repository: kubeshop/kubtest-curl-executor
+    repository: kubeshop/testkube-curl-executor
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
@@ -182,18 +182,18 @@ curl-executor:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8086
-  mongoDSN: "mongodb://kubtest-mongodb:27017"
-  apiServerURI: "http://kubtest-api-server:8080"
+  mongoDSN: "mongodb://testkube-mongodb:27017"
+  apiServerURI: "http://testkube-api-server:8080"
 
 prometheus:
   enabled: false
 
-kubtest-dashboard:
+testkube-dashboard:
   enabled: true
   nameOverride: "dashboard"
-  fullnameOverride: "kubtest-dashboard"
+  fullnameOverride: "testkube-dashboard"
   image:
-    repository: kubeshop/kubtest-dashboard
+    repository: kubeshop/testkube-dashboard
     pullPolicy: Always
     tag: "main"
   service:
@@ -209,7 +209,7 @@ kubtest-dashboard:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"      
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: kubtest-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-demo
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -217,12 +217,12 @@ kubtest-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - demo.kubtest.io
+      - demo.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
-      - demo.kubtest.io
-      secretName: kubtest-demo-cert-secret
+      - demo.testkube.io
+      secretName: testkube-demo-cert-secret
     apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
 
 

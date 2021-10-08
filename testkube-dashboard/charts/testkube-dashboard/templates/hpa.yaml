@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "kubtest-dashboard.fullname" . }}
+  name: {{ include "testkube-dashboard.fullname" . }}
   labels:
-    {{- include "kubtest-dashboard.labels" . | nindent 4 }}
+    {{- include "testkube-dashboard.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "kubtest-dashboard.fullname" . }}
+    name: {{ include "testkube-dashboard.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

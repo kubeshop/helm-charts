@@ -7,8 +7,8 @@ on:
       - 'postman-executor/**'
       - 'cypress-executor/**'
       - 'api-server/**'
-      - 'kubtest-operator/**'
-      - 'kubtest/**'
+      - 'testkube-operator/**'
+      - 'testkube/**'
     branches:
       - main
 
@@ -18,8 +18,8 @@ on:
       - 'cypress-executor/**'
       - 'postman-executor/**'
       - 'api-server/**'
-      - 'kubtest-operator/**'
-      - 'kubtest/**'
+      - 'testkube-operator/**'
+      - 'testkube/**'
     branches:
       - main
 

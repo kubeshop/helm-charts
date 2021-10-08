@@ -3,7 +3,7 @@ kind: Role
 metadata:
   name: scripts.operator.api-server-{{ .Release.Name }}
 rules:
-- apiGroups: ["tests.kubtest.io"]
+- apiGroups: ["tests.testkube.io"]
   resources: ["scripts"]
   verbs: ["get", "watch", "list", "create", "delete"]
 
@@ -15,7 +15,7 @@ metadata:
   name: executors-cluster-role-{{ .Release.Name }}
 rules:
 - apiGroups:
-  - executor.kubtest.io
+  - executor.testkube.io
   resources:
   - executors
   verbs:

@@ -1,4 +1,4 @@
-name: Release kubtest api-server chart.
+name: Release testkube api-server chart.
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Release kubtest postman-executor chart.
+name: Release testkube postman-executor chart.
 
 on:
   push:

@@ -1,9 +1,9 @@
-name: Release kubtest kubtest-operator chart.
+name: Release testkube testkube-operator chart.
 
 on:
   push:
     paths:
-      - 'kubtest-operator/**'
+      - 'testkube-operator/**'
     branches:
       - main
 
@@ -30,6 +30,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir: kubtest-operator/charts
+          charts_dir: testkube-operator/charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

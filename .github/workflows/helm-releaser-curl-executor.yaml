@@ -1,4 +1,4 @@
-name: Release kubtest curl-executor chart.
+name: Release testkube curl-executor chart.
 
 on:
   push:

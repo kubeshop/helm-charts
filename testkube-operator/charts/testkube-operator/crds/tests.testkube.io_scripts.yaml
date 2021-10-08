@@ -5,9 +5,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
-  name: scripts.tests.kubtest.io
+  name: scripts.tests.testkube.io
 spec:
-  group: tests.kubtest.io
+  group: tests.testkube.io
   names:
     kind: Script
     listKind: ScriptList

@@ -5,16 +5,16 @@
 replicaCount: 1
 
 image:
-  repository: kubeshop/kubtest-curl-executor
+  repository: kubeshop/testkube-curl-executor
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.5.12"
 
 imagePullSecrets: []
 nameOverride: "curl-executor"
-fullnameOverride: "kubtest-curl-executor"
+fullnameOverride: "testkube-curl-executor"
 
-apiServerURI: "http://kubtest-api-server:8080"
+apiServerURI: "http://testkube-api-server:8080"
 
 serviceAccount:
   # Specifies whether a service account should be created

@@ -26,5 +26,5 @@ roleRef:
   name: executors-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: kubtest-api-server-{{ .Release.Name }}
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}

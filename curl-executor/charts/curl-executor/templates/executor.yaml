@@ -1,4 +1,4 @@
-apiVersion: executor.kubtest.io/v1
+apiVersion: executor.testkube.io/v1
 kind: Executor
 metadata:
   name: curl-executor

@@ -1,15 +1,15 @@
-name: Release kubtest kubtest chart.
+name: Release testkube testkube chart.
 
 on:
   push:
     paths:
-      - 'kubtest/**'
+      - 'testkube/**'
     branches:
       - main
 
 jobs:
 
-  release_kubtest:
+  release_testkube:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,6 +35,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          charts_dir:  kubtest/charts
+          charts_dir:  testkube/charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

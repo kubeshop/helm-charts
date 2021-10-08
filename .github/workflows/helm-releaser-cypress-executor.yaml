@@ -1,4 +1,4 @@
-name: Release kubtest cypress-executor chart.
+name: Release testkube cypress-executor chart.
 
 on:
   push:
