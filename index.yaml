@@ -2140,6 +2140,17 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
+  testkube-dashboard:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2021-10-08T11:40:37.946233525Z"
+    description: A Helm chart for Kubernetes
+    digest: ad9ae2efb24cab508cc824f466f660d113888880c3102777dec3f62a6463d1d4
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-0.5.0/testkube-dashboard-0.5.0.tgz
+    version: 0.5.0
   testkube-operator:
   - apiVersion: v2
     created: "2021-10-08T08:38:23.871630055Z"
@@ -2151,4 +2162,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
     version: 0.5.8
-generated: "2021-10-08T10:54:04.596723325Z"
+generated: "2021-10-08T11:40:37.947431046Z"
