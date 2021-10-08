@@ -653,6 +653,15 @@ entries:
     version: 0.5.0
   curl-executor:
   - apiVersion: v2
+    created: "2021-10-08T11:59:15.814052544Z"
+    description: A Helm chart for curl-executor
+    digest: cb9071ee7f53eecd6a728ab32ae3eecadf8805253a35529b46ecb2ca5709b982
+    name: curl-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.18/curl-executor-0.5.18.tgz
+    version: 0.5.18
+  - apiVersion: v2
     created: "2021-10-08T11:58:35.769674924Z"
     description: A Helm chart for curl-executor
     digest: 63c51e3788b241ba09ceac274d44e23b1f855bc230f646f9e488d2b5beeceea1
@@ -708,15 +717,6 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.5/curl-executor-0.5.5.tgz
     version: 0.5.5
   cypress-executor:
-  - apiVersion: v2
-    created: "2021-10-08T11:59:06.113442255Z"
-    description: A Helm chart for cypress-executor
-    digest: 5d3f3308747f71ae123e39cefb6ae060de7eb343ef3d7020720ebd15601e34e4
-    name: cypress-executor
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/cypress-executor-0.5.18/cypress-executor-0.5.18.tgz
-    version: 0.5.18
   - apiVersion: v2
     created: "2021-10-08T10:25:50.825359099Z"
     description: A Helm chart for cypress-executor
@@ -2216,4 +2216,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
     version: 0.5.8
-generated: "2021-10-08T11:59:06.114446713Z"
+generated: "2021-10-08T11:59:15.815012083Z"
