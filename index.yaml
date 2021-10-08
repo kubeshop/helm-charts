@@ -2043,4 +2043,15 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.0/postman-executor-0.5.0.tgz
     version: 0.5.0
-generated: "2021-10-08T08:14:16.934987371Z"
+  testkube-operator:
+  - apiVersion: v2
+    created: "2021-10-08T08:38:23.871630055Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 6e2c6df37e0dc91c30d96246fc25086d8273acf430b3aa40ead789f1957cf39f
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
+    version: 0.5.8
+generated: "2021-10-08T08:38:23.873179764Z"
