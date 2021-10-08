@@ -653,6 +653,15 @@ entries:
     version: 0.5.0
   curl-executor:
   - apiVersion: v2
+    created: "2021-10-08T11:58:35.769674924Z"
+    description: A Helm chart for curl-executor
+    digest: 63c51e3788b241ba09ceac274d44e23b1f855bc230f646f9e488d2b5beeceea1
+    name: curl-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.17/curl-executor-0.5.17.tgz
+    version: 0.5.17
+  - apiVersion: v2
     created: "2021-10-08T10:54:04.595738005Z"
     description: A Helm chart for curl-executor
     digest: ca735eebd1157f360756a8196a624b12bf1ad0a58280ba04a14dc43a88d3317f
@@ -2198,4 +2207,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
     version: 0.5.8
-generated: "2021-10-08T11:54:28.276962788Z"
+generated: "2021-10-08T11:58:35.770739334Z"
