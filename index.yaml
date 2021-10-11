@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   api-server:
   - apiVersion: v2
+    appVersion: 0.5.50
+    created: "2021-10-11T08:42:38.544640302Z"
+    description: A Helm chart for Api-server
+    digest: bfcbfa3a5a5d186b11f42df0a09ecfd62cca443bfd9dd6e9b4f56d8b9ab64a40
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.50/api-server-0.5.50.tgz
+    version: 0.5.50
+  - apiVersion: v2
     appVersion: 0.5.49
     created: "2021-10-11T07:51:13.716325327Z"
     description: A Helm chart for Api-server
@@ -2246,4 +2256,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8/testkube-operator-0.5.8.tgz
     version: 0.5.8
-generated: "2021-10-11T07:51:13.717452642Z"
+generated: "2021-10-11T08:42:38.549836638Z"
