@@ -7,25 +7,31 @@ dependencies:
 - name: testkube-operator
   version: 0.5.8
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../testkube-operator/charts/testkube-operator"
 - name: mongodb
   version: 10.0.0
   repository: https://charts.bitnami.com/bitnami
 - name: api-server
   version: 0.5.48
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../api-server/charts/api-server"
 - name: postman-executor
   version: 0.5.21
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../postman-executor/charts/postman-executor"
   condition: postman-executor.enabled
 - name: cypress-executor
   version: 0.5.18
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../cypress-executor/charts/cypress-executor"
   condition: cypress-executor.enabled
 - name: curl-executor
   version: 0.5.18
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../curl-executor/charts/curl-executor"
   condition: curl-executor.enabled
 - name: testkube-dashboard
   version: 0.5.0
   repository: https://kubeshop.github.io/helm-charts
+  #repository: "file://../../../testkube-dashboard/charts/testkube-dashboard"
   condition: testkube-dashboard.enabled

@@ -27,3 +27,6 @@ testbin/*
 
 # Helm lock file for charts.
 Chart.lock
+
+# Helm `dep up` charts
+**/charts/*.tgz
