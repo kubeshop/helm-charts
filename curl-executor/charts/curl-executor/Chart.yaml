@@ -2,4 +2,4 @@ apiVersion: v2
 name: curl-executor
 description: A Helm chart for curl-executor
 type: application
-version: 0.5.18
+version: 0.5.19
