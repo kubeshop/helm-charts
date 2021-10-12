@@ -6,7 +6,6 @@ on:
       - 'charts/**'
     branches:
       - main
-      - tarask/fix/testkube_helm_release
 jobs:
 
   release_charts:
