@@ -2431,6 +2431,41 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.84-testingg/testkube-0.5.84-testingg.tgz
     version: 0.5.84-testingg
   - apiVersion: v2
+    created: "2021-10-12T09:35:46.733391807Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.5.8-testing
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.5.51-testing
+    - condition: postman-executor.enabled
+      name: postman-executor
+      repository: file://../postman-executor
+      version: 0.5.22-testing
+    - condition: cypress-executor.enabled
+      name: cypress-executor
+      repository: file://../cypress-executor
+      version: 0.5.19-testing
+    - condition: curl-executor.enabled
+      name: curl-executor
+      repository: file://../curl-executor
+      version: 0.5.19-testing
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.5.0-testing
+    description: A Helm chart for testkube.
+    digest: 5d4a0779392bd26b432d480d7a3f260fd4aedc657d577d1aa0bb33e567e7e7c8
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.84-testing2/testkube-0.5.84-testing2.tgz
+    version: 0.5.84-testing2
+  - apiVersion: v2
     created: "2021-10-12T09:23:18.455792283Z"
     dependencies:
     - name: testkube-operator
@@ -2647,4 +2682,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-10-12T09:23:18.737280158Z"
+generated: "2021-10-12T09:35:46.734530521Z"
