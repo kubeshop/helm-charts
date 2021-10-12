@@ -33,14 +33,14 @@ entries:
     version: 0.5.51-testingg
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T09:23:17.904273686Z"
+    created: "2021-10-12T09:36:51.866689818Z"
     description: A Helm chart for Api-server
-    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
+    digest: 6805767ecafcc9c82bfb4a1275fbe988376f483b5154ff9e81c696f82e845b13
     name: api-server
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
-    version: 0.5.51-testing
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing2/api-server-0.5.51-testing2.tgz
+    version: 0.5.51-testing2
   - apiVersion: v2
     appVersion: 0.5.51
     created: "2021-10-12T08:07:11.059151099Z"
@@ -66,6 +66,16 @@ entries:
     created: "2021-10-12T08:43:12.598157902Z"
     description: A Helm chart for Api-server
     digest: ce0376ca2a7f1d20d6c34dfbafc826f529e1e271c4e212d2c7d0f9572a67be6a
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
+    version: 0.5.51-testing
+  - apiVersion: v2
+    appVersion: 0.5.51
+    created: "2021-10-12T09:23:17.904273686Z"
+    description: A Helm chart for Api-server
+    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
     name: api-server
     type: application
     urls:
@@ -2431,6 +2441,41 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.84-testingg/testkube-0.5.84-testingg.tgz
     version: 0.5.84-testingg
   - apiVersion: v2
+    created: "2021-10-12T09:36:52.102061799Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.5.8-testing
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.5.51-testing2
+    - condition: postman-executor.enabled
+      name: postman-executor
+      repository: file://../postman-executor
+      version: 0.5.22-testing
+    - condition: cypress-executor.enabled
+      name: cypress-executor
+      repository: file://../cypress-executor
+      version: 0.5.19-testing
+    - condition: curl-executor.enabled
+      name: curl-executor
+      repository: file://../curl-executor
+      version: 0.5.19-testing
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.5.0-testing
+    description: A Helm chart for testkube.
+    digest: 93354b0b547edbbb94a3d2c7543ba2d08378e48ced41abe83ceeb24db50d4b11
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.84-testing3/testkube-0.5.84-testing3.tgz
+    version: 0.5.84-testing3
+  - apiVersion: v2
     created: "2021-10-12T09:35:46.733391807Z"
     dependencies:
     - name: testkube-operator
@@ -2682,4 +2727,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-10-12T09:35:46.734530521Z"
+generated: "2021-10-12T09:36:52.103271314Z"
