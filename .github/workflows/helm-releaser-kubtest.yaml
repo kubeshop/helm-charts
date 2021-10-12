@@ -54,6 +54,7 @@ jobs:
   release_testkube:
     needs: checking_that_ghpages_updated
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v2
