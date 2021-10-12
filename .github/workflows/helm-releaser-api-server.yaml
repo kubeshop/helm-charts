@@ -6,7 +6,7 @@ on:
       - 'api-server/**'
     branches:
       - main
-      - tarask/fix/testkube_helm_release
+      #- tarask/fix/testkube_helm_release
 
 jobs:
 
