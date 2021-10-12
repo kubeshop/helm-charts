@@ -17,6 +17,7 @@ jobs:
           sleep 30
 
   refresh_dependencies:
+    needs: wait_dependencies_to_release
     runs-on: ubuntu-latest
     steps:
       - name: Triggering refresh for GH-pages to get latest Helm charts
@@ -30,6 +31,7 @@ jobs:
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
 
   checking_that_ghpages_updated:
+    needs: refresh_dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Triggering refresh for GH-pages to get latest Helm charts
@@ -50,6 +52,7 @@ jobs:
           USER_TOKEN: ${{ secrets.USER_TOKEN }}
 
   release_testkube:
+    needs: checking_that_ghpages_updated
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
