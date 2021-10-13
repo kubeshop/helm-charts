@@ -53,11 +53,9 @@ sed -i "/name: api-server/{n;s/^.*version.*/  version: $version_full/}" ../chart
 echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
 grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 
-# # Commiting and pushing changes:
-# git add -A
-# git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
+# Commiting and pushing changes:
+git add -A
+git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 
-# git remote -v
-
-# # git push origin main
-# git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+# git push origin main
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
