@@ -13,10 +13,6 @@ done
 # Lower-casing entered helm-chart-folder name to omit any issues with Upper case latters. 
 target_folder=$(echo "$target_folder" | tr '[:upper:]' '[:lower:]')
 
-# Setting up Git:
-git config user.name "kubeshop-bot"
-git config user.email "kubeshop-bot@kubeshop.io"
-          
 # Getting api-server chart version based on the pushed TAG:
 version_full=$(echo $RELEASE_VERSION | sed 's/^v//')
 echo "Version recieved: $version_full"
