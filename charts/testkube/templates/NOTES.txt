@@ -1,3 +1,5 @@
+`Enjoy testing with testkube!`
+{{- if false}} #TODO: Eneble this when we have somethin meaningfull to show.
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
@@ -19,4 +21,5 @@
   export CONTAINER_PORT=$(kubectl get pod --namespace {{ .Release.Namespace }} $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
   echo "Visit http://127.0.0.1:8088 to use your application"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8088:$CONTAINER_PORT
+{{- end }}
 {{- end }}
