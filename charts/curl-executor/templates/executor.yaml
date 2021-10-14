@@ -1,0 +1,9 @@
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: curl-executor
+spec:
+  executor_type: rest
+  uri: http://{{ include "curl-executor.fullname" . }}:{{ .Values.service.port }}
+  types:
+  - curl/test

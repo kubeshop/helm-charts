@@ -1,0 +1,9 @@
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: postman-executor
+spec:
+  executor_type: rest
+  uri: http://{{ include "postman-executor.fullname" . }}:{{ .Values.service.port }}
+  types:
+  - postman/collection

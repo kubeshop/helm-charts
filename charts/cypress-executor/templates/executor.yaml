@@ -1,0 +1,9 @@
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: cypress-executor
+spec:
+  executor_type: rest
+  uri: http://{{ include "cypress-executor.fullname" . }}:{{ .Values.service.port }}
+  types:
+  - cypress/project
