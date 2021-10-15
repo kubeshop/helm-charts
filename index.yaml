@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   api-server:
   - apiVersion: v2
+    appVersion: 0.5.67
+    created: "2021-10-15T09:24:11.362685044Z"
+    description: A Helm chart for Api-server
+    digest: 8595362cde9ba717ec2bb21f349aa5079c5f5e8a7294eb68a1c833551ec5b08a
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.67/api-server-0.5.67.tgz
+    version: 0.5.67
+  - apiVersion: v2
     appVersion: 0.5.66
     created: "2021-10-15T08:44:40.574975223Z"
     description: A Helm chart for Api-server
@@ -163,9 +173,9 @@ entries:
     version: 0.5.51-testing
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T08:43:12.598157902Z"
+    created: "2021-10-12T09:23:17.904273686Z"
     description: A Helm chart for Api-server
-    digest: ce0376ca2a7f1d20d6c34dfbafc826f529e1e271c4e212d2c7d0f9572a67be6a
+    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
     name: api-server
     type: application
     urls:
@@ -173,9 +183,9 @@ entries:
     version: 0.5.51-testing
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T09:23:17.904273686Z"
+    created: "2021-10-12T08:43:12.598157902Z"
     description: A Helm chart for Api-server
-    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
+    digest: ce0376ca2a7f1d20d6c34dfbafc826f529e1e271c4e212d2c7d0f9572a67be6a
     name: api-server
     type: application
     urls:
@@ -2325,16 +2335,6 @@ entries:
     version: 0.5.0
   postman-executor:
   - apiVersion: v2
-    appVersion: 0.5.29
-    created: "2021-10-15T09:23:56.205897915Z"
-    description: A Helm chart for Postman-executor
-    digest: a2743e93937bd76a0ed46d2043db780a6e832044d35f5a0863b72724c0b4a5a9
-    name: postman-executor
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.29/postman-executor-0.5.29.tgz
-    version: 0.5.29
-  - apiVersion: v2
     appVersion: 0.5.28
     created: "2021-10-15T09:23:20.14895559Z"
     description: A Helm chart for Postman-executor
@@ -2484,7 +2484,7 @@ entries:
     version: 0.5.0
   testkube:
   - apiVersion: v2
-    created: "2021-10-15T09:23:56.403210029Z"
+    created: "2021-10-15T09:24:11.579348885Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -2494,7 +2494,7 @@ entries:
       version: 10.0.0
     - name: api-server
       repository: file://../api-server
-      version: 0.5.21
+      version: 0.5.67
     - condition: postman-executor.enabled
       name: postman-executor
       repository: file://../postman-executor
@@ -2502,22 +2502,22 @@ entries:
     - condition: cypress-executor.enabled
       name: cypress-executor
       repository: file://../cypress-executor
-      version: 0.5.21
+      version: 0.5.25
     - condition: curl-executor.enabled
       name: curl-executor
       repository: file://../curl-executor
-      version: 0.5.22
+      version: 0.5.23
     - condition: testkube-dashboard.enabled
       name: testkube-dashboard
       repository: file://../testkube-dashboard
       version: 0.5.0
     description: A Helm chart for testkube.
-    digest: 56c109239cad400c581a7610873b73c2e303b174c1687af132b2c23abd86e9c2
+    digest: 4b034fcfc8416f11a7470fb4535acd5e9d568436ad2c46414d79680b7309ee59
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.106/testkube-0.5.106.tgz
-    version: 0.5.106
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.109/testkube-0.5.109.tgz
+    version: 0.5.109
   - apiVersion: v2
     created: "2021-10-15T09:23:20.291883178Z"
     dependencies:
@@ -3330,4 +3330,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-10-15T09:23:56.404795105Z"
+generated: "2021-10-15T09:24:11.581360209Z"
