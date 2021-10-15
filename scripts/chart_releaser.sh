@@ -18,18 +18,27 @@ version_full=$(echo $RELEASE_VERSION | sed 's/^v//')
 echo "Version recieved: $version_full"
 
 # Getting TestKube main chart version:
-tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
+if [[ $version_full =~ [0-9].[0-9].0$ ]]
+then
+    # Just use this tag for main TestKube chart as it's release:
+    tk_version_full_bumped=$version_full
+else
+    # calculate patch version by incrementing by one:
+    tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
 
-# Bumping TestKube version by one:
-tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
-tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
-tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
+    # Bumping TestKube version by one:
+    tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
+    tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
+    tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
 
-# Incrementing testKube helm charts patch version by one:
-tk_version_patch=$(expr $tk_version_patch + 1)
+    # Incrementing testKube helm charts patch version by one:
+    tk_version_patch=$(expr $tk_version_patch + 1)
 
-# New TestKube full version:
-tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
+    # New TestKube full version:
+    tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
+fi
+
+# Checking new TestKube full version:
 echo "New main TestKube's chart version is: $tk_version_full_bumped"
 
 # Editing $target_folder Chart, and its App versions:
