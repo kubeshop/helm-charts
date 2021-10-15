@@ -5,6 +5,7 @@ set -o pipefail
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
+        -m|--main-chart) main_chart="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -20,8 +21,11 @@ echo "Version recieved: $version_full"
 # Getting TestKube main chart version:
 if [[ $version_full =~ [0-9].[0-9].0$ ]]
 then
-    # Just use this tag for main TestKube chart as it's release:
-    tk_version_full_bumped=$version_full
+    if [[ $main_chart == "true" ]]
+    then
+        # Just use this tag for main TestKube chart as it's release:
+        tk_version_full_bumped=$version_full
+    fi
 else
     # calculate patch version by incrementing by one:
     tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
