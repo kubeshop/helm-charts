@@ -188,7 +188,7 @@ testkube-dashboard:
   image:
     repository: kubeshop/testkube-dashboard
     pullPolicy: Always
-    tag: "main" #TODO: add versioning here when the dashboard has it.
+    # tag: "main" # it will take tag from appVersion.
   service:
     type: NodePort
     port: 80

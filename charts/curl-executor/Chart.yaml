@@ -3,3 +3,4 @@ name: curl-executor
 description: A Helm chart for curl-executor
 type: application
 version: 0.5.20
+appVersion: 0.5.20
