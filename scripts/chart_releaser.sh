@@ -25,6 +25,20 @@ then
     then
         # Just use this tag for main TestKube chart as it's release:
         tk_version_full_bumped=$version_full
+    else
+        # calculate patch version by incrementing by one:
+        tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
+
+        # Bumping TestKube version by one:
+        tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
+        tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
+        tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
+
+        # Incrementing testKube helm charts patch version by one:
+        tk_version_patch=$(expr $tk_version_patch + 1)
+
+        # New TestKube full version:
+        tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
     fi
 else
     # calculate patch version by incrementing by one:
@@ -62,7 +76,7 @@ echo -e "\nChecking if testkube's main Chart.yaml version has been updated:\n"
 grep -iE "^version" ../charts/testkube/Chart.yaml
 
 # Editing TestKube's dependency Chart.yaml for $target_folder:
-sed -i "/name: api-server/{n;s/^.*version.*/  version: $version_full/}" ../charts/testkube/Chart.yaml
+sed -i "/name: $target_folder/{n;s/^.*version.*/  version: $version_full/}" ../charts/testkube/Chart.yaml
 echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
 grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 
