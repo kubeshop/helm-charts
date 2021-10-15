@@ -16,17 +16,17 @@ dependencies:
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../api-server"
 - name: postman-executor
-  version: 0.5.22
+  version: 0.5.25
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../postman-executor"
   condition: postman-executor.enabled
 - name: cypress-executor
-  version: 0.5.19
+  version: 0.5.21
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../cypress-executor"
   condition: cypress-executor.enabled
 - name: curl-executor
-  version: 0.5.19
+  version: 0.5.20
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../curl-executor"
   condition: curl-executor.enabled
