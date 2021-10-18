@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-cypress-executor
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "0.5.25"
+  # tag: "0.5.26"
 
 imagePullSecrets: []
 nameOverride: "cypress-executor"

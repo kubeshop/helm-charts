@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube. 
 type: application
-version: 0.5.112
+version: 0.5.113
 dependencies:
 - name: testkube-operator
   version: 0.5.8
@@ -21,7 +21,7 @@ dependencies:
   repository: "file://../postman-executor"
   condition: postman-executor.enabled
 - name: cypress-executor
-  version: 0.5.25
+  version: 0.5.26
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../cypress-executor"
   condition: cypress-executor.enabled
