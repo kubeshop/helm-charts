@@ -995,6 +995,16 @@ entries:
     version: 0.5.5
   cypress-executor:
   - apiVersion: v2
+    appVersion: 0.5.26
+    created: "2021-10-18T11:14:15.694071558Z"
+    description: A Helm chart for cypress-executor
+    digest: e8e54b8d2f37a8f9da53489ef259975791fb4bc0ad6350ea8a84da74c59c1286
+    name: cypress-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/cypress-executor-0.5.26/cypress-executor-0.5.26.tgz
+    version: 0.5.26
+  - apiVersion: v2
     created: "2021-10-15T06:19:30.137504116Z"
     description: A Helm chart for cypress-executor
     digest: 04b30ad1eb9cd305c938d70ca739ccf0b17539319c823b10c58b9a63e67afb17
@@ -2504,6 +2514,41 @@ entries:
     version: 0.5.0
   testkube:
   - apiVersion: v2
+    created: "2021-10-18T11:14:15.908978847Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.5.8
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.5.68
+    - condition: postman-executor.enabled
+      name: postman-executor
+      repository: file://../postman-executor
+      version: 0.5.29
+    - condition: cypress-executor.enabled
+      name: cypress-executor
+      repository: file://../cypress-executor
+      version: 0.5.26
+    - condition: curl-executor.enabled
+      name: curl-executor
+      repository: file://../curl-executor
+      version: 0.5.23
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.5.2
+    description: A Helm chart for testkube.
+    digest: 0438a14e613c530492ad1c4e620e1fe06a98803050a1f5b64208157f65346f21
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.113/testkube-0.5.113.tgz
+    version: 0.5.113
+  - apiVersion: v2
     created: "2021-10-18T11:03:20.524085063Z"
     dependencies:
     - name: testkube-operator
@@ -3510,4 +3555,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-10-18T11:03:20.650826269Z"
+generated: "2021-10-18T11:14:15.910350264Z"
