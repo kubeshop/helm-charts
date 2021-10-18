@@ -883,6 +883,16 @@ entries:
     version: 0.5.0
   curl-executor:
   - apiVersion: v2
+    appVersion: 0.5.24
+    created: "2021-10-18T11:15:07.071226908Z"
+    description: A Helm chart for curl-executor
+    digest: 85c59207629c847d0c187af0d94ad29d0dd177bfac16f7bcf83b9e837279c1e0
+    name: curl-executor
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/curl-executor-0.5.24/curl-executor-0.5.24.tgz
+    version: 0.5.24
+  - apiVersion: v2
     appVersion: 0.5.23
     created: "2021-10-15T10:27:15.716085594Z"
     description: A Helm chart for curl-executor
@@ -2365,16 +2375,6 @@ entries:
     version: 0.5.0
   postman-executor:
   - apiVersion: v2
-    appVersion: 0.5.30
-    created: "2021-10-18T11:14:53.812497933Z"
-    description: A Helm chart for Postman-executor
-    digest: 5e24c39300b880a7dd1d906357a96d90969eba521a1796f41ca12ff2180d20cf
-    name: postman-executor
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/postman-executor-0.5.30/postman-executor-0.5.30.tgz
-    version: 0.5.30
-  - apiVersion: v2
     appVersion: 0.5.28
     created: "2021-10-15T09:23:20.14895559Z"
     description: A Helm chart for Postman-executor
@@ -2524,7 +2524,7 @@ entries:
     version: 0.5.0
   testkube:
   - apiVersion: v2
-    created: "2021-10-18T11:14:54.032898186Z"
+    created: "2021-10-18T11:15:07.220348332Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -2546,18 +2546,18 @@ entries:
     - condition: curl-executor.enabled
       name: curl-executor
       repository: file://../curl-executor
-      version: 0.5.23
+      version: 0.5.24
     - condition: testkube-dashboard.enabled
       name: testkube-dashboard
       repository: file://../testkube-dashboard
       version: 0.5.2
     description: A Helm chart for testkube.
-    digest: e8532dd09d5549b0c8701d85459c78bd52815a621853d6f29e471862dba321eb
+    digest: cf2149576facda6a9f05dbfbfb769eb9fdf2a1f177e6f9d7deb9a94c2f6f3ae5
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.114/testkube-0.5.114.tgz
-    version: 0.5.114
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.5.115/testkube-0.5.115.tgz
+    version: 0.5.115
   - apiVersion: v2
     created: "2021-10-18T11:14:15.908978847Z"
     dependencies:
@@ -3600,4 +3600,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-10-18T11:14:54.034623876Z"
+generated: "2021-10-18T11:15:07.223980488Z"
