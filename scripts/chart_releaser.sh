@@ -2,6 +2,22 @@
 set -e
 set -o pipefail
 
+function update_tk_main_chart_version {
+    # calculate patch version by incrementing by one:
+    tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
+
+    # Bumping TestKube version by one:
+    tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
+    tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
+    tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
+
+    # Incrementing testKube helm charts patch version by one:
+    tk_version_patch=$(expr $tk_version_patch + 1)
+
+    # New TestKube full version:
+    tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
+}
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
@@ -23,37 +39,15 @@ if [[ $version_full =~ [0-9].[0-9].0$ ]]
 then
     if [[ $main_chart == "true" ]]
     then
-        # Just use this tag for main TestKube chart as it's release:
+        # Just use this tag for main TestKube chart as it's Release:
         tk_version_full_bumped=$version_full
     else
-        # calculate patch version by incrementing by one:
-        tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
-
-        # Bumping TestKube version by one:
-        tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
-        tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
-        tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
-
-        # Incrementing testKube helm charts patch version by one:
-        tk_version_patch=$(expr $tk_version_patch + 1)
-
-        # New TestKube full version:
-        tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
+        # Updating TestKube's main chart patch version:
+        update_tk_main_chart_version
     fi
 else
-    # calculate patch version by incrementing by one:
-    tk_version_full=$(grep -iE "^version:" ../charts/testkube/Chart.yaml | awk '{print $NF}')
-
-    # Bumping TestKube version by one:
-    tk_version_major=$(echo $tk_version_full | awk -F\. '{print $1}')
-    tk_version_minor=$(echo $tk_version_full | awk -F\. '{print $2}')
-    tk_version_patch=$(echo $tk_version_full | awk -F\. '{print $3}')
-
-    # Incrementing testKube helm charts patch version by one:
-    tk_version_patch=$(expr $tk_version_patch + 1)
-
-    # New TestKube full version:
-    tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
+    # Updating TestKube's main chart patch release version:
+    update_tk_main_chart_version
 fi
 
 # Checking new TestKube full version:
