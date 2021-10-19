@@ -1,4 +1,4 @@
-name: Release testkube testkube chart.
+name: Releasing Helm charts.
 
 on:
   push:

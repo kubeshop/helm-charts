@@ -1,4 +1,4 @@
-name: Rtesting slack integration.
+name: Testing slack integration.
 
 on:
   push:
@@ -34,7 +34,8 @@ jobs:
         SLACK_CHANNEL: testkube-logs
         SLACK_COLOR: ${{ needs.some_previous_job.result }} # or a specific color like 'good' or '#ff00ff'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: "TESTING!!! :boom:"
         SLACK_TITLE: Helm chart release failed!
-        SLACK_USERNAME: rtCamp
+        SLACK_USERNAME: GitHub
+        SLACK_LINK_NAMES: true
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "Kubeshop --> TestKube"
