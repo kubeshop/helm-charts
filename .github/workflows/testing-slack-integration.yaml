@@ -34,7 +34,24 @@ jobs:
         SLACK_CHANNEL: testkube-logs
         SLACK_COLOR: ${{ needs.some_previous_job.result }} # or a specific color like 'good' or '#ff00ff'
         SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_TITLE: Helm chart release failed!
+        SLACK_TITLE: Helm chart release failed :boom:!
+        SLACK_USERNAME: GitHub
+        SLACK_LINK_NAMES: true
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "Kubeshop --> TestKube"
+
+  testing_slack_if_prev_fails:
+    runs-on: ubuntu-latest
+    needs: some_previous_job
+    if: always() && (needs.some_previous_job.result == 'success')
+    steps:
+    - name: Slack Notification if previous (release job) succeed
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: testkube-logs
+        SLACK_COLOR: ${{ needs.some_previous_job.result }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_TITLE: Helm chart release succeed :party_blob:!
         SLACK_USERNAME: GitHub
         SLACK_LINK_NAMES: true
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
