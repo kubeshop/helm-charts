@@ -21,7 +21,7 @@ jobs:
 
       - name: Failing step.
         run: |
-          ls -al ./bla_bla
+          ls -al ./
 
   testing_slack_if_prev_fails:
     runs-on: ubuntu-latest
