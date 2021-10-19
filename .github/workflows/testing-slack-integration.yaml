@@ -56,3 +56,11 @@ jobs:
         SLACK_LINK_NAMES: true
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_FOOTER: "Kubeshop --> TestKube"
+
+  refreshing_gh_pages_if_slack_succeed:
+    needs: testing_slack_if_prev_succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Triggering refresh for GH-pages to make just released charts available
+        run: |
+          echo "All good"

@@ -38,7 +38,41 @@ jobs:
           charts_dir:  charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          
+
+  notify_slack_if_release_fails:
+    runs-on: ubuntu-latest
+    needs: release_charts
+    if: always() && (needs.release_charts.result == 'failure')
+    steps:
+    - name: Slack Notification if previous (release job) failed
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: testkube-logs
+        SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_TITLE: Helm chart release failed :boom:!
+        SLACK_USERNAME: GitHub
+        SLACK_LINK_NAMES: true
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "Kubeshop --> TestKube"
+
+  notify_slack_if_release_succeeds:
+    runs-on: ubuntu-latest
+    needs: release_charts
+    if: always() && (needs.release_charts.result == 'success')
+    steps:
+    - name: Slack Notification if previous (release job) succeed
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: testkube-logs
+        SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_TITLE: Helm chart release succeed :party_blob:!
+        SLACK_USERNAME: GitHub
+        SLACK_LINK_NAMES: true
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_FOOTER: "Kubeshop --> TestKube"
+
   refreshing_gh_pages:
     needs: release_charts
     runs-on: ubuntu-latest
