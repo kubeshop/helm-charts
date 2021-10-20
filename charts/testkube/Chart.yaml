@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube. 
 type: application
-version: 0.6.8
+version: 0.6.9
 dependencies:
 - name: testkube-operator
   version: 0.5.8
@@ -26,7 +26,7 @@ dependencies:
   repository: "file://../cypress-executor"
   condition: cypress-executor.enabled
 - name: curl-executor
-  version: 0.6.0
+  version: 0.6.1
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../curl-executor"
   condition: curl-executor.enabled
