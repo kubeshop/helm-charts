@@ -52,6 +52,8 @@ jobs:
 
       - name: Installing repositories
         run: |
+          echo "Kubeconfig is here: $KUBECONFIG"
+          chmod 440 $KUBECONFIG
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
@@ -60,5 +62,4 @@ jobs:
         run: |-
           # helm dep up ./charts/testkube
           # helm upgrade --install --atomic --timeout 180s testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
-          echo "Kubeconfig is here: $KUBECONFIG"
           helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
