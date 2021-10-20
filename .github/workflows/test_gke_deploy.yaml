@@ -60,4 +60,5 @@ jobs:
         run: |-
           # helm dep up ./charts/testkube
           # helm upgrade --install --atomic --timeout 180s testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
-          helm upgrade --install --atomic --timeout 180s helm-charts/testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
+          echo "Kubeconfig is here: $KUBECONFIG"
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
