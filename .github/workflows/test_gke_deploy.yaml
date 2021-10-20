@@ -59,4 +59,4 @@ jobs:
       - name: Deploy
         run: |-
           ls -al ./
-          helm upgrade --install --atomic --timeout 180s testkube ./helm-charts/charts/testkube --namespace testkube --create-namespace --values ./helm-charts/charts/testkube/values-demo.yaml --dry-run
+          helm upgrade --install --atomic --timeout 180s testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
