@@ -58,7 +58,6 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          ls -al ./
-          ls -al -R ~/
-          helm dep up ./charts/testkube
-          helm upgrade --install --atomic --timeout 180s testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
+          # helm dep up ./charts/testkube
+          # helm upgrade --install --atomic --timeout 180s testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
+          helm upgrade --install --atomic --timeout 180s helm-charts/testkube ./charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --dry-run
