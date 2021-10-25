@@ -32,6 +32,8 @@ spec:
           env:
           - name: API_SERVER_ENDPOINT
             value: "{{ .Values.apiServerEndpoint }}"
+          - name: REACT_APP_API_SERVER_ENDPOINT
+            value: "{{ .Values.apiServerEndpoint }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
