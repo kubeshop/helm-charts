@@ -131,7 +131,6 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_FOOTER: "Kubeshop --> TestKube"
 
-jobs:
   deploy-to-testkube-dev-gke:
     name: Deploy
     runs-on: ubuntu-latest
