@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-          {{- if not eq .Values.apiServerEndpoint "default" }}
+          {{- if ne .Values.apiServerEndpoint "default" }}
           - name: REACT_APP_API_SERVER_ENDPOINT
             value: "{{ .Values.apiServerEndpoint }}"
           {{- end }}
