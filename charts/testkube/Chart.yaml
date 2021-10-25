@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube. 
 type: application
-version: 0.6.16
+version: 0.6.17
 dependencies:
 - name: testkube-operator
   version: 0.5.8
@@ -31,7 +31,7 @@ dependencies:
   repository: "file://../curl-executor"
   condition: curl-executor.enabled
 - name: testkube-dashboard
-  version: 0.6.2
+  version: 0.6.3
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../testkube-dashboard"
   condition: testkube-dashboard.enabled
