@@ -43,8 +43,11 @@ service:
   type: NodePort # for working with real k8s we should use "ClusterIP" type.
   port: 8088
 
+minio:
+  enabled: false
+
 ingress:
-  enabled: "false"
+  enabled: false
   annotations: 
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1

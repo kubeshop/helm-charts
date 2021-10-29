@@ -108,8 +108,10 @@ api-server:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
+  minio:
+    enabled: true
   ingress:
-    enabled: "true"
+    enabled: true
     annotations: 
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
