@@ -225,6 +225,6 @@ testkube-dashboard:
     - hosts:
       - demo.testkube.io
       secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "http://demo.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
 
 
