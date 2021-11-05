@@ -47,9 +47,9 @@ jobs:
           # Downloading test suite:
           curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }}
 
-          # Runnign Test suite:
-          #kubectl delete script sanity || true
-          #kubectl testkube scripts create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity
+          # Running Test suite:
+          kubectl delete script sanity || true
+          kubectl testkube scripts create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity
           kubectl testkube scripts start sanity -f -p api_uri=http://testkube-api-server:8088 -p script_api_uri=http://testkube-api-server:8088 -p script_type=postman/collection -p script_name=fill-me -p execution_name=fill-me
 
   notify_slack_if_test_suite_dev_succeeds:
