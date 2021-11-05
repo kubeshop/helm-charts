@@ -1,6 +1,0 @@
-apiVersion: v2
-name: curl-executor
-description: A Helm chart for curl-executor
-type: application
-version: 0.6.2-beta001
-appVersion: 0.6.2-beta001

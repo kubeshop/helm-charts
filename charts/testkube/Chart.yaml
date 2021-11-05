@@ -15,21 +15,6 @@ dependencies:
   version: 0.0.0-jobs1
   #repository: https://kubeshop.github.io/helm-charts
   repository: "file://../api-server"
-- name: postman-executor
-  version: 0.6.1
-  #repository: https://kubeshop.github.io/helm-charts
-  repository: "file://../postman-executor"
-  condition: postman-executor.enabled
-- name: cypress-executor
-  version: 0.6.1
-  #repository: https://kubeshop.github.io/helm-charts
-  repository: "file://../cypress-executor"
-  condition: cypress-executor.enabled
-- name: curl-executor
-  version: 0.6.2-beta001
-  #repository: https://kubeshop.github.io/helm-charts
-  repository: "file://../curl-executor"
-  condition: curl-executor.enabled
 - name: testkube-dashboard
   version: 0.6.5
   #repository: https://kubeshop.github.io/helm-charts

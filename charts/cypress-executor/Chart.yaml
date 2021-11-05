@@ -1,6 +1,0 @@
-apiVersion: v2
-name: cypress-executor
-description: A Helm chart for cypress-executor
-type: application
-version: 0.6.1
-appVersion: 0.6.1
