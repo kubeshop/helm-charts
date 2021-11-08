@@ -239,6 +239,9 @@ jobs:
       # Runnning test suite
       - name: Run test suite
         run: |-
+          # enabling debug mode
+          set -x
+
           # Installing testkube kubectl plugin:
           bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
 
