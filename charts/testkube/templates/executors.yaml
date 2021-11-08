@@ -1,0 +1,41 @@
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: cypress-executor
+  namespace: testkube
+spec:
+  executor_type: job
+  image: kubeshop/testkube-cypress-executor:0.6.2
+  types:
+  - cypress/project
+  volume_mount_path: /mnt/artifacts-storage
+  volume_quantity: 10Gix
+
+---
+
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: curl-executor
+  namespace: testkube
+spec:
+  executor_type: job
+  image: kubeshop/testkube-curl-executor:0.6.2
+  types:
+  - curl/test
+  volume_mount_path: /mnt/artifacts-storage
+  volume_quantity: 10Gix
+
+---
+apiVersion: executor.testkube.io/v1
+kind: Executor
+metadata:
+  name: postman-job
+  namespace: testkube
+spec:
+  executor_type: job
+  image: kubeshop/testkube-postman-executor:0.6.4
+  types:
+  - postman-job/collection
+  volume_mount_path: /mnt/artifacts-storage
+  volume_quantity: 10Gix
