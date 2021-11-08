@@ -130,6 +130,7 @@ api-server:
       secretName: testkube-demo-cert-secret
 
   mongoDSN: "mongodb://testkube-mongodb:27017"
+  telemetryDisabled: false
 
 prometheus:
   enabled: false

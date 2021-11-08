@@ -17,6 +17,8 @@ fullnameOverride: "testkube-api-server"
 mongoDSN: "mongodb://testkube-mongodb:27017"
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
+telemetryDisabled: false
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
