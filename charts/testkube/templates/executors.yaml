@@ -36,6 +36,6 @@ spec:
   executor_type: job
   image: kubeshop/testkube-postman-executor:0.6.4
   types:
-  - postman-job/collection
+  - postman/collection
   volume_mount_path: /mnt/artifacts-storage
   volume_quantity: 10Gix
