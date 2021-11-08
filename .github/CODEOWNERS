@@ -1,3 +1,7 @@
-fog1985
-olensmar
-exu
+assets/* @olensmar 
+docs/* @olensmar 
+img/* @olensmar 
+api/* @olensmar 
+api/v1/* @olensmar 
+
+* @exu @nicufk @jasmingacic @fog1985
