@@ -45,12 +45,12 @@ jobs:
           set -x
 
           # Installing testkube kubectl plugin:
-          bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh ) 2>&1
+          bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
 
           # Downloading test suite:
-          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }} 2>&1
+          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }}
 
           # Running Test suite:
-          kubectl -n testkube delete script sanity || true 2>&1
-          kubectl testkube scripts create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity --type postman/collection 2>&1
-          kubectl testkube scripts start sanity -f -p api_uri=http://testkube-api-server:8088 -p script_api_uri=http://testkube-api-server:8088 -p script_type=postman/collection -p script_name=fill-me -p execution_name=fill-me 2>&1
+          kubectl -n testkube delete script sanity || true
+          kubectl testkube scripts create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity --type postman/collection
+          kubectl testkube scripts start sanity -f -p api_uri=http://testkube-api-server:8088 -p script_api_uri=http://testkube-api-server:8088 -p script_type=postman/collection -p script_name=fill-me -p execution_name=fill-me
