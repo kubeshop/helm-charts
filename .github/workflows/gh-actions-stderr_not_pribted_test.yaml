@@ -1,0 +1,55 @@
+name: Releasing Helm charts.
+
+on:
+  push:
+    branches:
+      - tarask/refactor/stderr_not_printed_gh_actions
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER_NAME_DEV: ${{ secrets.GKE_CLUSTER_NAME_DEV }}    # Add your cluster name here.
+  GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }}   # Add your cluster zone here.
+  DEPLOYMENT_NAME: testkube # Add your deployment name here.
+
+jobs:
+
+  test_suite_run_dev:
+    name: test suite for DEV GKE.
+    runs-on: ubuntu-latest
+    needs: deploy-to-testkube-dev-gke
+    steps:
+
+      # Setup gcloud CLI
+      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+        with:
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          project_id: ${{ secrets.GKE_PROJECT }}
+
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      - run: |-
+          gcloud --quiet auth configure-docker
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER_NAME_DEV }}
+          location: ${{ env.GKE_ZONE_DEV }}
+          credentials: ${{ secrets.GKE_SA_KEY }}
+
+      # Runnning test suite
+      - name: Run test suite
+        run: |-
+          # enabling debug mode
+          set -x
+
+          # Installing testkube kubectl plugin:
+          bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
+
+          # Downloading test suite:
+          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }}
+
+          # Running Test suite:
+          kubectl -n testkube delete script sanity || true
+          kubectl testkube scripts create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity --type postman/collection
+          kubectl testkube scripts start sanity -f -p api_uri=http://testkube-api-server:8088 -p script_api_uri=http://testkube-api-server:8088 -p script_type=postman/collection -p script_name=fill-me -p execution_name=fill-me |&
