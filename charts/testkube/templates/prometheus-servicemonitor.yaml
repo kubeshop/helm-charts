@@ -1,0 +1,15 @@
+{{ if .Values.prometheus.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: testkube-api-server
+  labels:
+    app: prometheus
+spec:
+  endpoints:
+  - interval: 10s
+    port: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: api-server
+{{ end }}

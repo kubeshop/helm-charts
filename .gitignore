@@ -23,8 +23,11 @@ testbin/*
 *.swp
 *.swo
 *~
+.DS_Store
 
 # Helm lock file for charts.
 Chart.lock
 
 .kube
+# Helm `dep up` charts
+**/charts/*.tgz
