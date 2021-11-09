@@ -74,6 +74,17 @@ sed -i "/name: $target_folder/{n;s/^.*version.*/  version: $version_full/}" ../c
 echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
 grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 
+if [[ $main_chart == "true" ]]
+then
+    # Editing TestKube's executors.yaml if tag was pushed to main chart. E.G. to testKube:
+    sed -i "s/\(.*image:.*\:\).*$/\1$version_full/g" ../charts/testkube/templates/executors.yaml
+    echo -e "\nChecking if TestKube's executors.yaml has been updated:\n"
+    grep -iE image ../charts/testkube/templates/executors.yaml
+else
+    # No reason to edit executors.yaml image tags as it's not a TestKube repo/tag.
+    echo "Executors.yaml is not updated. As this tag was not pushed into TestKube repo."
+fi
+
 # Commiting and pushing changes:
 git add -A
 git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
