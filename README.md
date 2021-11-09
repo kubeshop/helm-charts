@@ -31,7 +31,7 @@ The following [TestKube](https://github.com/kubeshop/testkube/) Helm Charts are 
 
 > Please note that the testkube Helm chart will install all the needed charts. Including CRDs. It's an umbrella chart.
 
-## Promehteus service monitor 
+## Prometheus service monitor 
 
 If have already configured Prometheus stack you can enble service monitor 
 for testkube API server to scrape metrics from it. 
