@@ -1,3 +1,30 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jobs-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - get
+  - watch
+  - list
+  - create
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - watch
+  - list
+  - create
+  
+---
 apiVersion: rbac.authorization.k8s.io/v1
 # This role binding allows "system:serviceaccount:default:api-server-chart" to manage secrets in the "default" namespace.
 # You need to already have a Role named "scripts.operator.api-server" in that namespace.
