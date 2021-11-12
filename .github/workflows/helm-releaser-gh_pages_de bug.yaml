@@ -16,7 +16,6 @@ env:
 jobs:
 
   refreshing_gh_pages:
-    needs: release_charts
     runs-on: ubuntu-latest
     steps:
       - name: Triggering refresh for GH-pages to make just released charts available
