@@ -86,6 +86,7 @@ jobs:
       - name: Making sure that they are abvailable now.
         run: |
           status=""
+          counter=0
           while [[ $status != \"built\" ]]
           do
               status=$(curl -s \
@@ -94,6 +95,14 @@ jobs:
               --header "Authorization: Bearer $USER_TOKEN" | jq .status)
               echo "Checking latest GH pages build status --> $status"
               sleep 5
+
+              # checking if GH pages built doesn't take too much time or it didn't go into erroring state.
+              # waiting time for build to succeed is set to 10 minutes.
+              counter=$(expr $counter + 1)
+              if [[ $status =~ error.* ]] || [[ $counter == 120 ]]; then
+                echo Something went wrong. Please check GH's pages issues.
+                exit 1
+              fi
           done
         env:
           # You must create a personal token with repo access as GitHub does
