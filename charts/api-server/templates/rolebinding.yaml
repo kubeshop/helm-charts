@@ -38,7 +38,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: jobs-cluster-role-testkube
+  name: jobs-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
   name: testkube-api-server-testkube
