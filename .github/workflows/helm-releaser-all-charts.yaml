@@ -96,11 +96,9 @@ jobs:
               echo "Checking latest GH pages build status --> $status"
               sleep 5
 
-              # checking if GH pages built doesn't take too much time or it didn't go into erroring state.
-              # waiting time for build to succeed is set to 10 minutes.
               counter=$(expr $counter + 1)
-              if [[ $status =~ error.* ]] || [[ $counter == 120 ]]; then
-                echo Something went wrong. Please check GH's pages issues.
+              if [[ $status == \"errored\" ]] || [[ $counter == 120 ]]; then
+                echo "Something went wrong. Please check GH's pages issues."
                 exit 1
               fi
           done
