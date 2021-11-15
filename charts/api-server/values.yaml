@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.5.60"
+  # tag: "0.6.7"
 
 imagePullSecrets: []
 nameOverride: "api-server"
@@ -16,6 +16,8 @@ fullnameOverride: "testkube-api-server"
 
 mongoDSN: "mongodb://testkube-mongodb:27017"
 postmanExecutorURI: "http://testkube-postman-executor:8082"
+
+telemetryDisabled: false
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -43,8 +45,11 @@ service:
   type: NodePort # for working with real k8s we should use "ClusterIP" type.
   port: 8088
 
+minio:
+  enabled: false
+
 ingress:
-  enabled: "false"
+  enabled: false
   annotations: 
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1

@@ -108,8 +108,10 @@ api-server:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
+  minio:
+    enabled: false
   ingress:
-    enabled: "false"
+    enabled: false
     annotations: 
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -128,55 +130,7 @@ api-server:
       secretName: testkube-demo-cert-secret
 
   mongoDSN: "mongodb://testkube-mongodb:27017"
-  postmanExecutorURI: "http://testkube-postman-executor:8082"
-
-postman-executor:
-  enabled: true
-  nameOverride: "postman-executor"
-  fullnameOverride: "testkube-postman-executor"
-  image:
-    repository: kubeshop/testkube-postman-executor
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    # TODO we should stick to static version
-    # tag: "latest"
-  service:
-    type: NodePort # for working with real k8s we should use "ClusterIP" type.
-    port: 8082
-  mongoDSN: "mongodb://testkube-mongodb:27017"
-  apiServerURI: "http://testkube-api-server:8088"
-
-cypress-executor:
-  enabled: true
-  nameOverride: "cypress-executor"
-  fullnameOverride: "testkube-cypress-executor"
-  image:
-    repository: kubeshop/testkube-cypress-executor
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    # TODO we should stick to static version
-    # tag: "latest"
-  service:
-    type: NodePort # for working with real k8s we should use "ClusterIP" type.
-    port: 8084
-  mongoDSN: "mongodb://testkube-mongodb:27017"
-  apiServerURI: "http://testkube-api-server:8088"
-
-curl-executor:
-  enabled: true
-  nameOverride: "curl-executor"
-  fullnameOverride: "testkube-curl-executor"
-  image:
-    repository: kubeshop/testkube-curl-executor
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    # TODO we should stick to static version
-    # tag: "latest"
-  service:
-    type: NodePort # for working with real k8s we should use "ClusterIP" type.
-    port: 8086
-  mongoDSN: "mongodb://testkube-mongodb:27017"
-  apiServerURI: "http://testkube-api-server:8080"
+  telemetryDisabled: false
 
 prometheus:
   enabled: false
@@ -188,7 +142,7 @@ testkube-dashboard:
   image:
     repository: kubeshop/testkube-dashboard
     pullPolicy: Always
-    tag: "main" #TODO: add versioning here when the dashboard has it.
+    # tag: "main" # it will take tag from appVersion.
   service:
     type: NodePort
     port: 80

@@ -30,7 +30,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-          - name: API_SERVER_ENDPOINT
+          - name: REACT_APP_API_SERVER_ENDPOINT
             value: "{{ .Values.apiServerEndpoint }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

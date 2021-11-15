@@ -8,11 +8,13 @@ image:
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "main" #TODO: add versioning here when the dashboard has it.
+  # tag: "0.6.5"
 
 imagePullSecrets: []
 nameOverride: "dashboard"
 fullnameOverride: "testkube-dashboard"
+
+apiServerEndpoint: "default"
 
 serviceAccount:
   # Specifies whether a service account should be created

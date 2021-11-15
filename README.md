@@ -27,14 +27,11 @@ The following [TestKube](https://github.com/kubeshop/testkube/) Helm Charts are 
 - `api-server`: the TestKube API Server
 - `testkube-dashboard`: the TestKube Dashboard for UI interactions with the API Server
 - `testkube-operator`: the TestKube Operator
-- `postman-executor`: the Postman Executor used for running Postman Collections
-- `cypress-executor`: the Cypress Executor used for running Cypress projects (checked out from Git)
-- `curl-executor`: the Curl Executor used for running curl command tests.
 - `testkube`: the main TestKube chart - [Installation Instructions](https://kubeshop.github.io/testkube/installing/#manual-testkube-helm-charts-installation)
 
 > Please note that the testkube Helm chart will install all the needed charts. Including CRDs. It's an umbrella chart.
 
-## Promehteus service monitor 
+## Prometheus service monitor 
 
 If have already configured Prometheus stack you can enble service monitor 
 for testkube API server to scrape metrics from it. 

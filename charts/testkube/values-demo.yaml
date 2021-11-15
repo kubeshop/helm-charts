@@ -108,8 +108,10 @@ api-server:
   service:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
+  minio:
+    enabled: true
   ingress:
-    enabled: "true"
+    enabled: true
     annotations: 
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -135,7 +137,7 @@ api-server:
       secretName: testkube-demo-cert-secret
 
   mongoDSN: "mongodb://testkube-mongodb:27017"
-  postmanExecutorURI: "http://testkube-postman-executor:8082"
+  telemetryDisabled: false
 
 postman-executor:
   enabled: true
@@ -195,7 +197,7 @@ testkube-dashboard:
   image:
     repository: kubeshop/testkube-dashboard
     pullPolicy: Always
-    tag: "main"
+    #tag: "main" #it will take the tag from appVersion
   service:
     type: NodePort
     port: 80
@@ -223,6 +225,6 @@ testkube-dashboard:
     - hosts:
       - demo.testkube.io
       secretName: testkube-demo-cert-secret
-    apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
 
 
