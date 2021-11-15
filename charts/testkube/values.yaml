@@ -139,6 +139,8 @@ api-server:
     endpoint: "localhost:9000"
     accessKeyId: "minio"
     accessKey: "minio123"
+    location: ""
+    token: ""
     SSL: false
     scrapperDisabled: false
 
