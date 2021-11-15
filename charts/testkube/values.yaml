@@ -175,4 +175,4 @@ testkube-dashboard:
       location: ""
       token: ""
       SSL: false
-      scrapperDisabled: false
+      scrapperEnabled: true

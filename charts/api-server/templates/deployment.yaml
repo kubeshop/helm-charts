@@ -51,7 +51,7 @@ spec:
           - name: "STORAGE_SSL"
             value:  "{{ .Values.storage.SSL }}"
           - name: "SCRAPPERENABLED"
-            value:  "{{ .Values.storage.scrapperDisabled }}"
+            value:  "{{ .Values.storage.scrapperEnabled }}"
 
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
