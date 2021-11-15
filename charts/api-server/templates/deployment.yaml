@@ -38,6 +38,21 @@ spec:
             value: "{{ .Values.postmanExecutorURI }}"
           - name: TESTKUBE_TELEMETRY_DISABLED
             value: "{{ .Values.telemetryDisabled }}"
+          - name: "STORAGE_ENDPOINT"
+            value:  "{{ .Values.storage.endpoint }}"
+          - name: "STORAGE_STORAGE_ACCESSKEYID"
+            value:  "{{ .Values.storage.accessKeyId }}"
+          - name: "STORAGE_SECRETACCESSKEY"
+            value: "{{ .Values.storage.accessKey }}"
+          - name: "STORAGE_LOCATION"
+            value: "{{ .Values.storage.location }}"
+          - name: "STORAGE_TOKEN"
+            value: "{{ .Values.storage.token }}"
+          - name: "STORAGE_SSL"
+            value:  "{{ .Values.storage.SSL }}"
+          - name: "SCRAPPERENABLED"
+            value:  "{{ .Values.storage.scrapperDisabled }}"
+
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
