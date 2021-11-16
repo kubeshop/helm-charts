@@ -5,7 +5,7 @@ metadata:
   namespace: testkube
 spec:
   executor_type: job
-  image: kubeshop/testkube-cypress-executor:0.6.7
+  image: kubeshop/testkube-cypress-executor:0.6.4
   types:
   - cypress/project
   volume_mount_path: /mnt/artifacts-storage
