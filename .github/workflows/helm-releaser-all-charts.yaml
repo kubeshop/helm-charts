@@ -47,6 +47,7 @@ jobs:
           charts_dir:  charts
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
 
   notify_slack_if_helm_chart_release_fails:
     runs-on: ubuntu-latest
