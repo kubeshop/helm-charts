@@ -97,6 +97,9 @@ spec:
   type: NodePort
   ports:
     - name: http
+      port: 9000
+      protocol: TCP
+    - name: web
       port: 9090
       protocol: TCP
     - name: https
