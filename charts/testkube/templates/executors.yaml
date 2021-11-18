@@ -34,7 +34,7 @@ metadata:
   namespace: testkube
 spec:
   executor_type: job
-  image: kubeshop/testkube-postman-executor:0.6.6
+  image: kubeshop/testkube-postman-executor:0.6.7
   types:
   - postman/collection
   volume_mount_path: /mnt/artifacts-storage
