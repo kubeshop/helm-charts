@@ -65,8 +65,10 @@ spec:
         - name: CONSOLE_TLS_PORT
           value: "9443"
         ports:
-        - containerPort: 9090
+        - containerPort: 9000
           name: http
+        - containerPort: 9090
+          name: web
         - containerPort: 9443
           name: https
         # Readiness probe detects situations when MinIO server instance
