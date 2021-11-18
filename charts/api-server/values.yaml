@@ -95,7 +95,7 @@ tolerations: []
 
 affinity: {}
 storage:
-  endpoint: "localhost:9000"
+  endpoint: "testkube-minio-service"
   accessKeyId: "minio"
   accessKey: "minio123"
   location: ""

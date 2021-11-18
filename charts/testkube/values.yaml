@@ -132,7 +132,14 @@ api-server:
       - hosts:
           - demo.testkube.io
         secretName: testkube-demo-cert-secret
-
+  storage:
+    endpoint: "testkube-minio-service"
+    accessKeyId: "minio"
+    accessKey: "minio123"
+    location: ""
+    token: ""
+    SSL: false
+    scrapperEnabled: true
   mongoDSN: "mongodb://testkube-mongodb:27017"
   telemetryDisabled: false
 
@@ -168,11 +175,3 @@ testkube-dashboard:
           - demo.testkube.io
         secretName: testkube-demo-cert-secret
     apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
-    storage:
-      endpoint: "localhost:9000"
-      accessKeyId: "minio"
-      accessKey: "minio123"
-      location: ""
-      token: ""
-      SSL: false
-      scrapperEnabled: true
