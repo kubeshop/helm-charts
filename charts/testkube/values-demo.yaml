@@ -136,7 +136,7 @@ api-server:
       - demo.testkube.io
       secretName: testkube-demo-cert-secret
   storage:
-    endpoint: "testkube-minio-service"
+    endpoint_port: "9000"
     accessKeyId: "minio"
     accessKey: "minio123"
     location: ""
