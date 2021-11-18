@@ -95,7 +95,7 @@ tolerations: []
 
 affinity: {}
 storage:
-  endpoint: "localhost:9000"
+  endpoint_port: "9000"
   accessKeyId: "minio"
   accessKey: "minio123"
   location: ""
