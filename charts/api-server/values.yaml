@@ -48,7 +48,7 @@ service:
   port: 8088
 
 minio:
-  enabled: false
+  enabled: true
 
 ingress:
   enabled: false
