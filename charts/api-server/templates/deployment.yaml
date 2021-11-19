@@ -39,8 +39,8 @@ spec:
           - name: TESTKUBE_TELEMETRY_DISABLED
             value: "{{ .Values.telemetryDisabled }}"
           - name: "STORAGE_ENDPOINT"
-            value:  "{{ .Values.storage.endpoint }}"
-          - name: "STORAGE_STORAGE_ACCESSKEYID"
+            value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
+          - name: "STORAGE_ACCESSKEYID"
             value:  "{{ .Values.storage.accessKeyId }}"
           - name: "STORAGE_SECRETACCESSKEY"
             value: "{{ .Values.storage.accessKey }}"

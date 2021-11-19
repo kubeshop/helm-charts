@@ -1,3 +1,5 @@
+![TestKube Logo](https://raw.githubusercontent.com/kubeshop/testkube/main/assets/logo-dark-text-full.png)
+
 ![Known Vulnerabilities](https://snyk.io/test/github/kubeshop/helm-charts/badge.svg)
 
 # Kubeshop Helm Charts
