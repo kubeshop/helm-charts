@@ -3,7 +3,8 @@ name: Releasing Helm charts.
 on:
   push:
     paths:
-      - 'charts/**'
+      - 'charts/testkube**'
+      - 'charts/api-server/**'
     branches:
       - main
 
