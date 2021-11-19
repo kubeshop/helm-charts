@@ -1,0 +1,106 @@
+{{- if .Values.webhooks.enabled -}}
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: {{ include "kusk-gateway.fullname" .}}-mutating-webhook-configuration
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: {{ include "kusk-gateway.webhooksServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /mutate-gateway-kusk-io-v1alpha1-api
+  failurePolicy: {{ .Values.webhooks.failurePolicy }}
+  name: mapi.kb.io
+  rules:
+  - apiGroups:
+    - gateway.kusk.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - apis
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "kusk-gateway.webhooksServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /mutate-gateway-kusk-io-v1alpha1-staticroute
+  failurePolicy: {{ .Values.webhooks.failurePolicy }}
+  name: mstaticroute.kb.io
+  rules:
+  - apiGroups:
+    - gateway.kusk.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - staticroutes
+  sideEffects: None
+
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: null
+  name: kusk-gateway-validating-webhook-configuration
+  annotations:
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
+webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
+  clientConfig:
+    service:
+      name: {{ include "kusk-gateway.webhooksServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-gateway-kusk-io-v1alpha1-api
+  failurePolicy: {{ .Values.webhooks.failurePolicy }}
+  name: vapi.kb.io
+  rules:
+  - apiGroups:
+    - gateway.kusk.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - apis
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "kusk-gateway.webhooksServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-gateway-kusk-io-v1alpha1-staticroute
+  failurePolicy: {{ .Values.webhooks.failurePolicy }}
+  name: vstaticroute.kb.io
+  rules:
+  - apiGroups:
+    - gateway.kusk.io
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - staticroutes
+  sideEffects: None
+
+
+{{- end -}}

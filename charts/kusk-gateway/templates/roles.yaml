@@ -1,0 +1,339 @@
+{{- if .Values.rbac.create -}}
+---
+# permissions for end users to edit apis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-api-editor-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis/status
+  verbs:
+  - get
+---
+# permissions for end users to view apis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-api-viewer-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis/status
+  verbs:
+  - get
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-proxy-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - authentication.k8s.io
+  resources:
+  - tokenreviews
+  verbs:
+  - create
+- apiGroups:
+  - authorization.k8s.io
+  resources:
+  - subjectaccessreviews
+  verbs:
+  - create
+---
+# permissions for end users to edit envoyfleet.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-envoyfleet-editor-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet/status
+  verbs:
+  - get
+---
+# permissions for end users to view envoyfleet.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-envoyfleet-viewer-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet/status
+  verbs:
+  - get
+---
+# permissions to do leader election.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kusk-gateway-leader-election-role
+  namespace: kusk-system
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+---
+# permissions for end users to edit staticroutes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-staticroute-editor-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes/status
+  verbs:
+  - get
+---
+# permissions for end users to view staticroutes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-staticroute-viewer-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes/status
+  verbs:
+  - get
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: kusk-gateway-manager-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - apis/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - envoyfleet/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - gateway.kusk.io
+  resources:
+  - staticroutes/status
+  verbs:
+  - get
+  - patch
+  - update
+
+---
+# permissions to do manage Envoy Fleets
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kusk-gateway-envoyfleet-manager-role
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+rules:
+  - apiGroups:
+      - "apps"
+    resources:
+      - deployments
+      - services
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+
+{{- end -}}

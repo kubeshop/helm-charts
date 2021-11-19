@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # FIXME: this name is currently harcoded in manager
+  name: kusk-xds-service
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.xdsService.type }}
+  ports:
+    - port: {{ .Values.xdsService.port }}
+      targetPort: xds
+      protocol: TCP
+      name: xds
+  selector:
+    {{- include "kusk-gateway.selectorLabels" . | nindent 4 }}
+
+{{ if .Values.webhooks.enabled -}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kusk-gateway.webhooksServiceName" . }}
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.webhooks.service.type }}
+  ports:
+    - port: {{ .Values.webhooks.service.port }}
+      targetPort: webhook-server
+      protocol: TCP
+      name: webhook-server
+  selector:
+    {{- include "kusk-gateway.selectorLabels" . | nindent 4 }}
+
+{{- end -}}

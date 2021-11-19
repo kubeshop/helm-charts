@@ -1,0 +1,231 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.4.1
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
+  creationTimestamp: null
+  labels:
+    {{- include "kusk-gateway-crds.labels" . | nindent 4 }}
+  name: staticroutes.gateway.kusk.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          namespace: {{ .Release.Namespace }}
+          name: {{ include "kusk-gateway.webhooksServiceName" . }}
+          path: /convert
+      conversionReviewVersions:
+      - v1
+  group: gateway.kusk.io
+  names:
+    kind: StaticRoute
+    listKind: StaticRouteList
+    plural: staticroutes
+    singular: staticroute
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: StaticRoute is the Schema for the staticroutes API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: StaticRouteSpec defines the desired state of StaticRoute
+            properties:
+              hosts:
+                description: Hosts is a collection of vhosts the rules apply to. Defaults
+                  to "*" - vhost that matches all domain names.
+                items:
+                  description: Host is a vHost (and domain name) definition that is
+                    used during request routing. Could be wildcard ("*" - all vhosts),
+                    prefix/suffix wildcard (*-example.com, example.*, but not both
+                    *example*), or simple domain (www.example.com)
+                  type: string
+                type: array
+              paths:
+                additionalProperties:
+                  additionalProperties:
+                    description: Action is either a route to the upstream or a redirect,
+                      they're mutually exclusive.
+                    properties:
+                      redirect:
+                        description: RedirectOptions provide http redirects see https://www.envoyproxy.io/docs/envoy/latest/api-v3/config/route/v3/route_components.proto#envoy-v3-api-msg-config-route-v3-redirectaction
+                        properties:
+                          host_redirect:
+                            type: string
+                          path_redirect:
+                            description: mutually exclusive with rewrite regex redirect
+                            type: string
+                          port_redirect:
+                            format: int32
+                            type: integer
+                          response_code:
+                            format: int32
+                            type: integer
+                          rewrite_regex:
+                            description: mutually exclusive with path redirect
+                            properties:
+                              pattern:
+                                type: string
+                              substitution:
+                                type: string
+                            required:
+                            - pattern
+                            - substitution
+                            type: object
+                          scheme_redirect:
+                            description: http|https
+                            type: string
+                          strip_query:
+                            type: boolean
+                        type: object
+                      route:
+                        description: Route defines a routing rule that proxies to
+                          upstream
+                        properties:
+                          cors:
+                            properties:
+                              credentials:
+                                type: boolean
+                              expose_headers:
+                                items:
+                                  type: string
+                                type: array
+                              headers:
+                                items:
+                                  type: string
+                                type: array
+                              max_age:
+                                type: integer
+                              methods:
+                                items:
+                                  type: string
+                                type: array
+                              origins:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          path:
+                            description: StaticPathOptions differ from PathOptions
+                              since we don't use Prefix in static routes
+                            properties:
+                              rewrite:
+                                description: Rewrite is the pattern (regex) and a
+                                  substitution string that will change URL when request
+                                  is being forwarded to the upstream service. e.g.
+                                  given that Base is set to "/petstore/api/v3", and
+                                  with Rewrite.Pattern is set to "^/petstore", Rewrite.Substitution
+                                  is set to "" path that would be generated is "/petstore/api/v3/pets",
+                                  URL that the upstream service would receive is "/api/v3/pets".
+                                properties:
+                                  pattern:
+                                    type: string
+                                  substitution:
+                                    type: string
+                                required:
+                                - pattern
+                                - substitution
+                                type: object
+                            type: object
+                          qos:
+                            properties:
+                              idle_timeout:
+                                description: IdleTimeout is timeout for idle connection
+                                format: int32
+                                type: integer
+                              request_timeout:
+                                description: RequestTimeout is total request timeout
+                                format: int32
+                                type: integer
+                              retries:
+                                description: Retries define how many times to retry
+                                  calling the backend
+                                format: int32
+                                type: integer
+                            type: object
+                          upstream:
+                            description: UpstreamOptions defines upstream that we
+                              proxy to Host and Service are mutually exclusive
+                            properties:
+                              host:
+                                description: UpstreamHost defines any DNS hostname
+                                  with port that we can proxy to, even outside of
+                                  the cluster
+                                properties:
+                                  hostname:
+                                    description: Hostname is the upstream hostname,
+                                      without port.
+                                    type: string
+                                  port:
+                                    description: Port is the upstream port.
+                                    format: int32
+                                    type: integer
+                                required:
+                                - hostname
+                                - port
+                                type: object
+                              service:
+                                description: UpstreamService defines K8s Service in
+                                  the cluster
+                                properties:
+                                  name:
+                                    description: Name is the upstream K8s Service's
+                                      name.
+                                    type: string
+                                  namespace:
+                                    description: Namespace where service is located
+                                    type: string
+                                  port:
+                                    description: Port is the upstream K8s Service's
+                                      port.
+                                    format: int32
+                                    type: integer
+                                required:
+                                - namespace
+                                - port
+                                type: object
+                            type: object
+                        required:
+                        - upstream
+                        type: object
+                    type: object
+                  description: Methods maps Method (GET, POST) to Action
+                  type: object
+                description: Paths is a multidimensional map of path / method to the
+                  routing rules
+                type: object
+            required:
+            - paths
+            type: object
+          status:
+            description: StaticRouteStatus defines the observed state of StaticRoute
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
