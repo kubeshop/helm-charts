@@ -3,7 +3,7 @@
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: kusk-gateway
+  name: kusk-gateway-manager
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
 spec:

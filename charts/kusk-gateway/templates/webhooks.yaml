@@ -3,7 +3,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: {{ include "kusk-gateway.fullname" .}}-mutating-webhook-configuration
+  name: kusk-gateway-mutating-webhook-configuration
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
   annotations:
