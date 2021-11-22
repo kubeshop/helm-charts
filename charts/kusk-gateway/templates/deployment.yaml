@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kusk-gateway-manager
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "kusk-gateway.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+    {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "kusk-gateway.selectorLabels" . | nindent 8 }}
+        {{- with .Values.extraPodLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "kusk-gateway.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      containers:
+        - name: kube-rbac-proxy
+          args:
+          - --secure-listen-address=0.0.0.0:8443
+          - --upstream=http://127.0.0.1:8080/
+          - --logtostderr=true
+          - --v=10
+          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
+          imagePullPolicy: IfNotPresent
+          name: kube-rbac-proxy
+          ports:
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+          resources:
+          {{- toYaml .Values.kubeRBACProxy.resources | nindent 12 }}
+        - name: manager
+          securityContext:
+            {{- toYaml .Values.manager.podSecurityContext | nindent 12 }}
+          image: "{{ required "Image repository is required"  .Values.manager.image.repository | }}:{{ .Values.manager.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+          args:
+          {{- toYaml .Values.manager.args |nindent 12 }}
+          command:
+          {{- toYaml .Values.manager.command |nindent 12}}
+          ports:
+            - name: xds
+              containerPort: 18000
+              protocol: TCP
+            - containerPort: 9443
+              name: webhook-server
+              protocol: TCP
+          {{- if .Values.manager.health }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.manager.health.liveness.path }}
+              port: {{ .Values.manager.health.liveness.port }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.manager.health.readiness.path }}
+              port: {{ .Values.manager.health.readiness.port }}
+          {{- end }}
+          resources:
+          {{- toYaml .Values.manager.resources | nindent 12 }}
+          {{- if .Values.manager.env }}
+          env:
+          {{- toYaml .Values.manager.env | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+          - mountPath: {{ .Values.webhooks.certsDir }}
+            name: cert
+            readOnly: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      volumes:
+      - name: cert
+        secret:
+          defaultMode: 420
+          secretName: "{{ include "kusk-gateway.webhooksCertificate" . }}"

@@ -1,0 +1,9 @@
+---
+apiVersion: gateway.kusk.io/v1alpha1
+kind: EnvoyFleet
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "kusk-gateway-envoyfleet.labels" . | nindent 4 }}
+spec:
+  size: {{ .Values.size }}

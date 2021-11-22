@@ -1,0 +1,10 @@
+# Default values
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+# Fleet name, i.e. Fleet ID
+name: default
+size: 1

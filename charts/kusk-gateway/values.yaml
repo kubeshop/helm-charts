@@ -1,0 +1,113 @@
+# Default values for kusk-gateway.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+autoscaling:
+  enabled: false
+
+serviceAccount:
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  name: "kusk-gateway-manager"
+
+# Create RBAC roles for users and controller
+rbac:
+  create: true
+
+# installCRDs makes Custom Resource Definitions (CRDs) to be installed.
+# Only one version of CRDs could be installed in the cluster,
+# i.e. only one Helm release of Kusk Gateway Operator could be installed in the cluster.
+# Chart upgrades will upgrade CRDs, chart uninstall will remove them.
+installCRDs: true
+
+podAnnotations: {}
+
+extraPodLabels: {}
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65532
+  runAsGroup: 65532
+  fsGroup: 65532
+
+xdsService:
+  type: ClusterIP
+  port: 18000
+
+webhooks:
+  enabled: true
+  certsDir: "/tmp/k8s-webhook-server/serving-certs"
+  # failurePolicy of the webhook, Fail or Ignore
+  failurePolicy: Fail
+  service:
+    type: ClusterIP
+    port: 443
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Manager container settings
+manager:
+  image:
+    repository: kubeshop/kusk-gateway
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    # Comment out to disable health checks
+  podSecurityContext:
+    allowPrivilegeEscalation: false
+  health:
+    liveness:
+      port: 8081
+      path: /healthz
+    readiness:
+      port: 8081
+      path: /readyz
+  command:
+    - /manager
+  args:
+    - --leader-elect
+    - --health-probe-bind-address=:8081
+    - --metrics-bind-address=127.0.0.1:8080
+    - --envoy-control-plane-bind-address=:18000
+    # To login to the shell (if it is present in container) and run commands manually
+    # command:
+    #   - "tail"
+    # args:
+    #   - "-f"
+    #   - "/dev/null"
+  #env: []
+  env: []
+  # - name: ENABLE_WEBHOOKS
+  #   value: "false"
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+# KubeRBACProxy container settings
+kubeRBACProxy:
+  resources: {}
+
+terminationGracePeriodSeconds: 10
+
+podDisruptionBudget: {}

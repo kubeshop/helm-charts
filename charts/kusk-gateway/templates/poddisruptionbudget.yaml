@@ -1,0 +1,14 @@
+{{- if .Values.podDisruptionBudget }}
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: kusk-gateway-manager
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+spec:
+{{ toYaml .Values.podDisruptionBudget | indent 2 -}}
+  selector:
+    matchLabels:
+      {{- include "kusk-gateway.selectorLabels" . | nindent 6 }}
+{{- end }}

@@ -1,0 +1,25 @@
+{{- if .Values.webhooks.enabled -}}
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "kusk-gateway.webhooksCertmanagerCertificate" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  dnsNames:
+  - {{ include "kusk-gateway.webhooksServiceName" . }}.{{ .Release.Namespace }}.svc
+  - {{ include "kusk-gateway.webhooksServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: kusk-gateway-selfsigned-issuer
+  secretName: {{ include "kusk-gateway.webhooksCertificate" . }}
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: kusk-gateway-selfsigned-issuer
+  namespace: {{ .Release.Namespace }}
+spec:
+  selfSigned: {}
+
+{{- end -}}
