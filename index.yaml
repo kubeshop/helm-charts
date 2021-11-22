@@ -2693,6 +2693,47 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/kubtest-operator-0.5.0/kubtest-operator-0.5.0.tgz
     version: 0.5.0
+  kusk-gateway:
+  - apiVersion: v2
+    appVersion: v0.0.0
+    created: "2021-11-22T09:40:50.694562271Z"
+    dependencies:
+    - condition: installCRDs
+      name: kusk-gateway-crds
+      repository: ""
+      version: 0.0.1
+    description: A Helm chart for Kusk Gateway
+    digest: 5c8e0954666d8149ec8701cc9e05845fc0d77a44ce16cc8bb68a8a658837a0e6
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.1/kusk-gateway-0.0.1.tgz
+    version: 0.0.1
+  kusk-gateway-envoyfleet:
+  - apiVersion: v2
+    appVersion: v0.0.0
+    created: "2021-11-22T09:40:50.842001055Z"
+    description: A Helm chart for Kusk Gateway EnvoyFleet
+    digest: 1bcc5567714715af4121ed8f0d1458ffd3e399160c34c66ea2bdd7185b02dae9
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - kusk-gateway-envoyfleet
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway-envoyfleet
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
+    version: 0.0.1
   postman-executor:
   - apiVersion: v2
     appVersion: 0.6.1
@@ -5434,4 +5475,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-11-19T15:39:26.445990322Z"
+generated: "2021-11-22T09:40:50.84619268Z"
