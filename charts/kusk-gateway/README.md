@@ -27,7 +27,7 @@ NOTE: this will add CustomResourceDefinitions and RBAC roles and rolebindings to
 This install requires having cluster administrative rights.
 
 ```sh
-helm install kusk-gateway kubeshop/kusk-gateway -n kusk-system
+helm install kusk-gateway kubeshop/kusk-gateway -n kusk-system --create-namespace
 ```
 
 Then install default EnvoyFleet to the cluster:
@@ -43,5 +43,6 @@ NOTE: this will delete CRDs too.
 ```sh
 
 helm delete kusk-gateway-envoyfleet kusk-gateway -n kusk-system
+kubectl delete namespace kusk-system
 
 ```

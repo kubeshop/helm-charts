@@ -36,6 +36,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: kusk-gateway-leader-election
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
 roleRef:
