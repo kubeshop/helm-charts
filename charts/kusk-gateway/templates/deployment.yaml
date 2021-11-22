@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kusk-gateway-manager
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
 spec:

@@ -125,7 +125,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: kusk-gateway-leader-election-role
-  namespace: kusk-system
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
 rules:
