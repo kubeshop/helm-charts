@@ -59,6 +59,8 @@ metadata:
   creationTimestamp: null
   name: kusk-gateway-validating-webhook-configuration
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
   annotations:
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
 webhooks:
