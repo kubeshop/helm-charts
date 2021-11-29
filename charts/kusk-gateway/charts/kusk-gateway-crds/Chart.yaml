@@ -28,7 +28,7 @@ type: application
 
 # Note: this subchart can't be installed outside of main chart but we need to keep labels consistent.
 # So make this version to be the same as in main chart.
-version: 0.0.2
+version: 0.0.3
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -37,4 +37,4 @@ version: 0.0.2
 
 # Note: this subchart can't be installed outside of main chart but we need to keep labels consistent.
 # So make this version to be the same as in main chart.
-appVersion: "0.0.0-alpha.1"
+appVersion: "v0.0.0-alpha.1"
