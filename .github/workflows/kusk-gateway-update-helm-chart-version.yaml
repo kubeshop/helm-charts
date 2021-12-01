@@ -1,9 +1,5 @@
 name: Bump Helm Chart Version for Kusk Gateway charts
 
-concurrency:
-  group: "helm-bump-chart"
-  cancel-in-progress: true
-
 on:
   workflow_call:
     inputs:
