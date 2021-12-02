@@ -1,4 +1,4 @@
-# Demo values for testkube.
+# Dashboard values for testkube.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -125,7 +125,7 @@ api-server:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-dashboard
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -133,12 +133,12 @@ api-server:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /results/(v\d/executions.*)
     hosts:
-      - demo.testkube.io
+      - dashboard.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
-      - demo.testkube.io
-      secretName: testkube-demo-cert-secret
+      - dashboard.testkube.io
+      secretName: testkube-dashboard-cert-secret
   storage:
     endpoint_port: "9000"
     accessKeyId: "minio"
@@ -174,7 +174,7 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"      
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-dashboard
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -182,10 +182,10 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - demo.testkube.io
+      - dashboard.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
     - hosts:
-      - demo.testkube.io
-      secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
+      - dashboard.testkube.io
+      secretName: testkube-dashboard-cert-secret
+  apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
