@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
   creationTimestamp: null
   labels:
-    {{- include "kusk-gateway-crds.labels" . | nindent 4 }}
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
   name: staticroutes.gateway.kusk.io
 spec:
   conversion:

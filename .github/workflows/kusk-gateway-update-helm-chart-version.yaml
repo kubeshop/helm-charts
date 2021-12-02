@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: output appVersion
-        run: echo ${{ inputs.appVersion }}
+        run: echo New appVersion is ${{ inputs.appVersion }}
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,8 +30,18 @@ jobs:
 
       - name: Bump up kusk-gateway chart
         run: |
-          #CHART_VERSION=$(sed )
-          echo 1
+          # sets appVersion in the Chart.yaml
+          sed  -i -e "s/^appVersion: .*$/appVersion: \"${{ inputs.appVersion }}\"/" charts/kusk-gateway/Chart.yaml
+          # Bumps charts patch version
+          CURRENT_VERSION=$(sed  -n  -e  "s/^version: \(.*\)$/\1/p"  charts/kusk-gateway/Chart.yaml)
+          echo Current chart version ${CURRENT_VERSION}
+          NEW_VERSION=$(echo $CURRENT_VERSION |awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
+          echo New version ${NEW_VERSION}
+          sed -i -e "s/^version: .*/version: ${NEW_VERSION}/g" charts/kusk-gateway/Chart.yaml
+
+      - name: Test the chart
+        run: |
+          helm lint charts/kusk-gateway
 
       - name: Push updated chart
         run: |
@@ -40,7 +50,6 @@ jobs:
           # git add .
           # git commit -m "automatically updated kusk-gateway related charts"
           # git push
-
 
 
   notify_slack_if_helm_chart_bump_fails:
