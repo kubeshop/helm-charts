@@ -1350,6 +1350,29 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2021-12-15T09:00:55.445449936Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.6.9
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.7.3
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.7.1
+    description: A Helm chart for testkube.
+    digest: 4d614a78a4fe82053c7fb9d8a87ef9ac78958f0e123bbf4bbda43ebd6ff78d5a
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.7.16/testkube-0.7.16.tgz
+    version: 0.7.16
+  - apiVersion: v2
     created: "2021-12-14T15:31:59.957271963Z"
     dependencies:
     - name: testkube-operator
@@ -2728,6 +2751,16 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    created: "2021-12-15T09:00:55.638978601Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 5fa5eed9f18c6bd72145d2dac6fc7c3c12d080348698df29a025fef08ad70992
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.6.9/testkube-operator-0.6.9.tgz
+    version: 0.6.9
+  - apiVersion: v2
     created: "2021-12-14T14:57:36.692373196Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -2837,4 +2870,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2021-12-14T15:31:59.959601135Z"
+generated: "2021-12-15T09:00:55.640745489Z"
