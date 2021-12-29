@@ -44,7 +44,6 @@ xdsService:
   port: 18000
 
 webhooks:
-  enabled: true
   certsDir: "/tmp/k8s-webhook-server/serving-certs"
   # failurePolicy of the webhook, Fail or Ignore
   failurePolicy: Fail

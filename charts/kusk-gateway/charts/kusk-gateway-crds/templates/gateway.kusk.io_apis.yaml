@@ -4,7 +4,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.4.1
+    controller-gen.kubebuilder.io/version: v0.7.0
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
   creationTimestamp: null
   labels:
@@ -49,8 +49,27 @@ spec:
           spec:
             description: APISpec defines the desired state of API
             properties:
+              fleet:
+                description: Fleet represents EnvoyFleet ID, which is deployed EnvoyFleet
+                  CustomResource name and namespace Optional, if missing will be automatically
+                  added by the Kusk Gateway with the discovery of the single fleet
+                  in the cluster (MutatingWebhookConfiguration for the API resource
+                  must be enabled).
+                properties:
+                  name:
+                    description: deployed Envoy Fleet CR name
+                    pattern: ^[a-z0-9-]{1,62}$
+                    type: string
+                  namespace:
+                    description: deployed Envoy Fleet CR namespace
+                    pattern: ^[a-z0-9-]{1,62}$
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
               spec:
-                description: Spec represents OpenAPI spec
+                description: Spec represents OpenAPI spec as an embedded string.
                 type: string
             required:
             - spec

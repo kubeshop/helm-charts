@@ -5,6 +5,109 @@
 nameOverride: ""
 fullnameOverride: ""
 
-# Fleet name, i.e. Fleet ID
-name: default
 size: 1
+
+image: "envoyproxy/envoy-alpine:v1.20.0"
+service:
+  # NodePort, ClusterIP, LoadBalancer
+  type: LoadBalancer
+  # Specify annotations to modify service behaviour, e.g. for GCP to create internal load balancer:
+  # annotations:
+  #   networking.gke.io/load-balancer-type: "Internal"
+  annotations: {}
+  # Specify predefined static load balancer IP address if present, e.g.
+  #loadBalancerIP: 10.10.10.10
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: http
+
+# Extra annotations on Envoy Proxy pods for, e.g. Prometheus scraping.
+# annotations:
+#   prometheus.io/scrape: 'true'
+#   prometheus.io/port: '9102'
+annotations: {}
+
+###### Envoy Proxy Deployment settings for the pods scheduling #######
+# Read https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/ for the details.
+
+# E.g. schedule Envoy pods to the node with the label "disktype=ssd".
+# nodeSelector:
+#   disktype: "ssd"
+nodeSelector: {}
+
+# Allow to be scheduled on the "tainted" node. E.g. taint with "kubectl taint nodes node1 key1=value1:NoSchedule".
+# Taints will repel the pods from the node unless the pods have the specific toleration.
+# The line below will allow this specific Envoy pod to be scheduled there (but scheduler decideds where to put it anyway).
+# tolerations:
+# - key: "key1"
+#   operator: "Exists"
+#   effect: "NoSchedule"
+tolerations: []
+
+# Provide pods affinity and anti-affinity settings.
+# This is more flexible than nodeSelector scheme but they can be specified together.
+# For the scalability and fault tolerance we prefer to put all Envoy pods onto different nodes - in a case one node fails we survive on others.
+# The block below will search for all Envoy Fleet pods with matching labels (here - "fleet" label with Envoy Fleet name.namespace as value) and will try to schedule pods
+# on different nodes.
+# Other fleets (if present) are not taken into consideration. You can specify nodeAffinity and podAffinity as well.
+# Note that pods labels are defined by Kusk Gateway Manager using the deployed name and namespace of EnvoyFleet Custom Resource.
+# affinity:
+#   podAntiAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#     - labelSelector:
+#         matchExpressions:
+#         - key: app.kubernetes.io/name
+#           operator: In
+#           values:
+#           - kusk-gateway-envoy-fleet
+#         - key: fleet
+#           operator: In
+#           values: "default.default"
+#       topologyKey: kubernetes.io/hostname
+affinity: {}
+
+# CPU and memory requests and limits for Envoy Proxy container
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# Graceful termination time for Envoy pods
+# terminationGracePeriodSeconds: 5
+
+# Access logging to stdout
+# If missing - disable access logging to stdout
+accesslog:
+  # json|text
+  format: text
+
+  # Depending on format we can specify our own log template or if template is not specified - default Kusk Gateway will be used
+  # Below are specified the examples of similar and minimalistic formats for both text and json format types.
+  # Text format fields order is preserved.
+  # The output example:
+  # "[2021-12-15T16:50:50.217Z]" "GET" "/" "200" "1"
+
+  # text_template: |
+  #   "[%START_TIME%]" "%REQ(:METHOD)%" "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%" "%RESPONSE_CODE%" "%DURATION%"
+  #
+  # Json format fields order isn't preserved
+  # The output example:
+  # {"start_time":"2021-12-15T16:46:52.135Z","path":"/","response_code":200,"method":"GET","duration":1}
+
+  # json_template:
+  #   start_time: "%START_TIME%"
+  #   method: "%REQ(:METHOD)%"
+  #   path: "%REQ(X-ENVOY-ORIGINAL-PATH?:PATH)%"
+  #   response_code: "%RESPONSE_CODE%"
+  #   duration: "%DURATION%"

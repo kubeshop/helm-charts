@@ -1,0 +1,3 @@
+Kusk Gateway Manager was succesfully deployed.
+
+Deploy Envoy Fleet Helm chart to create the gateway and then deploy API or StaticRoute custom resources to expose your applications endpoints.
