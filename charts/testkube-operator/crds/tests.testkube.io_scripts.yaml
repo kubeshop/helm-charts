@@ -5,6 +5,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.4.1
+  creationTimestamp: null
   name: scripts.tests.testkube.io
 spec:
   group: tests.testkube.io
@@ -72,6 +73,10 @@ spec:
                 - type
                 - uri
                 type: object
+              tags:
+                items:
+                  type: string
+                type: array
               type:
                 description: script type
                 type: string
