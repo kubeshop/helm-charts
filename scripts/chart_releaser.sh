@@ -92,9 +92,9 @@ else
     echo "Executors.yaml is not updated. As this tag was not pushed into Executors' repo."
 fi
 
-# # Commiting and pushing changes:
-# git add -A
-# git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
+# Commiting and pushing changes:
+git add -A
+git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 
-# # git push origin main
-# git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+# git push origin main
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
