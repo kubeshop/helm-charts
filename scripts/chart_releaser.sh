@@ -68,7 +68,7 @@ then
     grep -i "tag" ../charts/$target_folder/values.yaml
     
     # Editing TestKube's dependency Chart.yaml for $target_folder:
-    sed -i "/name: $target_folder/{n;s/^.*version.*/  version: $version_full/}" ../charts/testkube/Chart.yaml
+    sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $version_full/}" ../charts/testkube/Chart.yaml
     echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
     grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 fi
