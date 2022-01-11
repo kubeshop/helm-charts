@@ -8,8 +8,6 @@ spec:
   image: kubeshop/testkube-cypress-executor:0.6.8
   types:
   - cypress/project
-  volume_mount_path: /mnt/artifacts-storage
-  volume_quantity: 10Gix
 
 ---
 
@@ -23,8 +21,6 @@ spec:
   image: kubeshop/testkube-curl-executor:0.6.6
   types:
   - curl/test
-  volume_mount_path: /mnt/artifacts-storage
-  volume_quantity: 10Gix
 
 ---
 apiVersion: executor.testkube.io/v1
@@ -37,5 +33,3 @@ spec:
   image: kubeshop/testkube-postman-executor:0.6.7
   types:
   - postman/collection
-  volume_mount_path: /mnt/artifacts-storage
-  volume_quantity: 10Gix
