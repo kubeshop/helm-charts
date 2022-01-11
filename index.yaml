@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   api-server:
   - apiVersion: v2
+    appVersion: 0.7.15
+    created: "2022-01-11T12:24:22.561254253Z"
+    description: A Helm chart for Api-server
+    digest: b93dc27817f1c4a28f80e6ca9e7e478deeeb7c8a8837833502766b10ba3ce974
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.7.15/api-server-0.7.15.tgz
+    version: 0.7.15
+  - apiVersion: v2
     appVersion: 0.7.14
     created: "2022-01-11T09:34:23.285110817Z"
     description: A Helm chart for Api-server
@@ -1460,7 +1470,7 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
-    created: "2022-01-11T12:23:33.172185663Z"
+    created: "2022-01-11T12:24:22.768667027Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -1470,18 +1480,18 @@ entries:
       version: 10.0.0
     - name: api-server
       repository: file://../api-server
-      version: 0.7.14
+      version: 0.7.15
     - condition: testkube-dashboard.enabled
       name: testkube-dashboard
       repository: file://../testkube-dashboard
       version: 0.7.5
     description: A Helm chart for testkube.
-    digest: 90308970acb19d732ec61937f0ed809f01b9b296b379ed2f9c51e2e1c5099903
+    digest: d4875e056e2cbd93ba1bf0f2aee4520437d610c5cf69124ef0523edc16a7954c
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.7.36/testkube-0.7.36.tgz
-    version: 0.7.36
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.7.37/testkube-0.7.37.tgz
+    version: 0.7.37
   - apiVersion: v2
     created: "2022-01-11T09:34:23.482181377Z"
     dependencies:
@@ -3249,16 +3259,6 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
-    created: "2022-01-11T12:23:33.367080033Z"
-    description: A Helm chart for the testkube-operator (installs needed CRDs only
-      for now)
-    digest: 69779dd7e561e0d9c65560c49a131ef4bf02395e90c9459870a5891d6b827947
-    name: testkube-operator
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.6.14/testkube-operator-0.6.14.tgz
-    version: 0.6.14
-  - apiVersion: v2
     created: "2022-01-07T10:30:08.003571234Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -3418,4 +3418,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-01-11T12:23:33.369414252Z"
+generated: "2022-01-11T12:24:22.770973342Z"
