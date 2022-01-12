@@ -188,4 +188,4 @@ testkube-dashboard:
     - hosts:
       - dashboard.testkube.io
       secretName: testkube-dashboard-cert-secret
-  apiServerEndpoint: "default" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "" #get the address of the endpoint or set it using helm
