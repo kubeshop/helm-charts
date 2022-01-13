@@ -36,8 +36,9 @@ service:
 
 # Extra annotations on Envoy Proxy pods for, e.g. Prometheus scraping.
 # annotations:
-#   prometheus.io/scrape: 'true'
-#   prometheus.io/port: '9102'
+  #   prometheus.io/scrape: 'true'
+  #   prometheus.io/port: '19000'
+  #   prometheus.io/path: /stats/prometheus
 annotations: {}
 
 ###### Envoy Proxy Deployment settings for the pods scheduling #######
