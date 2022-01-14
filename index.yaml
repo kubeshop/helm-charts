@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   api-server:
   - apiVersion: v2
+    appVersion: 0.7.18
+    created: "2022-01-14T09:40:45.497602536Z"
+    description: A Helm chart for Api-server
+    digest: f92317797ab5910cb5556a8193a069a421c69173dc7ae44d6267e9cef04f7ff8
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.7.18/api-server-0.7.18.tgz
+    version: 0.7.18
+  - apiVersion: v2
     appVersion: 0.7.17
     created: "2022-01-13T15:20:30.358728747Z"
     description: A Helm chart for Api-server
@@ -1489,6 +1499,29 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
     version: 0.0.1
   testkube:
+  - apiVersion: v2
+    created: "2022-01-14T09:40:45.716958816Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.7.5
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.7.18
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.7.6
+    description: A Helm chart for testkube.
+    digest: 5d40a98e29398a73dad4169b7c8844fedac2d7cf3c386de02585dff60880e8c2
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.7.42/testkube-0.7.42.tgz
+    version: 0.7.42
   - apiVersion: v2
     created: "2022-01-13T15:20:30.575411535Z"
     dependencies:
@@ -3550,4 +3583,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-01-13T15:20:30.577757606Z"
+generated: "2022-01-14T09:40:45.720013164Z"
