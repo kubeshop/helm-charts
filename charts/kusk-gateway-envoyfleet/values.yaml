@@ -126,7 +126,7 @@ accesslog:
   #   duration: "%DURATION%"
 
 # TLS Certificates and Ciphersuites configuration
-tls: []
+tls: {}
 #tls:
   # Optional cipher suites list
   # cipherSuites:
