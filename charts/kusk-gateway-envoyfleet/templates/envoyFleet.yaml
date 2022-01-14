@@ -43,5 +43,10 @@ spec:
 {{- end }}
 
 {{- if .Values.terminationGracePeriodSeconds }}
-terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+  terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+{{- end }}
+
+{{- if .Values.tls }}
+  tls:
+{{ toYaml .Values.tls |indent 4 }}
 {{- end }}
