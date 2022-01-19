@@ -1,15 +1,4 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: scripts.operator.api-server-{{ .Release.Name }}
-rules:
-- apiGroups: ["tests.testkube.io"]
-  resources: ["scripts"]
-  verbs: ["get", "watch", "list", "create", "delete"]
-
----
-
-apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: executors-cluster-role-{{ .Release.Name }}
@@ -50,6 +39,37 @@ rules:
   - watch
   - list
   - create
+
+
+
+--- 
+
+# permissions for end users to edit tests.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: script-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - scripts
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - scripts/status
+  verbs:
+  - get
+
+
 
 --- 
 
