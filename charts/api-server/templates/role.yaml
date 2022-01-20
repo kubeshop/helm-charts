@@ -117,5 +117,5 @@ rules:
   - patch
   - update
   - watch
-  - deleteCollection
+  - deletecollection
   
