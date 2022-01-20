@@ -55,3 +55,18 @@ subjects:
 - kind: ServiceAccount
   name: testkube-api-server-testkube
   namespace: {{ .Release.Namespace }}
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: secrets-crb-{{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: secrets-cluster-role-{{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: testkube-api-server-testkube
+  namespace: {{ .Release.Namespace }}
