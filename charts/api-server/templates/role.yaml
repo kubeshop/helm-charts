@@ -62,6 +62,7 @@ rules:
   - patch
   - update
   - watch
+  - deletecollection
 - apiGroups:
   - tests.testkube.io
   resources:
@@ -91,6 +92,7 @@ rules:
   - patch
   - update
   - watch
+  - deletecollection
 - apiGroups:
   - tests.testkube.io
   resources:
