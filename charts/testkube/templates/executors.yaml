@@ -2,7 +2,7 @@ apiVersion: executor.testkube.io/v1
 kind: Executor
 metadata:
   name: cypress-executor
-  namespace: testkube
+  namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
   image: kubeshop/testkube-cypress-executor:0.6.8
@@ -15,7 +15,7 @@ apiVersion: executor.testkube.io/v1
 kind: Executor
 metadata:
   name: curl-executor
-  namespace: testkube
+  namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
   image: kubeshop/testkube-curl-executor:0.6.6
@@ -27,7 +27,7 @@ apiVersion: executor.testkube.io/v1
 kind: Executor
 metadata:
   name: postman-executor
-  namespace: testkube
+  namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
   image: kubeshop/testkube-postman-executor:0.6.7
