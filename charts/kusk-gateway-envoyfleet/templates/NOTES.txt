@@ -1,7 +1,9 @@
-Envoy Fleet installed
+Envoy Fleet was installed.
 
-Get the Fleets Load Balancer External IP address with:
+Get the Fleet's Load Balancer External IP address with:
 
-   kubectl get svc -l "app=kusk-gateway,component=envoy-svc,fleet={{ .Values.name }}" --namespace {{ .Release.Namespace }}
+kubectl get svc -l "app.kubernetes.io/part-of=kusk-gateway,app.kubernetes.io/component=envoy-svc,fleet={{ .Release.Name }}.{{ .Release.Namespace }}" --namespace {{ .Release.Namespace }}
 
-NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+NOTE: It may take a few minutes for the LoadBalancer External IP to be available.
+
+You can use that address to query your deployed endpoints.
