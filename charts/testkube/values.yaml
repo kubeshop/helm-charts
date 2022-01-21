@@ -147,7 +147,7 @@ prometheus:
   enabled: false
 
 testkube-dashboard:
-  enabled: false
+  enabled: ture
   nameOverride: "dashboard"
   fullnameOverride: "testkube-dashboard"
   image:
