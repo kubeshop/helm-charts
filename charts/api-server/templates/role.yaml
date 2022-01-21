@@ -48,7 +48,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: scripts-cluster-role-{{ .Release.Name }}
+  name: script-cluster-role-{{ .Release.Name }}
 rules:
 - apiGroups:
   - tests.testkube.io
@@ -77,7 +77,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: tests-cluster-role-{{ .Release.Name }}
+  name: test-cluster-role-{{ .Release.Name }}
 rules:
 - apiGroups:
   - tests.testkube.io

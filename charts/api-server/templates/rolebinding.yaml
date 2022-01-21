@@ -35,7 +35,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: scripts-cluster-role-{{ .Release.Name }}
+  name: script-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
   name: testkube-api-server-testkube
@@ -50,7 +50,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: tests-cluster-role-{{ .Release.Name }}
+  name: test-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
   name: testkube-api-server-testkube
