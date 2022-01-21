@@ -43,6 +43,10 @@ xdsService:
   type: ClusterIP
   port: 18000
 
+validatorService:
+  type: ClusterIP
+  port: 17000
+
 webhooks:
   certsDir: "/tmp/k8s-webhook-server/serving-certs"
   # failurePolicy of the webhook, Fail or Ignore
