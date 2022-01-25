@@ -85,6 +85,13 @@ manager:
     - --health-probe-bind-address=:8081
     - --metrics-bind-address=127.0.0.1:8080
     - --envoy-control-plane-bind-address=:18000
+
+    # Configure log verbocity
+    # Available levels [DEBUG|INFO|WARN|ERROR|DPANIC|PANIC|FATAL]
+    # - --log-level=INFO
+    # Enable development mode - logs out stack traces on warn logs and panics on dpanic level logs
+    # - --development=true
+
     # To login to the shell (if it is present in container) and run commands manually
     # command:
     #   - "tail"
