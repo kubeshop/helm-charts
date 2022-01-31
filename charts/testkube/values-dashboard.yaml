@@ -114,6 +114,9 @@ api-server:
     port: 8088
   minio:
     enabled: true
+  jetstack:  
+    enabled: true  
+    version: v1.7.0      
   ingress:
     enabled: true
     annotations:

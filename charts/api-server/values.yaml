@@ -50,6 +50,10 @@ service:
 minio:
   enabled: true
 
+jetstack:  
+  enabled: true
+  version: v1.7.0
+
 ingress:
   enabled: false
   annotations:
