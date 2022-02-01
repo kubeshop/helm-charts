@@ -114,9 +114,6 @@ api-server:
     port: 8088
   minio:
     enabled: true
-  jetstack:  
-    enabled: true
-    version: v1.7.0
   ingress:
     enabled: true
     annotations:
@@ -155,6 +152,10 @@ api-server:
 
 prometheus:
   enabled: false
+
+jetstack:
+  enabled: true
+  version: v1.7.0
 
 testkube-dashboard:
   enabled: true

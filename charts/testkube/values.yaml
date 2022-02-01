@@ -113,10 +113,7 @@ api-server:
     type: NodePort # for working with real k8s we should use "ClusterIP" type.
     port: 8088
   minio:
-    enabled: true
-  jetstack:  
-    enabled: true
-    version: v1.7.0    
+    enabled: true  
   ingress:
     enabled: false
     annotations:
@@ -148,6 +145,10 @@ api-server:
 
 prometheus:
   enabled: false
+
+jetstack:
+  enabled: true
+  version: v1.7.0
 
 testkube-dashboard:
   enabled: true
