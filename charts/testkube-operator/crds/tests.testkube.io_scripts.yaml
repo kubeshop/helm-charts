@@ -128,11 +128,11 @@ spec:
               content:
                 description: script content object
                 properties:
-                  content:
+                  data:
                     description: script content body
                     type: string
                   repository:
-                    description: Repository represents VCS repo, currently we're habdling Git only
+                    description: repository of script content
                     properties:
                       branch:
                         description: branch/tag name for checkout
@@ -159,11 +159,6 @@ spec:
                     description: uri of script content
                     type: string
                 type: object
-              input-type:
-                description: 'script content type can be:  - direct content - created
-                  from file, - git repo directory checkout in case when test is some
-                  kind of project or have more than one file,'
-                type: string
               name:
                 description: script execution custom name
                 type: string

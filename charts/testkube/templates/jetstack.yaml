@@ -1,4 +1,4 @@
-{{- if .Values.jetstack.enabled -}}
+{{- if and .Values.jetstack.enabled (not .Capabilities.APIVersions.Has "cert-manager.io/v1") -}}
 ---
   # Source: cert-manager/templates/cainjector-serviceaccount.yaml
   apiVersion: v1
