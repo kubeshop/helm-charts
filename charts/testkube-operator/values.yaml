@@ -23,6 +23,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# Create RBAC roles for users and controller
+rbac:
+  create: true
+
 podAnnotations: {}
 
 podSecurityContext:

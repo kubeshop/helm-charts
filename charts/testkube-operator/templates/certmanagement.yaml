@@ -1,0 +1,26 @@
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: testkube-operator-serving-cert
+  namespace: testkube-operator-system
+spec:
+  dnsNames:
+  - testkube-operator-webhook-service.testkube-operator-system.svc
+  - testkube-operator-webhook-service.testkube-operator-system.svc.cluster.local
+  issuerRef:
+    kind: Issuer
+    name: testkube-operator-selfsigned-issuer
+  secretName: webhook-server-cert
+
+---
+
+  apiVersion: cert-manager.io/v1
+  kind: Issuer
+  metadata:
+    name: testkube-operator-selfsigned-issuer
+    namespace: testkube-operator-system
+  spec:
+    selfSigned: {}
+  
