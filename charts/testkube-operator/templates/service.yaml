@@ -6,7 +6,7 @@ metadata:
   labels:
     control-plane: controller-manager
   name: testkube-operator-controller-manager-metrics-service
-  namespace: testkube-operator-system
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
   - name: https
@@ -20,8 +20,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: testkube-operator-webhook-service
-  namespace: testkube-operator-system
+  name: {{ include "testkube-operator.webhookServiceName" . }}
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
   - port: 443

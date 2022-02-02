@@ -123,7 +123,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: testkube-operator-leader-election-role
-  namespace: testkube-operator-system
+  namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
   - ""

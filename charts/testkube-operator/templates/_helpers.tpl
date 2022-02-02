@@ -54,9 +54,23 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "testkube-operator.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "testkube-operator.fullname" .) .Values.serviceAccount.name }}
+{{- if .Values.serviceAccount.name }}
+{{- default .Values.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- default "testkube-operator-controller-manager" }}
 {{- end }}
+{{- end }}
+
+{{/*
+Create testkube operator webhook service name
+*/}}
+{{- define "testkube-operator.webhookServiceName" -}}
+{{- default "testkube-operator-webhook-service" }}
+{{- end }}
+
+{{/*
+Create testkube operator webhook certificate
+*/}}
+{{- define "testkube-operator.webhookCertificate" -}}
+{{- default "testkube-operator-serving-cert" }}
 {{- end }}

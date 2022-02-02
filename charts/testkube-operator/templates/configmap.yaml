@@ -17,4 +17,4 @@ data:
 kind: ConfigMap
 metadata:
   name: testkube-operator-manager-config
-  namespace: testkube-operator-system
+  namespace: {{ .Release.Namespace }}
