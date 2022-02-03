@@ -4,7 +4,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: roller-manager-role
+  name: testkube-operator-manager-role
 rules:
 - apiGroups:
   - executor.testkube.io
