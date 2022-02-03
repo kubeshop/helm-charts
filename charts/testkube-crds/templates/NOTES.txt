@@ -1,0 +1,1 @@
+Testkube CRDS are installed.
