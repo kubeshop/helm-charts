@@ -153,10 +153,6 @@ api-server:
 prometheus:
   enabled: false
 
-jetstack:
-  enabled: true
-  version: v1.7.0
-
 testkube-dashboard:
   enabled: true
   nameOverride: "dashboard"
