@@ -47,6 +47,9 @@ spec:
         - containerPort: 9443
           name: webhook-server
           protocol: TCP
+        env:
+          name: OPERATOR_DEFAULT_EXECUTORS
+          value: "{{ .Files.Get executors.json }}"
         readinessProbe:
           httpGet:
             path: /readyz
