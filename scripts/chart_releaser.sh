@@ -83,13 +83,13 @@ then
     if [[ $executor_name != "" ]]
     then
         # Editing TestKube's executors.yaml if tag was pushed to main chart. E.G. to testKube:
-        sed -i "s/\(.*image:.*$executor_name.*\:\).*$/\1$version_full/g" ../charts/testkube/templates/executors.yaml
-        echo -e "\nChecking if TestKube's executors.yaml ($executor_name executor) has been updated:\n"
-        grep -iE image ../charts/testkube/templates/executors.yaml | grep $executor_name
+        sed -i "s/\(.*image:.*$executor_name.*\:\).*$/\1$version_full/g" ../charts/testkube-operator/executors.json
+        echo -e "\nChecking if TestKube's executors.json ($executor_name executor) has been updated:\n"
+        grep -iE image ../charts/testkube-operator/executors.json | grep $executor_name
     fi
 else
-    # No reason to edit executors.yaml image tags as it's not a Executors' repo/tag.
-    echo "Executors.yaml is not updated. As this tag was not pushed into Executors' repo."
+    # No reason to edit executors.json image tags as it's not a Executors' repo/tag.
+    echo "Executors.json is not updated. As this tag was not pushed into Executors' repo."
 fi
 
 # Commiting and pushing changes:
