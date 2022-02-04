@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
-  image: kubeshop/testkube-cypress-executor:0.6.10-beta004
+  image: kubeshop/testkube-cypress-executor:0.6.10-beta005
   types:
   - cypress/project
 
