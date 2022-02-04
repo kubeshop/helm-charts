@@ -30,6 +30,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
-  image: kubeshop/testkube-postman-executor:0.6.7
+  image: kubeshop/testkube-postman-executor:0.6.8-beta001
   types:
   - postman/collection
