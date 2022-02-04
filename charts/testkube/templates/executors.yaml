@@ -18,7 +18,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   executor_type: job
-  image: kubeshop/testkube-curl-executor:0.6.6
+  image: kubeshop/testkube-curl-executor:0.6.7-beta001
   types:
   - curl/test
 
