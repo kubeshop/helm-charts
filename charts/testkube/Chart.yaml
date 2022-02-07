@@ -2,21 +2,21 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube.
 type: application
-version: 0.8.10
+version: 0.8.27
 dependencies:
   - name: testkube-operator
-    version: 0.9.1
+    version: 0.9.2-beta003
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
   - name: mongodb
     version: 10.0.0
     repository: https://charts.bitnami.com/bitnami
   - name: api-server
-    version: 0.8.5
+    version: 0.8.7
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../api-server"
   - name: testkube-dashboard
-    version: 0.8.3
+    version: 0.8.5
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
