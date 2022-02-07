@@ -8,7 +8,7 @@ image:
   repository: "kubeshop/testkube-operator"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.9.2-beta003"
+  tag: "0.9.2-beta004"
 
 imagePullSecrets: []
 nameOverride: "testkube-operator"
