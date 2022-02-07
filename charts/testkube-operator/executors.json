@@ -2,7 +2,7 @@
     {
         "name": "cypress-executor",
         "executor": {
-            "executorType": "job",
+            "executor_type": "job",
             "image": "kubeshop/testkube-cypress-executor:0.6.9",
             "types":["cypress/project"]
         }
@@ -10,7 +10,7 @@
     {
         "name": "curl-executor",
         "executor": {
-            "executorType": "job",
+            "executor_type": "job",
             "image": "kubeshop/testkube-curl-executor:0.6.6",
             "types":["curl/test"]
         }
@@ -18,7 +18,7 @@
     {
         "name": "postman-executor",
         "executor": {
-            "executorType": "job",
+            "executor_type": "job",
             "image": "kubeshop/testkube-postman-executor:0.6.7",
             "types":["postman/collection"]
         }

@@ -48,8 +48,10 @@ spec:
           name: webhook-server
           protocol: TCP
         env:
-        - name: OPERATOR_DEFAULT_EXECUTORS
+        - name: TESTKUBE_OPERATOR_DEFAULT_EXECUTORS
           value: "{{ .Files.Get "executors.json" | b64enc }}"
+        - name: TESTKUBE_OPERATOR_NAMESPACE
+          value: "{{ .Release.Namespace }}"
         readinessProbe:
           httpGet:
             path: /readyz
