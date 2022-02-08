@@ -42,9 +42,9 @@ kubectl delete namespace testkube
 ```
 
 ## Migration to upgradable CRDs helm chart
-Originally helm chart stored CRDs in special crds folder. In order to make them upgradable they were moved
-into regular templates folder. Unfortunately Helm uses different annotations and lables for resources located
-in crds and temeplates folders. Please run these commands to fix it:
+Oiginally Helm chart stored CRDs in a special crds folder. In order to make them upgradable they were moved
+into the regular templates folder. Unfortunately Helm uses different annotations and labels for resources located
+in crds and templates folders. Please run these commands to fix it:
 
 ```sh
 
