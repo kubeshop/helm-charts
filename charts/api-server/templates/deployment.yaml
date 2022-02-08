@@ -52,7 +52,10 @@ spec:
             value:  "{{ .Values.storage.SSL }}"
           - name: "SCRAPPERENABLED"
             value:  "{{ .Values.storage.scrapperEnabled }}"
-
+          - name: TESTKUBE_DEFAULT_EXECUTORS
+            value: "{{ .Files.Get "executors.json" | b64enc }}"
+          - name: TESTKUBE_NAMESPACE
+            value: "{{ .Release.Namespace }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

@@ -1,0 +1,59 @@
+---
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
+  name: testkube-operator-mutating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /mutate-scripts-tests-testkube-io-v1-script
+  failurePolicy: Fail
+  name: mscript.kb.io
+  rules:
+  - apiGroups:
+    - scripts.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - scripts
+  sideEffects: None
+
+---
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
+  name: testkube-operator-validating-webhook-configuration
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-scripts-tests-testkube-io-v1-script
+  failurePolicy: Fail
+  name: vscript.kb.io
+  rules:
+  - apiGroups:
+    - scripts.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - scripts
+  sideEffects: None
