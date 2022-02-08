@@ -83,7 +83,7 @@ then
     if [[ $executor_name != "" ]]
     then
         # Editing TestKube's executors.yaml if tag was pushed to main chart. E.G. to testKube:
-        sed -i "s/\(.*image:.*$executor_name.*\:\).*$/\1$version_full/g" ../charts/api-server/executors.json
+        sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$version_full\",/g" ../charts/api-server/executors.json
         echo -e "\nChecking if TestKube's executors.json ($executor_name executor) has been updated:\n"
         grep -iE image ../charts/api-server/executors.json | grep $executor_name
     fi

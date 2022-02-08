@@ -40,3 +40,19 @@ helm delete testkube -n testkube
 kubectl delete namespace testkube
 
 ```
+
+## Migration to upgradable CRDs helm chart
+Oiginally Helm chart stored CRDs in a special crds folder. In order to make them upgradable they were moved
+into the regular templates folder. Unfortunately Helm uses different annotations and labels for resources located
+in crds and templates folders. Please run these commands to fix it:
+
+```sh
+
+kubectl annotate --overwrite crds executors.executor.testkube.io meta.helm.sh/release-name="testkube" meta.helm.sh/release-namespace="testkube"
+kubectl annotate --overwrite crds tests.tests.testkube.io meta.helm.sh/release-name="testkube" meta.helm.sh/release-namespace="testkube"
+kubectl annotate --overwrite crds scripts.tests.testkube.io meta.helm.sh/release-name="testkube" meta.helm.sh/release-namespace="testkube"
+kubectl label --overwrite crds executors.executor.testkube.io app.kubernetes.io/managed-by=Helm
+kubectl label --overwrite crds tests.tests.testkube.io app.kubernetes.io/managed-by=Helm
+kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/managed-by=Helm
+
+```
