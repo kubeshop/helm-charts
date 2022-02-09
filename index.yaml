@@ -903,26 +903,6 @@ entries:
     version: 0.5.51-testing2
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T09:23:17.904273686Z"
-    description: A Helm chart for Api-server
-    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
-    name: api-server
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
-    version: 0.5.51-testing
-  - apiVersion: v2
-    appVersion: 0.5.51
-    created: "2021-10-12T08:34:45.953919496Z"
-    description: A Helm chart for Api-server
-    digest: d52ac371b029480e05e9adbd2efb427f619a6781e82a91b9585c09484069bc1b
-    name: api-server
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
-    version: 0.5.51-testing
-  - apiVersion: v2
-    appVersion: 0.5.51
     created: "2021-10-12T08:43:12.598157902Z"
     description: A Helm chart for Api-server
     digest: ce0376ca2a7f1d20d6c34dfbafc826f529e1e271c4e212d2c7d0f9572a67be6a
@@ -936,6 +916,26 @@ entries:
     created: "2021-10-12T08:07:11.059151099Z"
     description: A Helm chart for Api-server
     digest: f919c6b4d10fe618972304ad7be7d6bf83b7a122574516890bca7e937a976241
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
+    version: 0.5.51-testing
+  - apiVersion: v2
+    appVersion: 0.5.51
+    created: "2021-10-12T09:23:17.904273686Z"
+    description: A Helm chart for Api-server
+    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
+    name: api-server
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.51-testing/api-server-0.5.51-testing.tgz
+    version: 0.5.51-testing
+  - apiVersion: v2
+    appVersion: 0.5.51
+    created: "2021-10-12T08:34:45.953919496Z"
+    description: A Helm chart for Api-server
+    digest: d52ac371b029480e05e9adbd2efb427f619a6781e82a91b9585c09484069bc1b
     name: api-server
     type: application
     urls:
@@ -1856,6 +1856,29 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
     version: 0.0.1
   testkube:
+  - apiVersion: v2
+    created: "2022-02-09T09:19:44.123551993Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.9.5
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.8.8
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.8.6
+    description: A Helm chart for testkube.
+    digest: 34f7462162839212881e2cc10fd4db289b954c60c05be2dea8f7e093aded2609
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.8.44/testkube-0.8.44.tgz
+    version: 0.8.44
   - apiVersion: v2
     created: "2022-02-08T13:09:33.679682578Z"
     dependencies:
@@ -5034,6 +5057,16 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    created: "2022-02-09T09:19:44.315190057Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 5a7946865339c720973331133ce67cd3e3b56e27c314f0114597755a6862dd87
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.9.5/testkube-operator-0.9.5.tgz
+    version: 0.9.5
+  - apiVersion: v2
     created: "2022-02-08T13:09:33.854601683Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -5273,4 +5306,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-02-08T13:09:33.857831822Z"
+generated: "2022-02-09T09:19:44.318602086Z"
