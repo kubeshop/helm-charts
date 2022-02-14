@@ -138,7 +138,7 @@ spec:
                         type: string
                       path:
                         description: if needed we can checkout particular path (dir
-                        or file) in case of BIG/mono repositories
+                          or file) in case of BIG/mono repositories
                         type: string
                       type:
                         description: VCS repository type
