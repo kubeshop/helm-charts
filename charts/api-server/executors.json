@@ -22,5 +22,13 @@
             "image": "kubeshop/testkube-postman-executor:0.7.2",
             "types":["postman/collection"]
         }
-    }
+    },
+    {
+        "name": "executor-init",
+        "executor": {
+            "executor_type": "init",
+            "image": "kubeshop/testkube-executor-init:0.0.1",
+            "types":[]
+        }
+    }    
 ]
