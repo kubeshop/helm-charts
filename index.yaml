@@ -3,9 +3,9 @@ entries:
   api-server:
   - apiVersion: v2
     appVersion: 0.9.5
-    created: "2022-02-18T13:38:28.701592285Z"
+    created: "2022-02-18T13:39:27.279179728Z"
     description: A Helm chart for Api-server
-    digest: 84a55417305d550d42310fb80b68e90b7ff254f9eb19f51196991a035487a95f
+    digest: b533cddc9e4a3e5b2469f9d59d84949c09956be11fdc4fec2fc43da54642045e
     name: api-server
     type: application
     urls:
@@ -1926,6 +1926,29 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
     version: 0.0.1
   testkube:
+  - apiVersion: v2
+    created: "2022-02-18T13:39:27.413808748Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.9.7
+    - name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.9.5
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 0.9.2
+    description: A Helm chart for testkube.
+    digest: 708458c1b5b624cc1e345e6e01d540f2c2028706392e68e4ae71ba804fe9bccd
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.9.16/testkube-0.9.16.tgz
+    version: 0.9.16
   - apiVersion: v2
     created: "2022-02-18T13:36:59.781711529Z"
     dependencies:
@@ -5571,6 +5594,16 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    created: "2022-02-18T13:39:27.542525352Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 5c7cc05b8b64e71b2bcb2a978c267ce80856915070f335a77680844dc133abaa
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.9.7/testkube-operator-0.9.7.tgz
+    version: 0.9.7
+  - apiVersion: v2
     created: "2022-02-10T11:59:46.046263006Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -5840,4 +5873,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-02-18T13:38:28.917073703Z"
+generated: "2022-02-18T13:39:27.546984839Z"
