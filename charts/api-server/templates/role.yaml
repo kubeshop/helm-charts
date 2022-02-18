@@ -41,8 +41,6 @@ rules:
   - list
   - create
 
-
-
 --- 
 
 # permissions for end users to edit tests.
@@ -70,8 +68,6 @@ rules:
   - scripts/status
   verbs:
   - get
-
-
 
 --- 
 
@@ -120,4 +116,30 @@ rules:
   - update
   - watch
   - deletecollection
-  
+
+--- 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: testsuite-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsuites
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsuites/status
+  verbs:
+  - get
