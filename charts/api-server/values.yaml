@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "0.9.4"
+  # tag: "0.9.5"
 
 imagePullSecrets: []
 nameOverride: "api-server"
