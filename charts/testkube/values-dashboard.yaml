@@ -110,7 +110,7 @@ api-server:
     # TODO we should stick to static version
     # tag: "latest"
   service:
-    type: NodePort # for working with real k8s we should use "ClusterIP" type.
+    type: ClusterIP
     port: 8088
   minio:
     enabled: true
@@ -136,9 +136,9 @@ api-server:
       - dashboard.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
-    - hosts:
-      - dashboard.testkube.io
-      secretName: testkube-dashboard-cert-secret
+      - hosts:
+          - dashboard.testkube.io
+        secretName: testkube-dashboard-cert-secret
   storage:
     endpoint_port: "9000"
     accessKeyId: "minio"
@@ -162,17 +162,17 @@ testkube-dashboard:
     pullPolicy: Always
     #tag: "main" #it will take the tag from appVersion
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
   ingress:
     enabled: "true"
-    annotations: 
+    annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-      nginx.ingress.kubernetes.io/cors-allow-credentials: "false"      
+      nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-dashboard
       # add an annotation indicating the issuer to use.
@@ -185,7 +185,7 @@ testkube-dashboard:
       - dashboard.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
-    - hosts:
-      - dashboard.testkube.io
-      secretName: testkube-dashboard-cert-secret
+      - hosts:
+          - dashboard.testkube.io
+        secretName: testkube-dashboard-cert-secret
   apiServerEndpoint: "" #get the address of the endpoint or set it using helm

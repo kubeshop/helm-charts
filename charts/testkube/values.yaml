@@ -110,7 +110,7 @@ api-server:
     # TODO we should stick to static version
     # tag: "latest"
   service:
-    type: NodePort # for working with real k8s we should use "ClusterIP" type.
+    type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
     port: 8088
   minio:
     enabled: true
@@ -155,7 +155,7 @@ testkube-dashboard:
     pullPolicy: Always
     # tag: "main" # it will take tag from appVersion.
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
   ingress:
     enabled: "false"
