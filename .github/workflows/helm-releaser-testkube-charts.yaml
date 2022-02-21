@@ -258,10 +258,10 @@ jobs:
           curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }}
 
           # Running Test suite:
-          kubectl -n testkube delete script sanity || true
+          kubectl -n testkube delete test sanity || true
           kubectl -n testkube delete secret sanity-secrets || true
           kubectl testkube tests create -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity --type postman/collection
-          kubectl testkube tests start sanity -f -p api_uri=http://testkube-api-server:8088 -p script_api_uri=http://testkube-api-server:8088 -p script_type=postman/collection -p script_name=fill-me -p execution_name=fill-me
+          kubectl testkube tests run sanity -f -p api_uri=http://testkube-api-server:8088 -p test_api_uri=http://testkube-api-server:8088 -p test_type=postman/collection -p test_name=fill-me -p execution_name=fill-me
 
   notify_slack_if_test_suite_dev_succeeds:
     runs-on: ubuntu-latest
