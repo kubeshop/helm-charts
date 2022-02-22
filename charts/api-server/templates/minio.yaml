@@ -96,7 +96,7 @@ metadata:
   # This name uniquely identifies the service
   name: testkube-minio-service-{{ .Release.Namespace }}
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - name: http
       port: 9000
