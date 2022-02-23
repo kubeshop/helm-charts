@@ -56,7 +56,7 @@ spec:
             value: "{{ .Files.Get "executors.json" | b64enc }}"
           - name: TESTKUBE_NAMESPACE
             value: "{{ .Release.Namespace }}"
-           - name: TESTKUBE_JOB_TEMPLATE
+          - name: TESTKUBE_JOB_TEMPLATE
             value: "{{ .Files.Get "job_template.yml" | b64enc }}"           
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
