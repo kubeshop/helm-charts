@@ -1,25 +1,25 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .name }}
-  namespace: {{ .namespace }}
+  name: {{ .Name }}
+  namespace: {{ .Namespace }}
 spec:
   template:
     spec:
       ttlSecondsAfterFinished: 180
       initContainers:
-      - name: {{ .name }}-init
-        image: {{ .initimage }}
+      - name: {{ .Name }}-init
+        image: {{ .Initimage }}
         imagePullPolicy: Always
-        command: ["/bin/runner", "{{ .jsn }}"]
+        command: ["/bin/runner", "{{ .Jsn }}"]
         volumeMounts:
         - name: data-volume
           mountPath: /data 
       containers:
-      - name: {{ .name }}
-        image: {{ .image }}
+      - name: {{ .Name }}
+        image: {{ .Image }}
         imagePullPolicy: Always
-        command: ["/bin/runner", "{{ .jsn }}"]
+        command: ["/bin/runner", "{{ .Jsn }}"]
         volumeMounts:
         - name: data-volume
           mountPath: /data
@@ -27,4 +27,4 @@ spec:
       - name: data-volume
         emptyDir: {}
       restartPolicy: Never
-  backoffLimit: 1
+  backoffLimit: 0
