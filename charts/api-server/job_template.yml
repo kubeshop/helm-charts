@@ -9,9 +9,11 @@ spec:
       ttlSecondsAfterFinished: 180
       initContainers:
       - name: {{ .Name }}-init
-        image: {{ .Initimage }}
+        image: {{ .InitImage }}
         imagePullPolicy: Always
-        command: ["/bin/runner", "{{ .Jsn }}"]
+        command: ["/bin/runner"]
+        args: 
+        - '{{ .Jsn }}'
         volumeMounts:
         - name: data-volume
           mountPath: /data 
@@ -19,7 +21,9 @@ spec:
       - name: {{ .Name }}
         image: {{ .Image }}
         imagePullPolicy: Always
-        command: ["/bin/runner", "{{ .Jsn }}"]
+        command: ["/bin/runner"]
+        args: 
+          - '{{ .Jsn }}'
         volumeMounts:
         - name: data-volume
           mountPath: /data
