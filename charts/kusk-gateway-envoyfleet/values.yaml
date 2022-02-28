@@ -141,6 +141,9 @@ tls: {}
   # tlsSecrets:
   #   - secretRef: my-tls-secret
   #     namespace: default
+  # Automaticaly redirect http to https for the following domain names:
+  # https_redirect_hosts:
+  # - example.com
 
 # Helper sidecar container params
 #helper:
