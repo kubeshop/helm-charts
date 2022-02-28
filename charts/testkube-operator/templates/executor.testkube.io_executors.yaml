@@ -64,6 +64,9 @@ spec:
               uri:
                 description: URI for rest based executors
                 type: string
+              job_template:
+                description: Job template to launch executor
+                type: string
             type: object
           status:
             description: ExecutorStatus defines the observed state of Executor
