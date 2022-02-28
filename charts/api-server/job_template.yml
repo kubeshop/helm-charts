@@ -4,9 +4,9 @@ metadata:
   name: {{ .Name }}
   namespace: {{ .Namespace }}
 spec:
+  ttlSecondsAfterFinished: 180  
   template:
     spec:
-      ttlSecondsAfterFinished: 180
       initContainers:
       - name: {{ .Name }}-init
         image: {{ .InitImage }}
