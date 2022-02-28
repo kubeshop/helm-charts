@@ -11,9 +11,9 @@ spec:
       - name: {{ .Name }}-init
         image: {{ .InitImage }}
         imagePullPolicy: Always
-        command: ["/bin/runner"]
-        args: 
-        - '{{ .Jsn }}'
+        command: 
+          - "/bin/runner"
+          - '{{ .Jsn }}'
         volumeMounts:
         - name: data-volume
           mountPath: /data 
@@ -21,8 +21,8 @@ spec:
       - name: {{ .Name }}
         image: {{ .Image }}
         imagePullPolicy: Always
-        command: ["/bin/runner"]
-        args: 
+        command: 
+          - "/bin/runner"
           - '{{ .Jsn }}'
         volumeMounts:
         - name: data-volume
