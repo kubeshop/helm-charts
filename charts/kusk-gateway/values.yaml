@@ -43,6 +43,10 @@ xdsService:
   type: ClusterIP
   port: 18000
 
+agentService:
+  type: ClusterIP
+  port: 18010
+
 validatorService:
   type: ClusterIP
   port: 17000

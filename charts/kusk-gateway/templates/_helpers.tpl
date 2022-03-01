@@ -75,3 +75,7 @@ We intend to have only one such account in the namespace, so this is hardcoded (
 {{- define "kusk-gateway.webhooksCertmanagerCertificate" -}}
 {{- default "kusk-gateway-webhooks-certmanager-certs" }}
 {{- end }}
+
+{{- define "kusk-gateway.agentServiceName" -}}
+{{- default "kusk-gateway-agent-service" }}
+{{- end }}
