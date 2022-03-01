@@ -1784,6 +1784,28 @@ entries:
   kusk-gateway:
   - apiVersion: v2
     appVersion: v0.0.0-alpha.2.1.2
+    created: "2022-03-01T09:21:24.094976839Z"
+    dependencies:
+    - condition: installCRDs
+      name: kusk-gateway-crds
+      repository: ""
+      version: 0.0.1
+    description: A Helm chart for Kusk Gateway
+    digest: 1bb06bc4f35880086f9f4f596b42bbe654dcf1c0f0172e0f868fb1e19ddede47
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.11/kusk-gateway-0.0.11.tgz
+    version: 0.0.11
+  - apiVersion: v2
+    appVersion: v0.0.0-alpha.2.1.2
     created: "2022-01-28T09:46:36.709820709Z"
     dependencies:
     - condition: installCRDs
@@ -1981,6 +2003,23 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.1/kusk-gateway-0.0.1.tgz
     version: 0.0.1
   kusk-gateway-envoyfleet:
+  - apiVersion: v2
+    appVersion: v0.0.0
+    created: "2022-03-01T09:21:24.294976849Z"
+    description: A Helm chart for Kusk Gateway EnvoyFleet
+    digest: 093d1cc8e755cd096098bfc35554d498bcf6f8084827156d50fe95dd563e0678
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - kusk-gateway-envoyfleet
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway-envoyfleet
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.3/kusk-gateway-envoyfleet-0.0.3.tgz
+    version: 0.0.3
   - apiVersion: v2
     appVersion: v0.0.0
     created: "2022-01-21T13:42:42.68288698Z"
@@ -6341,4 +6380,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-02-28T14:26:55.400748874Z"
+generated: "2022-03-01T09:21:24.299290049Z"
