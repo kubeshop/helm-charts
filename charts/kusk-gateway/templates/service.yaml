@@ -51,3 +51,20 @@ spec:
       name: webhook-server
   selector:
     {{- include "kusk-gateway.selectorLabels" . | nindent 4 }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kusk-gateway.agentServiceName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+    app.kubernetes.io/component: agent-service
+spec:
+  ports:
+    - port: {{ .Values.agentService.port }}
+      name: agent-config
+      targetPort: agent-config
+  selector:
+    {{- include "kusk-gateway.selectorLabels" . | nindent 4 }}

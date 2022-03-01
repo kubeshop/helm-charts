@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kusk-gateway-manager
 spec:
 {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -65,6 +66,9 @@ spec:
               protocol: TCP
             - containerPort: 9443
               name: webhook-server
+              protocol: TCP
+            - containerPort: 18010
+              name: agent-config
               protocol: TCP
           {{- if .Values.manager.health }}
           livenessProbe:
