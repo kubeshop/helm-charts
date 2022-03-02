@@ -119,10 +119,6 @@ spec:
                       type: string
                   type: object
                 type: array
-              tags:
-                items:
-                  type: string
-                type: array
             type: object
           status:
             description: TestSuiteStatus defines the observed state of TestSuite
