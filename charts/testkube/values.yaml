@@ -141,7 +141,7 @@ api-server:
     SSL: false
     scrapperEnabled: true
   mongoDSN: "mongodb://testkube-mongodb:27017"
-  telemetryDisabled: false
+  analyticsEnabled: true
 
 prometheus:
   enabled: false
