@@ -36,8 +36,8 @@ spec:
             value: "{{ .Values.mongoDSN }}"
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"
-          - name: TESTKUBE_TELEMETRY_DISABLED
-            value: "{{ .Values.telemetryDisabled }}"
+          - name: TESTKUBE_ANALYTICS_ENABLED
+            value: "{{ .Values.analyticsEnabled }}"
           - name: "STORAGE_ENDPOINT"
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
           - name: "STORAGE_ACCESSKEYID"
