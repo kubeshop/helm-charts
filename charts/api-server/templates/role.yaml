@@ -152,7 +152,7 @@ metadata:
   name: webhook-cluster-role-{{ .Release.Name }}
 rules:
 - apiGroups:
-  - tests.testkube.io
+  - executor.testkube.io
   resources:
   - webhooks
   verbs:
@@ -165,7 +165,7 @@ rules:
   - watch
   - deletecollection
 - apiGroups:
-  - tests.testkube.io
+  - executor.testkube.io
   resources:
   - webhooks/status
   verbs:
