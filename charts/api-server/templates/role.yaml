@@ -143,3 +143,30 @@ rules:
   - testsuites/status
   verbs:
   - get
+
+--- 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: webhook-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - executor.testkube.io
+  resources:
+  - webhooks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - executor.testkube.io
+  resources:
+  - webhooks/status
+  verbs:
+  - get
