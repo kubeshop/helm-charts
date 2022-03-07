@@ -86,10 +86,6 @@ spec:
           env:
           {{- toYaml .Values.manager.env | nindent 12 }}
           {{- end }}
-          volumeMounts:
-          - mountPath: {{ .Values.webhooks.certsDir }}
-            name: cert
-            readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -103,8 +99,3 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
-      volumes:
-      - name: cert
-        secret:
-          defaultMode: 420
-          secretName: "{{ include "kusk-gateway.webhooksCertificate" . }}"
