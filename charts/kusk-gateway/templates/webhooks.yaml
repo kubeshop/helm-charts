@@ -6,8 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
-  annotations:
-    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
 webhooks:
 - admissionReviewVersions:
   - v1
@@ -80,8 +78,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
-  annotations:
-    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{- include "kusk-gateway.webhooksCertmanagerCertificate" . }}"
 webhooks:
 - admissionReviewVersions:
   - v1

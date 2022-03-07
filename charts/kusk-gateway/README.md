@@ -8,8 +8,6 @@ This is the Helm chart for [Kusk Gateway](https://github.com/kubeshop/kusk-gatew
 
 * Kubernetes cluster administration rights are required.
 
-* We heavily depend on [jetstack cert-manager](https://github.com/jetstack/cert-manager) for webhooks TLS configuration. If it is not installed in your cluster, then please install it with the official instructions [here](https://cert-manager.io/docs/installation/).
-
 * If you install the chart to your local machine cluster (k3d or minikube), you may need to install and configure [MetalLB](https://metallb.universe.tf/) to handle LoadBalancer type services,
 otherwise EnvoyFleet service ExternlIP address will be in Pending state forever.
 

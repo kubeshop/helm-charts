@@ -42,6 +42,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kusk-gateway-webhooks-service
 spec:
   type: {{ .Values.webhooks.service.type }}
   ports:
