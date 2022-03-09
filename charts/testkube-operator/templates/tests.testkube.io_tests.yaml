@@ -194,11 +194,6 @@ spec:
                   type: string
                 description: execution params passed to executor
                 type: object
-              tags:
-                description: test tags
-                items:
-                  type: string
-                type: array
               type:
                 description: test type
                 type: string
