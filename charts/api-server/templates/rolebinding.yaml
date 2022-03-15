@@ -23,7 +23,7 @@ roleRef:
   name: jobs-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 ---
@@ -38,7 +38,7 @@ roleRef:
   name: script-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 ---
@@ -53,7 +53,7 @@ roleRef:
   name: test-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 ---
@@ -68,7 +68,7 @@ roleRef:
   name: secrets-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 ---
@@ -83,7 +83,7 @@ roleRef:
   name: testsuite-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 
 ---
@@ -98,5 +98,5 @@ roleRef:
   name: webhook-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-testkube
+  name: testkube-api-server-{{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
