@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Name }}
+  namespace: {{ .Namespace }}
+spec:
+  schedule: "0 * * * *" # every hour at 00
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: curlimage
+            image: curlimages/curl
+            imagePullPolicy: Always
+            command:
+            - sh
+            - -c
+            args:
+            - curl -X POST -H "Content-Type: application/json" -d '{{ .Data }}' "http://{{ .ServiceName }}:{{ .ServicePort}}/v1/test-suites/{{ .Id }}/executions"
+          restartPolicy: Never
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 180

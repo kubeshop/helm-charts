@@ -4,7 +4,6 @@ metadata:
   name: {{ .Name }}
   namespace: {{ .Namespace }}
 spec:
-  ttlSecondsAfterFinished: 180  
   template:
     spec:
       initContainers:
@@ -32,3 +31,4 @@ spec:
         emptyDir: {}
       restartPolicy: Never
   backoffLimit: 0
+  ttlSecondsAfterFinished: 180  
