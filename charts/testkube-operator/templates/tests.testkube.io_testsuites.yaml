@@ -92,6 +92,9 @@ spec:
                 type: string
               repeats:
                 type: integer
+              schedule:
+                description: schedule in cron job format for scheduled test execution
+                type: string
               steps:
                 description: Steps is list of tests which will be sequentially orchestrated
                 items:

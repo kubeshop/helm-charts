@@ -194,6 +194,9 @@ spec:
                   type: string
                 description: execution params passed to executor
                 type: object
+              schedule:
+                description: schedule in cron job format for scheduled test execution
+                type: string
               type:
                 description: test type
                 type: string
