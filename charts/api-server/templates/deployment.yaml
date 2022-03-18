@@ -56,11 +56,11 @@ spec:
             value: "{{ .Files.Get "executors.json" | b64enc }}"
           - name: TESTKUBE_NAMESPACE
             value: "{{ .Release.Namespace }}"
-          - name: TESTKUBE_JOB_TEMPLATE
+          - name: TESTKUBE_TEMPLATE_JOB
             value: "{{ .Files.Get "job_template.yml" | b64enc }}"
-          - name: TESTKUBE_CRONJOB_TEST_TEMPLATE
+          - name: TESTKUBE_TEMPLATE_CRONJOBTEST
             value: "{{ .Files.Get "cronjob_test_template.yml" | b64enc }}"
-          - name: TESTKUBE_CRONJOB_TESTSUITE_TEMPLATE
+          - name: TESTKUBE_TEMPLATE_CRONJOBTESTSUITE
             value: "{{ .Files.Get "cronjob_testsuite_template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "api-server.fullname" . }}"
