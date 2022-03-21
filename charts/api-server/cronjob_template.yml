@@ -1,14 +1,17 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Name }}
+  name: "{{ .Name }}-{{ .Resource }}"
   namespace: {{ .Namespace }}
 spec:
-  schedule: "0 * * * *" # every hour at 00
+  schedule: "{{ .Schedule }}"
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            testkube: cronjob 
         spec:
           containers:
           - name: curlimage
@@ -18,7 +21,7 @@ spec:
             - sh
             - -c
             args:
-            - curl -X POST -H "Content-Type: application/json" -d '{{ .Data }}' "http://{{ .ServiceName }}:{{ .ServicePort}}/v1/test-suites/{{ .Id }}/executions"
+            - curl -X POST -H "Content-Type: application/json" -d '{{ .Data }}' "http://{{ .ServiceName }}:{{ .ServicePort}}/v1/{{ .Resource }}/{{ .Name }}/executions"
           restartPolicy: Never
       backoffLimit: 0
       ttlSecondsAfterFinished: 180
