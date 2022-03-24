@@ -170,3 +170,25 @@ rules:
   - webhooks/status
   verbs:
   - get
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cronjobs-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - ""
+  - "batch"
+  resources:
+  - cronjobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
