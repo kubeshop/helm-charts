@@ -56,8 +56,12 @@ spec:
             value: "{{ .Files.Get "executors.json" | b64enc }}"
           - name: TESTKUBE_NAMESPACE
             value: "{{ .Release.Namespace }}"
-          - name: TESTKUBE_JOB_TEMPLATE
-            value: "{{ .Files.Get "job_template.yml" | b64enc }}"           
+          - name: TESTKUBE_TEMPLATE_JOB
+            value: "{{ .Files.Get "job_template.yml" | b64enc }}"
+          - name: TESTKUBE_TEMPLATE_CRONJOB
+            value: "{{ .Files.Get "cronjob_template.yml" | b64enc }}"
+          - name: APISERVER_FULLNAME
+            value: "{{ include "api-server.fullname" . }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
