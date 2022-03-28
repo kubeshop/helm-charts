@@ -15,6 +15,9 @@ nameOverride: "api-server"
 fullnameOverride: "testkube-api-server"
 
 mongoDSN: "mongodb://testkube-mongodb:27017"
+# or use dsn in secrets
+# mongoSecretName: testkube-secrets
+# mongoSecretKey: mongo-dsn
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true

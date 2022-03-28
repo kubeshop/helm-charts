@@ -147,9 +147,14 @@ api-server:
     token: ""
     SSL: false
     scrapperEnabled: true
+
   mongoDSN: "mongodb://testkube-mongodb:27017"
+  # or you can pass mongo dsn from secret
+  # mongoSecretName: testkube-secrets
+  # mongoSecretKey: mongo-dsn
+
   analyticsEnabled: true
-  
+
 prometheus:
   enabled: false
 
