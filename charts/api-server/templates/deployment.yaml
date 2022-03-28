@@ -33,13 +33,13 @@ spec:
           - name: APISERVER_PORT
             value: "{{ .Values.service.port }}"
           - name: API_MONGO_DSN
-            {{- if .Values.mongoSecretName }}
+            {{- if .Values.mongodb.secretName }}
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.mongoSecretName }}
-                key: {{ .Values.mongoSecretKey }}
+                name: {{ .Values.mongodb.secretName }}
+                key: {{ .Values.mongodb.secretKey }}
             {{- else }}
-            value: "{{ .Values.mongoDSN }}"
+            value: "{{ .Values.mongodb.dsn }}"
             {{- end }}
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"

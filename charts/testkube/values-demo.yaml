@@ -148,10 +148,12 @@ api-server:
     SSL: false
     scrapperEnabled: true
 
-  mongoDSN: "mongodb://testkube-mongodb:27017"
-  # or you can pass mongo dsn from secret
-  # mongoSecretName: testkube-secrets
-  # mongoSecretKey: mongo-dsn
+  mongodb:
+    enabled: true
+    dsn: "mongodb://testkube-mongodb:27017"
+    # or you can pass mongo dsn from secret
+    # secretName: testkube-secrets
+    # secretKey: mongo-dsn
 
   analyticsEnabled: true
 
