@@ -33,7 +33,14 @@ spec:
           - name: APISERVER_PORT
             value: "{{ .Values.service.port }}"
           - name: API_MONGO_DSN
-            value: "{{ .Values.mongoDSN }}"
+            {{- if .Values.mongodb.secretName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.mongodb.secretName }}
+                key: {{ .Values.mongodb.secretKey }}
+            {{- else }}
+            value: "{{ .Values.mongodb.dsn }}"
+            {{- end }}
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"
           - name: TESTKUBE_ANALYTICS_ENABLED

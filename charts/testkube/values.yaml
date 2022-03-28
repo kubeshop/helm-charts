@@ -88,6 +88,7 @@ affinity: {}
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
+  enabled: true
   nameOverride: "mongodb"
   fullnameOverride: "testkube-mongodb"
   architecture: "standalone"
@@ -140,7 +141,12 @@ api-server:
     token: ""
     SSL: false
     scrapperEnabled: true
-  mongoDSN: "mongodb://testkube-mongodb:27017"
+
+  mongodb:
+    dsn: "mongodb://testkube-mongodb:27017"
+    # secretName: testkube-secrets
+    # secretKey: mongo-dsn
+
   analyticsEnabled: true
 
 prometheus:

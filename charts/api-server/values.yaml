@@ -14,7 +14,11 @@ imagePullSecrets: []
 nameOverride: "api-server"
 fullnameOverride: "testkube-api-server"
 
-mongoDSN: "mongodb://testkube-mongodb:27017"
+mongodb:
+  dsn: "mongodb://testkube-mongodb:27017"
+  # or use dsn in secrets
+  # secretName: testkube-secrets
+  # secretKey: mongo-dsn
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true

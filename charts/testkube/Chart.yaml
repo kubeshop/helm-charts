@@ -9,6 +9,7 @@ dependencies:
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
   - name: mongodb
+    condition: mongodb.enabled
     version: 10.0.0
     repository: https://charts.bitnami.com/bitnami
   - name: api-server
