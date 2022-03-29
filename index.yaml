@@ -2374,6 +2374,30 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-03-29T19:22:03.547554859Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 0.11.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: api-server
+      repository: file://../api-server
+      version: 0.11.7
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.0.3
+    description: A Helm chart for testkube.
+    digest: 050f6d724a17bda1f4f88aa3352292f03ed0ce4c913113e5184745a4ac3fa33c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.9.70/testkube-0.9.70.tgz
+    version: 0.9.70
+  - apiVersion: v2
     created: "2022-03-29T12:30:56.743709812Z"
     dependencies:
     - name: testkube-operator
@@ -6820,6 +6844,16 @@ entries:
     version: 0.6.26
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.0.3
+    created: "2022-03-29T19:22:03.735045297Z"
+    description: A Helm chart for Kubernetes
+    digest: 45bd9cf20e29cf73120894c6d20be8bbd27ea9efcff739040545263224149eba
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.0.3/testkube-dashboard-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
     appVersion: 1.0.2
     created: "2022-03-29T09:02:18.0393574Z"
     description: A Helm chart for Kubernetes
@@ -7530,4 +7564,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-03-29T12:30:56.748517369Z"
+generated: "2022-03-29T19:22:03.757220637Z"
