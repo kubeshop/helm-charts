@@ -82,20 +82,15 @@ manager:
     readiness:
       port: 8081
       path: /readyz
+  metrics:
+    bindAddress: 127.0.0.1:8080
   command:
     - /manager
-  args:
-    - --leader-elect
-    - --health-probe-bind-address=:8081
-    - --metrics-bind-address=127.0.0.1:8080
-    - --envoy-control-plane-bind-address=:18000
+  enableLeaderElection: false
+  logLevel: INFO # Available levels [DEBUG|INFO|WARN|ERROR|DPANIC|PANIC|FATAL]
 
-    # Configure log verbocity
-    # Available levels [DEBUG|INFO|WARN|ERROR|DPANIC|PANIC|FATAL]
-    # - --log-level=INFO
-    # Enable development mode - logs out stack traces on warn logs and panics on dpanic level logs
-    # - --development=true
-
+  args: []
+  # args:
     # To login to the shell (if it is present in container) and run commands manually
     # command:
     #   - "tail"
