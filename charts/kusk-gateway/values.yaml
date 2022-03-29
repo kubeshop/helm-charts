@@ -52,6 +52,7 @@ validatorService:
   port: 17000
 
 webhooks:
+  # The directory where webhook certificates will be generated.
   certsDir: "/tmp/k8s-webhook-server/serving-certs"
   # failurePolicy of the webhook, Fail or Ignore
   failurePolicy: Fail
@@ -83,9 +84,13 @@ manager:
       port: 8081
       path: /readyz
   metrics:
+    # The address the metric endpoint binds to.
     bindAddress: 127.0.0.1:8080
   command:
     - /manager
+
+  # Enable leader election for controller manager.
+  # Enabling this will ensure there is only one active controller manager.
   enableLeaderElection: false
   logLevel: INFO # Available levels [DEBUG|INFO|WARN|ERROR|DPANIC|PANIC|FATAL]
 
