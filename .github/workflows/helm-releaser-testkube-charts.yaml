@@ -13,8 +13,8 @@ env:
   GKE_CLUSTER_NAME_DEV: ${{ secrets.GKE_CLUSTER_NAME_DEV }} # Add your cluster name here.
   GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube # Add your deployment name here.
-  TEST_SUITE_FILE_NAME: TestKube-Sanity.postman_collection.json
-  TEST_SUITE_FILE_PATH: test/postman
+  POSTMAN_TEST_FILE_NANE: TestKube-Sanity.postman_collection.json
+  POSTMAN_TEST_FILE_PATH: test/postman
 
 jobs:
   release_charts:
@@ -255,12 +255,12 @@ jobs:
           bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
 
           # Downloading test suite:
-          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.TEST_SUITE_FILE_PATH }}/${{ env.TEST_SUITE_FILE_NAME }}
+          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }}
 
           # Running Test suite:
           kubectl -n testkube delete test sanity || true
           kubectl -n testkube delete secret sanity-secrets || true
-          kubectl testkube create test -f ./${{ env.TEST_SUITE_FILE_NAME }} --name sanity --type postman/collection
+          kubectl testkube create test -f ./${{ env.POSTMAN_TEST_FILE_NANE }} --name sanity --type postman/collection
           kubectl testkube run test sanity -f -p api_uri=http://testkube-api-server:8088 -p test_api_uri=http://testkube-api-server:8088 -p test_type=postman/collection -p test_name=fill-me -p execution_name=fill-me
 
   notify_slack_if_test_suite_dev_succeeds:
