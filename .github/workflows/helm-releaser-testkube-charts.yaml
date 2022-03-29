@@ -14,7 +14,7 @@ env:
   GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube # Add your deployment name here.
   TEST_SUITE_FILE_NAME: TestKube-Sanity.postman_collection.json
-  TEST_SUITE_FILE_PATH: test/e2e
+  TEST_SUITE_FILE_PATH: test/postman
 
 jobs:
   release_charts:
