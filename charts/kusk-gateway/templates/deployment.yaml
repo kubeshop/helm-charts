@@ -41,7 +41,6 @@ spec:
           - --v=10
           image: gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0
           imagePullPolicy: IfNotPresent
-          name: kube-rbac-proxy
           ports:
           - containerPort: 8443
             name: https
@@ -49,14 +48,19 @@ spec:
           resources:
           {{- toYaml .Values.kubeRBACProxy.resources | nindent 12 }}
         - name: manager
+          envFrom:
+            - configMapRef:
+                name: kusk-gateway-manager
           securityContext:
             {{- toYaml .Values.manager.podSecurityContext | nindent 12 }}
           image: "{{ required "Image repository is required"  .Values.manager.image.repository | }}:{{ .Values.manager.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.manager.image.pullPolicy }}
+          {{- if .Values.manager.args }}
           args:
           {{- toYaml .Values.manager.args |nindent 12 }}
+          {{- end }}
           command:
-          {{- toYaml .Values.manager.command |nindent 12}}
+          {{- toYaml .Values.manager.command | nindent 12 }}
           ports:
             - name: xds
               containerPort: 18000
