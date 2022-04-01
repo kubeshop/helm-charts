@@ -16,7 +16,7 @@ otherwise EnvoyFleet service ExternlIP address will be in Pending state forever.
 Add repo:
 
 ```sh
-helm repo add kubesop https://kubeshop.github.io/helm-charts
+helm repo add kubeshop https://kubeshop.github.io/helm-charts
 helm repo update
 
 ```
