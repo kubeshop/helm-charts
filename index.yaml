@@ -1343,9 +1343,9 @@ entries:
     version: 0.5.51-testing2
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T08:34:45.953919496Z"
+    created: "2021-10-12T09:23:17.904273686Z"
     description: A Helm chart for Api-server
-    digest: d52ac371b029480e05e9adbd2efb427f619a6781e82a91b9585c09484069bc1b
+    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
     name: api-server
     type: application
     urls:
@@ -1353,9 +1353,9 @@ entries:
     version: 0.5.51-testing
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T09:23:17.904273686Z"
+    created: "2021-10-12T08:07:11.059151099Z"
     description: A Helm chart for Api-server
-    digest: c9563a5035210d354c6581d9dfd3e4d822c9642c8b162f9d6180911da110a6f2
+    digest: f919c6b4d10fe618972304ad7be7d6bf83b7a122574516890bca7e937a976241
     name: api-server
     type: application
     urls:
@@ -1373,9 +1373,9 @@ entries:
     version: 0.5.51-testing
   - apiVersion: v2
     appVersion: 0.5.51
-    created: "2021-10-12T08:07:11.059151099Z"
+    created: "2021-10-12T08:34:45.953919496Z"
     description: A Helm chart for Api-server
-    digest: f919c6b4d10fe618972304ad7be7d6bf83b7a122574516890bca7e937a976241
+    digest: d52ac371b029480e05e9adbd2efb427f619a6781e82a91b9585c09484069bc1b
     name: api-server
     type: application
     urls:
@@ -7768,4 +7768,22 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
-generated: "2022-03-31T13:51:46.883620053Z"
+  tracetest:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2022-04-01T07:54:56.48193091Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.1.12
+    description: A Helm chart for Trace Test
+    digest: a53a0ef14214276fa0edd1ff6540cbf1ea0a526920abb9804a07b8b6fadff12c
+    home: https://github.com/kubeshop/helm-charts
+    name: tracetest
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-04-01T07:54:56.486691215Z"
