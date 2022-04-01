@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "tracetest.fullname" . }}
+  labels:
+    {{- include "tracetest.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+    postgresConnString: "host={{ include "postgresql.primary.fullname" . }}-postgresql user=postgres password={{.Values.global.postgresql.auth.postgresPassword}} port=5432 sslmode=disable"
+    {{ if eq .Values.traceBackend "jaeger" }}
+    jaegerConnectionConfig:
+      {{- toYaml .Values.jaegerConnectionConfig | nindent 6 }}
+    {{ end}} 
+    {{ if eq .Values.traceBackend "tempo" }}
+    tempoConnectionConfig:
+      {{- toYaml .Values.tempoConnectionConfig | nindent 6 }}
+    {{ end}} 
+
+---
