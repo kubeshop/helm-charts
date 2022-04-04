@@ -2073,6 +2073,28 @@ entries:
     version: 0.5.0
   kusk-gateway:
   - apiVersion: v2
+    appVersion: v1.0.0-beta2
+    created: "2022-04-04T14:22:28.230052567Z"
+    dependencies:
+    - condition: installCRDs
+      name: kusk-gateway-crds
+      repository: ""
+      version: 0.0.1
+    description: A Helm chart for Kusk Gateway
+    digest: 0d332b9b617a5fd70b3e31c5b4fc94e026bd7ceb001935d6be06a04a722dacd3
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.16/kusk-gateway-0.0.16.tgz
+    version: 0.0.16
+  - apiVersion: v2
     appVersion: v0.0.0-beta1
     created: "2022-03-25T16:47:51.199582104Z"
     dependencies:
@@ -7956,4 +7978,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-04-04T14:07:19.120531759Z"
+generated: "2022-04-04T14:22:28.239345084Z"
