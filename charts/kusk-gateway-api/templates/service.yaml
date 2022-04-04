@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kusk-gateway-api.fullname" . }}
+  annotations:
+    kusk-gateway/openapi-url: https://raw.githubusercontent.com/kubeshop/kuskgateway-api-server/{{ .Values.image.tag | default .Chart.AppVersion }}/api/openapi.yaml
+    {{- include "kusk-gateway-api.labels" . | nindent 4 }} 
+  labels:
+    {{- include "kusk-gateway-api.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kusk-gateway-api.selectorLabels" . | nindent 4 }}
