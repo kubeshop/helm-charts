@@ -31,3 +31,5 @@ Chart.lock
 .kube
 # Helm `dep up` charts
 **/charts/*.tgz
+
+.monokle
