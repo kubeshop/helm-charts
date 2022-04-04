@@ -101,8 +101,8 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
-api-server:
-  nameOverride: "api-server"
+testkube-api:
+  nameOverride: "testkube-api"
   fullnameOverride: "testkube-api-server"
   image:
     repository: kubeshop/testkube-api-server

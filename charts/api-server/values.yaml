@@ -1,4 +1,4 @@
-# Default values for api-server.
+# Default values for testkube-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -11,7 +11,7 @@ image:
   # tag: "0.11.13"
 
 imagePullSecrets: []
-nameOverride: "api-server"
+nameOverride: "testkube-api"
 fullnameOverride: "testkube-api-server"
 
 mongodb:
