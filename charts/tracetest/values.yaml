@@ -2,16 +2,14 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 #
-global:
-  postgresql:
-    auth:
-      postgresPassword: "postgres"
-      # TODO
-      #username: "postgres"
-      #password: "postgres"
 postgresql:
+  enabled: true
   architecture: standalone
-architecture: standalone
+  auth:
+    database: "tracetest"
+    username: "tracetest"
+    password: not-secure-database-password
+    existingSecret: ""
 
 traceBackend: jaeger
 jaegerConnectionConfig:

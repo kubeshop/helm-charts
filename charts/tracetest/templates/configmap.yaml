@@ -6,7 +6,7 @@ metadata:
     {{- include "tracetest.labels" . | nindent 4 }}
 data:
   config.yaml: |-
-    postgresConnString: "host={{ include "postgresql.primary.fullname" . }}-postgresql user=postgres password={{.Values.global.postgresql.auth.postgresPassword}} port=5432 sslmode=disable"
+    postgresConnString: "host={{ include "tracetest.postgresql.fullname" . }} user={{.Values.postgresql.auth.username}} password={{.Values.postgresql.auth.password}}  port=5432 sslmode=disable"
     {{ if eq .Values.traceBackend "jaeger" }}
     jaegerConnectionConfig:
       {{- toYaml .Values.jaegerConnectionConfig | nindent 6 }}
