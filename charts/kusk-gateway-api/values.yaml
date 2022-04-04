@@ -8,7 +8,7 @@ image:
   repository: kubeshop/kusk-gateway-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
