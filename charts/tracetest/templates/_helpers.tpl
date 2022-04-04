@@ -43,6 +43,36 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
 {{/*
+Create a default fully qualified postgresql name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+*/}}
+{{- define "tracetest.postgresql.fullname" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
+{{- end -}}
+
+
+{{- define "tracetest.database.encryptedPassword" -}}
+  {{- include "tracetest.database.rawPassword" . | b64enc | quote -}}
+{{- end -}}
+
+{{- define "tracetest.database.rawPassword" -}}
+{{- if .Values.postgresql.enabled }}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.postgresPassword .Values.postgresql.auth.postgresPassword -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.postgresPassword -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.postgresPassword -}}
+    {{- end -}}
+{{- else -}}
+    {{- .Values.externalDatabase.password -}}
+{{- end -}}
+{{- end -}}
+
+
+{{/*
 Selector labels
 */}}
 {{- define "tracetest.selectorLabels" -}}

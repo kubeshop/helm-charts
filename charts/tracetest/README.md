@@ -1,6 +1,6 @@
-# TraceTest
+# Tracetest
 
-This is the Helm chart for [TraceTest](https://github.com/kubeshop/tracetest) installation.
+This is the Helm chart for [Tracetest](https://github.com/kubeshop/tracetest) installation.
 
 ## Installation
 
