@@ -102,7 +102,7 @@ mongodb:
     clusterIP: ""
 
 testkube-api:
-  nameOverride: "testkube-api"
+  nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
     repository: kubeshop/testkube-api-server
