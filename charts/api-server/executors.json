@@ -11,7 +11,7 @@
         "name": "cypress-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-cypress-executor:0.7.5",
+            "image": "kubeshop/testkube-cypress-executor:0.7.6-beta001",
             "types":["cypress/project"]
         }
     },
