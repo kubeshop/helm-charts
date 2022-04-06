@@ -1,15 +1,13 @@
-# Default values for kusk-gateway-api.
+# Default values for kusk-gateway-dashboard.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+enabled: true
 
 replicaCount: 1
 
-kusk-gateway-dashboard:
-  enabled: true
-
 image:
-  repository: kubeshop/kusk-gateway-api
-  pullPolicy: Always
+  repository: kubeshop/kusk-gateway-dashboard
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 

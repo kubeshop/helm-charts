@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kusk-gateway-dashboard.fullname" . }}
+  labels:
+    {{- include "kusk-gateway-dashboard.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kusk-gateway-dashboard.selectorLabels" . | nindent 4 }}

@@ -1,0 +1,18 @@
+apiVersion: gateway.kusk.io/v1alpha1
+kind: StaticRoute
+metadata:
+  name: {{ include "kusk-gateway-dashboard.fullname" . }}
+  labels:
+    {{- include "kusk-gateway-dashboard.labels" . | nindent 4 }} 
+spec:
+  hosts: [ "localhost", "*"]
+  paths:
+  # Root goes to frontend service
+    /: 
+       get:
+        route:
+         upstream:
+            service:
+              namespace: {{ .Release.Namespace }}
+              name: {{ include "kusk-gateway-dashboard.fullname" . }}
+              port: {{ .Values.service.port }}
