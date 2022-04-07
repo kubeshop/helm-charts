@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "kusk-gateway-dashboard.fullname" . }}
+  name: {{ include "dashboard.fullname" . }}
   labels:
-    {{- include "kusk-gateway-dashboard.labels" . | nindent 4 }}
+    {{- include "dashboard.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "kusk-gateway-dashboard.selectorLabels" . | nindent 6 }}
+      {{- include "dashboard.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "kusk-gateway-dashboard.selectorLabels" . | nindent 8 }}
+        {{- include "dashboard.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "kusk-gateway-dashboard.serviceAccountName" . }}
+      serviceAccountName: {{ include "dashboard.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: REACT_APP_API_ENDPOINT
-            value: http://{{ include "kusk-gateway-api.fullname" . }}.{{ .Release.Namespace }}
+            value: http://{{ include "kusk-gateway-api.fullname" . | trimSuffix "-dashboard" }}.{{ .Release.Namespace }}
           ports:
             - name: http
               containerPort: 80

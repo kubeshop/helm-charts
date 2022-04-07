@@ -4,7 +4,7 @@
 
 replicaCount: 1
 
-kusk-gateway-dashboard:
+dashboard:
   enabled: true
 
 image:

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: kusk-gateway-dashboard
-description: A Helm chart for Kubernetes
+name: dashboard
+description: A Helm chart for Kusk Gateway API's dashboard
 
 # A chart can be either an 'application' or a 'library' chart.
 #

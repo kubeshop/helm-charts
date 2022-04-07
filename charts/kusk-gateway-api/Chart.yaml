@@ -10,8 +10,8 @@ sources:
   - "https://github.com/kubeshop/helm-charts/tree/main/charts"
 
 dependencies:
-  - name: kusk-gateway-dashboard
-    condition: kusk-gateway-dashboard.enabled
+  - name: dashboard
+    condition: dashboard.enabled
 
 keywords:
   - "kusk-gateway"

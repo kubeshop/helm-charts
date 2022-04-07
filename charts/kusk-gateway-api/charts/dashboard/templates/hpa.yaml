@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "kusk-gateway-dashboard.fullname" . }}
+  name: {{ include "dashboard.fullname" . }}
   labels:
-    {{- include "kusk-gateway-dashboard.labels" . | nindent 4 }}
+    {{- include "dashboard.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "kusk-gateway-dashboard.fullname" . }}
+    name: {{ include "dashboard.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
