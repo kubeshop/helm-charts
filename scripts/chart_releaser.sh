@@ -28,7 +28,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-# Getting api-server chart version based on the pushed TAG:
+# Getting testkube-api chart version based on the pushed TAG:
 version_full=$(echo $RELEASE_VERSION | sed 's/^v//')
 echo "Version recieved: $version_full"
 
@@ -83,9 +83,9 @@ then
     if [[ $executor_name != "" ]]
     then
         # Editing TestKube's executors.yaml if tag was pushed to main chart. E.G. to testKube:
-        sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$version_full\",/g" ../charts/api-server/executors.json
+        sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$version_full\",/g" ../charts/testkube-api/executors.json
         echo -e "\nChecking if TestKube's executors.json ($executor_name executor) has been updated:\n"
-        grep -iE image ../charts/api-server/executors.json | grep $executor_name
+        grep -iE image ../charts/testkube-api/executors.json | grep $executor_name
     fi
 else
     # No reason to edit executors.json image tags as it's not a Executors' repo/tag.

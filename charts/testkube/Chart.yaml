@@ -12,10 +12,10 @@ dependencies:
     condition: mongodb.enabled
     version: 10.0.0
     repository: https://charts.bitnami.com/bitnami
-  - name: api-server
+  - name: testkube-api
     version: 0.11.16
     #repository: https://kubeshop.github.io/helm-charts
-    repository: "file://../api-server"
+    repository: "file://../testkube-api"
   - name: testkube-dashboard
     version: 1.0.10
     #repository: https://kubeshop.github.io/helm-charts

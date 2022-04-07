@@ -26,7 +26,7 @@ testkube-helm-charts` to see the charts.
 
 The following [TestKube](https://github.com/kubeshop/testkube/) Helm Charts are in this project
  
-- `api-server`: the TestKube API Server
+- `testkube-api`: the TestKube API Server
 - `testkube-dashboard`: the TestKube Dashboard for UI interactions with the API Server
 - `testkube-operator`: the TestKube Operator
 - `testkube`: the main TestKube chart - [Installation Instructions](https://kubeshop.github.io/testkube/installing/#manual-testkube-helm-charts-installation)

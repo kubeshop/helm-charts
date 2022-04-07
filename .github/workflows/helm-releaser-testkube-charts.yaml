@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - "charts/testkube**"
-      - "charts/api-server/**"
+      - "charts/testkube-api/**"
     branches:
       - main
 
