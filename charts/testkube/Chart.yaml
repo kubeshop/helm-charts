@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube.
 type: application
-version: 0.9.92
+version: 0.9.93
 dependencies:
   - name: testkube-operator
     version: 0.12.0
