@@ -7516,6 +7516,17 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-0.6.26/testkube-0.6.26.tgz
     version: 0.6.26
+  testkube-api:
+  - apiVersion: v2
+    appVersion: 0.11.16
+    created: "2022-04-07T10:58:40.923903562Z"
+    description: A Helm chart for Testkube api
+    digest: 4f862b5df046b99c89f01e3a254ed983851fa0b6ebbaa3118af724d8a0327acc
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-0.11.16/testkube-api-0.11.16.tgz
+    version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
     appVersion: 1.0.10
@@ -8336,4 +8347,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-04-07T08:53:08.419301633Z"
+generated: "2022-04-07T10:58:40.930632898Z"
