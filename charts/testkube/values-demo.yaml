@@ -128,10 +128,10 @@ testkube-api:
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-demo
       # add an annotation indicating the issuer to use.
-      cert-manager.io/cluster-issuer: letsencrypt-prod
+      # cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
       # or a new one is created specifically for the HTTP01 challenge.
-      acme.cert-manager.io/http01-edit-in-place: "true"
+      # acme.cert-manager.io/http01-edit-in-place: "true"
     path: /results/(v\d/.*)
     hosts:
       - demo.testkube.io
