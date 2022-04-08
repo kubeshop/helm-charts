@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: REACT_APP_API_ENDPOINT
-            value: http://{{ include "kusk-gateway-api.fullname" . | trimSuffix "-dashboard" }}.{{ .Release.Namespace }}
+            value: "{{ .Values.apiServerEndpoint }}"
           ports:
             - name: http
               containerPort: 80

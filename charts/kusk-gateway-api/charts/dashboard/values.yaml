@@ -5,6 +5,8 @@ enabled: true
 
 replicaCount: 1
 
+apiServerEndpoint: ""
+
 image:
   repository: kubeshop/kusk-gateway-dashboard
   pullPolicy: IfNotPresent
