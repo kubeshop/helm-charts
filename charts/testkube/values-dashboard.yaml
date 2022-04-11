@@ -133,15 +133,15 @@ testkube-api:
       # or a new one is created specifically for the HTTP01 challenge.
       acme.cert-manager.io/http01-edit-in-place: "true"
       nginx.ingress.kubernetes.io/server-snippet: |
-      set $gethttpmethod 0;
+        set $gethttpmethod 0;
 
-      if ( $request_method = GET ){
-        set $gethttpmethod 1;
-      }
+        if ( $request_method = GET ){
+          set $gethttpmethod 1;
+        }
 
-      if ( $gethttpmethod != 1 ) {
-        return 401;
-      }
+        if ( $gethttpmethod != 1 ) {
+          return 401;
+        }
     path: /results/(v\d/.*)
     hosts:
       - dashboard.testkube.io
