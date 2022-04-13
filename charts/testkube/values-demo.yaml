@@ -132,6 +132,31 @@ testkube-api:
       # controls whether the ingress is modified ‘in-place’,
       # or a new one is created specifically for the HTTP01 challenge.
       # acme.cert-manager.io/http01-edit-in-place: "true"
+      nginx.ingress.kubernetes.io/server-snippet: |
+        set $methodallowed "";
+        set $pathallowed "";
+
+        if ( $request_method = GET ){
+          set $methodallowed "true";
+          set $pathallowed "true";
+        }
+
+        if ( $request_method = POST ){
+          set $methodallowed "true";
+        }      
+
+        if ( $uri ~ "^(.*)/tests/(.*)/executions$" ){
+          set $pathallowed "true";
+        }  
+
+        if ( $uri ~ "^(.*)/test-suites/(.*)/executions$" ){
+          set $pathallowed "true";
+        }
+
+        set $condition "$methodallowed+$pathallowed";
+        if ( $condition != "true+true" ) {
+          return 401;
+        }
     path: /results/(v\d/.*)
     hosts:
       - demo.testkube.io
