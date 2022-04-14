@@ -115,6 +115,9 @@ testkube-api:
     port: 8088
   minio:
     enabled: true
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
   ingress:
     enabled: true
     annotations:
