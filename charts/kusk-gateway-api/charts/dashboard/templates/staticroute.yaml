@@ -1,0 +1,20 @@
+apiVersion: gateway.kusk.io/v1alpha1
+kind: StaticRoute
+metadata:
+  name: dashboard
+spec:
+  fleet:
+    name: {{ .Values.envoyfleet.name }}
+    namespace: {{ .Values.envoyfleet.namespace }}
+  # should work with localhost, example.org
+  hosts: [ "localhost", "*"]
+  paths:
+  # Root goes to frontend service
+    /: 
+       get:
+        route:
+         upstream:
+            service:
+              namespace: {{ .Release.Namespace }}
+              name: {{ include "dashboard.fullname" . }}
+              port: {{ .Values.service.port }}
