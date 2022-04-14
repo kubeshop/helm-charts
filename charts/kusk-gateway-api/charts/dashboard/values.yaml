@@ -2,6 +2,10 @@ enabled: true
 
 replicaCount: 1
 
+envoyfleet:
+  name: "default"
+  namespace: "default"
+
 image:
   repository: kubeshop/kusk-gateway-dashboard
   pullPolicy: Always
