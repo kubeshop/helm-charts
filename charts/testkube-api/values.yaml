@@ -53,6 +53,9 @@ service:
 
 minio:
   enabled: true
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 ingress:
   enabled: false
