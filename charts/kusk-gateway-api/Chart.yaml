@@ -11,6 +11,7 @@ sources:
 
 dependencies:
   - name: dashboard
+    version: 0.1.0
     condition: dashboard.enabled
 
 keywords:
