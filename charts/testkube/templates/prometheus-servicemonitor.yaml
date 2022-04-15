@@ -11,5 +11,5 @@ spec:
     port: http
   selector:
     matchLabels:
-      app.kubernetes.io/name: api-server
+      app.kubernetes.io/name: testkube-api
 {{ end }}

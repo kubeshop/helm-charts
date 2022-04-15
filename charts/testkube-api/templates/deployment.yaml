@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "api-server.fullname" . }}
+  name: {{ include "testkube-api.fullname" . }}
   labels:
-    {{- include "api-server.labels" . | nindent 4 }}
+    {{- include "testkube-api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "api-server.selectorLabels" . | nindent 6 }}
+      {{- include "testkube-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "api-server.selectorLabels" . | nindent 8 }}
+        {{- include "testkube-api.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -68,7 +68,7 @@ spec:
           - name: TESTKUBE_TEMPLATE_CRONJOB
             value: "{{ .Files.Get "cronjob_template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
-            value: "{{ include "api-server.fullname" . }}"
+            value: "{{ include "testkube-api.fullname" . }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

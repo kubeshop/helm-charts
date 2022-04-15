@@ -101,7 +101,7 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
-api-server:
+testkube-api:
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
@@ -115,6 +115,9 @@ api-server:
     port: 8088
   minio:
     enabled: true
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
   ingress:
     enabled: false
     annotations:
