@@ -1,16 +1,13 @@
+enabled: true
+
 replicaCount: 1
 
-envoyfleet: &envoyFleet
+envoyfleet:
   name: "default"
   namespace: "default"
 
-
-dashboard:
-  enabled: true
-  envoyfleet: *envoyFleet
-
 image:
-  repository: kubeshop/kusk-gateway-api
+  repository: kubeshop/kusk-gateway-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
