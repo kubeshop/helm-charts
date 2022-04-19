@@ -33,14 +33,6 @@ The following [TestKube](https://github.com/kubeshop/testkube/) Helm Charts are 
 
 > Please note that the testkube Helm chart will install all the needed charts. Including CRDs. It's an umbrella chart.
 
-## Kusk Gateway Helm Charts
-
-The following [Kusk Gateway](https://github.com/kubeshop/kusk-gateway/) Helm Charts are in this project
-
-- `kusk-gateway`: The main Kusk Gateway chart which installs the CRDs as part of the main install.
-- `kusk-gateway-envoyfleet`: The workhorse of Kusk Gateway; Creates a LoadBalancer envoy service which Kusk Gateway's manager component configures to route traffic to your APIs
-- `kusk-gateway-api`: Kusk Gateway's API server
-
 ## Prometheus service monitor 
 
 If have already configured Prometheus stack you can enble service monitor 
@@ -51,6 +43,15 @@ you'll need to add `prometheus.enabled=true` value to do this e.g.
 ```
 helm install testkube kubeshop/testkube --set prometheus.enabled=true
 ```
+
+## Kusk Gateway Helm Charts
+
+The following [Kusk Gateway](https://github.com/kubeshop/kusk-gateway/) Helm Charts are in this project
+
+- `kusk-gateway`: The main Kusk Gateway chart which installs the CRDs as part of the main install.
+- `kusk-gateway-envoyfleet`: The workhorse of Kusk Gateway; Creates a LoadBalancer envoy service which Kusk Gateway's manager component configures to route traffic to your APIs
+- `kusk-gateway-api`: Kusk Gateway's API server
+- `kusk-gateway-dashboard`: Subchart of Kusk Gateway's API server. Dashboard for UI interactions with the API Server.
 
 ## Other projects
 
