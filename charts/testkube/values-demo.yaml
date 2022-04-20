@@ -242,4 +242,3 @@ oauth2:
     cookieSecret: ""
     cookieSecure: "false"
     redirectUrl: "http://demo.testkube.io/oauth2/callback"
-  
