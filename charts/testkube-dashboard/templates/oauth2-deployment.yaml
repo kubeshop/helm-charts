@@ -17,7 +17,6 @@ spec:
       labels:
         {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
     spec:
-      serviceAccountName: {{ include "testkube-dashboard.serviceAccountName" . }}
       containers:
       - args:
         - --provider=github
