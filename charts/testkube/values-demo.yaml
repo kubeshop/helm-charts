@@ -224,3 +224,22 @@ testkube-dashboard:
           - demo.testkube.io
         secretName: testkube-demo-cert-secret
   apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
+
+oauth2:
+  enabled: false
+  name: oauth2-proxy
+  path: /oauth2
+  port: 4180
+  selector: k8s-app
+  image:
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    tag: latest
+    pullPolicy: Always
+  env:
+    clientId: ""
+    clientSecret: ""
+    githubOrg: ""
+    cookieSecret: ""
+    cookieSecure: "false"
+    redirectUrl: "http://demo.testkube.io/oauth2/callback"
+  

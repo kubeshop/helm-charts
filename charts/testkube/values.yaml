@@ -128,6 +128,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      # github oauth annotations
+      # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+      # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     path: /results/(v\d/executions.*)
     hosts:
       - demo.testkube.io
@@ -175,6 +178,10 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      # github oauth annotations
+      # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+      # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+      # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
     path: /
     hosts:
       - demo.testkube.io
@@ -184,3 +191,22 @@ testkube-dashboard:
           - demo.testkube.io
         secretName: testkube-demo-cert-secret
     apiServerEndpoint: "" #get the address of the endpoint or set it using helm
+
+oauth2:
+  enabled: false
+  name: oauth2-proxy
+  path: /oauth2
+  port: 4180
+  selector: k8s-app
+  image:
+    repository: quay.io/oauth2-proxy/oauth2-proxy
+    tag: latest
+    pullPolicy: Always
+  env:
+    clientId: ""
+    clientSecret: ""
+    githubOrg: ""
+    cookieSecret: ""
+    cookieSecure: "false"
+    redirectUrl: "http://demo.testkube.io/oauth2/callback"
+  

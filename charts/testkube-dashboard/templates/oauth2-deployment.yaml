@@ -1,0 +1,51 @@
+{{- if .Values.oauth2.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+  name: {{ .Values.oauth2.name }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: 1
+  {{- end }}
+  selector:
+    matchLabels:
+      {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+  template:
+    metadata:
+      labels:
+        {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+    spec:
+      serviceAccountName: {{ include "testkube-dashboard.serviceAccountName" . }}
+      containers:
+      - args:
+        - --provider=github
+        - --email-domain=*
+        - --upstream=file:///dev/null
+        - --show-debug-on-error=true
+        # Register a new application
+        # https://github.com/settings/applications/new
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          value: "{{ .Values.oauth2.env.clientId }}"
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          value: "{{ .Values.oauth2.env.clientSecret }}"
+        - name: OAUTH2_PROXY_GITHUB_ORG
+          value: "{{ .Values.oauth2.env.githubOrg }}"
+        # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          value: "{{ .Values.oauth2.env.cookieSecret }}"
+        - name: OAUTH2_PROXY_HTTP_ADDRESS
+          value: "0.0.0.0:{{ .Values.oauth2.port }}"
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "{{ .Values.oauth2.env.cookieSecure }}"
+        - name: OAUTH2_PROXY_REDIRECT_URL  
+          value: "{{ .Values.oauth2.env.redirectUrl }}"
+        image: "{{ .Values.oauth2.image.repository }}:{{ .Values.oauth2.image.tag }}"
+        imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
+        name: {{ .Values.oauth2.name }}
+        ports:
+        - containerPort: {{ .Values.oauth2.port }}
+          protocol: TCP
+{{- end }}
