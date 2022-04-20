@@ -22,17 +22,17 @@ spec:
     - host: {{ . | quote }}
       http:
         paths:
-          - path: {{ .Values.oauth2.path }}
+          - path: {{ $.Values.oauth2.path }}
             pathType: Prefix
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ .Values.oauth2.name }}
+                name: {{ $.Values.oauth2.name }}
                 port:
-                  number: {{ .Values.oauth2.port }}
+                  number: {{ $.Values.oauth2.port }}
               {{- else }}
-              serviceName: {{ .Values.oauth2.name }}
-              servicePort: {{ .Values.oauth2.port }}
+              serviceName: {{ $.Values.oauth2.name }}
+              servicePort: {{ $.Values.oauth2.port }}
               {{- end }}
     {{- end }}
   {{- if .Values.ingress.tls }}
