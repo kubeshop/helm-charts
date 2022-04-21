@@ -22,8 +22,6 @@ mongodb:
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true
-slackToken: ""
-slackChannelId: ""
 
 serviceAccount:
   # Specifies whether a service account should be created

@@ -156,9 +156,7 @@ testkube-api:
     # secretKey: mongo-dsn
 
   analyticsEnabled: true
-  slackToken: ""
-  slackChannelId: ""
-  
+
 prometheus:
   enabled: false
 
