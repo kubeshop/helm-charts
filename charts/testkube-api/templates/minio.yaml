@@ -89,6 +89,9 @@ spec:
             port: 9000
           initialDelaySeconds: 120
           periodSeconds: 20
+      {{- if  .Values.minio.serviceAccountName }}
+      serviceAccountName: {{ .Values.minio.serviceAccountName }}
+      {{- end }}
       {{- with .Values.minio.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
