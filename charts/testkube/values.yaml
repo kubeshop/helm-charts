@@ -128,9 +128,11 @@ testkube-api:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      # github oauth annotations
+      # github oauth annotations (empty by default)
       # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
       # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+      nginx.ingress.kubernetes.io/auth-url: ""
+      nginx.ingress.kubernetes.io/auth-signin: ""
     path: /results/(v\d/executions.*)
     hosts:
       - demo.testkube.io
@@ -178,10 +180,13 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      # github oauth annotations
+      # github oauth annotations (empty by default)
       # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
       # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
       # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
+      nginx.ingress.kubernetes.io/auth-url: ""
+      nginx.ingress.kubernetes.io/auth-signin: "" 
+      nginx.ingress.kubernetes.io/access-control-allow-origin: ""
     path: /
     hosts:
       - demo.testkube.io
