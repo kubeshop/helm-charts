@@ -32,7 +32,7 @@ helm install testkube kubeshop/testkube --create-namespace --namespace testkube
 
 ## Deinstallation
 
-NOTE: this will delete CRDs too.
+NOTE: this will delete CRDs too
 
 ```sh
 
