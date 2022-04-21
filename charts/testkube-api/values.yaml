@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.0.4"
+  # tag: "1.0.9"
 
 imagePullSecrets: []
 nameOverride: "api-server"
@@ -67,6 +67,9 @@ ingress:
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    # github oauth annotations
+    # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
   path: /results/(v\d/executions.*)
   hosts:
     - demo.testkube.io

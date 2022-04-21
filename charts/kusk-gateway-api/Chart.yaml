@@ -8,7 +8,7 @@ kubeVersion: ">=1.16.0-0"
 
 sources:
   - "https://github.com/kubeshop/helm-charts/tree/main/charts"
-
+ 
 keywords:
   - "kusk-gateway"
   - "kusk-gateway-api"
