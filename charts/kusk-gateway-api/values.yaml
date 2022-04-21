@@ -1,13 +1,8 @@
 replicaCount: 1
 
-envoyfleet: &envoyFleet
+envoyfleet:
   name: "default"
   namespace: "default"
-
-
-dashboard:
-  enabled: true
-  envoyfleet: *envoyFleet
 
 image:
   repository: kubeshop/kusk-gateway-api

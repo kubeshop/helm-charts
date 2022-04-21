@@ -8,13 +8,7 @@ kubeVersion: ">=1.16.0-0"
 
 sources:
   - "https://github.com/kubeshop/helm-charts/tree/main/charts"
-
-dependencies:
-  - name: dashboard
-    version: 0.1.0
-    repository: file://charts/dashboard
-    condition: dashboard.enabled
-
+ 
 keywords:
   - "kusk-gateway"
   - "kusk-gateway-api"
