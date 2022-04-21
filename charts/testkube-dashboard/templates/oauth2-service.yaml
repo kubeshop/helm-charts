@@ -1,0 +1,16 @@
+{{- if .Values.oauth2.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.oauth2.name }}
+  labels:
+    {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+spec:
+  ports:
+    - port: {{ .Values.oauth2.port }}
+      targetPort: {{ .Values.oauth2.port }}
+      protocol: TCP
+      name: http
+  selector:
+    {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+{{- end }}
