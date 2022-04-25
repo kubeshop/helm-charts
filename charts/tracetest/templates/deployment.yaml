@@ -50,6 +50,9 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: VERSION
+              value: {{ .Chart.AppVersion }}
           volumeMounts:
           - name: config
             mountPath: /app/config
