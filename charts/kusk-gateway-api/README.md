@@ -1,4 +1,4 @@
-# Kusk Gateway
+# Kusk Gateway API
 
 This is the Helm chart for the [Kusk Gateway API](https://github.com/kubeshop/kuskgateway-api-server) installation.
 
@@ -56,8 +56,9 @@ helm upgrade \
 
 ## Deinstallation
 
-NOTE: this will delete CRDs too.
-
 ```sh
 helm delete kusk-gateway-api -n kusk-system
+helm delete kusk-gateway-private-envoy-fleet -n kusk-system
+# NOTE: this will delete CRDs too.
+helm delete kusk-gateway -n kusk-system
 ```
