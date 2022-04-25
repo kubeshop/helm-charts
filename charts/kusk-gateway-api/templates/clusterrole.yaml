@@ -8,6 +8,7 @@ rules:
   resources:
   - apis
   verbs:
+  - create
   - get
   - list
   - watch
