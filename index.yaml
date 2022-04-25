@@ -9017,6 +9017,23 @@ entries:
     version: 0.5.8-testing
   tracetest:
   - apiVersion: v2
+    appVersion: v0.0.1-6
+    created: "2022-04-25T15:57:26.301005707Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.1.12
+    description: A Helm chart for Trace Test
+    digest: 2bd65bd6826e3e511c544090c80d08ac52e40834f4851281e2cb2db4dfad85bf
+    home: https://github.com/kubeshop/helm-charts
+    name: tracetest
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.4/tracetest-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
     appVersion: v0.0.1-5
     created: "2022-04-22T10:15:37.913066763Z"
     dependencies:
@@ -9084,4 +9101,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-04-25T12:21:57.89822369Z"
+generated: "2022-04-25T15:57:26.308089056Z"
