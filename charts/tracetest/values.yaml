@@ -99,3 +99,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+analytics:
+  enabled: false
+  measurementId: "G-WP4XXN1FYN"
+  secretKey: "QHaq8ZCHTzGzdcRxJ-NIbw"
