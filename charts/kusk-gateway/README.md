@@ -26,6 +26,7 @@ This install requires having cluster administrative rights.
 
 ```sh
 helm install kusk-gateway kubeshop/kusk-gateway -n kusk-system --create-namespace
+kubectl rollout status -w deployment/kusk-gateway-manager -n kusk-system
 ```
 
 Then install default EnvoyFleet to the cluster:
