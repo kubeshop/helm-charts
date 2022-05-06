@@ -3,7 +3,7 @@
         "name": "soapui-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-soapui-executor:0.0.1",
+            "image": "kubeshop/testkube-soapui-executor:0.1.0",
             "types":["soapui/xml"]
         }
     },
