@@ -53,14 +53,6 @@ spec:
           env:
             - name: VERSION
               value: {{ .Chart.AppVersion | quote }}
-            - name: ANALYTICS_ENABLED
-              value: {{ .Values.analytics.enabled | quote }}
-            {{ if .Values.analytics.enabled }}
-            - name: GOOGLE_ANALYTICS_MEASUREMENT_ID
-              value: {{ .Values.analytics.measurementId | quote }}
-            - name: GOOGLE_ANALYTICS_SECRET_KEY
-              value: {{ .Values.analytics.secretKey | quote }}
-            {{ end }}
           volumeMounts:
           - name: config
             mountPath: /app/config

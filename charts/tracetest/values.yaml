@@ -17,6 +17,13 @@ jaegerConnectionConfig:
   tls:
     insecure: true
 
+maxWaitTimeForTrace: 10s
+
+analytics:
+  enabled: false
+  measurementId: "G-WP4XXN1FYN"
+  secretKey: "QHaq8ZCHTzGzdcRxJ-NIbw"
+
 tempoConnectionConfig:
   endpoint: tempo:9095
   tls:
@@ -99,8 +106,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-analytics:
-  enabled: false
-  measurementId: "G-WP4XXN1FYN"
-  secretKey: "QHaq8ZCHTzGzdcRxJ-NIbw"
