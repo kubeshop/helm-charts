@@ -93,6 +93,8 @@ cliIngress:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "X-CLI-Ingress: true";
+  # uri to get user info (by default github one)
+  userInfoURI: "https://api.github.com/user"
   hosts:
     - demo.testkube.io
   tlsenabled: "false"

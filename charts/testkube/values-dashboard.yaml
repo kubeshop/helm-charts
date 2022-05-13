@@ -168,6 +168,23 @@ testkube-api:
       - hosts:
           - dashboard.testkube.io
         secretName: testkube-dashboard-cert-secret
+  cliIngress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-CLI-Ingress: true";
+    userInfoURI: "https://api.github.com/user"
+    hosts:
+      - demo.testkube.io
+    tlsenabled: "false"
+    tls: # < placing a host in the TLS config will indicate a certificate should be created
+      - hosts:
+          - demo.testkube.io
+        secretName: testkube-demo-cert-secret
   storage:
     endpoint_port: "9000"
     accessKeyId: "minio"

@@ -73,6 +73,8 @@ spec:
             value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
+          - name: TESTKUBE_USERINFO_URI
+            value:  "{{ .Values.cliIngress.userInfoURI }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
