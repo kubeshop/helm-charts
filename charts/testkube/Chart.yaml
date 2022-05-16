@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube.
 type: application
-version: 1.1.9
+version: 1.1.10
 dependencies:
   - name: testkube-operator
     version: 1.0.20
@@ -13,7 +13,7 @@ dependencies:
     version: 10.0.0
     repository: https://charts.bitnami.com/bitnami
   - name: testkube-api
-    version: 1.1.8
+    version: 1.1.9
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-api"
   - name: testkube-dashboard
