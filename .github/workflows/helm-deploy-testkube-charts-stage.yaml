@@ -3,6 +3,9 @@ name: Releasing Helm charts.
 on:
   repository_dispatch:
     types: [trigger-workflow]
+  push:
+    branches:
+      - deploy_to-stage-k8s-cluster
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -179,7 +182,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }}" --values ./charts/testkube/values-demo.yaml --debug
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --set testkube-api.image.tag=sha-8a6ed7b --values ./charts/testkube/values-demo.yaml --debug
 
 #  notify_slack_if_deploy_stage_succeeds:
 #    runs-on: ubuntu-latest
