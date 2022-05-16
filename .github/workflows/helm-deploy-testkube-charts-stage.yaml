@@ -59,7 +59,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --values ./charts/testkube/values-demo.yaml
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --values ./charts/testkube/values-stage.yaml
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest
