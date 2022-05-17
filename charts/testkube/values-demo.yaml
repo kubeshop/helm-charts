@@ -126,7 +126,7 @@ testkube-api:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-demo
@@ -155,6 +155,10 @@ testkube-api:
         if ( $uri ~ "^(.*)/test-suites/(.*)/executions$" ){
           set $pathallowed "true";
         }
+
+        if ( $uri ~ "^(.*)/tests$" ){
+          set $pathallowed "true";
+        }  
 
         set $condition "$methodallowed+$pathallowed";
         if ( $condition != "true+true" ) {
