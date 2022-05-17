@@ -156,7 +156,7 @@ testkube-api:
           set $pathallowed "true";
         }
 
-        if ( $uri ~ "^(.*)/tests" ){
+        if ( $uri ~ "^(.*)/tests$" ){
           set $pathallowed "true";
         }  
 
