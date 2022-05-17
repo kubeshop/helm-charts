@@ -242,4 +242,4 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://demo.testkube.io/oauth2/callback"
+      redirectUrl: "http://integration.testkube.io/oauth2/callback"
