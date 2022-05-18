@@ -13,12 +13,6 @@ keywords:
   - "kusk-gateway"
   - "openapi"
 
-# Installs CRDs if installCRD is true (either in values.yaml or via Helm command line flag)
-dependencies:
-  - name: kusk-gateway-crds
-    version: 0.0.1
-    condition: installCRDs
-
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
