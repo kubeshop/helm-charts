@@ -23,12 +23,6 @@ serviceAccount:
 rbac:
   create: true
 
-# installCRDs makes Custom Resource Definitions (CRDs) to be installed.
-# Only one version of CRDs could be installed in the cluster,
-# i.e. only one Helm release of Kusk Gateway Operator could be installed in the cluster.
-# Chart upgrades will upgrade CRDs, chart uninstall will remove them.
-installCRDs: true
-
 podAnnotations: {}
 
 extraPodLabels: {}
