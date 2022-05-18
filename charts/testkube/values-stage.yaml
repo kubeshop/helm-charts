@@ -156,6 +156,10 @@ testkube-api:
           set $pathallowed "true";
         }
 
+        if ( $uri ~ "^(.*)/tests$" ){
+          set $pathallowed "true";
+        }
+
         set $condition "$methodallowed+$pathallowed";
         if ( $condition != "true+true" ) {
           return 401;
