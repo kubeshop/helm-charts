@@ -9,6 +9,8 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.1.9"
+env:
+  executors: "{{ .Files.Get "executors.json" | b64enc }}"
 
 imagePullSecrets: []
 nameOverride: "api-server"

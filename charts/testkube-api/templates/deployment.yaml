@@ -64,7 +64,7 @@ spec:
           - name: "SCRAPPERENABLED"
             value:  "{{ .Values.storage.scrapperEnabled }}"
           - name: TESTKUBE_DEFAULT_EXECUTORS
-            value: "{{ .Files.Get "executors.json" | b64enc }}"
+            value: "{{ .Values.env.executors }}"  #"{{ .Files.Get "executors.json" | b64enc }}"
           - name: TESTKUBE_NAMESPACE
             value: "{{ .Release.Namespace }}"
           - name: TESTKUBE_TEMPLATE_JOB
