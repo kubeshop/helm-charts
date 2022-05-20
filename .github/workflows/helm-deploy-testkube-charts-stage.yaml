@@ -49,6 +49,7 @@ jobs:
           version: v3.4.0
 
       - name: Modify executors.json file if any executor Docker image was updated
+#        if: ${{ github.event.client_payload.image_tag_executor }}
         run: |
           export image_tag="sha-62caaec"
           export executor_name="postman"
