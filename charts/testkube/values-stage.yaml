@@ -101,7 +101,11 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
+testkube-operator:
+  enabled: true
+
 testkube-api:
+  enabled: true
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:

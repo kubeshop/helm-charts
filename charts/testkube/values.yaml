@@ -27,7 +27,7 @@ podAnnotations: {}
 
 podSecurityContext:
   {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 securityContext:
   {}
@@ -36,7 +36,7 @@ securityContext:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -48,7 +48,7 @@ ingress:
   annotations:
     {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
@@ -70,7 +70,7 @@ resources:
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
+#   memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -101,7 +101,11 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
+testkube-operator:
+  enabled: true
+
 testkube-api:
+  enabled: true
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
@@ -158,7 +162,7 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   slackChannelId: ""
-  
+
 prometheus:
   enabled: false
 
@@ -187,7 +191,7 @@ testkube-dashboard:
       # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
       # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
       nginx.ingress.kubernetes.io/auth-url: ""
-      nginx.ingress.kubernetes.io/auth-signin: "" 
+      nginx.ingress.kubernetes.io/auth-signin: ""
       nginx.ingress.kubernetes.io/access-control-allow-origin: ""
     path: /
     hosts:
