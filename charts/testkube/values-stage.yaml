@@ -1,4 +1,4 @@
-# Demo values for testkube.
+# Stage values for testkube.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -118,7 +118,7 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-  uiIngress:
+  ingress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
@@ -126,10 +126,10 @@ testkube-api:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-methods: "GET, POST"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
       # cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -158,7 +158,7 @@ testkube-api:
 
         if ( $uri ~ "^(.*)/tests$" ){
           set $pathallowed "true";
-        }  
+        }
 
         set $condition "$methodallowed+$pathallowed";
         if ( $condition != "true+true" ) {
@@ -166,28 +166,11 @@ testkube-api:
         }
     path: /results/(v\d/.*)
     hosts:
-      - demo.testkube.io
+      - integration.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - demo.testkube.io
-        secretName: testkube-demo-cert-secret
-  cliIngress:
-    enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$1
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        more_set_headers "X-CLI-Ingress: true";
-    userInfoURI: "https://api.github.com/user"
-    hosts:
-      - demo.testkube.io
-    tlsenabled: "false"
-    tls: # < placing a host in the TLS config will indicate a certificate should be created
-      - hosts:
-          - demo.testkube.io
+          - integration.testkube.io
         secretName: testkube-demo-cert-secret
   storage:
     endpoint_port: "9000"
@@ -232,7 +215,7 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-demo
+      kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -240,13 +223,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - demo.testkube.io
+      - integration.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - demo.testkube.io
+          - integration.testkube.io
         secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "integration.testkube.io/results" #get the address of the endpoint or set it using helm
   oauth2:
     enabled: false
     name: oauth2-proxy
@@ -263,4 +246,4 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://demo.testkube.io/oauth2/callback"
+      redirectUrl: "http://integration.testkube.io/oauth2/callback"

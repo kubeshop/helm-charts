@@ -13,12 +13,6 @@ keywords:
   - "kusk-gateway"
   - "openapi"
 
-# Installs CRDs if installCRD is true (either in values.yaml or via Helm command line flag)
-dependencies:
-  - name: kusk-gateway-crds
-    version: 0.0.1
-    condition: installCRDs
-
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -32,9 +26,9 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.0.20
+version: 0.0.22
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: "v1.0.0"
+appVersion: "v1.0.1"
