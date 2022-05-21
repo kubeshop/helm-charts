@@ -65,7 +65,9 @@ jobs:
         run:  |
           api_image_tag=$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
           operator_image_tag=$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
-          dashboard_image_tag=$(kubectl get deployment ttestkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
+          dashboard_image_tag=$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
+
+          echo $dashboard_image_tag $operator_image_tag $api_image_tag
 
       - name: Deploy if Executors' image is update
         if:  ${{ github.event.client_payload.image_tag_executor }}
