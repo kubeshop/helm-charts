@@ -61,11 +61,11 @@ jobs:
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Get image tag OF Testkube APi, Dashboard, Operator
+      - name: Get image tag of Testkube APi, Dashboard, Operator
         run:  |
-          api_image_tag=$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
-          operator_image_tag=$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
-          dashboard_image_tag=$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}')
+          api_image_tag=$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
+          operator_image_tag=$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
+          dashboard_image_tag=$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
 
           echo $dashboard_image_tag $operator_image_tag $api_image_tag
 
