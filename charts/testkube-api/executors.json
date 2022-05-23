@@ -4,7 +4,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-soapui-executor:0.1.0",
-            "types":["soapui/xml"]
+            "types":["soapui/xml"],
+            "content_types": ["string", "file-uri", "git-file"],
+            "features": ["artifacts"]
         }
     },
     {
@@ -12,7 +14,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-k6-executor:0.0.5",
-            "types":["k6/script"]
+            "types":["k6/script"],
+            "content_types": ["string", "file-uri", "git-file"],
+            "features": []
         }
     },
     {
@@ -20,7 +24,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-cypress-executor:1.0.0",
-            "types":["cypress/project"]
+            "types":["cypress/project"],
+            "content_types": ["git-dir"],
+            "features": ["artifacts", "junit-report"]
         }
     },
     {
@@ -28,7 +34,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-curl-executor:1.0.0",
-            "types":["curl/test"]
+            "types":["curl/test"],
+            "content_types": ["string", "file-uri", "git-file"],
+            "features": []
         }
     },
     {
@@ -36,7 +44,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-postman-executor:1.0.0",
-            "types":["postman/collection"]
+            "types":["postman/collection"],
+            "content_types": ["string", "file-uri", "git-file"],
+            "features": []
         }
     },
     {
