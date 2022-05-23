@@ -118,7 +118,7 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-  ingress:
+  uiIngress:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
@@ -168,6 +168,30 @@ testkube-api:
     hosts:
       - demo.testkube.io
     tlsenabled: "true"
+    tls: # < placing a host in the TLS config will indicate a certificate should be created
+      - hosts:
+          - demo.testkube.io
+        secretName: testkube-demo-cert-secret
+  cliIngress:
+    enabled: false
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        more_set_headers "X-CLI-Ingress: true";
+    # parameters to check oauth token (by default github one)
+    oauth:
+      clientID: ""
+      clientSecret: ""
+      authURL: "https://github.com/login/oauth/authorize"
+      tokenURL: "https://github.com/login/oauth/access_token"
+      scopes: ""
+    path: /results/(v\d/.*)
+    hosts:
+      - demo.testkube.io
+    tlsenabled: "false"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
           - demo.testkube.io
