@@ -4,7 +4,8 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-soapui-executor:0.1.0",
-            "types":["soapui/xml"]
+            "types":["soapui/xml"],
+            "content_types": ["string", "file-uri", "git-file"]
         }
     },
     {
@@ -12,7 +13,8 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-k6-executor:0.0.4",
-            "types":["k6/script"]
+            "types":["k6/script"],
+            "content_types": ["string", "file-uri", "git-file"]
         }
     },
     {
@@ -20,7 +22,8 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-cypress-executor:0.7.8",
-            "types":["cypress/project"]
+            "types":["cypress/project"],
+            "content_types": ["git-dir"]
         }
     },
     {
@@ -28,7 +31,9 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-curl-executor:0.7.8",
-            "types":["curl/test"]
+            "types":["curl/test"],
+            "content_types": ["string", "file-uri", "git-file"]
+
         }
     },
     {
@@ -36,7 +41,8 @@
         "executor": {
             "executor_type": "job",
             "image": "kubeshop/testkube-postman-executor:0.7.8",
-            "types":["postman/collection"]
+            "types":["postman/collection"],
+            "content_types": ["string", "file-uri", "git-file"]
         }
     },
     {
