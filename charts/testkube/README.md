@@ -8,7 +8,7 @@ This is the Helm chart for [Testkube](https://github.com/kubeshop/testkube) inst
 
 * Kubernetes cluster administration rights are required.
 
-* We heavily depend on [jetstack cert-manager](https://github.com/jetstack/cert-manager) for webhooks TLS configuration. If it is not installed in your cluster, then please install it with the official instructions [here](https://cert-manager.io/docs/installation/).
+* We heavily depend on [jetstack cert-manager](https://github.com/jetstack/cert-manager) for webhooks TLS configuration. If it is not installed in your cluster, then please install it with the official instructions [here](https://cert-manager.io/docs/installation/)
 
 ### Chart installation
 
