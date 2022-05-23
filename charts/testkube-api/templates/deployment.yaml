@@ -79,7 +79,7 @@ spec:
             value:  "{{ .Values.cliIngress.oauth.clientSecret }}"
           - name: TESTKUBE_OAUTH_AUTHURL
             value:  "{{ .Values.cliIngress.oauth.authURL }}"
-            - name: TESTKUBE_OAUTH_TOKENURL
+          - name: TESTKUBE_OAUTH_TOKENURL
             value:  "{{ .Values.cliIngress.oauth.tokenURL }}"
           - name: TESTKUBE_OAUTH_SCOPES
             value:  "{{ .Values.cliIngress.oauth.scopes }}"

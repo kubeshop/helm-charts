@@ -100,6 +100,7 @@ cliIngress:
     authURL: "https://github.com/login/oauth/authorize"
     tokenURL: "https://github.com/login/oauth/access_token"
     scopes: ""
+  path: /results/(v\d/.*)
   hosts:
     - demo.testkube.io
   tlsenabled: "false"
