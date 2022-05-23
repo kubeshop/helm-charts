@@ -2798,6 +2798,30 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.2.0/testkube-1.2.0.tgz
     version: 1.2.0
   - apiVersion: v2
+    created: "2022-05-23T14:25:17.915911772Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.0.23
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.0.0
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.1.18
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.1.7
+    description: A Helm chart for testkube.
+    digest: 62d7ed3e684bdc5fcd340740e7e6df3d061e4a47043712e03a6ff92376ad9c8a
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.1.29/testkube-1.1.29.tgz
+    version: 1.1.29
+  - apiVersion: v2
     created: "2022-05-23T14:04:07.438992265Z"
     dependencies:
     - name: testkube-operator
@@ -9246,6 +9270,16 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.2.0/testkube-api-1.2.0.tgz
     version: 1.2.0
   - apiVersion: v2
+    appVersion: 1.1.18
+    created: "2022-05-23T14:25:18.048959528Z"
+    description: A Helm chart for Testkube api
+    digest: 69178467e5f1223a2590ab7ef41b05727ff124e578db2395702750bc6bb2ba7a
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.1.18/testkube-api-1.1.18.tgz
+    version: 1.1.18
+  - apiVersion: v2
     appVersion: 1.1.17
     created: "2022-05-23T14:04:07.540823596Z"
     description: A Helm chart for Testkube api
@@ -10888,4 +10922,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-23T14:04:07.548661344Z"
+generated: "2022-05-23T14:25:18.056692467Z"
