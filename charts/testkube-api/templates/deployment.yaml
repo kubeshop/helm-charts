@@ -73,8 +73,16 @@ spec:
             value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
-          - name: TESTKUBE_USERINFO_URI
-            value:  "{{ .Values.cliIngress.userInfoURI }}"
+          - name: TESTKUBE_OAUTH_CLIENTID
+            value:  "{{ .Values.cliIngress.oauth.clientID }}"
+          - name: TESTKUBE_OAUTH_CLIENTSECRET
+            value:  "{{ .Values.cliIngress.oauth.clientSecret }}"
+          - name: TESTKUBE_OAUTH_AUTHURL
+            value:  "{{ .Values.cliIngress.oauth.authURL }}"
+            - name: TESTKUBE_OAUTH_TOKENURL
+            value:  "{{ .Values.cliIngress.oauth.tokenURL }}"
+          - name: TESTKUBE_OAUTH_SCOPES
+            value:  "{{ .Values.cliIngress.oauth.scopes }}"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
