@@ -58,7 +58,6 @@ jobs:
 
       - name: Installing repositories
         run: |
-#          helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Get image tag of Testkube APi, Dashboard, Operator
