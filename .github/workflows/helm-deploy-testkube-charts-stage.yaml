@@ -2,44 +2,38 @@ name: Releasing Testkube Helm charts to Stage k8s Cluster.
 
 on:
   repository_dispatch:
-    types: [trigger-workflow]
+    types: [trigger-workflow, trigger-workflow-dashboard, trigger-workflow-operator, trigger-workflow-executor]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER_NAME_STAGE: ${{ secrets.GKE_CLUSTER_NAME_STAGE }} # Add your cluster name here.
   GKE_ZONE_STAGE: ${{ secrets.GKE_ZONE_STAGE }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube # Add your deployment name here.
+  ENV: stage
   POSTMAN_TEST_FILE_NANE: TestKube-Sanity.postman_collection.json
   POSTMAN_TEST_FILE_PATH: test/postman
 
 jobs:
-  deploy-to-testkube-stage-gke:
-    name: Deploy
+  release_charts_if_image_updated:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.client_payload.ref }}
-      - run: echo ${{ github.event.client_payload.image_tag }}
 
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
         with:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           project_id: ${{ secrets.GKE_PROJECT }}
-
-      # Configure Docker to use the gcloud command-line tool as a credential
-      # helper for authentication
       - run: |-
           gcloud --quiet auth configure-docker
 
-      # Get the GKE credentials so we can deploy to the cluster
       - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
           cluster_name: ${{ env.GKE_CLUSTER_NAME_STAGE }}
@@ -51,25 +45,55 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Modify executors.json file if any executor Docker image was updated
+        if: ${{ github.event.client_payload.image_tag_executor }}
+        run: |
+          export image_tag=${{ github.event.client_payload.image_tag }}
+          export executor_name=${{ github.event.client_payload.executor_name }}
+          sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$image_tag\",/g" ./charts/testkube-api/executors.json
+          cat ./charts/testkube-api/executors.json
+
       - name: Installing repositories
         run: |
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      # Deploy the Docker image to the GKE cluster
-      - name: Deploy
-        run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --values ./charts/testkube/values-stage.yaml
+      - name: Get image tag of Testkube APi, Dashboard, Operator
+        id: vars
+        run: |
+          echo ::set-output name=api_image_tag::$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
+          echo ::set-output name=operator_image_tag::$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
+          echo ::set-output name=dashboard_image_tag::$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
+
+      - name: Deploy if Executors' image is update
+        if:  ${{ github.event.client_payload.image_tag_executor }}
+        run: |
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} helm-charts/testkube --namespace testkube --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml  --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
+
+      - name: Deploy if Testkube API image is updated
+        if: ${{ github.event.client_payload.image_tag }}
+        run: |
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} helm-charts/testkube --namespace testkube --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
+
+      - name: Deploy if Testkube Dashboard image is updated
+        if: ${{ github.event.client_payload.image_tag_dashboard }}
+        run: |
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} helm-charts/testkube --namespace testkube --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-dashboard.image.tag=${{ github.event.client_payload.image_tag_dashboard }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }}
+
+      - name: Deploy if Testkube Operator image is updated
+        if: ${{ github.event.client_payload.image_tag_operator }}
+        run: |
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} helm-charts/testkube --namespace testkube --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ github.event.client_payload.image_tag_operator }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }}
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest
-    needs: deploy-to-testkube-stage-gke
+    needs: release_charts_if_image_updated
     steps:
-      - name: Slack Notification if the helm release deployment to STAGE GKS succeeded.
+      - name: Slack Notification if the helm release deployment to ${{ env.ENV }} GKS succeeded.
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.deploy-to-testkube-stage-gke.result }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_TITLE: Helm chart release successfully deployed into ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
@@ -79,14 +103,14 @@ jobs:
 
   notify_slack_if_deploy_stage_failed:
     runs-on: ubuntu-latest
-    needs: deploy-to-testkube-stage-gke
-    if: always() && (needs.deploy-to-testkube-stage-gke.result == 'failure')
+    needs: release_charts_if_image_updated
+    if: always() && (needs.release_charts_if_image_updated.result == 'failure')
     steps:
-      - name: Slack Notification if the helm release deployment to STAGE GKS failed.
+      - name: Slack Notification if the helm release deployment to ${{ env.ENV }} GKS failed.
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.deploy-to-testkube-stage-gke.result }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_TITLE: Helm chart release failed to deploy into ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE! :boom:!
           SLACK_USERNAME: GitHub
@@ -95,9 +119,9 @@ jobs:
           SLACK_FOOTER: "Kubeshop --> TestKube"
 
   test_suite_run_stage:
-    name: test suite for STAGE GKE
+    name: test suite for GKE cluster
     runs-on: ubuntu-latest
-    needs: deploy-to-testkube-stage-gke
+    needs: release_charts_if_image_updated
     steps:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -156,7 +180,7 @@ jobs:
     needs: test_suite_run_stage
     if: always() && (needs.test_suite_run_stage.result == 'failure')
     steps:
-      - name: Slack Notification if the test suite run on STAGE GKS failed.
+      - name: Slack Notification if the test suite run on ${{ env.ENV }} GKS failed.
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testkube-logs
