@@ -53,7 +53,7 @@
         "name": "artillery-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-artillery-executor:0.0.2",
+            "image": "kubeshop/testkube-artillery-executor:0.0.3",
             "types":["artillery/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": []
