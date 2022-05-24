@@ -3,8 +3,9 @@ name: Releasing Testkube Helm charts to Stage k8s Cluster.
 on:
   repository_dispatch:
     types: [trigger-workflow, trigger-workflow-dashboard, trigger-workflow-operator, trigger-workflow-executor]
-  branches:
-    - test_stage-flow
+  push:
+    branches:
+      - test_stage-flow
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
