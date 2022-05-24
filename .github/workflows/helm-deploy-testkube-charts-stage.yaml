@@ -1,6 +1,6 @@
 name: Releasing Testkube Helm charts to Stage k8s Cluster.
 
-concurrency: ${{ env.ENV }}
+concurrency: staging_cluster
 
 on:
   repository_dispatch:
