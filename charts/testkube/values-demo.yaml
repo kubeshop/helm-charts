@@ -173,7 +173,7 @@ testkube-api:
           - demo.testkube.io
         secretName: testkube-demo-cert-secret
   cliIngress:
-    enabled: false
+    enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -188,7 +188,7 @@ testkube-api:
       authURL: "https://github.com/login/oauth/authorize"
       tokenURL: "https://github.com/login/oauth/access_token"
       scopes: ""
-    path: /results/(v\d/.*)
+    path: /api/(v\d/.*)
     hosts:
       - demo.testkube.io
     tlsenabled: "false"
