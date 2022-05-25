@@ -185,8 +185,7 @@ testkube-api:
     oauth:
       clientID: ""
       clientSecret: ""
-      authURL: "https://github.com/login/oauth/authorize"
-      tokenURL: "https://github.com/login/oauth/access_token"
+      provider: "github"
       scopes: ""
       path: /results/(v\d/.*)
     hosts:
