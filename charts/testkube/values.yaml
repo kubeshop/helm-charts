@@ -25,8 +25,7 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext:
-  {}
+podSecurityContext: {}
 # fsGroup: 2000
 
 securityContext:
@@ -184,12 +183,6 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   slackChannelId: ""
-<<<<<<< Updated upstream
-
-prometheus:
-  enabled: false
-=======
->>>>>>> Stashed changes
 
 testkube-dashboard:
   enabled: true
