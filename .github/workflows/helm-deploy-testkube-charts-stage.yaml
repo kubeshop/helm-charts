@@ -5,9 +5,7 @@ concurrency: staging_cluster
 on:
   repository_dispatch:
     types: [trigger-workflow, trigger-workflow-dashboard, trigger-workflow-operator, trigger-workflow-executor]
-  push:
-    branches:
-      - fix_chart-error
+
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -76,7 +74,7 @@ jobs:
           helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml  --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
 
       - name: Deploy if Testkube API image is updated
-    #    if: ${{ github.event.client_payload.image_tag }}
+        if: ${{ github.event.client_payload.image_tag }}
         run: |
           helm dependency update ./charts/testkube
           helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=sha-43c48a5 --set testkube-operator.image.tag=sha-cfdf1d7 --set testkube-dashboard.image.tag=sha-448f953
