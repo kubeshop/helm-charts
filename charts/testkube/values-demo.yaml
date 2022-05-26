@@ -111,7 +111,7 @@ testkube-api:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
-    # tag: "latest"
+    tag: "latest"
   service:
     type: ClusterIP
     port: 8088
