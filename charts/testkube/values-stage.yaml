@@ -102,6 +102,8 @@ mongodb:
     clusterIP: ""
 
 testkube-api:
+  prometheus:
+    enabled: false
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
@@ -213,9 +215,6 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   slackChannelId: ""
-
-prometheus:
-  enabled: false
 
 testkube-dashboard:
   enabled: true

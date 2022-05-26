@@ -38,10 +38,10 @@ The following [TestKube](https://github.com/kubeshop/testkube/) Helm Charts are 
 If have already configured Prometheus stack you can enble service monitor 
 for testkube API server to scrape metrics from it. 
 
-you'll need to add `prometheus.enabled=true` value to do this e.g. 
+you'll need to add `testkube-api.prometheus.enabled=true` value to do this e.g. 
 
 ```
-helm install testkube kubeshop/testkube --set prometheus.enabled=true
+helm install testkube kubeshop/testkube --set testkube-api.prometheus.enabled=true
 ```
 
 ## Kusk Gateway Helm Charts

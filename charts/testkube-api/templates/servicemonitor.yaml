@@ -2,14 +2,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: testkube-api-server
+  name: {{ include "testkube-api.fullname" . }}-servicemonitor
   labels:
     app: prometheus
 spec:
   endpoints:
-  - interval: 10s
+  - interval: 15s
     port: http
   selector:
     matchLabels:
-      app.kubernetes.io/name: testkube-api
+      app.kubernetes.io/name: {{ include "testkube-api.fullname" . }}
 {{ end }}
