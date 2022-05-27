@@ -214,7 +214,6 @@ testkube-api:
 
   analyticsEnabled: true
   slackToken: ""
-  slackChannelId: ""
 
 testkube-dashboard:
   enabled: true
