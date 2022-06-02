@@ -33,7 +33,7 @@ jobs:
         with:
           charts_dir: charts
         env:
-          CR_TOKEN: "${{ secrets.DEVOPS_GITHUB_TOKEN }}"
+          CR_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
           CR_SKIP_EXISTING: true
 
   notify_slack_if_helm_chart_release_fails:
