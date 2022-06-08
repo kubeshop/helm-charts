@@ -20,7 +20,7 @@ jaegerConnectionConfig:
 maxWaitTimeForTrace: 10s
 
 analytics:
-  enabled: false
+  enabled: true
 
 tempoConnectionConfig:
   endpoint: tempo:9095
