@@ -21,8 +21,6 @@ maxWaitTimeForTrace: 10s
 
 analytics:
   enabled: false
-  measurementId: "G-WP4XXN1FYN"
-  secretKey: "QHaq8ZCHTzGzdcRxJ-NIbw"
 
 tempoConnectionConfig:
   endpoint: tempo:9095

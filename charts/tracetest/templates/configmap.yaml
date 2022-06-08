@@ -9,8 +9,6 @@ data:
     maxWaitTimeForTrace: {{.Values.maxWaitTimeForTrace}}
     googleAnalytics:
       enabled: {{.Values.analytics.enabled}}
-      measurementId: "{{.Values.analytics.measurementId}}"
-      secretKey: "{{.Values.analytics.secretKey}}"
     postgresConnString: "host={{ include "tracetest.postgresql.fullname" . }} user={{.Values.postgresql.auth.username}} password={{.Values.postgresql.auth.password}}  port=5432 sslmode=disable"
     {{ if eq .Values.traceBackend "jaeger" }}
     jaegerConnectionConfig:
