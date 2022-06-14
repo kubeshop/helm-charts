@@ -18,5 +18,7 @@ data:
     tempoConnectionConfig:
       {{- toYaml .Values.tempoConnectionConfig | nindent 6 }}
     {{ end}} 
+    telemetry:
+      {{- toYaml .Values.telemetry | nindent 6 }}
 
 ---
