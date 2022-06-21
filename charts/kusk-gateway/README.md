@@ -40,8 +40,6 @@ helm install kusk-gateway-envoyfleet kubeshop/kusk-gateway-envoyfleet -n kusk-sy
 NOTE: this will delete CRDs too.
 
 ```sh
-
 helm delete kusk-gateway-envoyfleet kusk-gateway -n kusk-system
 kubectl delete namespace kusk-system
-
 ```
