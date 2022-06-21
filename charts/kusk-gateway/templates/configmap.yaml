@@ -7,6 +7,7 @@ data:
   LOG_LEVEL: {{ .Values.manager.logLevel }}
   METRICS_BIND_ADDR: {{ .Values.manager.metrics.bindAddress }}
   WEBHOOK_CERTS_DIR: {{ .Values.webhooks.certsDir }}
+  ANALYTICS_ENABLED: {{ .Values.analytics.enabled }}
 kind: ConfigMap
 metadata:
   name: kusk-gateway-manager
