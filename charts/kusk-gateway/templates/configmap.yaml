@@ -1,13 +1,13 @@
 apiVersion: v1
 data:
-  AGENT_MANAGER_BIND_ADDR: :{{ .Values.agentService.port }}
+  AGENT_MANAGER_BIND_ADDR: ":{{ .Values.agentService.port }}"
   ENABLE_LEADER_ELECTION: "{{ .Values.manager.enableLeaderElection }}"
-  ENVOY_CONTROL_PLANE_BIND_ADDR: :{{ .Values.xdsService.port }}
-  HEALTH_PROBE_BIND_ADDR: :{{ .Values.manager.health.liveness.port }}
-  LOG_LEVEL: {{ .Values.manager.logLevel }}
-  METRICS_BIND_ADDR: {{ .Values.manager.metrics.bindAddress }}
-  WEBHOOK_CERTS_DIR: {{ .Values.webhooks.certsDir }}
-  ANALYTICS_ENABLED: {{ .Values.analytics.enabled }}
+  ENVOY_CONTROL_PLANE_BIND_ADDR: ":{{ .Values.xdsService.port }}"
+  HEALTH_PROBE_BIND_ADDR: ":{{ .Values.manager.health.liveness.port }}"
+  LOG_LEVEL: "{{ .Values.manager.logLevel }}"
+  METRICS_BIND_ADDR: "{{ .Values.manager.metrics.bindAddress }}"
+  WEBHOOK_CERTS_DIR: "{{ .Values.webhooks.certsDir }}"
+  ANALYTICS_ENABLED: "{{ .Values.analytics.enabled }}"
 kind: ConfigMap
 metadata:
   name: kusk-gateway-manager
