@@ -6,7 +6,8 @@ metadata:
     {{- include "tracetest.labels" . | nindent 4 }}
 data:
   config.yaml: |-
-    maxWaitTimeForTrace: {{.Values.maxWaitTimeForTrace}}
+    poolingConfig:
+      {{- toYaml .Values.poolingConfig | nindent 6 }}
     googleAnalytics:
       enabled: {{.Values.analytics.enabled}}
     postgresConnString: "host={{ include "tracetest.postgresql.fullname" . }} user={{.Values.postgresql.auth.username}} password={{.Values.postgresql.auth.password}}  port=5432 sslmode=disable"
