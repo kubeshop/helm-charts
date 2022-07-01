@@ -12107,16 +12107,6 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.10.3/testkube-operator-0.10.3.tgz
     version: 0.10.3
   - apiVersion: v2
-    created: "2022-03-04T12:43:53.193142185Z"
-    description: A Helm chart for the testkube-operator (installs needed CRDs only
-      for now)
-    digest: 78ccb022979ffaa92d6c49ad167ce02a1bbb88ad9e95989b7b0d13c9c1ee0dea
-    name: testkube-operator
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.10.2-beta001/testkube-operator-0.10.2-beta001.tgz
-    version: 0.10.2-beta001
-  - apiVersion: v2
     created: "2022-03-04T06:04:52.896736056Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -12131,6 +12121,16 @@ entries:
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
     digest: 3441cab1dbeea80e02d659a0234b0bf8d43cb6664963e87277853a0bd7d8fb88
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.10.2-beta001/testkube-operator-0.10.2-beta001.tgz
+    version: 0.10.2-beta001
+  - apiVersion: v2
+    created: "2022-03-04T12:43:53.193142185Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 78ccb022979ffaa92d6c49ad167ce02a1bbb88ad9e95989b7b0d13c9c1ee0dea
     name: testkube-operator
     type: application
     urls:
@@ -12437,6 +12437,23 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
   tracetest:
+  - apiVersion: v2
+    appVersion: v0.5.6
+    created: "2022-07-01T19:00:28.122729276Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.1.12
+    description: A Helm chart for Trace Test
+    digest: f6a7ab650a6b70dbca1d0405cdc1e003ddfe7ffad777ac640d4697e2a8c2cead
+    home: https://github.com/kubeshop/helm-charts
+    name: tracetest
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.33/tracetest-0.1.33.tgz
+    version: 0.1.33
   - apiVersion: v2
     appVersion: v0.5.5
     created: "2022-06-30T18:14:48.158337505Z"
@@ -12998,4 +13015,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-01T06:48:30.8612472Z"
+generated: "2022-07-01T19:00:28.134423292Z"
