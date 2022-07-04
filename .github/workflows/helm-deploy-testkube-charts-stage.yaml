@@ -165,6 +165,7 @@ jobs:
           curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }}
 
           # Running Test suite:
+          kubectl testkube disable telemetry
           kubectl -n testkube delete test sanity || true
           kubectl -n testkube delete secret sanity-secrets || true
           kubectl testkube create test -f ./${{ env.POSTMAN_TEST_FILE_NANE }} --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
