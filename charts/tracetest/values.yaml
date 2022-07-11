@@ -10,12 +10,13 @@ postgresql:
     password: not-secure-database-password
     existingSecret: ""
 
-traceBackend: jaeger
-
-jaegerConnectionConfig:
-  endpoint: jaeger-query:16685
-  tls:
-    insecure: true
+tracingBackend:
+  dataStore:
+    type: jaeger
+    jaeger:
+      endpoint: jaeger-query:16685
+      tls:
+        insecure: true
 
 poolingConfig:
   maxWaitTimeForTrace: 30s
@@ -23,11 +24,6 @@ poolingConfig:
 
 analytics:
   enabled: true
-
-tempoConnectionConfig:
-  endpoint: tempo:9095
-  tls:
-    insecure: true
 
 telemetry:
   serviceName: tracetest
