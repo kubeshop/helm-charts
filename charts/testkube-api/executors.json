@@ -13,7 +13,7 @@
         "name": "gradle-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-gradle-executor:0.0.1",
+            "image": "kubeshop/testkube-gradle-executor:0.0.2",
             "types":["gradle/project", "gradle/test", "gradle/integrationTest"],
             "content_types": ["git-dir"],
             "features": []
