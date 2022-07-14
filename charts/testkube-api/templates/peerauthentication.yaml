@@ -1,0 +1,13 @@
+{{ if .Capabilities.APIVersions.Has "security.istio.io/v1beta1" -}}
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: {{ include "testkube-api.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "testkube-api.selectorLabels" . | nindent 6 }}
+  mtls:
+    mode: PERMISSIVE
+{{ end -}}
