@@ -225,6 +225,7 @@ rules:
   - v1
   resources:
   - secrets
+  - namespaces
   verbs:
   - get
   - list
