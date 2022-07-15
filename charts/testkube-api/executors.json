@@ -3,7 +3,7 @@
         "name": "maven-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-maven-executor:0.0.2",
+            "image": "kubeshop/testkube-maven-executor:0.0.3",
             "types":["maven/project", "maven/test", "maven/integration-test"],
             "content_types": ["git-dir"],
             "features": []
