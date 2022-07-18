@@ -53,7 +53,7 @@
         "name": "cypress-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-cypress-executor:1.1.1",
+            "image": "kubeshop/testkube-cypress-executor:1.1.2",
             "types":["cypress/project"],
             "content_types": ["git-dir"],
             "features": ["artifacts", "junit-report"]
