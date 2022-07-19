@@ -45,6 +45,7 @@ telemetry:
 server:
   telemetry:
     exporter: collector
+    applicationExporter: collector
     dataStore: jaeger
 
 replicaCount: 1
