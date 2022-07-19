@@ -13,7 +13,7 @@ data:
     postgresConnString: "host={{ include "tracetest.postgresql.fullname" . }} user={{.Values.postgresql.auth.username}} password={{.Values.postgresql.auth.password}}  port=5432 sslmode=disable"
     telemetry:
       {{- toYaml .Values.telemetry | nindent 6 }}
-    tracingBackend:
-      {{- toYaml .Values.tracingBackend | nindent 6 }}
+    server:
+      {{- toYaml .Values.server | nindent 6 }}
 
 ---
