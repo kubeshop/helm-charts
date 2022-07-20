@@ -176,9 +176,6 @@ spec:
                         commit:
                           description: commit id (sha) for checkout
                           type: string
-                        depth:
-                          description: history depth for git commits
-                          type: integer
                         path:
                           description:
                             if needed we can checkout particular path (dir
