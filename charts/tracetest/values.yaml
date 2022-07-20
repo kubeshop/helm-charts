@@ -10,14 +10,6 @@ postgresql:
     password: not-secure-database-password
     existingSecret: ""
 
-tracingBackend:
-  dataStore:
-    type: jaeger
-    jaeger:
-      endpoint: jaeger-query:16685
-      tls:
-        insecure: true
-
 poolingConfig:
   maxWaitTimeForTrace: 30s
   retryDelay: 5s
@@ -26,13 +18,35 @@ analytics:
   enabled: true
 
 telemetry:
-  serviceName: tracetest
-  sampling: 100 # 100%
-  jaeger:
-    host: localhost
-    port: 6831
+  dataStores:
+    jaeger:
+      type: jaeger
+      jaeger:
+        endpoint: jaeger-query:16685
+        tls:
+          insecure: true
+
+    tempo:
+      type: tempo
+      tempo:
+        endpoint: tempo:9095
+        tls:
+          insecure: true
+
   exporters:
-    - jaeger
+    collector:
+      serviceName: tracetest
+      sampling: 100
+      exporter:
+        type: collector
+        collector:
+          endpoint: otel-collector:4317
+
+server:
+  telemetry:
+    exporter: collector
+    applicationExporter: collector
+    dataStore: jaeger
 
 replicaCount: 1
 
