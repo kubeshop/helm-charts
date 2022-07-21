@@ -204,6 +204,11 @@ spec:
                       description: uri of test content
                       type: string
                   type: object
+                executorArgs:
+                  description: additional executor binary arguments
+                  items:
+                    type: string
+                  type: array
                 name:
                   description: test execution custom name
                   type: string
