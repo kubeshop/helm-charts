@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ include "kusk-gateway-api.fullname" . }}
   annotations:
-    kusk-gateway/openapi-url: https://raw.githubusercontent.com/kubeshop/kuskgateway-api-server/{{ .Values.image.tag | default .Chart.AppVersion }}/api/openapi.yaml
-    kusk-gateway/path-prefix: /api
-    kusk-gateway/path-prefix-substitution: ""
-    kusk-gateway/envoy-fleet: {{ .Values.envoyfleet.name }}.{{ .Values.envoyfleet.namespace }}
+    gateway.kusk.io/openapi-url: https://raw.githubusercontent.com/kubeshop/kuskgateway-api-server/{{ .Values.image.tag | default .Chart.AppVersion }}/api/openapi.yaml
+    gateway.kusk.io/path-prefix: /api
+    gateway.kusk.io/path-prefix-substitution: ""
+    gateway.kusk.io/envoy-fleet: {{ .Values.envoyfleet.name }}.{{ .Values.envoyfleet.namespace }}
     {{- include "kusk-gateway-api.labels" . | nindent 4 }} 
   labels:
     {{- include "kusk-gateway-api.labels" . | nindent 4 }}
