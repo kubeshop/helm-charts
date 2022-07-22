@@ -3,7 +3,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.2",
+            "image": "kubeshop/testkube-ginkgo-executor:0.0.3",
             "types":["ginkgo/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": []
