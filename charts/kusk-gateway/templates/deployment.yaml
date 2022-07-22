@@ -62,6 +62,9 @@ spec:
           command:
           {{- toYaml .Values.manager.command | nindent 12 }}
           ports:
+            - containerPort: 19000
+              name: auth
+              protocol: TCP
             - name: xds
               containerPort: 18000
               protocol: TCP

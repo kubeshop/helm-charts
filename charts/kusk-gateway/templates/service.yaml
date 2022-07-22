@@ -38,6 +38,24 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: "kusk-gateway-auth-service"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "kusk-gateway.labels" . | nindent 4 }}
+    app.kubernetes.io/component: auth-service
+spec:
+  type: {{ .Values.authService.type }}
+  ports:
+    - port: {{ .Values.authService.port }}
+      targetPort: auth
+      protocol: TCP
+      name: auth
+  selector:
+    {{- include "kusk-gateway.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: {{ include "kusk-gateway.webhooksServiceName" . }}
   namespace: {{ .Release.Namespace }}
   labels:
