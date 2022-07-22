@@ -5,9 +5,6 @@ metadata:
   name: {{ include "testkube-api.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
-  selector:
-    matchLabels:
-      {{- include "testkube-api.selectorLabels" . | nindent 6 }}
   mtls:
     mode: PERMISSIVE
 {{ end -}}
