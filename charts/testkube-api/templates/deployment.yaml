@@ -46,7 +46,13 @@ spec:
           - name: TESTKUBE_ANALYTICS_ENABLED
             value: "{{ .Values.analyticsEnabled }}"
           - name: SLACK_TOKEN
-            value: "{{ .Values.slackToken }}"
+            value: "{{ .Values.slack.token }}"
+          - name: SLACK_IMAGE_FAILED
+            value: "{{ .Values.slack.imageFailed }}"
+          - name: SLACK_IMAGE_PASSED
+            value: "{{ .Values.slack.imagePassed }}"
+          - name: SLACK_IMAGE_PENDING
+            value: "{{ .Values.slack.imagePending }}"
           - name: "STORAGE_ENDPOINT"
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
           - name: "STORAGE_ACCESSKEYID"

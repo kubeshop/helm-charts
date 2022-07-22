@@ -22,7 +22,11 @@ mongodb:
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true
-slackToken: ""
+slack:
+  token: ""
+  imageFailed: "https://raw.githubusercontent.com/kubeshop/testkube/d3380bc4bf4534ef1fb88cdce5d346dca8898986/assets/imageFailed.png"
+  imagePassed: "https://raw.githubusercontent.com/kubeshop/testkube/d3380bc4bf4534ef1fb88cdce5d346dca8898986/assets/imagePassed.png"
+  imagePending: "https://raw.githubusercontent.com/kubeshop/testkube/d3380bc4bf4534ef1fb88cdce5d346dca8898986/assets/imagePending.png"
 
 serviceAccount:
   # Specifies whether a service account should be created
