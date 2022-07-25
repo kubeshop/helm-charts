@@ -6,7 +6,7 @@
             "image": "kubeshop/testkube-ginkgo-executor:0.0.3",
             "types":["ginkgo/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
-            "features": []
+            "features": ["artifacts", "junit-report"]
         }
     },
     {
