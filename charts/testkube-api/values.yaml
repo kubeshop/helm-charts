@@ -133,6 +133,7 @@ tolerations: []
 
 affinity: {}
 storage:
+  endpoint: ""
   endpoint_port: "9000"
   accessKeyId: "minio"
   accessKey: "minio123"
