@@ -2,10 +2,10 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube.
 type: application
-version: 1.3.103
+version: 1.3.104
 dependencies:
   - name: testkube-operator
-    version: 1.3.19
+    version: 1.3.20
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
   - name: mongodb
