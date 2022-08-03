@@ -18,6 +18,12 @@ spec:
         control-plane: controller-manager
     spec:
       containers:
+      - name: APISERVER_FULLNAME
+        value: "{{ .Values.service.apiFullname }}"
+      - name: APISERVER_PORT
+        value: "{{ .Values.service.apiPort }}"
+      - name: APISERVER_TEMPLATE_CRONJOB
+        value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
       - args:
         - --secure-listen-address=0.0.0.0:8443
         - --upstream=http://127.0.0.1:8080/
