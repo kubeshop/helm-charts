@@ -246,10 +246,12 @@ testkube-dashboard:
     path: /
     hosts:
       - demo.testkube.io
+      - dashboard.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
           - demo.testkube.io
+          - dashboard.testkube.io
         secretName: testkube-demo-cert-secret
   apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
   oauth2:
