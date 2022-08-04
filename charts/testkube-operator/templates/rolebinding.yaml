@@ -60,6 +60,4 @@ subjects:
   name: {{ include "testkube-operator.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
-
 {{- end -}}
-

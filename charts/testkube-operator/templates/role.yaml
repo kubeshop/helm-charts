@@ -209,8 +209,6 @@ rules:
   - create
   - patch
 
-{{- end -}}
-
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
@@ -232,3 +230,5 @@ rules:
   - update
   - watch
   - deletecollection
+
+{{- end -}}
