@@ -7,7 +7,7 @@ metadata:
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
   name: testkube-operator-mutating-webhook-configuration
 webhooks:
-- admissionReviewScriptVersions:
+- admissionReviewVersions:
   - v1
   clientConfig:
     service:
@@ -27,7 +27,8 @@ webhooks:
     resources:
     - scripts
   sideEffects: None
-- admissionReviewTestVersions:
+- admissionReviewVersions:
+  - v1
   - v2
   clientConfig:
     service:
@@ -57,7 +58,7 @@ metadata:
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
   name: testkube-operator-validating-webhook-configuration
 webhooks:
-- admissionReviewScriptVersions:
+- admissionReviewVersions:
   - v1
   clientConfig:
     service:
@@ -77,13 +78,14 @@ webhooks:
     resources:
     - scripts
   sideEffects: None
-- admissionReviewTestVersions:
+- admissionReviewVersions:
+  - v1
   - v2
   clientConfig:
     service:
       name: webhook-service
       namespace: system
-      path: /validate-tests-tests-testkube-io-v2-tests
+      path: /validate-tests-tests-testkube-io-v2-test
   failurePolicy: Fail
   name: vtest.kb.io
   rules:
