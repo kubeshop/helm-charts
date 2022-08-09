@@ -48,6 +48,26 @@ webhooks:
     resources:
     - tests
   sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-testsuites-tests-testkube-io-v1-testsuite
+  failurePolicy: Fail
+  name: mtestsuite.kb.io
+  rules:
+  - apiGroups:
+    - testsuites.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testsuites
+  sideEffects: None
 
 ---
 
@@ -99,4 +119,23 @@ webhooks:
     resources:
     - tests
   sideEffects: None
-  
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-testsuites-tests-testkube-io-v1-testsuite
+  failurePolicy: Fail
+  name: vtestsuite.kb.io
+  rules:
+  - apiGroups:
+    - testsuites.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testsuites
+  sideEffects: None
