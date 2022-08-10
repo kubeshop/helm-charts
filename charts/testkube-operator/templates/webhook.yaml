@@ -27,6 +27,47 @@ webhooks:
     resources:
     - scripts
   sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v2
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /mutate-tests-tests-testkube-io-v2-test
+  failurePolicy: Fail
+  name: mtest.kb.io
+  rules:
+  - apiGroups:
+    - tests.tests.testkube.io
+    apiVersions:
+    - v2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - tests
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /mutate-testsuites-tests-testkube-io-v1-testsuite
+  failurePolicy: Fail
+  name: mtestsuite.kb.io
+  rules:
+  - apiGroups:
+    - testsuites.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testsuites
+  sideEffects: None
 
 ---
 
@@ -56,4 +97,45 @@ webhooks:
     - UPDATE
     resources:
     - scripts
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v2
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-tests-tests-testkube-io-v2-test
+  failurePolicy: Fail
+  name: vtest.kb.io
+  rules:
+  - apiGroups:
+    - tests.tests.testkube.io
+    apiVersions:
+    - v2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - tests
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-testsuites-tests-testkube-io-v1-testsuite
+  failurePolicy: Fail
+  name: vtestsuite.kb.io
+  rules:
+  - apiGroups:
+    - testsuites.tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testsuites
   sideEffects: None

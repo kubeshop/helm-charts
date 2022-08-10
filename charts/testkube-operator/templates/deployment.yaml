@@ -43,6 +43,13 @@ spec:
           initialDelaySeconds: 15
           periodSeconds: 20
         name: manager
+        env:
+        - name: APISERVER_FULLNAME
+          value: "{{ .Values.apiFullname }}"
+        - name: APISERVER_PORT
+          value: "{{ .Values.apiPort }}"
+        - name: APISERVER_TEMPLATE_CRONJOB
+          value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
         ports:
         - containerPort: 9443
           name: webhook-server

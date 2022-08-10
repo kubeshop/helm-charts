@@ -71,8 +71,6 @@ spec:
             value: "{{ .Release.Namespace }}"
           - name: TESTKUBE_TEMPLATE_JOB
             value: "{{ .Files.Get "job-template.yml" | b64enc }}"
-          - name: TESTKUBE_TEMPLATE_CRONJOB
-            value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
           - name: TESTKUBE_OAUTH_CLIENTID
