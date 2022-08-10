@@ -17,6 +17,7 @@ spec:
           namespace: {{ .Release.Namespace }}
           path: /convert
       conversionReviewVersions:
+      - v1
       - v2
   group: tests.testkube.io
   names:
