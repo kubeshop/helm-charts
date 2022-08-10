@@ -32,8 +32,8 @@ webhooks:
   - v2
   clientConfig:
     service:
-      name: webhook-service
-      namespace: system
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
       path: /mutate-tests-tests-testkube-io-v2-test
   failurePolicy: Fail
   name: mtest.kb.io
@@ -52,8 +52,8 @@ webhooks:
   - v1
   clientConfig:
     service:
-      name: webhook-service
-      namespace: system
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
       path: /mutate-testsuites-tests-testkube-io-v1-testsuite
   failurePolicy: Fail
   name: mtestsuite.kb.io
@@ -103,8 +103,8 @@ webhooks:
   - v2
   clientConfig:
     service:
-      name: webhook-service
-      namespace: system
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
       path: /validate-tests-tests-testkube-io-v2-test
   failurePolicy: Fail
   name: vtest.kb.io
@@ -123,8 +123,8 @@ webhooks:
   - v1
   clientConfig:
     service:
-      name: webhook-service
-      namespace: system
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
       path: /validate-testsuites-tests-testkube-io-v1-testsuite
   failurePolicy: Fail
   name: vtestsuite.kb.io
