@@ -7,7 +7,7 @@ fullnameOverride: ""
 
 size: 1
 
-image: "envoyproxy/envoy-alpine:v1.20.0"
+image: "envoyproxy/envoy:v1.23.0"
 service:
   # NodePort, ClusterIP, LoadBalancer
   type: LoadBalancer
