@@ -397,7 +397,7 @@ spec:
                           type: string
                         tokenSecret:
                           description: Testkube internal reference for secret storage
-                          in Kubernetes secrets
+                            in Kubernetes secrets
                           properties:
                             key:
                               description: object key
@@ -420,7 +420,7 @@ spec:
                           type: string
                         usernameSecret:
                           description: Testkube internal reference for secret storage
-                          in Kubernetes secrets
+                            in Kubernetes secrets
                           properties:
                             key:
                               description: object key
