@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: "ANALYTICS_ENABLED"
-            value: "{{ .Values.enabled }}"
+            value: "{{ .Values.analytics.enabled }}"
           ports:
             - name: http
               containerPort: 8080
