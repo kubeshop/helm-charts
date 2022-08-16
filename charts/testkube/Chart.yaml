@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: A Helm chart for testkube.
 type: application
-version: 1.4.32
+version: 1.4.33
 dependencies:
   - name: testkube-operator
     version: 1.4.4
@@ -10,7 +10,7 @@ dependencies:
     repository: "file://../testkube-operator"
   - name: mongodb
     condition: mongodb.enabled
-    version: 13.0.0
+    version: 11.0.0
     repository: https://charts.bitnami.com/bitnami
   - name: testkube-api
     version: 1.4.21
