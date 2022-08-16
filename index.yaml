@@ -2104,6 +2104,23 @@ entries:
   kusk-gateway:
   - apiVersion: v2
     appVersion: v1.1.5
+    created: "2022-08-16T09:48:38.446003423Z"
+    description: A Helm chart for Kusk Gateway
+    digest: 331ac1bd80be978df047f39f7fbecaff9dad27a3d08c43406fadaa013380ed65
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.33/kusk-gateway-0.0.33.tgz
+    version: 0.0.33
+  - apiVersion: v2
+    appVersion: v1.1.5
     created: "2022-08-10T14:15:00.401654332Z"
     description: A Helm chart for Kusk Gateway
     digest: 8a7a0ecbe302f5cc0e98041ab558d51014baf3d67889fd7a05b2bf3312cf2a9e
@@ -2730,6 +2747,25 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-0.0.1/kusk-gateway-0.0.1.tgz
     version: 0.0.1
   kusk-gateway-api:
+  - apiVersion: v2
+    appVersion: v1.1.1
+    created: "2022-08-16T09:48:38.591284981Z"
+    description: A Helm chart for the Kusk Gateway API
+    digest: 96193f161c7580b0f373ae64bdda5f2ee04c3dfa1d9cf0a05d35176d07c87f57
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - kusk-gateway-api
+    - api
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway-api
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-api-0.1.7/kusk-gateway-api-0.1.7.tgz
+    version: 0.1.7
   - apiVersion: v2
     appVersion: v1.1.1
     created: "2022-08-09T10:34:42.09332978Z"
@@ -17663,4 +17699,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-16T06:35:14.022979405Z"
+generated: "2022-08-16T09:48:38.605599092Z"
