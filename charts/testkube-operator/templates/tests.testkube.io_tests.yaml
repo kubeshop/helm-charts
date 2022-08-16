@@ -395,18 +395,46 @@ spec:
                           description: if needed we can checkout particular path (dir
                             or file) in case of BIG/mono repositories
                           type: string
-                        token:
-                          description: git auth token for private repositories
-                          type: string
+                        tokenSecret:
+                          description: Testkube internal reference for secret storage
+                            in Kubernetes secrets
+                          properties:
+                            key:
+                              description: object key
+                              type: string
+                            name:
+                              description: object name
+                              type: string
+                            namespace:
+                              description: object kubernetes namespace
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
                         type:
                           description: VCS repository type
                           type: string
                         uri:
                           description: uri of content file or git directory
                           type: string
-                        username:
-                          description: git auth username for private repositories
-                          type: string
+                        usernameSecret:
+                          description: Testkube internal reference for secret storage
+                            in Kubernetes secrets
+                          properties:
+                            key:
+                              description: object key
+                              type: string
+                            name:
+                              description: object name
+                              type: string
+                            namespace:
+                              description: object kubernetes namespace
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
                       required:
                       - type
                       - uri
