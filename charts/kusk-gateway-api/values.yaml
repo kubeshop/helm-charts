@@ -64,3 +64,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+analytics:
+  enabled: true
