@@ -73,6 +73,8 @@ spec:
             value: "{{ .Files.Get "job-template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
+          - name: APISERVER_CONFIG
+            value: "/etc/config"
           - name: TESTKUBE_OAUTH_CLIENTID
             value:  "{{ .Values.cliIngress.oauth.clientID }}"
           - name: TESTKUBE_OAUTH_CLIENTSECRET
@@ -99,6 +101,14 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: testkube-api-server-config
+            optional: true # mark the source ConfigMap as optional
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
