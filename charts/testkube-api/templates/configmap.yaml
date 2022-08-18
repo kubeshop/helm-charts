@@ -1,9 +1,7 @@
----
 apiVersion: v1
 data:
   clusterId: ""
   enableTelemetry: true
 kind: ConfigMap
 metadata:
-  name: testkube-api-server-config
-  namespace: {{ .Release.Namespace }}
+  name: testkube-api-server-config-{{ .Release.Namespace }}
