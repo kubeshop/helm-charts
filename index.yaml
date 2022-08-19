@@ -3008,6 +3008,23 @@ entries:
   kusk-gateway-envoyfleet:
   - apiVersion: v2
     appVersion: v0.0.0
+    created: "2022-08-19T10:28:23.885296761Z"
+    description: A Helm chart for Kusk Gateway EnvoyFleet
+    digest: 66a09111d307808fc9d92de5c292b9a3895cb84990816c3aff65b043391604f4
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - kusk-gateway-envoyfleet
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway-envoyfleet
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.4/kusk-gateway-envoyfleet-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: v0.0.0
     created: "2022-03-01T09:21:24.294976849Z"
     description: A Helm chart for Kusk Gateway EnvoyFleet
     digest: 093d1cc8e755cd096098bfc35554d498bcf6f8084827156d50fe95dd563e0678
@@ -18040,4 +18057,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-19T09:46:57.904990102Z"
+generated: "2022-08-19T10:28:23.897650546Z"
