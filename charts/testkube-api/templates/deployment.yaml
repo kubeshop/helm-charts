@@ -73,6 +73,8 @@ spec:
             value: "{{ .Files.Get "job-template.yml" | b64enc }}"
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
+          - name: APISERVER_CONFIG
+            value: "testkube-api-server-config-{{ .Release.Namespace }}"
           - name: TESTKUBE_OAUTH_CLIENTID
             value:  "{{ .Values.cliIngress.oauth.clientID }}"
           - name: TESTKUBE_OAUTH_CLIENTSECRET
