@@ -57,6 +57,7 @@ minio:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  image: minio/minio:latest
   serviceAccountName: ""
 
 uiIngress:
