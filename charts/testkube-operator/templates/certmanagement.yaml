@@ -1,25 +1,63 @@
 ---
 
-apiVersion: cert-manager.io/v1
-kind: Certificate
+apiVersion: batch/v1
+kind: Job
 metadata:
-  name: {{ include "testkube-operator.webhookCertificate" . }}
+  name: cert-creation
   namespace: {{ .Release.Namespace }}
 spec:
-  dnsNames:
-  - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
-  - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local
-  issuerRef:
-    kind: Issuer
-    name: testkube-operator-selfsigned-issuer
-  secretName: webhook-server-cert
+  template:
+    spec:
+      containers:
+      - name: certificate-renewal
+        image: {{ .Values.certificateImage }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: Always
+        command:
+        - /bin/sh
+        - -c
+        - ./create_cert.sh
+        env:
+        - name: WEBHOOK_DOMAIN_NAME
+          value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
+        - name: NAMESPACE
+          value: {{ .Release.Namespace }}
+        - name: DNS_DOMAIN_NAME1
+          value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}
+        - name: DNS_DOMAIN_NAME2
+          value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local 
+      restartPolicy: Never
+      serviceAccountName: testkube-api-server-testkube
+  backoffLimit: 1
 
 ---
 
-apiVersion: cert-manager.io/v1
-kind: Issuer
+apiVersion: batch/v1
+kind: CronJob
 metadata:
-  name: testkube-operator-selfsigned-issuer
+  name: cert-creation
   namespace: {{ .Release.Namespace }}
 spec:
-  selfSigned: {}
+  schedule: "* * * */3 *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: certificate-renewal
+            image: {{ .Values.certificateImage }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+            imagePullPolicy: Always
+            command:
+            - /bin/sh
+            - -c
+            - ./create_cert.sh
+            env:
+            - name: WEBHOOK_DOMAIN_NAME
+              value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
+            - name: NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: DNS_DOMAIN_NAME1
+              value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}
+            - name: DNS_DOMAIN_NAME2
+              value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local 
+          restartPolicy: Never      
+          serviceAccountName: testkube-api-server-testkube

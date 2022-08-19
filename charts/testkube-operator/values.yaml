@@ -18,6 +18,8 @@ fullnameOverride: "testkube-operator"
 apiFullname: "testkube-api-server"
 apiPort: 8088
 
+certificateImage: "kubeshop/testkube-certificate"
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
