@@ -119,6 +119,7 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
+    image: minio/minio:latest
   uiIngress:
     enabled: false
     annotations:
@@ -236,3 +237,6 @@ testkube-dashboard:
       cookieSecret: ""
       cookieSecure: "false"
       redirectUrl: "http://demo.testkube.io/oauth2/callback"
+
+testkube-operator:
+  imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
