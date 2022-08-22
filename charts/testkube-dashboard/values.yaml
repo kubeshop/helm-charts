@@ -14,7 +14,7 @@ imagePullSecrets: []
 nameOverride: "dashboard"
 fullnameOverride: "testkube-dashboard"
 
-apiServerEndpoint: "default"
+apiServerEndpoint: "localhost:8088/v1"
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -58,7 +58,7 @@ ingress:
     # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
     nginx.ingress.kubernetes.io/auth-url: ""
-    nginx.ingress.kubernetes.io/auth-signin: "" 
+    nginx.ingress.kubernetes.io/auth-signin: ""
     nginx.ingress.kubernetes.io/access-control-allow-origin: ""
   path: /
   hosts:
