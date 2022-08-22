@@ -1,7 +1,12 @@
 apiVersion: gateway.kusk.io/v1alpha1
 kind: StaticRoute
 metadata:
-  name: dashboard
+  name: {{ include "dashboard.fullname" . }}
+  annotations:
+    {{- include "dashboard.labels" . | nindent 4 }}
+  labels:
+    {{- include "dashboard.labels" . | nindent 4 }}
+    kusk-managed: "true"
 spec:
   fleet:
     name: {{ .Values.envoyfleet.name }}

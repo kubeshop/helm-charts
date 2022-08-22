@@ -8,6 +8,7 @@ metadata:
     {{- include "kusk-gateway-api.labels" . | nindent 4 }} 
   labels:
     {{- include "kusk-gateway-api.labels" . | nindent 4 }}
+    kusk-managed: "true"
 spec:
   fleet:
     name: {{ .Values.envoyfleet.name }}
