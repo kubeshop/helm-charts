@@ -22,12 +22,12 @@ spec:
       - name: kubectl
         image: "k8s.gcr.io/hyperkube:v1.12.1"
         imagePullPolicy: "IfNotPresent"
-        command: #["bash", "-c", "kubectl scale deployment testkube-mongodb --replicas=0 -n testkube; sleep 2; kubectl delete pvc testkube-mongodb -n testkube | true" ]
+        command:
         - /bin/bash
         - -c
         - >
             export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n testkube | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
-            if [ "$current_mongodb_version" -lt "14" ];
+            if [ "$current_mongodb_version" -lt "13" ];
             then kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
             sleep 2;
             kubectl delete pvc testkube-mongodb -n testkube | true;
