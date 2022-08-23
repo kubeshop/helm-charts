@@ -30,8 +30,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+          {{- if ne "default" (default $.Values.apiServerEndpoint "default") }}
           - name: REACT_APP_API_SERVER_ENDPOINT
             value: "{{ .Values.apiServerEndpoint }}"
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"

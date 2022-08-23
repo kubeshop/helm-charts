@@ -14,8 +14,6 @@ imagePullSecrets: []
 nameOverride: "dashboard"
 fullnameOverride: "testkube-dashboard"
 
-apiServerEndpoint: "default"
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
