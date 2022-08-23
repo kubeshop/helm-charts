@@ -30,6 +30,6 @@ spec:
             if [ "$current_mongodb_version" -lt "13" ];
             then kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
             sleep 2;
-            kubectl delete pvc testkube-mongodb -n testkube | true;
+            kubectl delete pvc testkube-mongodb -n testkube || echo "MongoDB volume not found. Continuing with creating a new one";
             else echo "MongoDB is up-to-date"; fi
       restartPolicy: OnFailure
