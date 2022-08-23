@@ -3,9 +3,10 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: cert-creation
+  name: cert-creation-{{ .Release.Revision }}
   namespace: {{ .Release.Namespace }}
 spec:
+  ttlSecondsAfterFinished: 100
   template:
     spec:
       containers:
@@ -34,12 +35,13 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: cert-creation
+  name: cert-creation-{{ .Release.Revision }}
   namespace: {{ .Release.Namespace }}
 spec:
   schedule: "* * * */3 *"
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 100
       template:
         spec:
           containers:
