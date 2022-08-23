@@ -42,6 +42,9 @@ spec:
                 items:
                   type: string
                 type: array
+              selector:
+                description: Labels to filter for tests and test suites
+                type: string
               uri:
                 description: Uri is address where webhook should be made
                 type: string
