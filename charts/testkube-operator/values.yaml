@@ -8,7 +8,7 @@ image:
   repository: "kubeshop/testkube-operator"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.4.10"
+  tag: "1.4.11"
 
 imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
 imagePullSecrets: []
