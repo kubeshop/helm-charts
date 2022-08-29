@@ -8,7 +8,7 @@ image:
   repository: "kubeshop/testkube-operator"
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.4.10"
+  tag: "1.4.11"
 
 imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
 imagePullSecrets: []
@@ -70,7 +70,9 @@ ingress:
   #      - chart-example.local
 
 resources:
-  {}
+  requests:
+    cpu: 30m
+    memory: 30Mi
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following

@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: kusk-gateway-manager
   namespace: {{ .Release.Namespace }}
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
   labels:
     {{- include "kusk-gateway.labels" . | nindent 4 }}
     app.kubernetes.io/component: kusk-gateway-manager
