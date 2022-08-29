@@ -38,11 +38,5 @@ spec:
             NOW="$(date +"%F")-$(date +"%T")";
             FILE="mongodb_dump-$NOW";
             mongodump --uri=mongodb://testkube-mongodb:27017  --out=/mongodump/db/$FILE;
-            kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
-            sleep 2;
-            kubectl delete pvc testkube-mongodb -n testkube || echo "MongoDB volume not found. Continuing with creating a new one";
-            echo "Waiting for a new MongoDB volume to spin up";
-            sleep 10;
-            mongorestore --uri=mongodb://testkube-mongodb:27017  /mongodump/db/$FILE
             else echo "MongoDB is up-to-date"; fi
       restartPolicy: Never
