@@ -245,3 +245,9 @@ preUpgradeHook:
   name: mongodb-upgrade
   serviceAccount:
     create: true
+
+preUpgradeHookMongoDump:
+  name: mongodb-dump
+
+postUpgradeHookMongoRestore:
+  name: mongodb-restore
