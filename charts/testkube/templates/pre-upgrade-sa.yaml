@@ -25,7 +25,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 rules:
   - apiGroups: [""]
-    resources: ["persistentvolumeclaims"]
+    resources: ["persistentvolumeclaims", "pods", "pods/exec"]
     verbs: ["create","delete","get","list","patch","update","watch"]
   - apiGroups: ["apps"]
     resources: ["deployments", "deployments/scale"]

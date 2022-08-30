@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "mongodb.labels" . | nindent 4 }}
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    job-name: pre-upgrade
   annotations:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-weight": "4"
@@ -27,7 +28,7 @@ spec:
         - -c
         - >
             export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n testkube | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
-            if [ "$current_mongodb_version" -lt "15" ];
+            if [ "$current_mongodb_version" -lt "13" ];
             then apt update;
             apt install dirmngr gnupg apt-transport-https software-properties-common ca-certificates wget -y;
             wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -;
@@ -37,15 +38,13 @@ spec:
 
             echo "Starting MongoDB Backup";
             NOW="$(date +"%F")-$(date +"%T")";
-            FILE="mongodb_dump-$NOW";
+            FILE="$NOW";
             mongodump --uri=mongodb://testkube-mongodb:27017  --out=/mongodump/db/$FILE;
+
             kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
             sleep 2;
             kubectl delete pvc testkube-mongodb -n testkube || echo "MongoDB volume not found. Continuing with creating a new one";
 
-            echo "Waiting for a new MongoDB volume to spin up";
-            sleep 20;
-            mongorestore --uri=mongodb://testkube-mongodb:27017 --db=testkube /mongodump/db/$FILE;
             else echo "MongoDB is up-to-date"; fi
 
       restartPolicy: Never
