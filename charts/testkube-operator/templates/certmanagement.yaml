@@ -35,7 +35,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: cert-creation-{{ .Release.Revision }}
+  name: cert-creation
   namespace: {{ .Release.Namespace }}
 spec:
   schedule: "* * * */3 *"
