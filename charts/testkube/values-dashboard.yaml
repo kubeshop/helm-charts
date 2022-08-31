@@ -97,7 +97,7 @@ mongodb:
     # rootPassword: "123DefaultOne321"
   service:
     port: "27017"
-    portNmae: "mongodb"
+    portName: "mongodb"
     nodePort: true
     clusterIP: ""
 
