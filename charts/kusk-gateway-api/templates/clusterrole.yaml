@@ -12,6 +12,8 @@ rules:
   - get
   - list
   - watch
+  - update
+  - patch
 - apiGroups:
   - gateway.kusk.io
   resources:
