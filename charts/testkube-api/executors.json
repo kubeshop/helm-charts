@@ -3,7 +3,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.4",
+            "image": "kubeshop/testkube-ginkgo-executor:0.0.5",
             "types":["ginkgo/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": ["artifacts", "junit-report"]
@@ -63,7 +63,7 @@
         "name": "cypress-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-cypress-executor:1.1.4",
+            "image": "kubeshop/testkube-cypress-executor:1.1.5",
             "types":["cypress/project"],
             "content_types": ["git-dir"],
             "features": ["artifacts", "junit-report"]
@@ -73,7 +73,7 @@
         "name": "curl-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-curl-executor:1.0.3",
+            "image": "kubeshop/testkube-curl-executor:1.0.4",
             "types":["curl/test"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": []
@@ -83,7 +83,7 @@
         "name": "postman-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-postman-executor:1.0.4",
+            "image": "kubeshop/testkube-postman-executor:1.0.6",
             "types":["postman/collection"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": []
@@ -93,7 +93,7 @@
         "name": "artillery-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-artillery-executor:0.0.7",
+            "image": "kubeshop/testkube-artillery-executor:0.0.8",
             "types":["artillery/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": []

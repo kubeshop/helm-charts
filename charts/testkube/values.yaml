@@ -96,7 +96,7 @@ mongodb:
     # rootPassword: "123DefaultOne321"
   service:
     port: "27017"
-    portNmae: "mongodb"
+    portName: "mongodb"
     nodePort: true
     clusterIP: ""
   resources:
@@ -182,7 +182,7 @@ testkube-api:
   resources:
     requests:
       cpu: 200m
-      memory: 50Mi
+      memory: 100Mi
 
   mongodb:
     dsn: "mongodb://testkube-mongodb:27017"
