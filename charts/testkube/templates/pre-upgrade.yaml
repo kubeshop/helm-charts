@@ -8,7 +8,7 @@ metadata:
     job-name: pre-upgrade
   annotations:
     "helm.sh/hook": pre-upgrade
-    "helm.sh/hook-weight": "4"
+    "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
   template:
@@ -28,23 +28,8 @@ spec:
         - -c
         - >
             export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n testkube | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
-            if [ "$current_mongodb_version" -lt "13" ];
-            then apt update;
-            apt install dirmngr gnupg apt-transport-https software-properties-common ca-certificates wget -y;
-            wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -;
-            echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list;
-            apt-get update;
-            apt install mongodb-org-tools -y;
-
-            echo "Starting MongoDB Backup";
-            NOW="$(date +"%F")-$(date +"%T")";
-            FILE="$NOW";
-            mongodump --uri=mongodb://testkube-mongodb:27017  --out=/mongodump/db/$FILE;
-
-            kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
-            sleep 2;
-            kubectl delete pvc testkube-mongodb -n testkube || echo "MongoDB volume not found. Continuing with creating a new one";
-
+            if [ "$current_mongodb_version" -lt "12" ];
+            then kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
             else echo "MongoDB is up-to-date"; fi
 
       restartPolicy: Never
