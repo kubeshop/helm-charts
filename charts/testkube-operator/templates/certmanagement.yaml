@@ -27,7 +27,7 @@ spec:
         - name: DNS_DOMAIN_NAME2
           value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local 
       restartPolicy: Never
-      serviceAccountName: testkube-api-server-testkube
+      serviceAccountName: testkube-api-server-{{ .Release.Name }}
   backoffLimit: 1
 
 ---
@@ -62,4 +62,4 @@ spec:
             - name: DNS_DOMAIN_NAME2
               value: {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc.cluster.local 
           restartPolicy: Never      
-          serviceAccountName: testkube-api-server-testkube
+          serviceAccountName: testkube-api-server-{{ .Release.Name }}
