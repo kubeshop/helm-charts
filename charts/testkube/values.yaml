@@ -139,6 +139,9 @@ testkube-api:
       # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
       nginx.ingress.kubernetes.io/auth-url: ""
       nginx.ingress.kubernetes.io/auth-signin: ""
+      # for websockets
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     path: /results/(v\d/executions.*)
     hosts:
       - demo.testkube.io
@@ -156,6 +159,10 @@ testkube-api:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         more_set_headers "X-CLI-Ingress: true";
+      # for websockets
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+
     # parameters to check oauth token (by default github one)
     oauth:
       clientID: ""
@@ -248,8 +255,11 @@ testkube-dashboard:
 
 testkube-operator:
   imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
+<<<<<<< Updated upstream
 
 preUpgradeHook:
   name: mongodb-upgrade
   serviceAccount:
     create: true
+=======
+>>>>>>> Stashed changes

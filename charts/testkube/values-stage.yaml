@@ -138,6 +138,11 @@ testkube-api:
       # controls whether the ingress is modified ‘in-place’,
       # or a new one is created specifically for the HTTP01 challenge.
       # acme.cert-manager.io/http01-edit-in-place: "true"
+
+      # for websockets
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+
       nginx.ingress.kubernetes.io/server-snippet: |
         set $methodallowed "";
         set $pathallowed "";
