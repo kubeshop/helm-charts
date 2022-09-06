@@ -7,6 +7,10 @@ fullnameOverride: ""
 
 size: 1
 
+# Specify whether this fleet is the default fleet.
+# APIs and StaticRoutes that do not specify an EnvoyFleet will use the default fleet.
+default: false
+
 image: "envoyproxy/envoy:v1.23.1"
 service:
   # NodePort, ClusterIP, LoadBalancer
