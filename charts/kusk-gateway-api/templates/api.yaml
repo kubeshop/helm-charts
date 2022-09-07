@@ -104,7 +104,6 @@ spec:
               type: string
           required:
           - name
-          - status
           - namespace
           - serviceType
           - ports
@@ -123,9 +122,7 @@ spec:
               type: string
           required:
           - name
-          - nodePort
           - port
-          - protocol
           - targetPort
           type: object
         StaticRouteItem:
