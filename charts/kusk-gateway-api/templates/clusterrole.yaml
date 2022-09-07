@@ -26,8 +26,12 @@ rules:
   resources:
   - envoyfleet
   verbs:
+  - create
+  - delete
   - get
   - list
+  - patch
+  - update
   - watch
 - apiGroups:
   - gateway.kusk.io
@@ -40,8 +44,12 @@ rules:
   resources:
   - staticroutes
   verbs:
+  - create
+  - delete
   - get
   - list
+  - patch
+  - update
   - watch
 - apiGroups:
   - gateway.kusk.io
