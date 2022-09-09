@@ -32,6 +32,15 @@ spec:
           env:
           - name: APISERVER_PORT
             value: "{{ .Values.service.port }}"
+          - name: NATS_URI
+            {{- if .Values.nats.secretName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.nats.secretName }}
+                key: {{ .Values.nats.secretKey }}
+            {{- else }}
+            value: "{{ .Values.nats.uri }}"
+            {{- end }}
           - name: API_MONGO_DSN
             {{- if .Values.mongodb.secretName }}
             valueFrom:
