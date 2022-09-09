@@ -84,6 +84,10 @@ tolerations: []
 
 affinity: {}
 
+nats:
+  enabled: true
+  uri: "nats://testkube-nats"
+
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
