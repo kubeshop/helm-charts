@@ -3451,6 +3451,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-09T13:45:22.800943978Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.0
+    - condition: nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.14
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.4
+    description: A Helm chart for testkube.
+    digest: bb1e4b3bd275264c5e23b4c81c09f1136fa307b1ce56d5f68d404356775235b4
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.37/testkube-1.5.37.tgz
+    version: 1.5.37
+  - apiVersion: v2
     created: "2022-09-09T07:13:31.943129002Z"
     dependencies:
     - name: testkube-operator
@@ -17912,6 +17940,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.5.4
+    created: "2022-09-09T13:45:23.065781249Z"
+    description: A Helm chart for Kubernetes
+    digest: ae17c64e9a30033accc136921c523c738b76fa2b67f1134f811dcdcfffd91dd7
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.5.4/testkube-dashboard-1.5.4.tgz
+    version: 1.5.4
+  - apiVersion: v2
     appVersion: 1.5.3
     created: "2022-09-02T09:24:47.447202211Z"
     description: A Helm chart for Kubernetes
@@ -20005,4 +20043,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-09T07:13:32.060652411Z"
+generated: "2022-09-09T13:45:23.084202632Z"
