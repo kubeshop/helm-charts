@@ -52,6 +52,10 @@ service:
   type: ClusterIP
   port: 8088
 
+nats:
+  enabled: true
+  uri: "nats://testkube-nats"
+
 minio:
   enabled: true
   nodeSelector: {}
