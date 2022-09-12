@@ -55,6 +55,9 @@ service:
 nats:
   enabled: true
   uri: "nats://testkube-nats"
+  # or load URI from secrets
+  # secretName: XXX
+  # secretKey: XXX
 
 minio:
   enabled: true
