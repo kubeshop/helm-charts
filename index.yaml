@@ -3451,6 +3451,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-12T06:33:05.153008871Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.15
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.4
+    description: A Helm chart for testkube.
+    digest: 6245e33e7cac827958546cbf80b4e25a4d6e2df1936b7e01bea7b98a39363053
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.38/testkube-1.5.38.tgz
+    version: 1.5.38
+  - apiVersion: v2
     created: "2022-09-09T13:45:22.800943978Z"
     dependencies:
     - name: testkube-operator
@@ -15989,6 +16017,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.15
+    created: "2022-09-12T06:33:05.292125282Z"
+    description: A Helm chart for Testkube api
+    digest: f7adbf299246b0bb1bc083d6c38d4c6bb841e42d93f80784a06827e97aba8099
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.15/testkube-api-1.5.15.tgz
+    version: 1.5.15
+  - apiVersion: v2
     appVersion: 1.5.14
     created: "2022-09-09T07:13:32.042170776Z"
     description: A Helm chart for Testkube api
@@ -20060,4 +20098,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-09T21:21:50.705858476Z"
+generated: "2022-09-12T06:33:05.30537054Z"
