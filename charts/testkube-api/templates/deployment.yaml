@@ -41,6 +41,15 @@ spec:
             {{- else }}
             value: "{{ .Values.mongodb.dsn }}"
             {{- end }}
+          - name: NATS_URI
+            {{- if .Values.nats.secretName }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.nats.secretName }}
+                key: {{ .Values.nats.secretKey }}
+            {{- else }}
+            value: "{{ .Values.nats.uri }}"
+            {{- end }}
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"
           - name: TESTKUBE_ANALYTICS_ENABLED
