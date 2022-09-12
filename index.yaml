@@ -3451,6 +3451,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-12T11:55:20.144418808Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.17
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.4
+    description: A Helm chart for testkube.
+    digest: 480df1303fe0958ff954048853f046f093f424833af660f881b4aacef7a26271
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.40/testkube-1.5.40.tgz
+    version: 1.5.40
+  - apiVersion: v2
     created: "2022-09-12T11:09:17.096760778Z"
     dependencies:
     - name: testkube-operator
@@ -16045,6 +16073,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.17
+    created: "2022-09-12T11:55:20.225441518Z"
+    description: A Helm chart for Testkube api
+    digest: 8165d84a71ba3a0417c7730db37425d9c23610fe5e811c6c4958dc1aaef8e2a1
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.17/testkube-api-1.5.17.tgz
+    version: 1.5.17
+  - apiVersion: v2
     appVersion: 1.5.16
     created: "2022-09-12T11:09:17.24186588Z"
     description: A Helm chart for Testkube api
@@ -20136,4 +20174,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-12T11:09:17.256050844Z"
+generated: "2022-09-12T11:55:20.242695886Z"
