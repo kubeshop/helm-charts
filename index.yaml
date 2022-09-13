@@ -3451,6 +3451,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-13T08:36:15.641893612Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.18
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.4
+    description: A Helm chart for testkube.
+    digest: 693c302df2c8af0f56d1422043b8e7644e98d28174cf65320e8c9d45332d8b67
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.41/testkube-1.5.41.tgz
+    version: 1.5.41
+  - apiVersion: v2
     created: "2022-09-12T11:55:20.144418808Z"
     dependencies:
     - name: testkube-operator
@@ -16073,6 +16101,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.18
+    created: "2022-09-13T08:36:15.736400203Z"
+    description: A Helm chart for Testkube api
+    digest: 1d5b934bc6c38dd1818aea6b540159d13188a7404c62fa045e354dd5bc7cd8e5
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.18/testkube-api-1.5.18.tgz
+    version: 1.5.18
+  - apiVersion: v2
     appVersion: 1.5.17
     created: "2022-09-12T11:55:20.225441518Z"
     description: A Helm chart for Testkube api
@@ -20174,4 +20212,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-12T11:55:20.242695886Z"
+generated: "2022-09-13T08:36:15.751015087Z"
