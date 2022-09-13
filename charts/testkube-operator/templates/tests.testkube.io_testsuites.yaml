@@ -512,7 +512,7 @@ spec:
                   type: array
               type: object
             status:
-              description: TestSuiteStatus defines the observed state of TestSuite.
+              description: TestSuiteStatus defines the observed state of TestSuite
               type: object
           type: object
       served: true

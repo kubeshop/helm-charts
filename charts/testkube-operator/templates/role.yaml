@@ -136,6 +136,32 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsources
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsources/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsources/status
+  verbs:
+  - get
+  - patch
+  - update
 
 ---
 

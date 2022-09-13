@@ -190,3 +190,30 @@ rules:
   - get
   - patch
   - update
+
+  --- 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: testsource-cluster-role-{{ .Release.Name }}
+rules:
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsources
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+  - deletecollection
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsources/status
+  verbs:
+  - get

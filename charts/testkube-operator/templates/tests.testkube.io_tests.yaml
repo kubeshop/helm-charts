@@ -232,6 +232,9 @@ spec:
                 schedule:
                   description: schedule in cron job format for scheduled test execution
                   type: string
+                source:
+                  description: reference to test source resource
+                  type: string
                 type:
                   description: test type
                   type: string
@@ -614,7 +617,7 @@ spec:
                   type: string
               type: object
             status:
-              description: TestStatus defines the observed state of Test.
+              description: TestStatus defines the observed state of Test
               properties:
                 executions_count:
                   type: integer
