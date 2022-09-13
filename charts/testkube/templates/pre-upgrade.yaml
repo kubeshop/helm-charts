@@ -29,14 +29,15 @@ spec:
         - >
             export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n testkube | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
             if [ "$current_mongodb_version" -eq "12" ];
-            then apt update;
-            apt install dirmngr gnupg apt-transport-https software-properties-common ca-certificates wget -y;
-            wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -;
-            echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list;
-            apt-get update;
-            apt-get install mongodb-mongosh -y;
-            mongosh "mongodb://testkube-mongodb:27017" --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )';
-            kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
-            else echo "MongoDB is up-to-date"; fi
+              then apt update;
+                apt install dirmngr gnupg apt-transport-https software-properties-common ca-certificates wget -y;
+                wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add -;
+                echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list;
+                apt-get update;
+                apt-get install mongodb-mongosh -y;
+                mongosh "mongodb://testkube-mongodb:27017" --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )';
+                kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
+              else echo "MongoDB is up-to-date";
+            fi
 
       restartPolicy: Never
