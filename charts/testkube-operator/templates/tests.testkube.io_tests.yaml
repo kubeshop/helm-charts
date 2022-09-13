@@ -614,7 +614,7 @@ spec:
                   type: string
               type: object
             status:
-              description: TestStatus defines the observed state of Test
+              description: TestStatus defines the observed state of Test.
               properties:
                 executions_count:
                   type: integer
