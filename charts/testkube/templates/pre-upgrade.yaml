@@ -27,7 +27,7 @@ spec:
         - /bin/bash
         - -c
         - >
-            export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n testkube | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
+            export current_mongodb_version=$(kubectl get deployment testkube-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n {{ .Release.Namespace }} | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
             if [ "$current_mongodb_version" -eq "12" ];
               then apt-get update;
                 apt-get install dirmngr gnupg apt-transport-https software-properties-common ca-certificates wget -y;
@@ -35,8 +35,8 @@ spec:
                 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list;
                 apt-get update;
                 apt-get install mongodb-mongosh -y;
-                mongosh "mongodb://testkube-mongodb:27017" --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )';
-                kubectl scale deployment testkube-mongodb --replicas=0 -n testkube;
+                mongosh "mongodb://{{ .Release.Name }}-mongodb:27017" --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )';
+                kubectl scale deployment testkube-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi
 
