@@ -36,7 +36,7 @@ spec:
                 apt-get update;
                 apt-get install mongodb-mongosh -y;
                 mongosh "mongodb://{{ .Release.Name }}-mongodb:27017" --eval 'db.adminCommand( { setFeatureCompatibilityVersion: "4.4" } )';
-                kubectl scale deployment testkube-mongodb --replicas=0 -n {{ .Release.Namespace }};
+                kubectl scale deployment {{ .Release.Name }}-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi
 
