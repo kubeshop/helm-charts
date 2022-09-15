@@ -3470,6 +3470,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-15T03:40:37.071410507Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.22
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.6-beta002
+    description: A Helm chart for testkube.
+    digest: 10b1570531b57062c0a5ee6514171819d80d42e4b07fa2aa852f2044cf59fd53
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.49/testkube-1.5.49.tgz
+    version: 1.5.49
+  - apiVersion: v2
     created: "2022-09-14T12:17:50.156869664Z"
     dependencies:
     - name: testkube-operator
@@ -16316,6 +16344,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.22
+    created: "2022-09-15T03:40:37.16125408Z"
+    description: A Helm chart for Testkube api
+    digest: e5180eef205b8f3ced67454417d08e863d78ac3a08ce4e7eae3a4723bd4a9e6d
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.22/testkube-api-1.5.22.tgz
+    version: 1.5.22
+  - apiVersion: v2
     appVersion: 1.5.21
     created: "2022-09-14T09:56:45.446024941Z"
     description: A Helm chart for Testkube api
@@ -20487,4 +20525,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-14T12:17:50.344378961Z"
+generated: "2022-09-15T03:40:37.262736496Z"
