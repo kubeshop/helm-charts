@@ -42,7 +42,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false
@@ -58,7 +58,7 @@ ingress:
     # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
     nginx.ingress.kubernetes.io/auth-url: ""
-    nginx.ingress.kubernetes.io/auth-signin: "" 
+    nginx.ingress.kubernetes.io/auth-signin: ""
     nginx.ingress.kubernetes.io/access-control-allow-origin: ""
   path: /
   hosts:
