@@ -227,7 +227,7 @@ testkube-dashboard:
     #tag: "main" #it will take the tag from appVersion
   service:
     type: ClusterIP
-    port: 80
+    port: 8080
   ingress:
     enabled: "true"
     annotations:
