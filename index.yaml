@@ -3470,6 +3470,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-15T11:24:04.741408196Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.24
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.8
+    description: A Helm chart for testkube.
+    digest: 3dc51f3b1a0a49a18c61dca8a8e80eba58e64ab520190201bd5f8e3e9e4258e7
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.57/testkube-1.5.57.tgz
+    version: 1.5.57
+  - apiVersion: v2
     created: "2022-09-15T10:59:38.318570559Z"
     dependencies:
     - name: testkube-operator
@@ -18591,6 +18619,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.5.8
+    created: "2022-09-15T11:24:04.997909073Z"
+    description: A Helm chart for Kubernetes
+    digest: 8e07d644341e304acd36aa2364db850dc1c973f57a546940695e0f33ef41eb19
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.5.8/testkube-dashboard-1.5.8.tgz
+    version: 1.5.8
+  - apiVersion: v2
     appVersion: 1.5.7
     created: "2022-09-15T10:59:38.422749718Z"
     description: A Helm chart for Kubernetes
@@ -20801,4 +20839,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-15T10:59:38.439195659Z"
+generated: "2022-09-15T11:24:05.022912871Z"
