@@ -3470,6 +3470,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-15T06:26:46.599853849Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.24
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.7-beta001
+    description: A Helm chart for testkube.
+    digest: dcc0de8febfd398844483f1881d83689ceea93fa7c2d54d745521e6c40814e99
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.53/testkube-1.5.53.tgz
+    version: 1.5.53
+  - apiVersion: v2
     created: "2022-09-15T04:52:33.944052858Z"
     dependencies:
     - name: testkube-operator
@@ -18479,6 +18507,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.5.7-beta001
+    created: "2022-09-15T06:26:46.694335441Z"
+    description: A Helm chart for Kubernetes
+    digest: 60bbc4f2850fe7333b0801cfebe4301b014358a112d47af1add25fb00b95dc7a
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.5.7-beta001/testkube-dashboard-1.5.7-beta001.tgz
+    version: 1.5.7-beta001
+  - apiVersion: v2
     appVersion: 1.5.6
     created: "2022-09-15T04:52:34.061210158Z"
     description: A Helm chart for Kubernetes
@@ -20639,4 +20677,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-15T04:52:34.07899683Z"
+generated: "2022-09-15T06:26:46.7094561Z"
