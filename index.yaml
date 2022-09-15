@@ -18564,6 +18564,16 @@ entries:
   testkube-dashboard:
   - apiVersion: v2
     appVersion: 1.5.7-beta003
+    created: "2022-09-15T10:56:16.317910635Z"
+    description: A Helm chart for Kubernetes
+    digest: cffa1faaf2ca72d7379e6bac44b8efa00eb6a0ce3fedc2840b0093800996f244
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.5.7-beta003/testkube-dashboard-1.5.7-beta003.tgz
+    version: 1.5.7-beta003
+  - apiVersion: v2
+    appVersion: 1.5.7-beta003
     created: "2022-09-15T07:39:30.559308955Z"
     description: A Helm chart for Kubernetes
     digest: 4ffa5636cf09dc11d9a3efb0cef066ef32ad7214d8308d7179c9007168b0c464
@@ -20753,4 +20763,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-15T07:39:30.577637531Z"
+generated: "2022-09-15T10:56:16.332155123Z"
