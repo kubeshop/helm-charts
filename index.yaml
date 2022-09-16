@@ -3470,6 +3470,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-16T10:01:43.018254574Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.1
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.25
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.8
+    description: A Helm chart for testkube.
+    digest: d347e7c9297eabf4de8f6f110913b82a0444db444a8d513d2a1686c0c1c3d3e7
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.59/testkube-1.5.59.tgz
+    version: 1.5.59
+  - apiVersion: v2
     created: "2022-09-15T11:51:23.268820836Z"
     dependencies:
     - name: testkube-operator
@@ -16596,6 +16624,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.25
+    created: "2022-09-16T10:01:43.145708147Z"
+    description: A Helm chart for Testkube api
+    digest: 3d3d8e63caea93ac0f1457ab0bc880868e862b7a6fa2044d4a6a36b4ec04e011
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.25/testkube-api-1.5.25.tgz
+    version: 1.5.25
+  - apiVersion: v2
     appVersion: 1.5.24
     created: "2022-09-15T04:23:58.369182208Z"
     description: A Helm chart for Testkube api
@@ -20877,4 +20915,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-15T11:51:23.410443281Z"
+generated: "2022-09-16T10:01:43.286336361Z"
