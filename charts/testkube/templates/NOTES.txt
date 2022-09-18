@@ -1,5 +1,5 @@
 `Enjoy testing with testkube!`
-{{- if false}} #TODO: Eneble this when we have somethin meaningfull to show.
+{{- if false }} #TODO: Enable this when we have something meaningful to show.
 1. Get the application URL by running these commands:
 {{- if .Values.uiIngress.enabled }}
 {{- range $host := .Values.uiIngress.hosts }}
