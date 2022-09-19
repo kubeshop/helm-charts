@@ -1,5 +1,3 @@
----
-
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -32,7 +30,11 @@ spec:
 
 ---
 
+{{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: batch/v1
+{{- else -}}
+apiVersion: batch/v1beta1
+{{- end }}
 kind: CronJob
 metadata:
   name: cert-creation

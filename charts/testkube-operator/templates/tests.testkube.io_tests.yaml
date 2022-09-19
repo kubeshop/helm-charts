@@ -457,6 +457,11 @@ spec:
                       items:
                         type: string
                       type: array
+                    command:
+                      description: container executor binary command
+                      items:
+                        type: string
+                      type: array
                     envs:
                       additionalProperties:
                         type: string
@@ -467,6 +472,21 @@ spec:
                         type: string
                       description: test execution labels
                       type: object
+                    image:
+                      description: container executor image
+                      type: string
+                    imagePullSecrets:
+                      description: container executor image pull secrets
+                      items:
+                        description: LocalObjectReference contains enough information
+                          to let you locate the referenced object inside the same namespace.
+                        properties:
+                          name:
+                            description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                              TODO: Add other useful fields. apiVersion, kind, uid?'
+                            type: string
+                        type: object
+                      type: array
                     httpProxy:
                       description: http proxy for executor containers
                       type: string

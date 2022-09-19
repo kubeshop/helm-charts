@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.5.4"
+  # tag: "1.5.8"
 
 imagePullSecrets: []
 nameOverride: "dashboard"
@@ -42,7 +42,7 @@ securityContext:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
 
 ingress:
   enabled: false
@@ -58,7 +58,7 @@ ingress:
     # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
     nginx.ingress.kubernetes.io/auth-url: ""
-    nginx.ingress.kubernetes.io/auth-signin: "" 
+    nginx.ingress.kubernetes.io/auth-signin: ""
     nginx.ingress.kubernetes.io/access-control-allow-origin: ""
   path: /
   hosts:
@@ -77,7 +77,7 @@ oauth2:
   selector: k8s-app
   image:
     repository: quay.io/oauth2-proxy/oauth2-proxy
-    tag: "1.5.4"
+    tag: "1.5.8"
     pullPolicy: Always
   env:
     clientId: ""
