@@ -3470,6 +3470,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-19T13:50:47.191982606Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.27
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.8
+    description: A Helm chart for testkube.
+    digest: 6a7b5c928132313bf4c2aaed25662f86f84050f2bf905b6f6db46b683a53c7a8
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.62/testkube-1.5.62.tgz
+    version: 1.5.62
+  - apiVersion: v2
     created: "2022-09-19T13:29:59.208707666Z"
     dependencies:
     - name: testkube-operator
@@ -16680,6 +16708,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.27
+    created: "2022-09-19T13:50:47.334816445Z"
+    description: A Helm chart for Testkube api
+    digest: 2c8ffc6f1dcf65313b9dfd7afd5a93db9af75d304dd4a71486af21be71d9e1ba
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.27/testkube-api-1.5.27.tgz
+    version: 1.5.27
+  - apiVersion: v2
     appVersion: 1.5.26
     created: "2022-09-16T10:12:29.176887258Z"
     description: A Helm chart for Testkube api
@@ -20991,4 +21029,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-19T13:29:59.365295603Z"
+generated: "2022-09-19T13:50:47.348790781Z"
