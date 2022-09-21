@@ -3514,6 +3514,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-21T16:11:16.093576386Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.3
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.29
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.8
+    description: A Helm chart for testkube.
+    digest: 974a996f4ea6e2fa1295d82d571befb6b2d19b74b6f70f48b1c2ddde617a1e60
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.66/testkube-1.5.66.tgz
+    version: 1.5.66
+  - apiVersion: v2
     created: "2022-09-21T15:32:33.065069265Z"
     dependencies:
     - name: testkube-operator
@@ -16836,6 +16864,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.29
+    created: "2022-09-21T16:11:16.207425333Z"
+    description: A Helm chart for Testkube api
+    digest: 69aaab4683c52df5953c19e115979524f4e662261710e8c644e697d05bb7ce81
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.29/testkube-api-1.5.29.tgz
+    version: 1.5.29
+  - apiVersion: v2
     appVersion: 1.5.28
     created: "2022-09-21T14:43:55.048470302Z"
     description: A Helm chart for Testkube api
@@ -21245,4 +21283,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-21T15:32:33.220116558Z"
+generated: "2022-09-21T16:11:16.376171875Z"
