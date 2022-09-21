@@ -92,7 +92,7 @@ spec:
                   type: string
               type: object
             status:
-              description: ExecutorStatus defines the observed state of Executor.
+              description: ExecutorStatus defines the observed state of Executor
               type: object
           type: object
       served: true
