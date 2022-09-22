@@ -43,6 +43,7 @@ telemetry:
           endpoint: otel-collector:4317
 
 server:
+  httpPort: 8080
   telemetry:
     exporter: collector
     applicationExporter: collector
