@@ -3514,6 +3514,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-23T13:41:33.743484236Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.6
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.33
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.13
+    description: A Helm chart for testkube.
+    digest: f1d7e9fc006d36e750d5bf90b704afc20f3500505b1642496d00e978fca4e2fa
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.77/testkube-1.5.77.tgz
+    version: 1.5.77
+  - apiVersion: v2
     created: "2022-09-23T13:27:12.947882482Z"
     dependencies:
     - name: testkube-operator
@@ -17144,6 +17172,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.33
+    created: "2022-09-23T13:41:33.843131294Z"
+    description: A Helm chart for Testkube api
+    digest: a0bc115bdd3c57a6aa3d609bcd630d93c12033e42b09a8f5c8c5a4406a17c083
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.33/testkube-api-1.5.33.tgz
+    version: 1.5.33
+  - apiVersion: v2
     appVersion: 1.5.32
     created: "2022-09-23T11:21:00.261811242Z"
     description: A Helm chart for Testkube api
@@ -21697,4 +21735,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-23T13:27:13.213325516Z"
+generated: "2022-09-23T13:41:33.859081655Z"
