@@ -324,8 +324,8 @@ spec:
                         type: string
                     type: object
                   type: array
-                configFiles:
-                  description: config files to be copied from host of form source:destination
+                copyFiles:
+                  description: files to be copied from host of form source:destination
                   items:
                     type: string
                   type: array
