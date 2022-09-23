@@ -263,7 +263,7 @@ rules:
       - list
       - watch
   - apiGroups:
-      - "apps/v1"
+      - "apps"
     resources:
       - deployments
       - daemonsets
@@ -273,15 +273,8 @@ rules:
       - list
       - watch
   - apiGroups:
-      - "networking.k8s.io/v1"
-    resources:
-      - ingresses
-    verbs:
-      - get
-      - list
-      - watch
-  - apiGroups:
-      - "extensions/v1"
+      - "networking.k8s.io"
+      - "extensions"
     resources:
       - ingresses
     verbs:
