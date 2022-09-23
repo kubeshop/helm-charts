@@ -77,84 +77,84 @@ metadata:
     cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
   name: testkube-operator-validating-webhook-configuration
 webhooks:
-  - admissionReviewVersions:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-scripts-tests-testkube-io-v1-script
+  failurePolicy: Fail
+  name: vscript.kb.io
+  rules:
+    - apiGroups:
+      - scripts.tests.testkube.io
+      apiVersions:
       - v1
-    clientConfig:
-      service:
-        name: {{ include "testkube-operator.webhookServiceName" . }}
-        namespace: {{ .Release.Namespace }}
-        path: /validate-scripts-tests-testkube-io-v1-script
-    failurePolicy: Fail
-    name: vscript.kb.io
-    rules:
-      - apiGroups:
-          - scripts.tests.testkube.io
-        apiVersions:
-          - v1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - scripts
-    sideEffects: None
-  - admissionReviewVersions:
-      - v1
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - scripts
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  - v2
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-tests-tests-testkube-io-v2-test
+  failurePolicy: Fail
+  name: vtest.kb.io
+  rules:
+    - apiGroups:
+      - tests.tests.testkube.io
+      apiVersions:
       - v2
-    clientConfig:
-      service:
-        name: {{ include "testkube-operator.webhookServiceName" . }}
-        namespace: {{ .Release.Namespace }}
-        path: /validate-tests-tests-testkube-io-v2-test
-    failurePolicy: Fail
-    name: vtest.kb.io
-    rules:
-      - apiGroups:
-          - tests.tests.testkube.io
-        apiVersions:
-          - v2
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - tests
-    sideEffects: None
-  - admissionReviewVersions:
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - tests
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-testsuites-tests-testkube-io-v1-testsuite
+  failurePolicy: Fail
+  name: vtestsuite.kb.io
+  rules:
+    - apiGroups:
+      - testsuites.tests.testkube.io
+      apiVersions:
       - v1
-    clientConfig:
-      service:
-        name: {{ include "testkube-operator.webhookServiceName" . }}
-        namespace: {{ .Release.Namespace }}
-        path: /validate-testsuites-tests-testkube-io-v1-testsuite
-    failurePolicy: Fail
-    name: vtestsuite.kb.io
-    rules:
-      - apiGroups:
-          - testsuites.tests.testkube.io
-        apiVersions:
-          - v1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - testsuites
-    sideEffects: None
-  - admissionReviewVersions:
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - testsuites
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: {{ include "testkube-operator.webhookServiceName" . }}
+      namespace: {{ .Release.Namespace }}
+      path: /validate-tests-testkube-io-v1-testtrigger
+  failurePolicy: Fail
+  name: vtesttrigger.kb.io
+  rules:
+    - apiGroups:
+      - tests.testkube.io
+      apiVersions:
       - v1
-    clientConfig:
-      service:
-        name: {{ include "testkube-operator.webhookServiceName" . }}
-        namespace: {{ .Release.Namespace }}
-        path: /validate-tests-testkube-io-v1-testtrigger
-    failurePolicy: Fail
-    name: vtesttrigger.kb.io
-    rules:
-      - apiGroups:
-          - tests.testkube.io
-        apiVersions:
-          - v1
-        operations:
-          - CREATE
-          - UPDATE
-        resources:
-          - testtriggers
-    sideEffects: None
+      operations:
+      - CREATE
+      - UPDATE
+      resources:
+      - testtriggers
+  sideEffects: None
