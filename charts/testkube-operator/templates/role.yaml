@@ -165,20 +165,6 @@ rules:
 - apiGroups:
   - tests.testkube.io
   resources:
-  - testsources/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - testsources/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - tests.testkube.io
-  resources:
   - testtriggers
   verbs:
   - create
