@@ -137,31 +137,71 @@ rules:
   - patch
   - update
 - apiGroups:
-  - tests.testkube.io
+    - tests.testkube.io
   resources:
-  - testsources
+    - testsources
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - tests.testkube.io
+    - tests.testkube.io
   resources:
-  - testsources/finalizers
+    - testsources/finalizers
   verbs:
-  - update
+    - update
 - apiGroups:
-  - tests.testkube.io
+    - tests.testkube.io
   resources:
-  - testsources/status
+    - testsources/status
   verbs:
-  - get
-  - patch
-  - update
+    - get
+    - patch
+    - update
+- apiGroups:
+    - tests.testkube.io
+  resources:
+    - testsources/finalizers
+  verbs:
+    - update
+- apiGroups:
+    - tests.testkube.io
+  resources:
+    - testsources/status
+  verbs:
+    - get
+    - patch
+    - update
+- apiGroups:
+    - tests.testkube.io
+  resources:
+    - testtriggers
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - tests.testkube.io
+  resources:
+    - testtriggers/finalizers
+  verbs:
+    - update
+- apiGroups:
+    - tests.testkube.io
+  resources:
+    - testtriggers/status
+  verbs:
+    - get
+    - patch
+    - update
 
 ---
 

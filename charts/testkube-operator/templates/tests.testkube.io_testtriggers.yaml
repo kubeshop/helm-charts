@@ -1,0 +1,197 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: $(CERTIFICATE_NAMESPACE)/$(CERTIFICATE_NAME)
+    controller-gen.kubebuilder.io/version: v0.8.0
+  name: testtriggers.tests.testkube.io
+spec:
+  conversion:
+    strategy: Webhook
+    webhook:
+      clientConfig:
+        service:
+          name: {{ include "testkube-operator.webhookServiceName" . }}
+          namespace: {{ .Release.Namespace }}
+          path: /convert
+      conversionReviewVersions:
+        - v1
+  group: tests.testkube.io
+  names:
+    kind: TestTrigger
+    listKind: TestTriggerList
+    plural: testtriggers
+    singular: testtrigger
+  scope: Namespaced
+  versions:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: TestTrigger is the Schema for the testtriggers API
+          properties:
+            apiVersion:
+              description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+              type: string
+            kind:
+              description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: TestTriggerSpec defines the desired state of TestTrigger
+              properties:
+                action:
+                  description: Action represents what needs to be executed for selected
+                    Execution
+                  type: string
+                event:
+                  description: On which Event for a Resource should an Action be triggered
+                  type: string
+                execution:
+                  description: Execution identifies for which test execution should
+                    an Action be executed
+                  type: string
+                resource:
+                  description: For which Resource do we monitor Event which triggers
+                    an Action
+                  type: string
+                resourceSelector:
+                  description: ResourceSelector identifies which Kubernetes Objects
+                    should be watched
+                  properties:
+                    labelSelector:
+                      description: LabelSelector is used to identify a group of Kubernetes
+                        Objects based on their metadata labels
+                      properties:
+                        matchExpressions:
+                          description: matchExpressions is a list of label selector
+                            requirements. The requirements are ANDed.
+                          items:
+                            description: A label selector requirement is a selector
+                              that contains values, a key, and an operator that relates
+                              the key and values.
+                            properties:
+                              key:
+                                description: key is the label key that the selector
+                                  applies to.
+                                type: string
+                              operator:
+                                description: operator represents a key's relationship
+                                  to a set of values. Valid operators are In, NotIn,
+                                  Exists and DoesNotExist.
+                                type: string
+                              values:
+                                description: values is an array of string values. If
+                                  the operator is In or NotIn, the values array must
+                                  be non-empty. If the operator is Exists or DoesNotExist,
+                                  the values array must be empty. This array is replaced
+                                  during a strategic merge patch.
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                              - key
+                              - operator
+                            type: object
+                          type: array
+                        matchLabels:
+                          additionalProperties:
+                            type: string
+                          description: matchLabels is a map of {key,value} pairs. A
+                            single {key,value} in the matchLabels map is equivalent
+                            to an element of matchExpressions, whose key field is "key",
+                            the operator is "In", and the values array contains only
+                            "value". The requirements are ANDed.
+                          type: object
+                      type: object
+                    name:
+                      description: Name selector is used to identify a Kubernetes Object
+                        based on the metadata name
+                      type: string
+                    namespace:
+                      description: Namespace of the Kubernetes object
+                      type: string
+                  type: object
+                testSelector:
+                  description: TargetSelector identifies on which Kubernetes Objects
+                    an Action should be taken
+                  properties:
+                    labelSelector:
+                      description: LabelSelector is used to identify a group of Kubernetes
+                        Objects based on their metadata labels
+                      properties:
+                        matchExpressions:
+                          description: matchExpressions is a list of label selector
+                            requirements. The requirements are ANDed.
+                          items:
+                            description: A label selector requirement is a selector
+                              that contains values, a key, and an operator that relates
+                              the key and values.
+                            properties:
+                              key:
+                                description: key is the label key that the selector
+                                  applies to.
+                                type: string
+                              operator:
+                                description: operator represents a key's relationship
+                                  to a set of values. Valid operators are In, NotIn,
+                                  Exists and DoesNotExist.
+                                type: string
+                              values:
+                                description: values is an array of string values. If
+                                  the operator is In or NotIn, the values array must
+                                  be non-empty. If the operator is Exists or DoesNotExist,
+                                  the values array must be empty. This array is replaced
+                                  during a strategic merge patch.
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                              - key
+                              - operator
+                            type: object
+                          type: array
+                        matchLabels:
+                          additionalProperties:
+                            type: string
+                          description: matchLabels is a map of {key,value} pairs. A
+                            single {key,value} in the matchLabels map is equivalent
+                            to an element of matchExpressions, whose key field is "key",
+                            the operator is "In", and the values array contains only
+                            "value". The requirements are ANDed.
+                          type: object
+                      type: object
+                    name:
+                      description: Name selector is used to identify a Kubernetes Object
+                        based on the metadata name
+                      type: string
+                    namespace:
+                      description: Namespace of the Kubernetes object
+                      type: string
+                  type: object
+              required:
+                - action
+                - event
+                - execution
+                - resource
+                - resourceSelector
+                - testSelector
+              type: object
+            status:
+              description: TestTriggerStatus defines the observed state of TestTrigger
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
