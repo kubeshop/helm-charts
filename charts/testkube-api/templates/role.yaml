@@ -15,7 +15,7 @@ rules:
   - update
   - patch
   - delete
-  - deletecollection 
+  - deletecollection
 
 ---
 
@@ -44,7 +44,7 @@ rules:
   - list
   - create
 
---- 
+---
 
 # permissions for end users to edit tests.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -72,7 +72,7 @@ rules:
   verbs:
   - get
 
---- 
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -120,7 +120,7 @@ rules:
   - watch
   - deletecollection
 
---- 
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -147,7 +147,7 @@ rules:
   verbs:
   - get
 
---- 
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -191,7 +191,7 @@ rules:
   - patch
   - update
 
---- 
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -217,3 +217,74 @@ rules:
   - testsources/status
   verbs:
   - get
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: testtriggers-cluster-role-{{ .Release.Name }}
+rules:
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testtriggers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testtriggers/status
+    verbs:
+      - get
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: watchers-cluster-role-{{ .Release.Name }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - events
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "apps/v1"
+    resources:
+      - deployments
+      - daemonsets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "networking.k8s.io/v1"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "extensions/v1"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
