@@ -376,6 +376,11 @@ spec:
             spec:
               description: TestSpec defines the desired state of Test
               properties:
+                configFiles:
+                  description: config files to be copied from host of form source:destination
+                  items:
+                    type: string
+                  type: array
                 content:
                   description: test content object
                   properties:
