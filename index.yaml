@@ -3514,6 +3514,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-23T14:49:43.210650393Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.7
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.33
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.14
+    description: A Helm chart for testkube.
+    digest: 947d5aa3063e556ff2bd5217b6f75db43baf641241cb57f408c80b7015dc2212
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.79/testkube-1.5.79.tgz
+    version: 1.5.79
+  - apiVersion: v2
     created: "2022-09-23T14:42:16.240897497Z"
     dependencies:
     - name: testkube-operator
@@ -19341,6 +19369,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.5.14
+    created: "2022-09-23T14:49:43.345767005Z"
+    description: A Helm chart for Kubernetes
+    digest: 6f8e654804ffce115579dd6a608faaebed4875a4637a48aa0370971f027ad5d4
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.5.14/testkube-dashboard-1.5.14.tgz
+    version: 1.5.14
+  - apiVersion: v2
     appVersion: 1.5.13
     created: "2022-09-22T18:42:35.104933773Z"
     description: A Helm chart for Kubernetes
@@ -21773,4 +21811,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-23T14:42:16.519546469Z"
+generated: "2022-09-23T14:49:43.364913258Z"
