@@ -3571,6 +3571,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-26T14:23:52.656643047Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.7
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.34
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.14
+    description: A Helm chart for testkube.
+    digest: 8c1cc0af81a7cd9bf028f2c394baf93055de20cdf111c96bc97ebfa7c53ae60d
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.80/testkube-1.5.80.tgz
+    version: 1.5.80
+  - apiVersion: v2
     created: "2022-09-23T14:49:43.210650393Z"
     dependencies:
     - name: testkube-operator
@@ -17285,6 +17313,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.34
+    created: "2022-09-26T14:23:52.782341326Z"
+    description: A Helm chart for Testkube api
+    digest: 37e74c610cf3640b81964c5772bbb1dfe4de56a8fe52e664ca196f185b22b6c3
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.34/testkube-api-1.5.34.tgz
+    version: 1.5.34
+  - apiVersion: v2
     appVersion: 1.5.33
     created: "2022-09-23T13:41:33.843131294Z"
     description: A Helm chart for Testkube api
@@ -21868,4 +21906,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-26T13:27:16.544208817Z"
+generated: "2022-09-26T14:23:52.798860546Z"
