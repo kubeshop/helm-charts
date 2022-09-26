@@ -3571,6 +3571,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-26T17:37:26.065067968Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.7
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.35
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.14
+    description: A Helm chart for testkube.
+    digest: 21c155d94e1face7aefd54c63021c51950b46f4fb13de4c4524a6f267e3bf0b6
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.81/testkube-1.5.81.tgz
+    version: 1.5.81
+  - apiVersion: v2
     created: "2022-09-26T14:23:52.656643047Z"
     dependencies:
     - name: testkube-operator
@@ -17313,6 +17341,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.35
+    created: "2022-09-26T17:37:26.184846665Z"
+    description: A Helm chart for Testkube api
+    digest: 493887fb3c37f9abd40a2de1fd49cc3b47b0cff806c1a4430b57b32ad89d42ee
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.35/testkube-api-1.5.35.tgz
+    version: 1.5.35
+  - apiVersion: v2
     appVersion: 1.5.34
     created: "2022-09-26T14:23:52.782341326Z"
     description: A Helm chart for Testkube api
@@ -21923,4 +21961,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-26T14:25:45.250585685Z"
+generated: "2022-09-26T17:37:26.200477425Z"
