@@ -43,7 +43,7 @@ telemetry:
           endpoint: otel-collector:4317
 
 server:
-  httpPort: 8080
+  httpPort: 11633
   telemetry:
     exporter: collector
     applicationExporter: collector
@@ -84,7 +84,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 11633
   annotations: {}
 
 ingress:
