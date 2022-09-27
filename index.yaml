@@ -3571,6 +3571,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-27T11:59:49.16659638Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.7
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.38
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.14
+    description: A Helm chart for testkube.
+    digest: 62336575eef6bfbb47b29de08ed85e106a4a16c0e405c02ad01d610a69608594
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.85/testkube-1.5.85.tgz
+    version: 1.5.85
+  - apiVersion: v2
     created: "2022-09-27T10:34:49.433246887Z"
     dependencies:
     - name: testkube-operator
@@ -17425,6 +17453,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.38
+    created: "2022-09-27T11:59:49.28581285Z"
+    description: A Helm chart for Testkube api
+    digest: f888face94f9e0d0578d01d90f85974255091691a756de364a119a305fec2f60
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.38/testkube-api-1.5.38.tgz
+    version: 1.5.38
+  - apiVersion: v2
     appVersion: 1.5.37
     created: "2022-09-27T10:34:49.547488922Z"
     description: A Helm chart for Testkube api
@@ -22065,4 +22103,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-27T10:34:49.563597507Z"
+generated: "2022-09-27T11:59:49.300964908Z"
