@@ -3571,6 +3571,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-09-28T16:25:45.281897877Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.7
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.39
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.14
+    description: A Helm chart for testkube.
+    digest: 6bdbffecaf92815001f45e5b5f2daa1fd709b375dbe9052857924f591e0efc40
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.96/testkube-1.5.96.tgz
+    version: 1.5.96
+  - apiVersion: v2
     created: "2022-09-28T15:22:27.258858957Z"
     dependencies:
     - name: testkube-operator
@@ -17705,6 +17733,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.39
+    created: "2022-09-28T16:25:45.394009523Z"
+    description: A Helm chart for Testkube api
+    digest: 1de21b2226286b008d1c5597dbf6d0358e6b951adcd45be5994805d7972109bf
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.39/testkube-api-1.5.39.tgz
+    version: 1.5.39
+  - apiVersion: v2
     appVersion: 1.5.38
     created: "2022-09-27T11:59:49.28581285Z"
     description: A Helm chart for Testkube api
@@ -22355,4 +22393,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-09-28T15:22:27.406944137Z"
+generated: "2022-09-28T16:25:45.409187224Z"
