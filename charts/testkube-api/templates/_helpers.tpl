@@ -65,5 +65,5 @@ Create the name of the service account to use
 Create an image pull secret value
 */}}
 {{- define "imagePullSecret" }}
-{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.imageCredentials.registry (printf "%s:%s" .Values.imageCredentials.username .Values.imageCredentials.password | b64enc) | b64enc }}
+{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.image.imageCredentials.registry (printf "%s:%s" .Values.image.imageCredentials.username .Values.image.imageCredentials.password | b64enc) | b64enc }}
 {{- end }}
