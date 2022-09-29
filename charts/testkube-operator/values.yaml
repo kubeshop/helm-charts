@@ -8,7 +8,7 @@ image:
   repository: "kubeshop/testkube-operator"
   pullPolicy: ""
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.5.7"
+  tag: "1.5.8"
 
 imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
 imagePullSecrets: []
@@ -39,14 +39,14 @@ webhook:
     enabled: true
     image:
       repository: bitnami/kubectl
-      tag: 1.22.15
+      tag: "1.5.8"
       pullPolicy: ""
 
   patch:
     enabled: true
     image:
       repository: k8s.gcr.io/ingress-nginx/kube-webhook-certgen
-      tag: v1.3.0
+      tag: "1.5.8"
       pullPolicy: ""
     annotations: {}
     podAnnotations: {}
