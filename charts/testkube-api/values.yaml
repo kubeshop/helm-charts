@@ -9,6 +9,10 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.5.39"
+  imageCredentials:
+    registry: ""
+    username: ""
+    password: ""
 
 imagePullSecrets: []
 nameOverride: "api-server"
@@ -66,6 +70,7 @@ minio:
   affinity: {}
   image: minio/minio:latest
   serviceAccountName: ""
+  imagePullSecrets: []
 
 uiIngress:
   enabled: false
