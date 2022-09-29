@@ -8,7 +8,7 @@ image:
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.5.14"
+  # tag: "1.5.15"
   imageCredentials:
     registry: ""
     username: ""
@@ -82,7 +82,7 @@ oauth2:
   imagePullSecrets: []
   image:
     repository: quay.io/oauth2-proxy/oauth2-proxy
-    tag: "1.5.14"
+    tag: "1.5.15"
     pullPolicy: Always
   env:
     clientId: ""
