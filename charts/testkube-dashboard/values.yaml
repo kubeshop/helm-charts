@@ -9,10 +9,11 @@ image:
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.5.15"
-  imageCredentials:
-    registry: ""
-    username: ""
-    password: ""  
+
+imageCredentials:
+  registry: ""
+  username: ""
+  password: ""  
 
 imagePullSecrets: []
 nameOverride: "dashboard"

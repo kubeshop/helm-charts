@@ -9,10 +9,11 @@ image:
   pullPolicy: Never
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
-  imageCredentials:
-    registry: ""
-    username: ""
-    password: ""
+
+imageCredentials:
+  registry: ""
+  username: ""
+  password: ""
 
 imagePullSecrets: []
 nameOverride: "testkube"
