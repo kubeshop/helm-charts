@@ -306,6 +306,7 @@ rules:
     - get
     - list
     - create
+    - delete
 - apiGroups:
     - admissionregistration.k8s.io
   resources:

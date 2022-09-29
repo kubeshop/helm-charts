@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: "kubeshop/testkube-operator"
-  pullPolicy: IfNotPresent
+  pullPolicy: ""
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.5.7"
 
@@ -35,12 +35,19 @@ webhook:
   labels: {}
   annotations: {}
 
+  migrate:
+    enabled: true
+    image:
+      repository: bitnami/kubectl
+      tag: 1.22.15
+      pullPolicy: ""
+
   patch:
     enabled: true
     image:
       repository: k8s.gcr.io/ingress-nginx/kube-webhook-certgen
       tag: v1.3.0
-      pullPolicy: IfNotPresent
+      pullPolicy: ""
     annotations: {}
     podAnnotations: {}
     labels: {}
