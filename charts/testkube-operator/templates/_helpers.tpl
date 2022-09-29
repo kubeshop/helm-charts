@@ -62,6 +62,17 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the webhook service account to use
+*/}}
+{{- define "testkube-operator.webhook.serviceAccountName" -}}
+{{- if .Values.webhook.patch.serviceAccount.name }}
+{{- default .Values.webhook.patch.serviceAccount.name }}
+{{- else }}
+{{- default "testkube-operator-webhook-cert-mgr" }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create testkube operator webhook service name
 */}}
 {{- define "testkube-operator.webhookServiceName" -}}

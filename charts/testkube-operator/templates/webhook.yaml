@@ -1,10 +1,14 @@
----
+{{- if .Values.webhook.enabled }}
 apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingWebhookConfiguration
 metadata:
-  annotations:
-    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
-  name: testkube-operator-mutating-webhook-configuration
+  {{- if .Values.webhook.annotations }}
+  annotations: {{ toYaml .Values.webhook.annotations | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "testkube-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: admission-webhook
+  name: {{ .Values.webhook.name }}
 webhooks:
 - admissionReviewVersions:
   - v1
@@ -73,9 +77,16 @@ webhooks:
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  annotations:
-    cert-manager.io/inject-ca-from: "{{ .Release.Namespace }}/{{ include "testkube-operator.webhookCertificate" . }}"
-  name: testkube-operator-validating-webhook-configuration
+  {{- if .Values.webhook.annotations }}
+  annotations: {{ toYaml .Values.webhook.annotations | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "testkube-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: admission-webhook
+    {{- with .Values.webhook.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ .Values.webhook.name }}
 webhooks:
 - admissionReviewVersions:
   - v1
@@ -158,3 +169,4 @@ webhooks:
       resources:
       - testtriggers
   sideEffects: None
+{{- end }}

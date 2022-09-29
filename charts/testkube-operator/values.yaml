@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: "kubeshop/testkube-operator"
-  pullPolicy: Always
+  pullPolicy: ""
   # Overrides the image tag whose default is the chart appVersion.
   tag: "1.5.7"
 
@@ -28,6 +28,54 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
+
+webhook:
+  enabled: true
+  name: testkube-operator-webhook-admission
+  labels: {}
+  annotations: {}
+
+  migrate:
+    enabled: true
+    image:
+      repository: bitnami/kubectl
+      tag: 1.22.15
+      pullPolicy: ""
+
+  patch:
+    enabled: true
+    image:
+      repository: k8s.gcr.io/ingress-nginx/kube-webhook-certgen
+      tag: v1.3.0
+      pullPolicy: ""
+    annotations: {}
+    podAnnotations: {}
+    labels: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 2000
+      fsGroup: 2000
+    serviceAccount:
+      annotations: {}
+      name: testkube-operator-webhook-cert-mgr
+    nodeSelector:
+      kubernetes.io/os: linux
+    tolerations: []
+
+  certificate:
+    secretName: webhook-server-cert
+
+  createSecretJob:
+    resources: {}
+      # limits:
+      #   cpu: 10m
+      #   memory: 20Mi
+      # requests:
+      #   cpu: 10m
+      #   memory: 20Mi
+
+  patchWebhookJob:
+    resources: {}
 
 # Create RBAC roles for users and controller
 rbac:
