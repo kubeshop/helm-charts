@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: patch
-          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.tag }}
+          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.version }}
           imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
           args:
             - patch

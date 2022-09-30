@@ -31,7 +31,7 @@ spec:
       {{- if .Values.webhook.migrate.enabled }}
       initContainers:
         - name: migrate
-          image: {{ .Values.webhook.migrate.image.repository }}:{{ .Values.webhook.migrate.image.tag }}
+          image: {{ .Values.webhook.migrate.image.repository }}:{{ .Values.webhook.migrate.image.version }}
           imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
           args:
             - delete
@@ -43,7 +43,7 @@ spec:
       {{- end }}
       containers:
         - name: create
-          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.tag }}
+          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.version }}
           imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
           args:
             - create

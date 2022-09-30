@@ -39,14 +39,14 @@ webhook:
     enabled: true
     image:
       repository: bitnami/kubectl
-      tag: "1.5.8"
+      version: 1.22.15
       pullPolicy: ""
 
   patch:
     enabled: true
     image:
       repository: k8s.gcr.io/ingress-nginx/kube-webhook-certgen
-      tag: "1.5.8"
+      version: v1.3.0
       pullPolicy: ""
     annotations: {}
     podAnnotations: {}
