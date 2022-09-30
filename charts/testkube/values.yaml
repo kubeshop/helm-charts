@@ -2,15 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 1
-
-image:
-  repository: ""
-  pullPolicy: Never
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-imagePullSecrets: []
 nameOverride: "testkube"
 fullnameOverride: "testkube"
 
@@ -22,67 +13,6 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-# fsGroup: 2000
-
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-# runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: "false"
-  className: ""
-  annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-  # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-
-# resources:
-#   {}
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-# limits:
-#   cpu: 100m
-#   memory: 128Mi
-# requests:
-#   cpu: 100m
-#   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
 
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -145,13 +75,17 @@ testkube-api:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     path: /results/(v\d/executions.*)
+    ## Hostnames must be provided if Ingress is enabled.
     hosts:
-      - demo.testkube.io
-    tlsenabled: "false"
-    tls: # < placing a host in the TLS config will indicate a certificate should be created
-      - hosts:
-          - demo.testkube.io
-        secretName: testkube-demo-cert-secret
+      []
+    # - testkube.example.com
+    tlsenabled: false
+    # Placing a host in the TLS config will indicate a certificate should be created
+    tls:
+      []
+      # - hosts:
+      #     - testkube.example.com
+    #   secretName: testkube-cert-secret
   cliIngress:
     enabled: false
     annotations:
@@ -172,13 +106,17 @@ testkube-api:
       provider: "github"
       scopes: ""
     path: /results/(v\d/.*)
+    ## Hostnames must be provided if Ingress is enabled.
     hosts:
-      - demo.testkube.io
-    tlsenabled: "false"
-    tls: # < placing a host in the TLS config will indicate a certificate should be created
-      - hosts:
-          - demo.testkube.io
-        secretName: testkube-demo-cert-secret
+      []
+    # - testkube.example.com
+    tlsenabled: false
+    # Placing a host in the TLS config will indicate a certificate should be created
+    tls:
+      []
+      # - hosts:
+      #     - testkube.example.com
+    #   secretName: testkube-cert-secret
   storage:
     endpoint: ""
     endpoint_port: "9000"
@@ -213,7 +151,7 @@ testkube-dashboard:
     type: ClusterIP
     port: 8080
   ingress:
-    enabled: "false"
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
@@ -229,14 +167,18 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/auth-signin: ""
       nginx.ingress.kubernetes.io/access-control-allow-origin: ""
     path: /
+    ## Hostnames must be provided if Ingress is enabled.
     hosts:
-      - demo.testkube.io
-    tlsenabled: "false"
-    tls: # < placing a host in the TLS config will indicate a certificate should be created
-      - hosts:
-          - demo.testkube.io
-        secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "" #get the address of the endpoint or set it using helm
+      []
+    # - testkube.example.com
+    tlsenabled: false
+    # Placing a host in the TLS config will indicate a certificate should be created
+    tls:
+      []
+      # - hosts:
+      #     - testkube.example.com
+    #   secretName: testkube-cert-secret
+    apiServerEndpoint: "" # get the address of the endpoint or set it using helm
   oauth2:
     enabled: false
     name: oauth2-proxy
@@ -253,7 +195,7 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://demo.testkube.io/oauth2/callback"
+      redirectUrl: "http://testkube.example.com/oauth2/callback"
 
 testkube-operator:
   imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
