@@ -103,7 +103,7 @@
         "name": "executor-init",
         "executor": {
             "executor_type": "init",
-            "image": "kubeshop/testkube-executor-init:0.7.11",
+            "image": "kubeshop/testkube-executor-init:0.7.12",
             "types":[]
         }
     }    
