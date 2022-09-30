@@ -29,7 +29,7 @@ podAnnotations: {}
 
 podSecurityContext:
   {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 securityContext:
   {}
@@ -38,7 +38,7 @@ securityContext:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -61,13 +61,17 @@ ingress:
     nginx.ingress.kubernetes.io/auth-signin: ""
     nginx.ingress.kubernetes.io/access-control-allow-origin: ""
   path: /
+  ## Hostnames must be provided if Ingress is enabled.
   hosts:
-    - demo.testkube.io
-  tlsenabled: "false"
-  tls: # < placing a host in the TLS config will indicate a certificate should be created
-    - hosts:
-        - demo.testkube.io
-      secretName: testkube-demo-cert-secret
+    []
+  # - testkube.example.com
+  tlsenabled: false
+  # placing a host in the TLS config will indicate a certificate should be created
+  tls:
+    []
+    # - hosts:
+    #     - testkube.example.com
+  #   secretName: testkube-cert-secret
 
 oauth2:
   enabled: false
@@ -85,7 +89,7 @@ oauth2:
     githubOrg: ""
     cookieSecret: ""
     cookieSecure: "false"
-    redirectUrl: "http://demo.testkube.io/oauth2/callback"
+    redirectUrl: "http://testkube.example.com/oauth2/callback"
 
 resources:
   {}
@@ -98,7 +102,7 @@ resources:
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
+#   memory: 128Mi
 
 autoscaling:
   enabled: false
