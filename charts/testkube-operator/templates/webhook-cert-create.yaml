@@ -1,0 +1,78 @@
+{{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    {{- with .Values.webhook.patch.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  labels:
+    {{- include "testkube-operator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: admission-webhook
+    {{- with .Values.webhook.patch.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: webhook-cert-create
+spec:
+  template:
+    metadata:
+      {{- if .Values.webhook.patch.podAnnotations }}
+      annotations: {{ toYaml .Values.webhook.patch.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "testkube-operator.labels" . | nindent 8 }}
+        app.kubernetes.io/component: admission-webhook
+        {{- with .Values.webhook.patch.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- if .Values.webhook.migrate.enabled }}
+      initContainers:
+        - name: migrate
+          image: {{ .Values.webhook.migrate.image.repository }}:{{ .Values.webhook.migrate.image.version }}
+          imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
+          args:
+            - delete
+            - secret
+            - {{ .Values.webhook.certificate.secretName }}
+            - --namespace
+            - {{ .Release.Namespace }}
+            - --ignore-not-found
+      {{- end }}
+      containers:
+        - name: create
+          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.version }}
+          imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
+          args:
+            - create
+            - --host
+            - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
+            - --namespace
+            - {{ .Release.Namespace }}
+            - --secret-name
+            - {{ .Values.webhook.certificate.secretName }}
+            - --key-name
+            - tls.key
+            - --cert-name
+            - tls.crt
+          securityContext:
+            allowPrivilegeEscalation: false
+          {{- if .Values.webhook.createSecretJob.resources }}
+          resources: {{ toYaml .Values.webhook.createSecretJob.resources | nindent 12 }}
+          {{- end }}
+      restartPolicy: OnFailure
+      serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
+      {{- if .Values.webhook.patch.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.tolerations }}
+      tolerations: {{ toYaml .Values.webhook.patch.tolerations | nindent 8 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.securityContext }}
+      securityContext:
+        {{- toYaml .Values.webhook.patch.securityContext | nindent 8 }}
+      {{- end }}
+  backoffLimit: 1
+{{- end }}

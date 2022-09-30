@@ -30,5 +30,11 @@ spec:
       - name: data-volume
         emptyDir: {}
       restartPolicy: Never
+      {{- if gt (len .ImagePullSecrets) 0 }}
+      imagePullSecrets:
+      {{- range $secret := .ImagePullSecrets}}
+      - name: {{ $secret -}}
+      {{- end}}
+      {{- end}}
   backoffLimit: 0
   ttlSecondsAfterFinished: 180  

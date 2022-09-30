@@ -5,6 +5,9 @@ metadata:
   # This name uniquely identifies the PVC. This is used in deployment.
   name: testkube-minio-pv-claim-{{ .Release.Namespace }}
 spec:
+  {{- if .Values.minio.storageClassName }}
+  storageClassName: {{ .Values.minio.storageClassName }}
+  {{- end }}
   # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
     # The volume is mounted as read-write by a single node
