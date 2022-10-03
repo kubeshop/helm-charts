@@ -10,6 +10,11 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.5.16"
 
+imageCredentials:
+  registry: ""
+  username: ""
+  password: ""  
+
 imagePullSecrets: []
 nameOverride: "dashboard"
 fullnameOverride: "testkube-dashboard"
@@ -79,6 +84,7 @@ oauth2:
   path: /oauth2
   port: 4180
   selector: k8s-app
+  imagePullSecrets: []
   image:
     repository: quay.io/oauth2-proxy/oauth2-proxy
     tag: "1.5.16"

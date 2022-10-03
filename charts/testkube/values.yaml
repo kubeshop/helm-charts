@@ -2,6 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+imageCredentials:
+  registry: ""
+  username: ""
+  password: ""
+
+imagePullSecrets: []
 nameOverride: "testkube"
 fullnameOverride: "testkube"
 
@@ -85,7 +91,7 @@ testkube-api:
       []
       # - hosts:
       #     - testkube.example.com
-    #   secretName: testkube-cert-secret
+      #   secretName: testkube-cert-secret
   cliIngress:
     enabled: false
     annotations:
@@ -116,7 +122,7 @@ testkube-api:
       []
       # - hosts:
       #     - testkube.example.com
-    #   secretName: testkube-cert-secret
+      #   secretName: testkube-cert-secret
   storage:
     endpoint: ""
     endpoint_port: "9000"
@@ -177,7 +183,7 @@ testkube-dashboard:
       []
       # - hosts:
       #     - testkube.example.com
-    #   secretName: testkube-cert-secret
+      #   secretName: testkube-cert-secret
     apiServerEndpoint: "" # get the address of the endpoint or set it using helm
   oauth2:
     enabled: false

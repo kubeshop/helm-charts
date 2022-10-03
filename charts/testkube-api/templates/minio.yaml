@@ -36,6 +36,10 @@ spec:
         # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
+      {{- with .Values.minio.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       # Volumes used by this deployment
       volumes:
       - name: data
