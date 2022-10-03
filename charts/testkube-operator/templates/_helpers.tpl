@@ -85,10 +85,3 @@ Create testkube operator webhook certificate
 {{- define "testkube-operator.webhookCertificate" -}}
 {{- default "testkube-operator-serving-cert" }}
 {{- end }}
-
-{{/*
-Create an image pull secret value
-*/}}
-{{- define "imagePullSecret" }}
-{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.imageCredentials.registry (printf "%s:%s" .Values.imageCredentials.username .Values.imageCredentials.password | b64enc) | b64enc }}
-{{- end }}
