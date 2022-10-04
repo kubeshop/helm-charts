@@ -3605,6 +3605,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-04T03:05:14.295903676Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.9
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.45
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.5.16
+    description: A Helm chart for testkube.
+    digest: d96723f2aa95bb08f522fbb79373a0b3a03bcdac15b7a8629dd33a4b879e9981
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.107/testkube-1.5.107.tgz
+    version: 1.5.107
+  - apiVersion: v2
     created: "2022-10-03T12:57:06.906045961Z"
     dependencies:
     - name: testkube-operator
@@ -18047,6 +18075,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.5.45
+    created: "2022-10-04T03:05:14.397602581Z"
+    description: A Helm chart for Testkube api
+    digest: 4b1741756b58c907604c2f88f1ad8c0e531994e8007d4aad0eb35544e2e91b78
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.5.45/testkube-api-1.5.45.tgz
+    version: 1.5.45
+  - apiVersion: v2
     appVersion: 1.5.44
     created: "2022-10-03T12:57:07.014277072Z"
     description: A Helm chart for Testkube api
@@ -22797,4 +22835,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-03T12:57:07.030124162Z"
+generated: "2022-10-04T03:05:14.415353244Z"
