@@ -3605,6 +3605,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-04T09:30:24.010434682Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.9
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.5.45
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: 7fcb3a06d81e70fa4be69731ccd5f6cb7297fcb59eadc5984f4b496270345879
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.5.108/testkube-1.5.108.tgz
+    version: 1.5.108
+  - apiVersion: v2
     created: "2022-10-04T03:05:14.295903676Z"
     dependencies:
     - name: testkube-operator
@@ -20336,6 +20364,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.6.0
+    created: "2022-10-04T09:30:24.11868874Z"
+    description: A Helm chart for Kubernetes
+    digest: 0b46da134c8144732c9987c8e082c64f1220e58eaac938268abfd580f38bebce
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.6.0/testkube-dashboard-1.6.0.tgz
+    version: 1.6.0
+  - apiVersion: v2
     appVersion: 1.5.16
     created: "2022-09-30T09:44:37.67459489Z"
     description: A Helm chart for Kubernetes
@@ -22835,4 +22873,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-04T03:05:14.415353244Z"
+generated: "2022-10-04T09:30:24.135669659Z"
