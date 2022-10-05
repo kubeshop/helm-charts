@@ -53,7 +53,7 @@
         "name": "k6-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-k6-executor:0.0.13",
+            "image": "kubeshop/testkube-k6-executor:0.0.14",
             "types":["k6/script"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": []
