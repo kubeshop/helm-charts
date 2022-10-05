@@ -3354,16 +3354,6 @@ entries:
     version: 0.1.0
   kusk-gateway-dashboard:
   - apiVersion: v2
-    appVersion: v1.2.1-rc
-    created: "2022-10-05T13:16:12.986322572Z"
-    description: A Helm chart for Kusk Gateway API's dashboard
-    digest: 8c2e29b6363c149bdd548882c00e0696ac0abfe914f33ed730c6f84f40722439
-    name: kusk-gateway-dashboard
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-dashboard-0.1.13/kusk-gateway-dashboard-0.1.13.tgz
-    version: 0.1.13
-  - apiVersion: v2
     appVersion: v1.2.0
     created: "2022-09-19T21:20:00.694222903Z"
     description: A Helm chart for Kusk Gateway API's dashboard
@@ -3614,6 +3604,34 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
     version: 0.0.1
   testkube:
+  - apiVersion: v2
+    created: "2022-10-05T13:16:51.251523033Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.5.10
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.2
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: 544fed9b744519732161c70d9b87aa1b16b65da215e3f64a9ced3c863bf09ca7
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.2/testkube-1.6.2.tgz
+    version: 1.6.2
   - apiVersion: v2
     created: "2022-10-05T08:52:39.950567868Z"
     dependencies:
@@ -18197,6 +18215,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.2
+    created: "2022-10-05T13:16:51.340415514Z"
+    description: A Helm chart for Testkube api
+    digest: d269ae95f056b088cb973df83ad168e2c6c6d28c933dddf828c4d780485a6309
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.2/testkube-api-1.6.2.tgz
+    version: 1.6.2
+  - apiVersion: v2
     appVersion: 1.6.1
     created: "2022-10-05T08:52:40.034477731Z"
     description: A Helm chart for Testkube api
@@ -23014,4 +23042,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-05T13:16:13.001118366Z"
+generated: "2022-10-05T13:16:51.361049797Z"
