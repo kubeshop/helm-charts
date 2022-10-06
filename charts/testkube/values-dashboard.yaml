@@ -216,6 +216,7 @@ testkube-api:
 
   analyticsEnabled: true
   slackToken: ""
+  executors: ""
 
 testkube-dashboard:
   enabled: true
