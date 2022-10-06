@@ -24,6 +24,9 @@ postmanExecutorURI: "http://testkube-postman-executor:8082"
 analyticsEnabled: true
 slackToken: ""
 
+# base64 encoded executors.json alike data
+executors: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
