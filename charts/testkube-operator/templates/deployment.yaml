@@ -50,6 +50,10 @@ spec:
           value: "{{ .Values.apiPort }}"
         - name: APISERVER_TEMPLATE_CRONJOB
           value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
+        {{- if not .Values.webhook.enabled }}
+        - name: ENABLE_WEBHOOKS
+          value: "false"
+        {{- end }}
         ports:
         - containerPort: 9443
           name: webhook-server
