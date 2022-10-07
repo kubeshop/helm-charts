@@ -3632,6 +3632,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-07T20:24:25.811218249Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.8
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: 082de8f74e8414a24d806242df839f86bfadbedbef9b01dd7f8d0fb832ad195c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.35/testkube-1.6.35.tgz
+    version: 1.6.35
+  - apiVersion: v2
     created: "2022-10-07T18:05:00.818679357Z"
     dependencies:
     - name: testkube-operator
@@ -18802,6 +18830,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.8
+    created: "2022-10-07T20:24:25.908164679Z"
+    description: A Helm chart for Testkube api
+    digest: d2181c689f6a411b78460d3eef7855aee77840fc0f7136ddbde6d056d1efc8ac
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.8/testkube-api-1.6.8.tgz
+    version: 1.6.8
+  - apiVersion: v2
     appVersion: 1.6.7
     created: "2022-10-07T11:12:14.489841653Z"
     description: A Helm chart for Testkube api
@@ -23696,4 +23734,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-07T18:05:01.001242898Z"
+generated: "2022-10-07T20:24:25.929108934Z"
