@@ -3632,6 +3632,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-12T12:08:57.222097143Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.10
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: cc9e9e8f046cc2d9b6ce83d9085ceb0e905b466ac42730aff631e5c3775c0cc7
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.37/testkube-1.6.37.tgz
+    version: 1.6.37
+  - apiVersion: v2
     created: "2022-10-11T09:05:52.89467149Z"
     dependencies:
     - name: testkube-operator
@@ -18858,6 +18886,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.10
+    created: "2022-10-12T12:08:57.442082904Z"
+    description: A Helm chart for Testkube api
+    digest: e257f32554c58a3a271d89c238a517289ee28faf310c8a052046ea72daf464da
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.10/testkube-api-1.6.10.tgz
+    version: 1.6.10
+  - apiVersion: v2
     appVersion: 1.6.9
     created: "2022-10-11T09:05:53.185706646Z"
     description: A Helm chart for Testkube api
@@ -23772,4 +23810,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-11T09:05:53.208670669Z"
+generated: "2022-10-12T12:08:57.462371848Z"
