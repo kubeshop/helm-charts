@@ -101,15 +101,15 @@ webhooks:
   failurePolicy: Fail
   name: vscript.kb.io
   rules:
-    - apiGroups:
-      - tests.testkube.io
-      apiVersions:
-      - v1
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - scripts
+  - apiGroups:
+    - tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - scripts
   sideEffects: None
 - admissionReviewVersions:
   - v1
@@ -122,15 +122,15 @@ webhooks:
   failurePolicy: Fail
   name: vtest.kb.io
   rules:
-    - apiGroups:
-      - tests.testkube.io
-      apiVersions:
-      - v2
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - tests
+  - apiGroups:
+    - tests.testkube.io
+    apiVersions:
+    - v2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - tests
   sideEffects: None
 - admissionReviewVersions:
   - v1
@@ -143,15 +143,15 @@ webhooks:
   failurePolicy: Fail
   name: vtestsuite.kb.io
   rules:
-    - apiGroups:
-      - tests.testkube.io
-      apiVersions:
-      - v1
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - testsuites
+  - apiGroups:
+    - tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testsuites
   sideEffects: None
 - admissionReviewVersions:
   - v1
@@ -164,14 +164,14 @@ webhooks:
   failurePolicy: Fail
   name: vtesttrigger.kb.io
   rules:
-    - apiGroups:
-      - tests.testkube.io
-      apiVersions:
-      - v1
-      operations:
-      - CREATE
-      - UPDATE
-      resources:
-      - testtriggers
+  - apiGroups:
+    - tests.testkube.io
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - testtriggers
   sideEffects: None
 {{- end }}
