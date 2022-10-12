@@ -40,12 +40,14 @@ spec:
             - {{ .Values.webhook.certificate.secretName }}
             - --webhook-name
             - {{ .Values.webhook.name }}
+            - --crd-api-groups
+            - tests.testkube.io,executor.testkube.io
           securityContext:
             allowPrivilegeEscalation: false
           {{- if .Values.webhook.patchWebhookJob.resources }}
           resources: {{ toYaml .Values.webhook.patchWebhookJob.resources | nindent 12 }}
           {{- end }}
-      restartPolicy: OnFailure
+      restartPolicy: Never
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
       {{- if .Values.webhook.patch.securityContext }}
       securityContext:
