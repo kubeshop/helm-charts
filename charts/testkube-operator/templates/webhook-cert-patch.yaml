@@ -40,6 +40,8 @@ spec:
             - {{ .Values.webhook.certificate.secretName }}
             - --webhook-name
             - {{ .Values.webhook.name }}
+            - --patch-validating=true
+            - --patch-mutating=false
             - --crd-api-groups
             - tests.testkube.io,executor.testkube.io
           securityContext:
