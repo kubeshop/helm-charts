@@ -12,16 +12,17 @@ metadata:
 webhooks:
 - admissionReviewVersions:
   - v1
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /mutate-scripts-tests-testkube-io-v1-script
+      path: /mutate-tests-testkube-io-v1-script
   failurePolicy: Fail
   name: mscript.kb.io
   rules:
   - apiGroups:
-    - scripts.tests.testkube.io
+    - tests.testkube.io
     apiVersions:
     - v1
     operations:
@@ -32,17 +33,17 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v2
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /mutate-tests-tests-testkube-io-v2-test
+      path: /mutate-tests-testkube-io-v2-test
   failurePolicy: Fail
   name: mtest.kb.io
   rules:
   - apiGroups:
-    - tests.tests.testkube.io
+    - tests.testkube.io
     apiVersions:
     - v2
     operations:
@@ -53,16 +54,17 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /mutate-testsuites-tests-testkube-io-v1-testsuite
+      path: /mutate-tests-testkube-io-v1-testsuite
   failurePolicy: Fail
   name: mtestsuite.kb.io
   rules:
   - apiGroups:
-    - testsuites.tests.testkube.io
+    - tests.testkube.io
     apiVersions:
     - v1
     operations:
@@ -90,16 +92,17 @@ metadata:
 webhooks:
 - admissionReviewVersions:
   - v1
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /validate-scripts-tests-testkube-io-v1-script
+      path: /validate-tests-testkube-io-v1-script
   failurePolicy: Fail
   name: vscript.kb.io
   rules:
     - apiGroups:
-      - scripts.tests.testkube.io
+      - tests.testkube.io
       apiVersions:
       - v1
       operations:
@@ -110,17 +113,17 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
-  - v2
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /validate-tests-tests-testkube-io-v2-test
+      path: /validate-tests-testkube-io-v2-test
   failurePolicy: Fail
   name: vtest.kb.io
   rules:
     - apiGroups:
-      - tests.tests.testkube.io
+      - tests.testkube.io
       apiVersions:
       - v2
       operations:
@@ -131,16 +134,17 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
       namespace: {{ .Release.Namespace }}
-      path: /validate-testsuites-tests-testkube-io-v1-testsuite
+      path: /validate-tests-testkube-io-v1-testsuite
   failurePolicy: Fail
   name: vtestsuite.kb.io
   rules:
     - apiGroups:
-      - testsuites.tests.testkube.io
+      - tests.testkube.io
       apiVersions:
       - v1
       operations:
@@ -151,6 +155,7 @@ webhooks:
   sideEffects: None
 - admissionReviewVersions:
   - v1
+  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
