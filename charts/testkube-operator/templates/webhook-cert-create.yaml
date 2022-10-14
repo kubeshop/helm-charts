@@ -48,7 +48,7 @@ spec:
           args:
             - create
             - --host
-            - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
+            - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }},{{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
             - --namespace
             - {{ .Release.Namespace }}
             - --secret-name
@@ -57,6 +57,8 @@ spec:
             - tls.key
             - --cert-name
             - tls.crt
+            - --ca-name
+            - ca.crt
           securityContext:
             allowPrivilegeEscalation: false
           {{- if .Values.webhook.createSecretJob.resources }}

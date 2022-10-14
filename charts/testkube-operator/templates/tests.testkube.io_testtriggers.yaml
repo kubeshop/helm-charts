@@ -2,20 +2,9 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    cert-manager.io/inject-ca-from: $(CERTIFICATE_NAMESPACE)/$(CERTIFICATE_NAME)
     controller-gen.kubebuilder.io/version: v0.8.0
   name: testtriggers.tests.testkube.io
 spec:
-  conversion:
-    strategy: Webhook
-    webhook:
-      clientConfig:
-        service:
-          name: {{ include "testkube-operator.webhookServiceName" . }}
-          namespace: {{ .Release.Namespace }}
-          path: /convert
-      conversionReviewVersions:
-        - v1
   group: tests.testkube.io
   names:
     kind: TestTrigger
@@ -117,7 +106,7 @@ spec:
                       type: string
                   type: object
                 testSelector:
-                  description: TargetSelector identifies on which Kubernetes Objects
+                  description: TestSelector identifies on which Kubernetes Objects
                     an Action should be taken
                   properties:
                     labelSelector:
