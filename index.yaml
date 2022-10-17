@@ -3649,6 +3649,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-17T21:42:33.676710202Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.15
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: c7d1de3719def267b0fcfd01fcf1e7679c2b990c9333ce6e16a55979fa7d4412
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.46/testkube-1.6.46.tgz
+    version: 1.6.46
+  - apiVersion: v2
     created: "2022-10-17T15:37:58.264835114Z"
     dependencies:
     - name: testkube-operator
@@ -19127,6 +19155,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.15
+    created: "2022-10-17T21:42:33.78800256Z"
+    description: A Helm chart for Testkube api
+    digest: 1358018e1df5793a84ee53a1ed1df4f477d3345477ba38eb0e442960b36631c6
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.15/testkube-api-1.6.15.tgz
+    version: 1.6.15
+  - apiVersion: v2
     appVersion: 1.6.14
     created: "2022-10-17T14:25:02.251286437Z"
     description: A Helm chart for Testkube api
@@ -24128,4 +24166,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-17T15:37:58.418139305Z"
+generated: "2022-10-17T21:42:33.804893604Z"
