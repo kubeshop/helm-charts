@@ -49,6 +49,7 @@ testkube-api:
   service:
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
     port: 8088
+    annotations: {}
   nats:
     enabled: true
   minio:
@@ -152,6 +153,7 @@ testkube-dashboard:
   service:
     type: ClusterIP
     port: 8080
+    annotations: {}
   ingress:
     enabled: false
     annotations:
