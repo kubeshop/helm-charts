@@ -3649,6 +3649,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-19T09:00:16.715442141Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.18
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: 63ed0fb2f069b94aab1f3eb9459ec6188f24521ba62dbf389118ba62c5ebc31a
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.50/testkube-1.6.50.tgz
+    version: 1.6.50
+  - apiVersion: v2
     created: "2022-10-18T14:50:10.27335719Z"
     dependencies:
     - name: testkube-operator
@@ -19239,6 +19267,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.18
+    created: "2022-10-19T09:00:16.847263624Z"
+    description: A Helm chart for Testkube api
+    digest: cd5e1439c44b5e43eb2e6bdd610ee11063e8167b64ed7f66eefe1901f88ec505
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.18/testkube-api-1.6.18.tgz
+    version: 1.6.18
+  - apiVersion: v2
     appVersion: 1.6.17
     created: "2022-10-18T14:50:10.426171792Z"
     description: A Helm chart for Testkube api
@@ -24270,4 +24308,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-18T14:50:10.447016884Z"
+generated: "2022-10-19T09:00:16.864149296Z"
