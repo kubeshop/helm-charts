@@ -33,7 +33,7 @@
         "name": "kubepug-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-kubepug-executor:0.0.6",
+            "image": "kubeshop/testkube-kubepug-executor:0.0.7",
             "types":["kubepug/yaml", "kubepug/json"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": []
