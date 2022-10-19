@@ -168,6 +168,13 @@ testkube-api:
           set $pathallowed "true";
         }  
 
+        if ( $uri ~ "^(.*)/tests/(.*)$" ){
+          set $pathallowed "true";
+        }
+        if ( $request_method = PATCH ){
+          set $methodallowed "true";
+        }
+
         set $condition "$methodallowed+$pathallowed";
         if ( $condition != "true+true" ) {
           return 401;
