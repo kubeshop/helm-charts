@@ -411,9 +411,6 @@ spec:
                             - key
                             - name
                           type: object
-                      required:
-                        - type
-                        - uri
                       type: object
                     type:
                       description: test type
