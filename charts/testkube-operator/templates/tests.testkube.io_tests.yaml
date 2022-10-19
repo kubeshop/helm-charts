@@ -415,9 +415,6 @@ spec:
                           description: if provided we checkout the whole repository
                             and run test from this directory
                           type: string
-                      required:
-                        - type
-                        - uri
                       type: object
                     type:
                       description: test type
