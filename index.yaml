@@ -3727,6 +3727,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-21T08:19:25.012019748Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.4
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.24
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.6.0
+    description: A Helm chart for testkube.
+    digest: bcfbf4ebe8d50be2981894923ce6c5ab378ccde6019b16905257a98838301c06
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.69/testkube-1.6.69.tgz
+    version: 1.6.69
+  - apiVersion: v2
     created: "2022-10-21T08:05:41.166057029Z"
     dependencies:
     - name: testkube-operator
@@ -19653,6 +19681,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.24
+    created: "2022-10-21T08:19:25.111486328Z"
+    description: A Helm chart for Testkube api
+    digest: 1c7ea49e486ab9cda99a18ecc27d8aa6ee835c627693d1d512cb2bd81a5ffbe4
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.24/testkube-api-1.6.24.tgz
+    version: 1.6.24
+  - apiVersion: v2
     appVersion: 1.6.23
     created: "2022-10-21T00:17:12.949240691Z"
     description: A Helm chart for Testkube api
@@ -24764,4 +24802,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-21T08:05:41.32833287Z"
+generated: "2022-10-21T08:19:25.127705866Z"
