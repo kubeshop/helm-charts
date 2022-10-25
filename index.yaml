@@ -3807,6 +3807,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-25T18:48:54.567584752Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.5
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.26
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.7.0
+    description: A Helm chart for testkube.
+    digest: c0c705b93aa719f854ab8e9770e5b33f8e6f187427af0c30a9f4826f71b0274c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.78/testkube-1.6.78.tgz
+    version: 1.6.78
+  - apiVersion: v2
     created: "2022-10-25T16:34:00.813801178Z"
     dependencies:
     - name: testkube-operator
@@ -19985,6 +20013,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.26
+    created: "2022-10-25T18:48:54.719711051Z"
+    description: A Helm chart for Testkube api
+    digest: 2e46af74e9ba54f5238df0be466faa7f5d2635e95e2a92eb825c579395e1cc64
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.26/testkube-api-1.6.26.tgz
+    version: 1.6.26
+  - apiVersion: v2
     appVersion: 1.6.25
     created: "2022-10-21T08:34:43.823557426Z"
     description: A Helm chart for Testkube api
@@ -25153,4 +25191,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-25T16:34:01.052574453Z"
+generated: "2022-10-25T18:48:54.737456047Z"
