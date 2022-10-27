@@ -3868,6 +3868,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-10-27T10:26:57.237872925Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.5
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.27
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.7.1
+    description: A Helm chart for testkube.
+    digest: a866a4e2afbaba759090d6817c93d633ebfd70c3095fc0b86d148efbc5216f00
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.83/testkube-1.6.83.tgz
+    version: 1.6.83
+  - apiVersion: v2
     created: "2022-10-26T19:34:05.550837576Z"
     dependencies:
     - name: testkube-operator
@@ -20186,6 +20214,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.27
+    created: "2022-10-27T10:26:57.469563688Z"
+    description: A Helm chart for Testkube api
+    digest: a253e0a6f9b4999e8b31c151e16376effee9d338c8574da8371f7dfc54f44082
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.27/testkube-api-1.6.27.tgz
+    version: 1.6.27
+  - apiVersion: v2
     appVersion: 1.6.26
     created: "2022-10-25T18:48:54.719711051Z"
     description: A Helm chart for Testkube api
@@ -25374,4 +25412,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-10-27T08:42:50.898298568Z"
+generated: "2022-10-27T10:26:57.493002248Z"
