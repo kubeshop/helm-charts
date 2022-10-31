@@ -58,6 +58,9 @@ testkube-api:
     tolerations: []
     affinity: {}
     image: minio/minio:latest
+    serviceAccountName: ""
+    minioRootUser: "minio"
+    minioRootPassword: "minio123"
   uiIngress:
     enabled: false
     annotations:
