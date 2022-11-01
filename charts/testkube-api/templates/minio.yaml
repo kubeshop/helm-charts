@@ -60,9 +60,9 @@ spec:
         env:
         # MinIO access key and secret key
         - name: MINIO_ROOT_USER
-          value: "minio"
+          value: {{ .Values.minio.minioRootUser }}
         - name: MINIO_ROOT_PASSWORD
-          value: "minio123"
+          value: {{ .Values.minio.minioRootPassword }}
         - name: CONSOLE_PORT
           value: "9090"
         - name: CONSOLE_TLS_PORT

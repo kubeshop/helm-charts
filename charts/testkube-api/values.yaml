@@ -70,6 +70,8 @@ minio:
   affinity: {}
   image: minio/minio:latest
   serviceAccountName: ""
+  minioRootUser: ""
+  minioRootPassword: ""
 
 uiIngress:
   enabled: false
