@@ -85,3 +85,20 @@ Create testkube operator webhook certificate
 {{- define "testkube-operator.webhookCertificate" -}}
 {{- default "testkube-operator-serving-cert" }}
 {{- end }}
+
+
+{{/*
+Define Operator image
+*/}}
+{{- define "testkube-operator.image" -}}
+{{- $registryName := .Values.image.registry -}}
+{{- $repositoryName := .Values.image.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
+    {{- else -}}
+      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+    {{- end -}}
+{{- end -}}
+{{- end -}}

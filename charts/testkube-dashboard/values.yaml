@@ -4,7 +4,11 @@
 
 replicaCount: 1
 
+global:
+  imageRegistry:
+
 image:
+  registry: docker.io
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.

@@ -4,11 +4,15 @@
 
 replicaCount: 1
 
+global:
+  imageRegistry:
+
 image:
+  registry: docker.io
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.6.28"
+  # tag: ""
 
 imagePullSecrets: []
 nameOverride: "api-server"
