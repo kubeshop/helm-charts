@@ -4,17 +4,20 @@
 
 replicaCount: 1
 
+#Global image parameters
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets [array] Global Docker registry secret names as an array
 global:
-  imageRegistry:
+  imageRegistry: ""
+  imagePullSecrets: []
 
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: ""
+  # tag: "1.6.28"
 
-imagePullSecrets: []
 nameOverride: "api-server"
 fullnameOverride: "testkube-api-server"
 

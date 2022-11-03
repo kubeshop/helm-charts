@@ -4,8 +4,12 @@
 
 replicaCount: 1
 
+#Global image parameters
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets [array] Global Docker registry secret names as an array
 global:
-  imageRegistry:
+  imageRegistry: ""
+  imagePullSecrets: []
 
 image:
   registry: docker.io
@@ -15,7 +19,6 @@ image:
   tag: "1.6.5"
 
 imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
-imagePullSecrets: []
 nameOverride: "testkube-operator"
 fullnameOverride: "testkube-operator"
 
