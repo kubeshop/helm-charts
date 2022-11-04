@@ -2,7 +2,13 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-imagePullSecrets: []
+#Global image parameters
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets [array] Global Docker registry secret names as an array
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
 nameOverride: "testkube"
 fullnameOverride: "testkube"
 

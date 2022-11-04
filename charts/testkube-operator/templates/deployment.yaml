@@ -17,6 +17,10 @@ spec:
       labels:
         control-plane: controller-manager
     spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
       - args:
         - --secure-listen-address=0.0.0.0:8443
@@ -34,7 +38,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+        image: {{ include "testkube-operator.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
