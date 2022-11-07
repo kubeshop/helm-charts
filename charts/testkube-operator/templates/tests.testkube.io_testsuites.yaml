@@ -363,6 +363,10 @@ spec:
                     sync:
                       description: whether to start execution sync or async
                       type: boolean
+                    timeout:
+                      description: test suite timeout in seconds
+                      format: int32
+                      type: integer
                     variables:
                       additionalProperties:
                         properties:
