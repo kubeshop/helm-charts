@@ -70,6 +70,8 @@ rules:
   resources:
     - services
     - namespaces
+    - pods
+    - pods/logs
   verbs:
     - get
     - list
