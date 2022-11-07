@@ -1,4 +1,3 @@
-
 ---
 apiVersion: gateway.kusk.io/v1alpha1
 kind: API
@@ -703,6 +702,39 @@ spec:
           summary: Get static route CRD
           tags:
           - static routes
+      /logs:
+        x-kusk:
+          upstream:
+            service:
+              name: {{ include "kusk-gateway-api.fullname" . }}-websocket
+              namespace: {{ .Release.Namespace }}
+              port: 8081
+          websocket: true
+        get:
+          tags:
+            - "fleets"
+          summary: "Get envoy fleet logs"
+          operationId: getEnvoyFleetLogs
+          parameters:
+            - name: namespace
+              in: query
+              schema:
+                type: string
+                default: "kusk-system"
+            - name: name
+              in: query
+              schema:
+                type: string
+                default: "kusk-gateway-envoy-fleet"
+          responses:
+            200:
+              description: "Envoy fleet logs"
+              content:
+                application/json:
+                  schema:
+                    type: object
+            404:
+              description: "Envoy fleet logs not found"
     servers:
     - description: My local endpoint mockup
       url: http://localhost:8080
