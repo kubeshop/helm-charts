@@ -50,6 +50,23 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        - name: kusk-gateway-api-websocket
+          image: "{{ .Values.image.repository }}-websocket:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: ws
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: ws
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: ws
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
