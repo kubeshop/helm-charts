@@ -3885,6 +3885,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-07T10:46:12.950051592Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.5
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.29
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.0
+    description: A Helm chart for testkube.
+    digest: d46d468b6e493f2a7aea48bfae887c9fbe964fc0c85aaa58a1a91964d612bb2a
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.90/testkube-1.6.90.tgz
+    version: 1.6.90
+  - apiVersion: v2
     created: "2022-11-04T15:59:29.421562219Z"
     dependencies:
     - name: testkube-operator
@@ -20399,6 +20427,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.29
+    created: "2022-11-07T10:46:13.050361845Z"
+    description: A Helm chart for Testkube api
+    digest: da9fd4d5fa665d0c83ae171d9dd8d61c03c76773fe2c3d10ad3ba7e74891b9ce
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.29/testkube-api-1.6.29.tgz
+    version: 1.6.29
+  - apiVersion: v2
     appVersion: 1.6.28
     created: "2022-10-27T13:28:14.125033487Z"
     description: A Helm chart for Testkube api
@@ -25617,4 +25655,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-04T15:59:29.825394132Z"
+generated: "2022-11-07T10:46:13.068080243Z"
