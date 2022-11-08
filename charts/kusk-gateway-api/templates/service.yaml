@@ -13,8 +13,8 @@ spec:
       targetPort: 8080
       protocol: TCP
       name: http
-    - port: 8081
-      targetPort: 8081
+    - port: {{ .Values.websocket.port }}
+      targetPort: {{ .Values.websocket.port }}
       protocol: TCP
       name: ws
   selector:

@@ -54,10 +54,11 @@ spec:
           image: "{{ .Values.image.repository }}-websocket:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-            - --port=8081
+            - --port={{ .Values.websocket.port }}
+            {{- toYaml .Values.websocket.args | nindent 12 }}
           ports:
             - name: ws
-              containerPort: 8081
+              containerPort: {{ .Values.websocket.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
