@@ -71,7 +71,7 @@ rules:
     - services
     - namespaces
     - pods
-    - pods/logs
+    - pods/log
   verbs:
     - get
     - list
