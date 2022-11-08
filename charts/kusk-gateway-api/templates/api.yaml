@@ -705,6 +705,9 @@ spec:
       /logs:
         x-kusk:
           upstream:
+            rewrite:
+              pattern: ^/api
+              substitution: ""
             service:
               name: {{ include "kusk-gateway-api.fullname" . }}-websocket
               namespace: {{ .Release.Namespace }}
