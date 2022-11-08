@@ -711,7 +711,7 @@ spec:
             service:
               name: {{ include "kusk-gateway-api.fullname" . }}-websocket
               namespace: {{ .Release.Namespace }}
-              port: 8081
+              port: {{ .Values.websocket.port }}
           websocket: true
         get:
           tags:
