@@ -175,11 +175,6 @@ testkube-api:
           set $methodallowed "true";
         }
 
-        if ( ($uri ~ "^(.*)/test-suites/(.+)/executions/(.+)$" || $uri ~ "^(.*)/test-suite-executions/(.+)$") &&  $request_method = DELETE) {
-          set $methodallowed "true";
-          set $pathallowed "true";
-        }
-        
         set $condition "$methodallowed+$pathallowed";
         if ( $condition != "true+true" ) {
           return 401;
