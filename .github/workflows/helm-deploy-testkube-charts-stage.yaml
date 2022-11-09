@@ -183,9 +183,13 @@ jobs:
           set -x
           kubectl -n testkube delete test dashboard-e2e-tests --ignore-not-found=true
           kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml
-      - name: Create staging testsuite
+      - name: (Re)create staging testsuite
         working-directory: ./testkube-repo
-        run: kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
+        run: |-
+          # enabling debug mode
+          set -x
+          kubectl -n testkube delete testsuite staging-testsuite --ignore-not-found=true
+          kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
       - name: Run staging testsuite
         run: kubectl testkube run testsuite staging-testsuite -f
 
