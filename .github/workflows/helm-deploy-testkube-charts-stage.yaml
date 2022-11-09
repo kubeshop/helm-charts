@@ -160,25 +160,27 @@ jobs:
         with:
           repository: kubeshop/testkube
           path: testkube
+      - name: ls
+        run: ls -lah; cd testkube; ls -lah
 
-      # Runnning test suite
-      - name: Run test suite
-        run: |-
-          # enabling debug mode
-          set -x
+      # # Runnning test suite
+      # - name: Run test suite
+      #   run: |-
+      #     # enabling debug mode
+      #     set -x
 
-          # Installing testkube kubectl plugin:
-          bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
+      #     # Installing testkube kubectl plugin:
+      #     bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
 
-          # Downloading test suite:
-          curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }}
+      #     # Downloading test suite:
+      #     curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }}
 
-          # Running Test suite:
-          kubectl testkube disable telemetry
-          kubectl -n testkube delete test sanity || true
-          kubectl -n testkube delete secret sanity-secrets || true
-          kubectl testkube create test -f ./${{ env.POSTMAN_TEST_FILE_NANE }} --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
-          kubectl testkube run test sanity -f
+      #     # Running Test suite:
+      #     kubectl testkube disable telemetry
+      #     kubectl -n testkube delete test sanity || true
+      #     kubectl -n testkube delete secret sanity-secrets || true
+      #     kubectl testkube create test -f ./${{ env.POSTMAN_TEST_FILE_NANE }} --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
+      #     kubectl testkube run test sanity -f
 
   # notify_slack_if_test_suite_stage_succeeds:
   #   runs-on: ubuntu-latest
