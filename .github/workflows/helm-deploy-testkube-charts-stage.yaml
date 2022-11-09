@@ -159,9 +159,9 @@ jobs:
         uses: actions/checkout@master
         with:
           repository: kubeshop/testkube
-          path: testkube
+          path: testkube-repo
       - name: ls
-        run: ls -lah; cd testkube; ls -lah
+        run: echo "Main dir \n"; ls -lah; cd testkube-repo; echo "testkube-repo dir \n"; ls -lah
 
       # # Runnning test suite
       # - name: Run test suite
