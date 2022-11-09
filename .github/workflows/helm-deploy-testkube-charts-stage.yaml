@@ -22,8 +22,8 @@ env:
   GKE_ZONE_STAGE: ${{ secrets.GKE_ZONE_STAGE }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube # Add your deployment name here.
   ENV: stage
-  POSTMAN_TEST_FILE_NANE: TestKube-Sanity.postman_collection.json
-  POSTMAN_TEST_FILE_PATH: test/postman
+  # POSTMAN_TEST_FILE_NANE: TestKube-Sanity.postman_collection.json //TODO: remove - not needed anymore
+  # POSTMAN_TEST_FILE_PATH: test/postman //TODO: remove - not needed anymore
 
 jobs:
   # release_charts_if_image_updated:
@@ -155,13 +155,16 @@ jobs:
           cluster_name: ${{ env.GKE_CLUSTER_NAME_STAGE }}
           location: ${{ env.GKE_ZONE_STAGE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
+      - name: Install testkube kubectl plugin
+        run: bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
       - name: Checkout tests from main Testkube repo
         uses: actions/checkout@master
         with:
           repository: kubeshop/testkube
           path: testkube-repo
-      - name: ls
-        run: echo "Main dir \n"; ls -lah; cd testkube-repo; echo "testkube-repo dir \n"; ls -lah
+      - name: Testkube smoke tests - run script
+        working-directory: ./testkube-repo
+        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -s -e soapui-smoke
 
       # # Runnning test suite
       # - name: Run test suite
@@ -170,10 +173,10 @@ jobs:
       #     set -x
 
       #     # Installing testkube kubectl plugin:
-      #     bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
+      #     # bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh ) //TODO: remove - moved to separate step
 
       #     # Downloading test suite:
-      #     curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }}
+      #     # curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }} //TODO: remove - repo checkout instead
 
       #     # Running Test suite:
       #     kubectl testkube disable telemetry
