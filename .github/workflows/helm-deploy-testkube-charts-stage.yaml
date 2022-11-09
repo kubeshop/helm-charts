@@ -155,35 +155,40 @@ jobs:
           cluster_name: ${{ env.GKE_CLUSTER_NAME_STAGE }}
           location: ${{ env.GKE_ZONE_STAGE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
-      - name: Install testkube kubectl plugin
-        run: bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
+      - name: Install testkube kubectl plugin and disable telemetry
+        run: bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh ) && kubectl testkube disable telemetry
       - name: Checkout tests from main Testkube repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
         with:
           repository: kubeshop/testkube
+          ref: tests-cicd-testsuite # TODO: change branch to master before merge
           path: testkube-repo
-      - name: Testkube smoke tests - run script
+      - name: Executor tests - delete/create/schedule all executor tests
         working-directory: ./testkube-repo
-        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -r -f -e soapui-smoke # delete, create, run, follow
+        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -s # (delete, create, schedule) - don't execute
+      - name: (Re)create Postman Sanity test (with CLI)
+        working-directory: ./testkube-repo
+        run: |-
+          # enabling debug mode
+          set -x
+          kubectl -n testkube delete test sanity --ignore-not-found=true
+          kubectl -n testkube delete secret sanity-secrets --ignore-not-found=true
+          kubectl testkube create test -f ./test/postman/TestKube-Sanity.postman_collection.json --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
+      - name: Run Postman sanity tests
+        run: kubectl testkube run test sanity -f
+      - name: (Re)create Dashboard E2E tests (from CRD)
+        working-directory: ./testkube-repo
+        run: |-
+          # enabling debug mode
+          set -x
+          kubectl -n testkube delete test dashboard-e2e-tests --ignore-not-found=true
+          kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml
+      - name: Create staging testsuite
+        working-directory: ./testkube-repo
+        run: kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
+      - name: Run staging testsuite
+        run: kubectl testkube run testsuite staging-testsuite -f
 
-      # # Runnning test suite
-      # - name: Run test suite
-      #   run: |-
-      #     # enabling debug mode
-      #     set -x
-
-      #     # Installing testkube kubectl plugin:
-      #     # bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh ) //TODO: remove - moved to separate step
-
-      #     # Downloading test suite:
-      #     # curl -LOs https://raw.githubusercontent.com/kubeshop/testkube/main/${{ env.POSTMAN_TEST_FILE_PATH }}/${{ env.POSTMAN_TEST_FILE_NANE }} //TODO: remove - repo checkout instead
-
-      #     # Running Test suite:
-      #     kubectl testkube disable telemetry
-      #     kubectl -n testkube delete test sanity || true
-      #     kubectl -n testkube delete secret sanity-secrets || true
-      #     kubectl testkube create test -f ./${{ env.POSTMAN_TEST_FILE_NANE }} --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
-      #     kubectl testkube run test sanity -f
 
   # notify_slack_if_test_suite_stage_succeeds:
   #   runs-on: ubuntu-latest
