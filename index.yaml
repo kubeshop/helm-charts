@@ -3885,6 +3885,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-09T08:16:02.08941307Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.5
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.32
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.1
+    description: A Helm chart for testkube.
+    digest: 79a37f8b1312b8cc3ab0bf71083420a62e0655d37182273d3adac75743bc38bb
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.98/testkube-1.6.98.tgz
+    version: 1.6.98
+  - apiVersion: v2
     created: "2022-11-09T07:58:08.408299774Z"
     dependencies:
     - name: testkube-operator
@@ -20623,6 +20651,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.6.32
+    created: "2022-11-09T08:16:02.328078921Z"
+    description: A Helm chart for Testkube api
+    digest: c56aeaab03f78c5e0fcc5bf431bb79336ebd08d97d694cbf8fbf451d2a3059d2
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.6.32/testkube-api-1.6.32.tgz
+    version: 1.6.32
+  - apiVersion: v2
     appVersion: 1.6.31
     created: "2022-11-08T10:37:35.048419137Z"
     description: A Helm chart for Testkube api
@@ -25881,4 +25919,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-09T07:58:08.607022837Z"
+generated: "2022-11-09T08:16:02.344836878Z"
