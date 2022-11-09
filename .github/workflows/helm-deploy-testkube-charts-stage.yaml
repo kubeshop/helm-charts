@@ -164,7 +164,7 @@ jobs:
           path: testkube-repo
       - name: Testkube smoke tests - run script
         working-directory: ./testkube-repo
-        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -s -e soapui-smoke
+        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -r -f -e soapui-smoke # delete, create, run, follow
 
       # # Runnning test suite
       # - name: Run test suite
