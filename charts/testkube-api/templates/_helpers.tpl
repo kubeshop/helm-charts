@@ -76,3 +76,14 @@ Define API image
      {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Add extra env variables
+*/}}
+{{- define "testkube-api.extraVars" -}}
+{{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+{{- else }}
+    {{- tpl (.value | toYaml) .context }}
+{{- end }}
+{{- end -}}

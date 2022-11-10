@@ -34,6 +34,9 @@ spec:
             value: "{{ .Values.apiServerEndpoint }}"
           - name: REACT_APP_ROOT_ROUTE
             value: "{{ .Values.ingress.path }}"
+          {{- if .Values.extraEnvVars }}
+          {{ include "testkube-dashboard.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-dashboard.image" . }}
