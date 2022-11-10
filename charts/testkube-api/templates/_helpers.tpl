@@ -87,3 +87,4 @@ Add extra env variables
     {{- tpl (.value | toYaml) .context }}
 {{- end }}
 {{- end -}}
+
