@@ -154,13 +154,25 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
+        } 
+
+        if ( $request_method = PATCH ){
+          set $methodallowed "true";
         }      
 
         if ( $uri ~ "^(.*)/tests/(.*)/executions$" ){
           set $pathallowed "true";
+        } 
+
+        if ( $uri ~ "^(.*)/tests/(.*)/executions/(.*)$" ){
+          set $pathallowed "true";
         }  
 
         if ( $uri ~ "^(.*)/test-suites/(.*)/executions$" ){
+          set $pathallowed "true";
+        }
+
+        if ( $uri ~ "^(.*)/test-suites/(.*)/executions/(.*)$" ){
           set $pathallowed "true";
         }
 
@@ -171,8 +183,9 @@ testkube-api:
         if ( $uri ~ "^(.*)/tests/(.*)$" ){
           set $pathallowed "true";
         }
-        if ( $request_method = PATCH ){
-          set $methodallowed "true";
+
+        if ( $uri ~ "^(.*)/test-suite-executions/(.*)$" ){
+          set $pathallowed "true";
         }
 
         set $condition "$methodallowed+$pathallowed";
