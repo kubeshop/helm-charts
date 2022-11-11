@@ -96,6 +96,9 @@ spec:
             value:  "{{ .Values.cliIngress.oauth.provider }}"
           - name: TESTKUBE_OAUTH_SCOPES
             value:  "{{ .Values.cliIngress.oauth.scopes }}"
+          {{- if .Values.extraEnvVars }}
+          {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-api.image" . }}

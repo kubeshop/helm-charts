@@ -75,3 +75,14 @@ Define Dashboard image
      {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Add extra env variables
+*/}}
+{{- define "testkube-dashboard.extraVars" -}}
+{{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+{{- else }}
+    {{- tpl (.value | toYaml) .context }}
+{{- end }}
+{{- end -}}

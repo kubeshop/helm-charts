@@ -52,6 +52,11 @@ testkube-api:
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
     # tag: "latest"
+  ## @param extraEnvVars Extra environment variables to be set on deployment
+  ## For example:
+  extraEnvVars: []
+#    - name: FOO
+#      value: BAR
   service:
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
     port: 8088
@@ -163,6 +168,11 @@ testkube-dashboard:
     type: ClusterIP
     port: 8080
     annotations: {}
+  ## @param extraEnvVars Extra environment variables to be set on deployment
+  ## For example:
+  extraEnvVars: []
+#    - name: FOO
+#      value: BAR
   ingress:
     enabled: false
     annotations:
@@ -212,6 +222,11 @@ testkube-dashboard:
 
 testkube-operator:
   imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
+  ## @param extraEnvVars Extra environment variables to be set on deployment
+  ## For example:
+  extraEnvVars: []
+#    - name: FOO
+#      value: BAR
 
 preUpgradeHook:
   name: mongodb-upgrade

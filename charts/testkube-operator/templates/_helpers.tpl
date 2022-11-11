@@ -102,3 +102,14 @@ Define Operator image
     {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Add extra env variables
+*/}}
+{{- define "testkube-operator.extraVars" -}}
+{{- if typeIs "string" .value }}
+    {{- tpl .value .context }}
+{{- else }}
+    {{- tpl (.value | toYaml) .context }}
+{{- end }}
+{{- end -}}
