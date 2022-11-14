@@ -79,6 +79,7 @@ minio:
   serviceAccountName: ""
   minioRootUser: ""
   minioRootPassword: ""
+  storage: 10Gi
 
 uiIngress:
   enabled: false
@@ -153,3 +154,5 @@ storage:
 
 prometheus:
   enabled: false
+
+monitoringLabels: []

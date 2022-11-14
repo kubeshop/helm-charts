@@ -43,7 +43,11 @@ mongodb:
 
 testkube-api:
   prometheus:
-    enabled: false
+    enabled: true
+  ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
+  ## For example:
+  monitoringLabels: []
+#    release: myrelease
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
@@ -72,6 +76,7 @@ testkube-api:
     serviceAccountName: ""
     minioRootUser: "minio"
     minioRootPassword: "minio123"
+    storage: 10Gi
   uiIngress:
     enabled: false
     annotations:

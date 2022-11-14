@@ -51,6 +51,13 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
+Monitoring labels
+*/}}
+{{- define "testkube-api.monitoring" -}}
+app: prometheus
+{{- end }}
+
+{{/*
 Create the name of the service account to use
 */}}
 {{- define "testkube-api.serviceAccountName" -}}
@@ -88,3 +95,15 @@ Add extra env variables
 {{- end }}
 {{- end -}}
 
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "testkube-api.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "testkube-api.render" -}}
+    {{- if typeIs "string" .value }}
+        {{- tpl .value .context }}
+    {{- else }}
+        {{- tpl (.value | toYaml) .context }}
+    {{- end }}
+{{- end -}}
