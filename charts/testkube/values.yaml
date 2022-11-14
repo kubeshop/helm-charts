@@ -43,7 +43,7 @@ mongodb:
 
 testkube-api:
   prometheus:
-    enabled: true
+    enabled: false
   ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
   ## For example:
   monitoringLabels: []
