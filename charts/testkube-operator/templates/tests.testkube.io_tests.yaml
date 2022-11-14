@@ -423,11 +423,6 @@ spec:
                       description: uri of test content
                       type: string
                   type: object
-                copyFiles:
-                  description: files to be copied from host of form source:destination
-                  items:
-                    type: string
-                  type: array
                 executionRequest:
                   description: test execution request body
                   properties:
@@ -624,6 +619,11 @@ spec:
                 type:
                   description: test type
                   type: string
+                uploads:
+                  description: files to be used from minio uploads
+                  items:
+                    type: string
+                  type: array
               type: object
             status:
               description: TestStatus defines the observed state of Test
