@@ -324,11 +324,6 @@ spec:
                         type: string
                     type: object
                   type: array
-                copyFiles:
-                  description: files to be copied from host of form source:destination
-                  items:
-                    type: string
-                  type: array
                 description:
                   type: string
                 executionRequest:
