@@ -3885,6 +3885,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-15T11:25:25.279363627Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.8
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.6.35
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.1
+    description: A Helm chart for testkube.
+    digest: f6b6e808c6258ac72d3b1302db1cffd9a4466d40b12dff7fb943079641dce9da
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.6.105/testkube-1.6.105.tgz
+    version: 1.6.105
+  - apiVersion: v2
     created: "2022-11-15T08:58:34.213000989Z"
     dependencies:
     - name: testkube-operator
@@ -24341,6 +24369,16 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    created: "2022-11-15T11:25:25.390772263Z"
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 8aa3ab994e9df00d8005c835e5a51f563e78c41d32cb12b0b9b2764ff48f8087
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-1.6.8/testkube-operator-1.6.8.tgz
+    version: 1.6.8
+  - apiVersion: v2
     created: "2022-11-15T08:58:34.348822286Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -26137,4 +26175,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-15T08:58:34.367690706Z"
+generated: "2022-11-15T11:25:25.41485833Z"
