@@ -96,6 +96,14 @@ spec:
             value:  "{{ .Values.cliIngress.oauth.provider }}"
           - name: TESTKUBE_OAUTH_SCOPES
             value:  "{{ .Values.cliIngress.oauth.scopes }}"
+          {{- if .Values.cloud.key }}
+          - name: TESTKUBE_CLOUD_API_KEY
+            value:  "{{ .Values.cloud.key}}"
+          {{- end}}
+          {{- if .Values.cloud.url }}
+          - name: TESTKUBE_CLOUD_API_URL
+            value:  "{{ .Values.cloud.url}}"
+          {{- end}}
           {{- if .Values.extraEnvVars }}
           {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}

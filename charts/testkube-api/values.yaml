@@ -26,6 +26,9 @@ mongodb:
   # or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
+cloud:
+  url: ""
+  key: ""
 postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true
