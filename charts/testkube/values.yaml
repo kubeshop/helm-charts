@@ -120,7 +120,7 @@ testkube-api:
     ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
     ##   nginx.ingress.kubernetes.io/configuration-snippet: |
     ##     more_set_headers "X-CLI-Ingress: true";
-    ##for websockets
+    ## for websockets
     ##   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     ##   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
@@ -193,7 +193,7 @@ testkube-dashboard:
     ##   nginx.ingress.kubernetes.io/enable-cors: "true"
     ##   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     ##   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-    ##github oauth annotations (empty by default)
+    ## github oauth annotations (empty by default)
     ##   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
     ##   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     ##   nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
