@@ -9,7 +9,7 @@ spec:
   {{- end}}
   template:
     spec:
-	  {{- if ne .InitImage ""}}
+      {{- if ne .InitImage ""}}
       initContainers:
       - name: {{ .Name }}-init
         image: {{ .InitImage }}
@@ -25,19 +25,19 @@ spec:
       - name: {{ .Name }}
         image: {{ .Image }}
         imagePullPolicy: Always
-		{{- if gt (len .Command) 0 }}
+    {{- if gt (len .Command) 0 }}
         command:
         {{- range $cmd := .Command}}
         - {{ $cmd -}}
-		{{- end}}
-		{{- end -}}
+    {{- end}}
+    {{- end -}}
 
-		{{- if gt (len .Args) 0 }}
+    {{- if gt (len .Args) 0 }}
         args:
         {{- range $arg := .Args}}
         - {{ $arg -}}
-		{{- end}}
-		{{- end}}
+    {{- end}}
+    {{- end}}
     {{- if .WorkingDir }}
         workingDir: {{ .WorkingDir }}
     {{- end}}
