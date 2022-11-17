@@ -3885,7 +3885,7 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
-    created: "2022-11-17T15:53:35.060748998Z"
+    created: "2022-11-17T15:54:05.06924451Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -3906,12 +3906,12 @@ entries:
       repository: file://../testkube-dashboard
       version: 1.8.1
     description: A Helm chart for testkube.
-    digest: d8d09e80afd3f884e857236437ddfc49d884bcac09165e33be24015f2ddc8f47
+    digest: 864f5c4fa56966b04b6b5278fce6c1fb201cb72fffabe9c62dc6683fde537542
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.9/testkube-1.7.9.tgz
-    version: 1.7.9
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.10/testkube-1.7.10.tgz
+    version: 1.7.10
   - apiVersion: v2
     created: "2022-11-17T15:50:02.630524622Z"
     dependencies:
@@ -26515,4 +26515,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-17T15:53:35.192001108Z"
+generated: "2022-11-17T15:54:05.268247723Z"
