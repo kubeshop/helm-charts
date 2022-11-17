@@ -110,6 +110,14 @@
         }
     },
     {
+        "name": "executor-scraper",
+        "executor": {
+            "executor_type": "scraper",
+            "image": "kubeshop/testkube-executor-scraper:0.0.1",
+            "types":[]
+        }
+    },
+    {
         "name": "executor-init",
         "executor": {
             "executor_type": "init",

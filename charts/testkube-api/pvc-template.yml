@@ -1,0 +1,8 @@
+apiVersion: batch/v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Name }}-pvc
+  namespace: {{ .Namespace }}
+spec:
+  storageClassName: ""
+  volumeName: {{ .ArtifactVolume }}
