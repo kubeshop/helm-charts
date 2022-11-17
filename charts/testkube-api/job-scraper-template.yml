@@ -16,12 +16,12 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if .ArtifactVolume }}
+        {{- if .ArtifactVolumeName }}
         volumeMounts:
           - name: artifact-volume
-            mountPath: {{ .ArtifactMountPath }}
+            mountPath: {{ .ArtifactVolumeMountPath }}
         {{- end}}
-      {{- if .ArtifactVolume }}
+      {{- if .ArtifactVolumeName }}
       volumes:
         - name: artifact-volume
           persistentVolumeClaim:
