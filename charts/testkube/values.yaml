@@ -82,7 +82,8 @@ testkube-api:
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
     ## e.g:
     ## annotations:
-    ##  kubernetes.io/ingress.class: nginx
+    ## kubernetes.io/ingress.class: nginx
+    ## nginx.ingress.kubernetes.io/rewrite-target: /$1
 
     path: /results/(v\d/executions.*)
     ## Hostnames must be provided if Ingress is enabled.
