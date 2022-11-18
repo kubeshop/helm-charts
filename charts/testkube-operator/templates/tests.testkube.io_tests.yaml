@@ -438,18 +438,23 @@ spec:
                       items:
                         type: string
                       type: array
-                    artifactDir:
-                      description: artifact directory for container executors with test
-                        artifacts
-                      type: string
-                    artifactVolumeMounthPath:
-                      description: artifact volume mount path for container executors
-                        with test artifacts
-                      type: string
-                    artifactVolumeName:
-                      description: artifact volume name for container executors with
+                    artifactRequest:
+                      description: artifact request body for container executors with
                         test artifacts
-                    type: string
+                      properties:
+                        dir:
+                          description: artifact directory
+                          type: string
+                        volumeMounthPath:
+                          description: artifact volume mount path
+                          type: string
+                        volumeName:
+                          description: artifact volume name
+                          type: string
+                      required:
+                      - volumeMounthPath
+                      - volumeName
+                      type: object
                     command:
                       description: container executor binary command
                       items:
