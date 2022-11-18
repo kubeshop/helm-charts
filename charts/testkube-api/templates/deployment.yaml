@@ -101,7 +101,7 @@ spec:
             value:  "{{ .Values.cloud.key}}"
           {{- end}}
           {{- if .Values.cloud.url }}
-          - name: TESTKUBE_CLOUD_API_URL
+          - name: TESTKUBE_CLOUD_URL
             value:  "{{ .Values.cloud.url}}"
           {{- end}}
           {{- if .Values.extraEnvVars }}
