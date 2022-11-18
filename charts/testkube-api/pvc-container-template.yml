@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Namespace }}
 spec:
   storageClassName: ""
-  volumeName: {{ .ArtifactVolumeName }}
+  volumeName: {{ .ArtifactRequest.VolumeName }}
