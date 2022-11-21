@@ -4,10 +4,16 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "testkube-api.fullname" . }}
   labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+  {{- include "testkube-api.labels" . | nindent 4 }}
+  {{- if .Values.commonLabels }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 6 }}
+  {{- end }}
+  {{- if .Values.autoscaling.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
     kind: Deployment
     name: {{ include "testkube-api.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}

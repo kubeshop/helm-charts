@@ -1,9 +1,15 @@
-apiVersion: apps/v1
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
-  labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+  labels: {{- include "common.labels.standard" . | nindent 6 }}
+  {{- include "testkube-api.selectorLabels" . | nindent 6 }}
+  {{- if .Values.commonLabels }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 6 }}
+  {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -19,12 +25,15 @@ spec:
       {{- end }}
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
+      {{- if .Values.podLabels }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: testkube-api-server-{{ .Release.Name }}
+      serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

@@ -1,162 +1,162 @@
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: executors-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: executors-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: jobs-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: jobs-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: scripts-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: script-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: tests-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: test-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: secrets-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: secrets-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: testsuites-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: testsuite-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: webhooks-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: webhook-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: configmaps-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: configmaps-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: testsources-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: testsource-cluster-role-{{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
-  name: testkube-api-server-{{ .Release.Name }}
+  name: {{ include "testkube-api.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: testtriggers-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: testtriggers-cluster-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
-    name: testkube-api-server-{{ .Release.Name }}
+    name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: watchers-crb-{{ .Release.Name }}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
+  apiGroup: {{ include "common.capabilities.rbac.apiVersion" . }}
   kind: ClusterRole
   name: watchers-cluster-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
-    name: testkube-api-server-{{ .Release.Name }}
+    name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}

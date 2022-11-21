@@ -32,6 +32,8 @@ Create chart name and version as used by the chart label.
 
 {{/*
 Common labels
+=======TO DELETE!!!!!!!
+=========
 */}}
 {{- define "testkube-api.labels" -}}
 helm.sh/chart: {{ include "testkube-api.chart" . }}
@@ -47,7 +49,6 @@ Selector labels
 */}}
 {{- define "testkube-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "testkube-api.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -93,17 +94,4 @@ Add extra env variables
 {{- else }}
     {{- tpl (.value | toYaml) .context }}
 {{- end }}
-{{- end -}}
-
-{{/*
-Renders a value that contains template.
-Usage:
-{{ include "testkube-api.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
-*/}}
-{{- define "testkube-api.render" -}}
-    {{- if typeIs "string" .value }}
-        {{- tpl .value .context }}
-    {{- else }}
-        {{- tpl (.value | toYaml) .context }}
-    {{- end }}
 {{- end -}}
