@@ -162,9 +162,7 @@ mongodb:
 nats:
   ## Deploy NATS server to the cluster
   enabled: true
-  ##URI to connect to the service
-  uri: "nats://testkube-nats"
-  ## or load URI from secrets
+  ## load URI from secrets
   # secretName: XXX
   # secretKey: XXX
 
