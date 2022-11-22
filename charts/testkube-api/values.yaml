@@ -33,6 +33,7 @@ postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 analyticsEnabled: true
 slackToken: ""
+jobServiceAccountName: ""
 
 # base64 encoded executors.json alike data
 executors: ""

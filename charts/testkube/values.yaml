@@ -164,6 +164,7 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   executors: ""
+  jobServiceAccountName: ""
 
 testkube-dashboard:
   enabled: true
