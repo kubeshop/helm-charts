@@ -13,7 +13,6 @@ Return the target Kubernetes version
 {{- end -}}
 {{- end -}}
 
-
 {/*
 Return the appropriate apiVersion for deployment.
 */}}

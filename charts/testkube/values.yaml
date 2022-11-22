@@ -43,10 +43,12 @@ mongodb:
 
 testkube-api:
   prometheus:
-    enabled: false
+    enabled: true
   ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
   ## For example:
-  monitoringLabels: []
+    monitoringLabels: []
+  ## Scrape interval
+    interval: 15s
 #    release: myrelease
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"

@@ -49,6 +49,7 @@ spec:
             {{- else }}
             value: "{{ .Values.mongodb.dsn }}"
             {{- end }}
+            {{- if .Values.nats.enabled }}
           - name: NATS_URI
             {{- if .Values.nats.secretName }}
             valueFrom:
@@ -56,7 +57,8 @@ spec:
                 name: {{ .Values.nats.secretName }}
                 key: {{ .Values.nats.secretKey }}
             {{- else }}
-            value: "{{ .Values.nats.uri }}"
+            value: {{ include "testkube-api.nats.uri" . }}
+            {{- end }}
             {{- end }}
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"
