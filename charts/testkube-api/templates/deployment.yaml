@@ -114,7 +114,7 @@ spec:
             value:  "{{ .Values.cloud.url}}"
           {{- end}}
           {{- if .Values.extraEnvVars }}
-          {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
+          {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}

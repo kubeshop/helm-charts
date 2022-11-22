@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "testkube-api.fullname" . }}
   labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.service.labels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.service.labels  "context" $ ) | nindent 4 }}
     {{- end }}

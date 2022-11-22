@@ -13,6 +13,7 @@ dependencies:
 $ helm dependency update
 ``
 
+Example of using `common` template:
 ```sh
 apiVersion: v1
 kind: ConfigMap

@@ -54,10 +54,12 @@ nameOverride: "api-server"
 fullnameOverride: "testkube-api-server"
 
 ## TESTKUBE API Deployment parameters
+## Running Testkube in Agent mode
 cloud:
+  ## URL of the Cloud Saas Control Plane
   url: ""
+  ## License Key
   key: ""
-postmanExecutorURI: "http://testkube-postman-executor:8082"
 
 ## Enable analytics for Testkube
 analyticsEnabled: true
@@ -192,6 +194,8 @@ minio:
   minioRootPassword: ""
   ## PVC Storage Request for MinIO. Should be available in the cluster.
   storage: 10Gi
+  ## Selector labels to match
+  matchLabels: []
 
 ## uiIngress parameters
 uiIngress:

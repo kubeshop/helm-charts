@@ -115,4 +115,28 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # This name uniquely identifies the service
+  name: testkube-minio-service-{{ .Release.Namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 9000
+      protocol: TCP
+    - name: web
+      port: 9090
+      protocol: TCP
+    - name: https
+      port: 9443
+      protocol: TCP
+  selector:
+    # Looks for labels `app:minio` in the namespace and applies the spec
+    app: testkube-minio-{{ .Release.Namespace }}
+    {{- if .Values.minio.matchLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- end }}
 {{- end }}
