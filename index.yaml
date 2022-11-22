@@ -3885,6 +3885,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-22T11:47:26.700949472Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.8
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.8
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.3
+    description: A Helm chart for testkube.
+    digest: 7ebecd7cab67830fe01537c6e8442de4e586b9736cc812e8103dac05a5caa542
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.21/testkube-1.7.21.tgz
+    version: 1.7.21
+  - apiVersion: v2
     created: "2022-11-22T10:14:31.982144539Z"
     dependencies:
     - name: testkube-operator
@@ -24158,6 +24186,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.8.3
+    created: "2022-11-22T11:47:26.953167832Z"
+    description: A Helm chart for Kubernetes
+    digest: b6d9a793892f39717b20ec24e7699a761c65fda3e23cfd3297b78fdc07fdd597
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.8.3/testkube-dashboard-1.8.3.tgz
+    version: 1.8.3
+  - apiVersion: v2
     appVersion: 1.8.2
     created: "2022-11-21T11:03:01.73072649Z"
     description: A Helm chart for Kubernetes
@@ -26936,4 +26974,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-22T10:14:32.126291134Z"
+generated: "2022-11-22T11:47:26.970983248Z"
