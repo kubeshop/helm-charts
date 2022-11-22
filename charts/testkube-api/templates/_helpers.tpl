@@ -28,6 +28,9 @@ Selector labels
 */}}
 {{- define "testkube-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "testkube-api.name" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
 {{- end }}
 
 {{/*
