@@ -24,13 +24,20 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+API labels
+*/}}
+{{- define "testkube-api.Labels" -}}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{ include "common.labels.standard" . }}
+{{ include "testkube-api.selectorLabels" . }}
+{{- end }}
+
+{{/*
 Selector labels
 */}}
 {{- define "testkube-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "testkube-api.name" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
+app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

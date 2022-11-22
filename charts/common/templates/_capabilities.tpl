@@ -35,3 +35,10 @@ Return the appropriate apiVersion for RBAC resources.
 {{- print "rbac.authorization.k8s.io/v1" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Return the appropriate apiVersion for RBAC resources API group.
+*/}}
+{{- define "common.capabilities.rbac.apiGroup.apiVersion" -}}
+{{- print "rbac.authorization.k8s.io" -}}
+{{- end -}}

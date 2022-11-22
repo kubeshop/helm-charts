@@ -10,7 +10,6 @@ Kubernetes standard labels
 */}}
 {{- define "common.labels.standard" -}}
 helm.sh/chart: {{ include "common.version.chart" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 

@@ -2,8 +2,7 @@ apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
-  labels: {{- include "common.labels.standard" . | nindent 6 }}
-  {{- include "testkube-api.selectorLabels" . | nindent 6 }}
+  labels: {{- include "testkube-api.Labels" . | nindent 6 }}
   {{- if .Values.commonLabels }}
   {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 6 }}
   {{- end }}
