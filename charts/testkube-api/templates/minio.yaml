@@ -8,16 +8,15 @@ spec:
   {{- if .Values.minio.storageClassName }}
   storageClassName: {{ .Values.minio.storageClassName }}
   {{- end }}
-  # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
-    # The volume is mounted as read-write by a single node
-    - ReadWriteOnce
+  {{- range .Values.minio.accessModes }}
+     - {{ . | quote }}
+  {{- end }}
   resources:
-    # This is the request for storage. Should be available in the cluster.
     requests:
       storage: {{ .Values.minio.storage }}
 ---
-apiVersion: apps/v1
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   # This name uniquely identifies the Deployment
@@ -25,6 +24,9 @@ metadata:
 spec:
   selector:
     matchLabels:
+    {{- if .Values.minio.matchLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- end }}
       app: testkube-minio-{{ .Release.Namespace }} # has to match .spec.template.metadata.labels
   strategy:
     # Specifies the strategy used to replace old Pods by new ones
@@ -33,7 +35,10 @@ spec:
   template:
     metadata:
       labels:
-        # This label is used as a selector in Service definition
+      {{- if .Values.minio.matchLabels }}
+      {{- include "common.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+      {{- end }}
+      # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
       # Volumes used by this deployment
@@ -67,6 +72,9 @@ spec:
           value: "9090"
         - name: CONSOLE_TLS_PORT
           value: "9443"
+        {{- if .Values.minio.extraEnvVars }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.minio.extraEnvVars "context" $) | nindent 6 }}
+        {{- end }}
         ports:
         - containerPort: 9000
           name: http
@@ -128,4 +136,7 @@ spec:
   selector:
     # Looks for labels `app:minio` in the namespace and applies the spec
     app: testkube-minio-{{ .Release.Namespace }}
+    {{- if .Values.minio.matchLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- end }}
 {{- end }}

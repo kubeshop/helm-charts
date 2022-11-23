@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "testkube-api.fullname" . }}-test-connection"
   labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- include "common.labels.standard" . | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
