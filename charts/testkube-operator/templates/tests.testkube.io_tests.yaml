@@ -442,8 +442,8 @@ spec:
                       description: artifact request body for container executors with
                         test artifacts
                       properties:
-                        dir:
-                          description: artifact directory
+                        dirs:
+                          description: artifact directories
                           type: string
                         volumeMounthPath:
                           description: artifact volume mount path
