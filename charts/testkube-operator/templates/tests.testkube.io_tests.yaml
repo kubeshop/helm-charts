@@ -444,7 +444,9 @@ spec:
                       properties:
                         dirs:
                           description: artifact directories
-                          type: string
+                          items:
+                            type: string
+                          type: array
                         volumeMounthPath:
                           description: artifact volume mount path
                           type: string
