@@ -44,6 +44,10 @@ mongodb:
 testkube-api:
   prometheus:
     enabled: false
+  ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
+  ## For example:
+  monitoringLabels: []
+#    release: myrelease
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
@@ -72,24 +76,27 @@ testkube-api:
     serviceAccountName: ""
     minioRootUser: "minio"
     minioRootPassword: "minio123"
+    storage: 10Gi
   uiIngress:
     enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$1
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-      nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      # github oauth annotations (empty by default)
-      # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
-      # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
-      nginx.ingress.kubernetes.io/auth-url: ""
-      nginx.ingress.kubernetes.io/auth-signin: ""
-      # for websockets
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
+    ## e.g annotations for NGINX Ingress Controller:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   nginx.ingress.kubernetes.io/rewrite-target: /$1
+    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/enable-cors: "true"
+    ##   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+    ##   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    ## github oauth annotations (empty by default)
+    ##   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    ##   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+    ##   nginx.ingress.kubernetes.io/auth-url: ""
+    ##   nginx.ingress.kubernetes.io/auth-signin: ""
+    ## for websockets
+    ##  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    ##  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     path: /results/(v\d/executions.*)
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
@@ -104,16 +111,18 @@ testkube-api:
       #   secretName: testkube-cert-secret
   cliIngress:
     enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/rewrite-target: /$1
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        more_set_headers "X-CLI-Ingress: true";
-      # for websockets
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
+    ## e.g annotations for NGINX Ingress Controller:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   nginx.ingress.kubernetes.io/rewrite-target: /$1
+    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/configuration-snippet: |
+    ##     more_set_headers "X-CLI-Ingress: true";
+    ## for websockets
+    ##   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    ##   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
     # parameters to check oauth token (by default github one)
     oauth:
@@ -155,6 +164,7 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   executors: ""
+  jobServiceAccountName: ""
 
 testkube-dashboard:
   enabled: true
@@ -171,24 +181,26 @@ testkube-dashboard:
   ## @param extraEnvVars Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-#    - name: FOO
-#      value: BAR
+  ##  - name: FOO
+  ##    value: BAR
   ingress:
     enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-      nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      # github oauth annotations (empty by default)
-      # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
-      # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
-      # nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
-      nginx.ingress.kubernetes.io/auth-url: ""
-      nginx.ingress.kubernetes.io/auth-signin: ""
-      nginx.ingress.kubernetes.io/access-control-allow-origin: ""
+    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
+    ## e.g annotations for NGINX Ingress Controller:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    ##   nginx.ingress.kubernetes.io/enable-cors: "true"
+    ##   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+    ##   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    ## github oauth annotations (empty by default)
+    ##   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    ##   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+    ##   nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
+    ##   nginx.ingress.kubernetes.io/auth-url: ""
+    ##   nginx.ingress.kubernetes.io/auth-signin: ""
+    ##   nginx.ingress.kubernetes.io/access-control-allow-origin: ""
     path: /
     ## Hostnames must be provided if Ingress is enabled.
     hosts:

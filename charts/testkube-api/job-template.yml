@@ -33,6 +33,9 @@ spec:
       - name: data-volume
         emptyDir: {}
       restartPolicy: Never
+      {{ if .ServiceAccountName }}
+      serviceAccountName: .ServiceAccountName
+      {{ end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
       {{- range $secret := .ImagePullSecrets}}
@@ -40,4 +43,4 @@ spec:
       {{- end}}
       {{- end}}
   backoffLimit: 0
-  ttlSecondsAfterFinished: 180  
+  ttlSecondsAfterFinished: 180

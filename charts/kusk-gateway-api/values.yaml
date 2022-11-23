@@ -67,3 +67,10 @@ affinity: {}
 
 analytics:
   enabled: true
+
+websocket:
+  port: 8081
+  args:
+    - --write-wait=10
+    - --pong-wait=60
+    - --max-message-size=512

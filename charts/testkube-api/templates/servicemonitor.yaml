@@ -3,8 +3,10 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: {{ include "testkube-api.fullname" . }}-servicemonitor
-  labels:
-    app: prometheus
+  labels: {{- include "testkube-api.monitoring" . | nindent 4 }}
+    {{- if .Values.monitoringLabels }}
+    {{- include "testkube-api.render" ( dict "value" .Values.monitoringLabels "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   endpoints:
   - interval: 15s
