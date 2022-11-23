@@ -66,4 +66,4 @@ spec:
       {{- end }}
       {{- end }}
   backoffLimit: 0
-  ttlSecondsAfterFinished: 180
+  ttlSecondsAfterFinished: {{ .DelaySeconds }}
