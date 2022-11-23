@@ -25,37 +25,36 @@ spec:
       - name: {{ .Name }}
         image: {{ .Image }}
         imagePullPolicy: Always
-    {{- if gt (len .Command) 0 }}
+        {{- if gt (len .Command) 0 }}
         command:
         {{- range $cmd := .Command }}
         - {{ $cmd -}}
-    {{- end }}
-    {{- end -}}
-
-    {{- if gt (len .Args) 0 }}
+        {{- end }}
+        {{- end -}}
+        {{- if gt (len .Args) 0 }}
         args:
         {{- range $arg := .Args }}
         - {{ $arg -}}
-    {{- end }}
-    {{- end }}
-    {{- if .WorkingDir }}
+        {{- end }}
+        {{- end }}
+        {{- if .WorkingDir }}
         workingDir: {{ .WorkingDir }}
-    {{- end }}
+        {{- end }}
         volumeMounts:
         - name: data-volume
           mountPath: /data
-    {{- if .ArtifactRequest }}
+        {{- if .ArtifactRequest }}
         - name: artifact-volume
           mountPath: {{ .ArtifactRequest.VolumeMountPath }}
-    {{- end }}
+        {{- end }}
       volumes:
       - name: data-volume
         emptyDir: {}
-    {{- if .ArtifactRequest }}
+      {{- if .ArtifactRequest }}
       - name: artifact-volume
         persistentVolumeClaim:
           claimName: {{ .Name }}-pvc
-    {{- end }}
+      {{- end }}
       restartPolicy: Never
       {{ if .ServiceAccountName }}
       serviceAccountName: .ServiceAccountName
