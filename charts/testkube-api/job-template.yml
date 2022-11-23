@@ -4,9 +4,9 @@ metadata:
   name: {{ .Name }}
   namespace: {{ .Namespace }}
 spec:
-  {{- if gt .ActiveDeadlineSeconds 0}}
+  {{- if gt .ActiveDeadlineSeconds 0 }}
   activeDeadlineSeconds: {{ .ActiveDeadlineSeconds }}
-  {{- end}}
+  {{- end }}
   template:
     spec:
       initContainers:
@@ -38,9 +38,9 @@ spec:
       {{ end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
-      {{- range $secret := .ImagePullSecrets}}
+      {{- range $secret := .ImagePullSecrets }}
       - name: {{ $secret -}}
-      {{- end}}
-      {{- end}}
+      {{- end }}
+      {{- end }}
   backoffLimit: 0
   ttlSecondsAfterFinished: 180

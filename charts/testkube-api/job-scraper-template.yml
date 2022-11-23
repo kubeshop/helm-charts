@@ -4,9 +4,9 @@ metadata:
   name: {{ .Name }}-scraper
   namespace: {{ .Namespace }}
 spec:
-  {{- if gt .ActiveDeadlineSeconds 0}}
+  {{- if gt .ActiveDeadlineSeconds 0 }}
   activeDeadlineSeconds: {{ .ActiveDeadlineSeconds }}
-  {{- end}}
+  {{- end }}
   template:
     spec:
       containers:
@@ -20,19 +20,22 @@ spec:
         volumeMounts:
           - name: artifact-volume
             mountPath: {{ .ArtifactRequest.VolumeMountPath }}
-        {{- end}}
+        {{- end }}
       {{- if .ArtifactRequest }}
       volumes:
         - name: artifact-volume
           persistentVolumeClaim:
             claimName: {{ .Name }}-pvc
-      {{- end}}
+      {{- end }}
       restartPolicy: Never
+      {{ if .ServiceAccountName }}
+      serviceAccountName: .ServiceAccountName
+      {{ end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
-      {{- range $secret := .ImagePullSecrets}}
+      {{- range $secret := .ImagePullSecrets }}
       - name: {{ $secret -}}
-      {{- end}}
-      {{- end}}
+      {{- end }}
+      {{- end }}
   backoffLimit: 0
   ttlSecondsAfterFinished: 0
