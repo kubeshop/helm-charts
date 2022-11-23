@@ -34,7 +34,7 @@ spec:
         emptyDir: {}
       restartPolicy: Never
       {{ if .ServiceAccountName }}
-      serviceAccountName: .ServiceAccountName
+      serviceAccountName: {{ .ServiceAccountName }}
       {{ end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
