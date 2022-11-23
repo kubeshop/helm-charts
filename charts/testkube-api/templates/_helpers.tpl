@@ -78,5 +78,5 @@ Define API image
 NATS Uri
 */}}
 {{- define "testkube-api.nats.uri" -}}
-nats://{{ .Release.Name }}-nats"
+"nats://{{ .Release.Name }}-nats"
 {{- end }}
