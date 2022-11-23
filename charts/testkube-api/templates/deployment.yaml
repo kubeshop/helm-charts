@@ -94,6 +94,8 @@ spec:
             value: "{{ .Release.Namespace }}"
           - name: TESTKUBE_TEMPLATE_JOB
             value: "{{ .Files.Get "job-template.yml" | b64enc }}"
+          - name: JOB_SERVICE_ACCOUNT_NAME
+            value: "{{ .Values.jobServiceAccountName }}" 
           - name: APISERVER_FULLNAME
             value: "{{ include "testkube-api.fullname" . }}"
           - name: APISERVER_CONFIG
@@ -111,7 +113,7 @@ spec:
             value:  "{{ .Values.cloud.key}}"
           {{- end}}
           {{- if .Values.cloud.url }}
-          - name: TESTKUBE_CLOUD_API_URL
+          - name: TESTKUBE_CLOUD_URL
             value:  "{{ .Values.cloud.url}}"
           {{- end}}
           {{- if .Values.extraEnvVars }}

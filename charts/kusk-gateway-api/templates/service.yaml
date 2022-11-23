@@ -13,5 +13,9 @@ spec:
       targetPort: 8080
       protocol: TCP
       name: http
+    - port: {{ .Values.websocket.port }}
+      targetPort: {{ .Values.websocket.port }}
+      protocol: TCP
+      name: ws
   selector:
     {{- include "kusk-gateway-api.selectorLabels" . | nindent 4 }}

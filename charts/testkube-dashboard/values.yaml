@@ -16,7 +16,7 @@ image:
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.8.1"
+  # tag: "1.8.3"
 
 nameOverride: "dashboard"
 fullnameOverride: "testkube-dashboard"
@@ -75,7 +75,7 @@ oauth2:
   selector: k8s-app
   image:
     repository: quay.io/oauth2-proxy/oauth2-proxy
-    tag: "1.8.1"
+    tag: "1.8.3"
     pullPolicy: Always
   env:
     clientId: ""

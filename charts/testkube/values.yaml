@@ -167,6 +167,7 @@ testkube-api:
   analyticsEnabled: true
   slackToken: ""
   executors: ""
+  jobServiceAccountName: ""
 
 testkube-dashboard:
   enabled: true
@@ -183,8 +184,8 @@ testkube-dashboard:
   ## @param extraEnvVars Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-#    - name: FOO
-#      value: BAR
+  ##  - name: FOO
+  ##    value: BAR
   ingress:
     enabled: false
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.

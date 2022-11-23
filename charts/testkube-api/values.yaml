@@ -45,7 +45,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
 ## Overrides the image tag whose default is the chart appVersion.
-  #tag: "1.7.0"
+  #tag: "1.7.10"
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -67,6 +67,7 @@ analyticsEnabled: true
 ## Integration with Slack.
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 slackToken: ""
+jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
 executors: ""
