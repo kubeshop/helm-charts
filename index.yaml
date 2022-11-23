@@ -2101,6 +2101,33 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/api-server-0.5.0/api-server-0.5.0.tgz
     version: 0.5.0
+  common:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-11-23T18:38:38.605799962Z"
+    description: A Library Helm Chart for definitions that can be shared by Helm templates
+      in other charts.
+    digest: 99b2f69c8d5100575f33522d86a160b243b2fc0c91effc3282ca761e3a00398c
+    home: https://github.com/kubeshop/helm-charts/tree/main/charts/common
+    keywords:
+    - common
+    - helper
+    - template
+    - function
+    - testkube
+    maintainers:
+    - name: Testkube
+      url: https://github.com/kubeshop/testkube
+    name: common
+    sources:
+    - https://github.com/kubeshop/helm-charts
+    - https://testkube.io/
+    type: library
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
+    version: 0.1.0
   kusk-gateway:
   - apiVersion: v2
     appVersion: v1.3.19
@@ -27265,4 +27292,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-23T10:05:07.942621259Z"
+generated: "2022-11-23T18:38:38.891313873Z"
