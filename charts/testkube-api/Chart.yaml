@@ -4,3 +4,8 @@ description: A Helm chart for Testkube api
 type: application
 version: 1.7.10
 appVersion: 1.7.10
+dependencies:
+  - name: common
+    version: 0.1.0
+    #repository: https://kubeshop.github.io/helm-charts
+    repository: "file://../common"
