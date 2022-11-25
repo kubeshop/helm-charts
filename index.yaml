@@ -3183,6 +3183,25 @@ entries:
     version: 0.0.1
   kusk-gateway-api:
   - apiVersion: v2
+    appVersion: v1.2.1
+    created: "2022-11-25T11:24:44.659311712Z"
+    description: A Helm chart for the Kusk Gateway API
+    digest: 4984da47966424e31b5acc1fb68d2604e13d86fcfb7b50a13a4e83e62eb45695
+    home: https://github.com/kubeshop/helm-charts
+    keywords:
+    - kusk-gateway
+    - kusk-gateway-api
+    - api
+    - openapi
+    kubeVersion: '>=1.16.0-0'
+    name: kusk-gateway-api
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-api-0.1.25/kusk-gateway-api-0.1.25.tgz
+    version: 0.1.25
+  - apiVersion: v2
     appVersion: v1.2.0
     created: "2022-11-25T10:59:30.919901765Z"
     description: A Helm chart for the Kusk Gateway API
@@ -27356,4 +27375,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-25T10:59:30.940741772Z"
+generated: "2022-11-25T11:24:44.676564584Z"
