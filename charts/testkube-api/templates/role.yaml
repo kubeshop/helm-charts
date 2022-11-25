@@ -1,227 +1,227 @@
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: executors-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - executor.testkube.io
-  resources:
-  - executors
-  verbs:
-  - get
-  - watch
-  - list
-  - create
-  - update
-  - patch
-  - delete
-  - deletecollection
+  - apiGroups:
+      - executor.testkube.io
+    resources:
+      - executors
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - update
+      - patch
+      - delete
+      - deletecollection
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: jobs-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - batch
-  resources:
-  - jobs
-  verbs:
-  - get
-  - watch
-  - list
-  - create
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/log
-  verbs:
-  - get
-  - watch
-  - list
-  - create
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
+      - create
 
 ---
 
 # permissions for end users to edit tests.
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: script-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - scripts
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - scripts/status
-  verbs:
-  - get
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - scripts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - scripts/status
+    verbs:
+      - get
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: test-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - tests
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - tests/status
-  verbs:
-  - get
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - tests
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - tests/status
+    verbs:
+      - get
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: secrets-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testsuite-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - testsuites
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - testsuites/status
-  verbs:
-  - get
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testsuites
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testsuites/status
+    verbs:
+      - get
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: webhook-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - executor.testkube.io
-  resources:
-  - webhooks
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
-- apiGroups:
-  - executor.testkube.io
-  resources:
-  - webhooks/status
-  verbs:
-  - get
+  - apiGroups:
+      - executor.testkube.io
+    resources:
+      - webhooks
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - executor.testkube.io
+    resources:
+      - webhooks/status
+    verbs:
+      - get
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: configmaps-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - create
-  - get
-  - patch
-  - update
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - get
+      - patch
+      - update
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testsource-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - testsources
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-  - deletecollection
-- apiGroups:
-  - tests.testkube.io
-  resources:
-  - testsources/status
-  verbs:
-  - get
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testsources
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - tests.testkube.io
+    resources:
+      - testsources/status
+    verbs:
+      - get
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testtriggers-cluster-role-{{ .Release.Name }}
@@ -248,38 +248,38 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: watchers-cluster-role-{{ .Release.Name }}
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - services
-  - events
-  - namespaces
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - "apps"
-  resources:
-  - deployments
-  - daemonsets
-  - statefulsets
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - "networking.k8s.io"
-  - "extensions"
-  resources:
-  - ingresses
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - events
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "apps"
+    resources:
+      - deployments
+      - daemonsets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "networking.k8s.io"
+      - "extensions"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch

@@ -2,77 +2,125 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-### @section  Global image parameters
-## Global Docker image registry
-## Global Docker registry secret names as an array
+replicaCount: 1
+
+#Global image parameters
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets [array] Global Docker registry secret names as an array
 global:
   imageRegistry: ""
   imagePullSecrets: []
 
-### @section Common parameters
-## Kubernetes version (using Helm capabilities if not set)
-kubeVersion: ""
-
-## Labels to add to all deployed objects
-commonLabels: []
-
-## Annotations to add to all deployed objects
-commonAnnotations: {}
-
-## Number of Testkube API Pod replicas
-replicaCount: 1
-
-## Testkube Pod annotations
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-podAnnotations: {}
-
-## Extra labels for Testkube API pods
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-podLabels: {}
-
-## Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-podSecurityContext: {}
-# fsGroup: 2000
-
-### @section Specific parameters
-## image.registry Testkube API image registry
-## image.repository Testkube API image name
-## image.tag Testkube API image tag
-## image.pullPolicy Testkube API Image pull policy
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
-## Overrides the image tag whose default is the chart appVersion.
-  #tag: "1.7.11"
+  # Overrides the image tag whose default is the chart appVersion.
+  # tag: "1.7.8"
 
-## Chart parameters
-## nameOverride Overrides Chart name
-## fullnameOverride Full name that overrides Chart name
 nameOverride: "api-server"
 fullnameOverride: "testkube-api-server"
 
-## TESTKUBE API Deployment parameters
-## Running Testkube in Agent mode
+mongodb:
+  dsn: "mongodb://testkube-mongodb:27017"
+  # or use dsn in secrets
+  # secretName: testkube-secrets
+  # secretKey: mongo-dsn
 cloud:
-  ## URL of the Cloud Saas Control Plane
   url: ""
-  ## License Key
   key: ""
+postmanExecutorURI: "http://testkube-postman-executor:8082"
 
-## Enable analytics for Testkube
 analyticsEnabled: true
-
-## Integration with Slack.
-##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 slackToken: ""
 jobServiceAccountName: ""
 
-## base64 encoded executors.json alike data
+# base64 encoded executors.json alike data
 executors: ""
 
-## Testkube API resource requests and limits
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+# fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8088
+  annotations: {}
+
+nats:
+  enabled: true
+  uri: "nats://testkube-nats"
+  # or load URI from secrets
+  # secretName: XXX
+  # secretKey: XXX
+
+minio:
+  enabled: true
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  image: minio/minio:latest
+  serviceAccountName: ""
+  minioRootUser: ""
+  minioRootPassword: ""
+  storage: 10Gi
+
+uiIngress:
+  enabled: false
+  path: /results/(v\d/executions.*)
+  # Hostnames must be provided if Ingress is enabled.
+  hosts:
+    []
+  # - testkube.example.com
+  tlsenabled: false
+  # Placing a host in the TLS config will indicate a certificate should be created
+  tls:
+    []
+    # - hosts:
+  #     - testkube.example.com
+  #   secretName: testkube-cert-secret
+
+cliIngress:
+  enabled: false
+  # Parameters to check oauth token (by default github one)
+  oauth:
+    clientID: ""
+    clientSecret: ""
+    provider: "github"
+    scopes: ""
+  path: /results/(v\d/.*)
+  # Hostnames must be provided if Ingress is enabled.
+  hosts:
+    []
+  # - testkube.example.com
+  tlsenabled: false
+  # Placing a host in the TLS config will indicate a certificate should be created
+  tls:
+    []
+    # - hosts:
+  #     - testkube.example.com
+  #   secretName: testkube-cert-secret
+
 resources:
   {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -83,33 +131,21 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+#   cpu: 100m
+#   memory: 128Mi
 
-## Autoscaling parameters
-## Enable autoscaling for Testkube API deployment
-## Minimum number of replicas to scale back
-## Maximum number of replicas to scale out
-## Target CPU utilization percentage
-## Target Memory utilization percentage
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
-## Node labels for Testkube API pod assignment.
+
 nodeSelector: {}
 
-## Tolerations for Testkube API  assignment.
 tolerations: []
 
-## Affinity for Testkube API pod assignment.
-## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
 affinity: {}
-
-## Storage for Testkube API. Now Minio is used:
 storage:
   endpoint: ""
   endpoint_port: "9000"
@@ -120,130 +156,7 @@ storage:
   SSL: false
   scrapperEnabled: true
 
-## Service Account parameters
-serviceAccount:
-## Specifies whether a service account should be created
-  create: true
-## Annotations to add to the service account
-  annotations: {}
-## The name of the service account to use.
-## If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-## Configure Container Security Context for Testkube API
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-##
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-# runAsUser: 1000
-
-## Service parameters
-service:
-  ## @param service.type Adapter service type
-  type: ClusterIP
-  ## HTTP Port
-  port: 8088
-  ## Additional custom annotations for the service
-  annotations: {}
-
-##MongoDB parameters
-mongodb:
-  dsn: "mongodb://testkube-mongodb:27017"
-  ## or use dsn in secrets
-  # secretName: testkube-secrets
-  # secretKey: mongo-dsn
-
-## NATS parameters
-## ref: https://github.com/nats-io/nats-server
-nats:
-  ## Deploy NATS server to the cluster
-  enabled: true
-  ## load URI from secrets
-  # secretName: XXX
-  # secretKey: XXX
-
-## MINIO parameters
-minio:
-  ## Deploy Minio server to the cluster
-  enabled: true
-  ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
-  ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
-  accessModes:
-    - ReadWriteOnce
-  ## Node labels for pod assignment.
-  nodeSelector: {}
-  ## Tolerations for pod assignment.
-  tolerations: []
-  ## Affinity for pod assignment.
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
-  affinity: {}
-  ## Minio image from DockerHub
-  image: minio/minio:latest
-  ## ServiceAccount name to use for Minio
-  serviceAccountName: ""
-  ## Root username
-  ## Root password
-  minioRootUser: ""
-  minioRootPassword: ""
-  ## PVC Storage Request for MinIO. Should be available in the cluster.
-  storage: 10Gi
-  ## Selector labels to match
-  matchLabels: []
-
-## uiIngress parameters
-uiIngress:
-  ## Use uiIngress
-  enabled: false
-  ## The Path to Nginx.
-  path: /results/(v\d/executions.*)
-  ## Hostnames must be provided if Ingress is enabled.
-  hosts:
-    []
-  # - testkube.example.com
-  ## Enable TLS configuration for the hostname defined at `uiIngress.hosts` parameter
-  tlsenabled: false
-  ## Placing a host in the TLS config will indicate a certificate should be created
-  tls:
-    []
-    # - hosts:
-    #     - testkube.example.com
-  #   secretName: testkube-cert-secret
-
-## uiIngress parameters
-cliIngress:
-  ## Use cliIngress
-  enabled: false
-  ## Parameters to check oauth token (by default github one)
-  oauth:
-    clientID: ""
-    clientSecret: ""
-    provider: "github"
-    scopes: ""
-  ## The Path to Nginx.
-  path: /results/(v\d/.*)
-  ## Hostnames must be provided if Ingress is enabled.
-  hosts:
-    []
-  # - testkube.example.com
-  tlsenabled: false
-  # Placing a host in the TLS config will indicate a certificate should be created
-  tls:
-    []
-    # - hosts:
-    #     - testkube.example.com
-  #   secretName: testkube-cert-secret
-
-##Prometheus monitoring
 prometheus:
-  ## Deploy Prometheus to cluster
   enabled: false
-  ## Scrape interval
-  interval: 15s
-  ## Additional monitoring labels
-  monitoringLabels: []
+
+monitoringLabels: []

@@ -25,7 +25,3 @@ dependencies:
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
-  - name: common
-    version: 0.1.0
-    #repository: https://kubeshop.github.io/helm-charts
-    repository: "file://../common"
