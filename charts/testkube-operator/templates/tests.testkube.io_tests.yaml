@@ -454,7 +454,7 @@ spec:
                           description: artifact volume name
                           type: string
                       required:
-                      - volumeMounthPath
+                      - volumeMountPath
                       - volumeName
                       type: object
                     command:
