@@ -447,7 +447,7 @@ spec:
                           items:
                             type: string
                           type: array
-                        volumeMounthPath:
+                        volumeMountPath:
                           description: artifact volume mount path
                           type: string
                         volumeName:
