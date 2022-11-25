@@ -3969,6 +3969,34 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-25T16:44:18.732640411Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.8
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.12
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.4
+    description: A Helm chart for testkube.
+    digest: d9b00a4bc07de695c779a63bd4454fb2fede1d4bc58e4e7b2c1a6f3ee085e373
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.40/testkube-1.7.40.tgz
+    version: 1.7.40
+  - apiVersion: v2
     created: "2022-11-25T13:06:15.730609044Z"
     dependencies:
     - name: testkube-operator
@@ -24625,6 +24653,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.8.4
+    created: "2022-11-25T16:44:18.93405239Z"
+    description: A Helm chart for Kubernetes
+    digest: 4763adccc5e1c35cc90059bba76df0cfb195b44385a15fe0f61434d8c151696d
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.8.4/testkube-dashboard-1.8.4.tgz
+    version: 1.8.4
+  - apiVersion: v2
     appVersion: 1.8.3
     created: "2022-11-22T11:47:26.953167832Z"
     description: A Helm chart for Kubernetes
@@ -27413,4 +27451,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-25T13:06:15.838941247Z"
+generated: "2022-11-25T16:44:18.955235777Z"
