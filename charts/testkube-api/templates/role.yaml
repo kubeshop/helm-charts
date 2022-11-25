@@ -283,3 +283,19 @@ rules:
   - get
   - list
   - watch
+
+  ---
+
+    apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+    kind: ClusterRole
+    metadata:
+      name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
+    rules:
+    - apiGroups:
+      - ""
+      resources:
+      - persistentvolumeclaims
+      verbs:
+      - create
+      - get
+      - delete
