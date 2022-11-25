@@ -3,8 +3,11 @@ kind: Service
 metadata:
   name: {{ include "testkube-api.fullname" . }}
   labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
-  {{- with .Values.service.annotations }}
+    {{- include "testkube-api.Labels" . | nindent 4 }}
+    {{- if .Values.service.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.service.labels  "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 8 }}
   {{- end }}
@@ -16,4 +19,7 @@ spec:
       protocol: TCP
       name: http
   selector:
+    {{- if .Values.service.selector }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.service.selector  "context" $ ) | nindent 4 }}
+    {{- end }}
     {{- include "testkube-api.selectorLabels" . | nindent 4 }}
