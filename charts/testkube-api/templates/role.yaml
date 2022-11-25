@@ -1,4 +1,4 @@
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: executors-cluster-role-{{ .Release.Name }}
@@ -19,7 +19,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: jobs-cluster-role-{{ .Release.Name }}
@@ -48,7 +48,7 @@ rules:
 ---
 
 # permissions for end users to edit tests.
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: script-cluster-role-{{ .Release.Name }}
@@ -75,7 +75,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: test-cluster-role-{{ .Release.Name }}
@@ -102,7 +102,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: secrets-cluster-role-{{ .Release.Name }}
@@ -123,7 +123,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testsuite-cluster-role-{{ .Release.Name }}
@@ -150,7 +150,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: webhook-cluster-role-{{ .Release.Name }}
@@ -177,7 +177,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: configmaps-cluster-role-{{ .Release.Name }}
@@ -194,7 +194,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testsource-cluster-role-{{ .Release.Name }}
@@ -221,7 +221,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: testtriggers-cluster-role-{{ .Release.Name }}
@@ -248,7 +248,7 @@ rules:
 
 ---
 
-apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: watchers-cluster-role-{{ .Release.Name }}

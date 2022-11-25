@@ -46,14 +46,11 @@ testkube-api:
     enabled: false
   ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
   ## For example:
-    monitoringLabels: []
-  ## Scrape interval
-    interval: 15s
+  monitoringLabels: []
 #    release: myrelease
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
-    registry: docker.io
     repository: kubeshop/testkube-api-server
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.

@@ -17,7 +17,7 @@ kind: Ingress
 metadata:
   name: ui-{{ $fullName }}-{{ .Release.Name }}
   labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- include "testkube-api.labels" . | nindent 4 }}
   {{- with .Values.uiIngress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

@@ -1,14 +1,9 @@
-apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
-  labels: {{- include "testkube-api.Labels" . | nindent 6 }}
-  {{- if .Values.commonLabels }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 6 }}
-  {{- end }}
-  {{- if .Values.commonAnnotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-  {{- end }}
+  labels:
+    {{- include "testkube-api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -24,15 +19,12 @@ spec:
       {{- end }}
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
-      {{- if .Values.podLabels }}
-      {{- include "common.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
-      {{- end }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
+      serviceAccountName: testkube-api-server-{{ .Release.Name }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -49,7 +41,6 @@ spec:
             {{- else }}
             value: "{{ .Values.mongodb.dsn }}"
             {{- end }}
-            {{- if .Values.nats.enabled }}
           - name: NATS_URI
             {{- if .Values.nats.secretName }}
             valueFrom:
@@ -57,8 +48,7 @@ spec:
                 name: {{ .Values.nats.secretName }}
                 key: {{ .Values.nats.secretKey }}
             {{- else }}
-            value: {{ include "testkube-api.nats.uri" . }}
-            {{- end }}
+            value: "{{ .Values.nats.uri }}"
             {{- end }}
           - name: POSTMANEXECUTOR_URI
             value: "{{ .Values.postmanExecutorURI }}"
@@ -117,7 +107,7 @@ spec:
             value:  "{{ .Values.cloud.url}}"
           {{- end}}
           {{- if .Values.extraEnvVars }}
-          {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
+          {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
