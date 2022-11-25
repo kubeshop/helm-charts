@@ -1,23 +1,23 @@
 {{- if .Values.uiIngress.enabled -}}
-{{- $fullName := include "testkube-api.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{- if and .Values.uiIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
+  {{- $fullName := include "testkube-api.fullname" . -}}
+  {{- $svcPort := .Values.service.port -}}
+  {{- if and .Values.uiIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.uiIngress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.uiIngress.annotations "kubernetes.io/ingress.class" .Values.uiIngress.className}}
   {{- end }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+  {{- end }}
+  {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+  {{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else -}}
+  {{- else -}}
 apiVersion: extensions/v1
-{{- end }}
+  {{- end }}
 kind: Ingress
 metadata:
   name: ui-{{ $fullName }}-{{ .Release.Name }}
   labels:
-    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- include "testkube-api.labels" . | nindent 4 }}
   {{- with .Values.uiIngress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -29,14 +29,14 @@ spec:
   {{- if .Values.uiIngress.tls }}
   tls:
     {{- if .Values.uiIngress.tlsenabled }}
-    {{- range .Values.uiIngress.tls }}
-    - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
-    {{- end }}
+      {{- range .Values.uiIngress.tls }}
+      - hosts:
+          {{- range .hosts }}
+          - {{ . | quote }}
+          {{- end }}
+        secretName: {{ .secretName }}
+      {{- end }}
+      {{- end }}
   {{- end }}
   rules:
     {{- range .Values.uiIngress.hosts }}
@@ -56,4 +56,4 @@ spec:
               servicePort: {{ $svcPort }}
           {{- end }}
     {{- end }}
-{{- end }}
+  {{- end }}

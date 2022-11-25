@@ -4,19 +4,14 @@ kind: ServiceMonitor
 metadata:
   name: {{ include "testkube-api.fullname" . }}-servicemonitor
   labels: {{- include "testkube-api.monitoring" . | nindent 4 }}
-    {{- if .Values.prometheus.monitoringLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.prometheus.monitoringLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.monitoringLabels }}
+    {{- include "testkube-api.render" ( dict "value" .Values.monitoringLabels "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
   endpoints:
-  {{- if .Values.prometheus.interval }}
-  - interval: {{ .Values.prometheus.interval }}
-  {{- end }}
-    port: http
+    - interval: 15s
+      port: http
   selector:
     matchLabels:
-    {{- include "testkube-api.selectorLabels" . | nindent 6 }}
-    {{- if .Values.prometheus.matchLabels }}
-    {{- include "common.tplvalues.render" ( dict "value" .Values.prometheus.matchLabels  "context" $ ) | nindent 6 }}
-    {{- end }}
-{{ end }}
+      app.kubernetes.io/name: {{ include "testkube-api.fullname" . }}
+  {{ end }}

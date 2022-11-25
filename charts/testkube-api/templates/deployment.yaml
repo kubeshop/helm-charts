@@ -1,14 +1,9 @@
-apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
-  labels: {{- include "testkube-api.Labels" . | nindent 6 }}
-  {{- if .Values.commonLabels }}
-  {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 6 }}
-  {{- end }}
-  {{- if .Values.commonAnnotations }}
-  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
-  {{- end }}
+  labels:
+    {{- include "testkube-api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -24,96 +19,91 @@ spec:
       {{- end }}
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
-      {{- if .Values.podLabels }}
-      {{- include "common.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
-      {{- end }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
+      serviceAccountName: testkube-api-server-{{ .Release.Name }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           env:
-          - name: APISERVER_PORT
-            value: "{{ .Values.service.port }}"
-          - name: API_MONGO_DSN
-            {{- if .Values.mongodb.secretName }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.mongodb.secretName }}
-                key: {{ .Values.mongodb.secretKey }}
-            {{- else }}
-            value: "{{ .Values.mongodb.dsn }}"
-            {{- end }}
-            {{- if .Values.nats.enabled }}
-          - name: NATS_URI
-            {{- if .Values.nats.secretName }}
-            valueFrom:
-              secretKeyRef:
-                name: {{ .Values.nats.secretName }}
-                key: {{ .Values.nats.secretKey }}
-            {{- else }}
-            value: {{ include "testkube-api.nats.uri" . }}
-            {{- end }}
-            {{- end }}
-          - name: POSTMANEXECUTOR_URI
-            value: "{{ .Values.postmanExecutorURI }}"
-          - name: TESTKUBE_ANALYTICS_ENABLED
-            value: "{{ .Values.analyticsEnabled }}"
-          - name: SLACK_TOKEN
-            value: "{{ .Values.slackToken }}"
-          - name: "STORAGE_ENDPOINT"
-            {{- if .Values.storage.endpoint }}
-            value:  "{{ .Values.storage.endpoint }}"
-            {{- else }}
-            value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
-            {{- end }}
-          - name: "STORAGE_ACCESSKEYID"
-            value:  "{{ .Values.storage.accessKeyId }}"
-          - name: "STORAGE_SECRETACCESSKEY"
-            value: "{{ .Values.storage.accessKey }}"
-          - name: "STORAGE_LOCATION"
-            value: "{{ .Values.storage.location }}"
-          - name: "STORAGE_TOKEN"
-            value: "{{ .Values.storage.token }}"
-          - name: "STORAGE_SSL"
-            value:  "{{ .Values.storage.SSL }}"
-          - name: "SCRAPPERENABLED"
-            value:  "{{ .Values.storage.scrapperEnabled }}"
-          - name: TESTKUBE_DEFAULT_EXECUTORS
-            {{- if .Values.executors }}
-            value:  "{{ .Values.executors }}"
-            {{- else }}
-            value: "{{ .Files.Get "executors.json" | b64enc }}"
-            {{- end }}
-          - name: TESTKUBE_NAMESPACE
-            value: "{{ .Release.Namespace }}"
-          - name: TESTKUBE_TEMPLATE_JOB
-            value: "{{ .Files.Get "job-template.yml" | b64enc }}"
-          - name: TESTKUBE_CONTAINER_TEMPLATE_JOB
-            value: "{{ .Files.Get "job-container-template.yml" | b64enc }}"
-          - name: TESTKUBE_CONTAINER_TEMPLATE_SCRAPER
-            value: "{{ .Files.Get "job-scraper-template.yml" | b64enc }}"
-          - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
-            value: "{{ .Files.Get "pvc-container-template.yml" | b64enc }}"
-          - name: JOB_SERVICE_ACCOUNT_NAME
-            value: "{{ .Values.jobServiceAccountName }}" 
-          - name: APISERVER_FULLNAME
-            value: "{{ include "testkube-api.fullname" . }}"
-          - name: APISERVER_CONFIG
-            value: "testkube-api-server-config-{{ .Release.Namespace }}"
-          - name: TESTKUBE_OAUTH_CLIENTID
-            value:  "{{ .Values.cliIngress.oauth.clientID }}"
-          - name: TESTKUBE_OAUTH_CLIENTSECRET
-            value:  "{{ .Values.cliIngress.oauth.clientSecret }}"
-          - name: TESTKUBE_OAUTH_PROVIDER
-            value:  "{{ .Values.cliIngress.oauth.provider }}"
-          - name: TESTKUBE_OAUTH_SCOPES
-            value:  "{{ .Values.cliIngress.oauth.scopes }}"
+            - name: APISERVER_PORT
+              value: "{{ .Values.service.port }}"
+            - name: API_MONGO_DSN
+              {{- if .Values.mongodb.secretName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongodb.secretName }}
+                  key: {{ .Values.mongodb.secretKey }}
+              {{- else }}
+              value: "{{ .Values.mongodb.dsn }}"
+              {{- end }}
+            - name: NATS_URI
+              {{- if .Values.nats.secretName }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.nats.secretName }}
+                  key: {{ .Values.nats.secretKey }}
+              {{- else }}
+              value: "{{ .Values.nats.uri }}"
+              {{- end }}
+            - name: POSTMANEXECUTOR_URI
+              value: "{{ .Values.postmanExecutorURI }}"
+            - name: TESTKUBE_ANALYTICS_ENABLED
+              value: "{{ .Values.analyticsEnabled }}"
+            - name: SLACK_TOKEN
+              value: "{{ .Values.slackToken }}"
+            - name: "STORAGE_ENDPOINT"
+              {{- if .Values.storage.endpoint }}
+              value:  "{{ .Values.storage.endpoint }}"
+              {{- else }}
+              value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
+              {{- end }}
+            - name: "STORAGE_ACCESSKEYID"
+              value:  "{{ .Values.storage.accessKeyId }}"
+            - name: "STORAGE_SECRETACCESSKEY"
+              value: "{{ .Values.storage.accessKey }}"
+            - name: "STORAGE_LOCATION"
+              value: "{{ .Values.storage.location }}"
+            - name: "STORAGE_TOKEN"
+              value: "{{ .Values.storage.token }}"
+            - name: "STORAGE_SSL"
+              value:  "{{ .Values.storage.SSL }}"
+            - name: "SCRAPPERENABLED"
+              value:  "{{ .Values.storage.scrapperEnabled }}"
+            - name: TESTKUBE_DEFAULT_EXECUTORS
+              {{- if .Values.executors }}
+              value:  "{{ .Values.executors }}"
+              {{- else }}
+              value: "{{ .Files.Get "executors.json" | b64enc }}"
+              {{- end }}
+            - name: TESTKUBE_NAMESPACE
+              value: "{{ .Release.Namespace }}"
+            - name: TESTKUBE_TEMPLATE_JOB
+              value: "{{ .Files.Get "job-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_JOB
+              value: "{{ .Files.Get "job-container-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_SCRAPER
+              value: "{{ .Files.Get "job-scraper-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
+              value: "{{ .Files.Get "pvc-container-template.yml" | b64enc }}"
+            - name: JOB_SERVICE_ACCOUNT_NAME
+              value: "{{ .Values.jobServiceAccountName }}"
+            - name: APISERVER_FULLNAME
+              value: "{{ include "testkube-api.fullname" . }}"
+            - name: APISERVER_CONFIG
+              value: "testkube-api-server-config-{{ .Release.Namespace }}"
+            - name: TESTKUBE_OAUTH_CLIENTID
+              value:  "{{ .Values.cliIngress.oauth.clientID }}"
+            - name: TESTKUBE_OAUTH_CLIENTSECRET
+              value:  "{{ .Values.cliIngress.oauth.clientSecret }}"
+            - name: TESTKUBE_OAUTH_PROVIDER
+              value:  "{{ .Values.cliIngress.oauth.provider }}"
+            - name: TESTKUBE_OAUTH_SCOPES
+              value:  "{{ .Values.cliIngress.oauth.scopes }}"
           {{- if .Values.cloud.key }}
           - name: TESTKUBE_CLOUD_API_KEY
             value:  "{{ .Values.cloud.key}}"
@@ -123,7 +113,7 @@ spec:
             value:  "{{ .Values.cloud.url}}"
           {{- end}}
           {{- if .Values.extraEnvVars }}
-          {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
+          {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
