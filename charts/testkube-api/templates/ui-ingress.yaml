@@ -18,19 +18,19 @@ metadata:
   name: ui-{{ $fullName }}-{{ .Release.Name }}
   labels:
     {{- include "global.labels.standard" . | nindent 4 }}
-    {{- if .Values.uiIngress.labels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.uiIngress.labels "context" $ ) | nindent 4 }}
-    {{- end }}
-    {{- if .Values.globalLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
-    {{- end }}
+      {{- if .Values.uiIngress.labels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.uiIngress.labels "context" $ ) | nindent 4 }}
+      {{- end }}
+      {{- if .Values.globalLabels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+      {{- end }}
   {{- with .Values.uiIngress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
-    {{- end }}
-    {{- if .Values.globalAnnotations }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
-    {{- end }}
+      {{- end }}
+      {{- if .Values.globalAnnotations }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+      {{- end }}
 spec:
   {{- if and .Values.uiIngress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: {{ .Values.uiIngress.className }}

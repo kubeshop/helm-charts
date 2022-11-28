@@ -24,9 +24,9 @@ spec:
       {{- end }}
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
-        {{- if .Values.podLabels }}
-        {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
-        {{- end }}
+          {{- if .Values.podLabels }}
+          {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
+          {{- end }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:

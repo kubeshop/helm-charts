@@ -7,7 +7,7 @@ metadata:
       {{- if .Values.globalLabels }}
       {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 6 }}
       {{- end }}
-    {{- if .Values.globalAnnotations }}
+      {{- if .Values.globalAnnotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:

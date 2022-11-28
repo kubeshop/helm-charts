@@ -84,7 +84,7 @@ resources:
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
+#   memory: 128Mi
 
 ## Autoscaling parameters
 ## Enable autoscaling for Testkube API deployment
@@ -145,7 +145,7 @@ securityContext:
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 ## Service parameters
 service:
@@ -218,7 +218,7 @@ uiIngress:
   ## Placing a host in the TLS config will indicate a certificate should be created
   tls:
     []
-    # - hosts:
+  # - hosts:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
@@ -246,7 +246,7 @@ cliIngress:
   # Placing a host in the TLS config will indicate a certificate should be created
   tls:
     []
-    # - hosts:
+  # - hosts:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
