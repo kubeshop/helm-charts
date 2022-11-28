@@ -4,5 +4,9 @@ metadata:
   name: {{ .Name }}-pvc
   namespace: {{ .Namespace }}
 spec:
-  storageClassName: ""
-  volumeName: {{ .ArtifactRequest.VolumeName }}
+  storageClassName: {{ .ArtifactRequest.StorageClassName }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

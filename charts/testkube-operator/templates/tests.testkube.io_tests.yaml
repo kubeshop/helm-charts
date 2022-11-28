@@ -450,12 +450,12 @@ spec:
                         volumeMountPath:
                           description: artifact volume mount path
                           type: string
-                        volumeName:
-                          description: artifact volume name
+                        storageClassName:
+                          description: artifact storage class name
                           type: string
                       required:
                       - volumeMountPath
-                      - volumeName
+                      - storageClassName
                       type: object
                     command:
                       description: container executor binary command
