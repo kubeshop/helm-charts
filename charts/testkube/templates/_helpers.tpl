@@ -31,7 +31,7 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
+Global labels
 */}}
 {{- define "testkube.labels" -}}
 helm.sh/chart: {{ include "testkube.chart" . }}
