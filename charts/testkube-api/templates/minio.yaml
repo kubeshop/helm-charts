@@ -8,23 +8,32 @@ spec:
   {{- if .Values.minio.storageClassName }}
   storageClassName: {{ .Values.minio.storageClassName }}
   {{- end }}
-  # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
-    # The volume is mounted as read-write by a single node
-    - ReadWriteOnce
+  {{- range .Values.minio.accessModes }}
+  - {{ . | quote }}
+  {{- end }}
   resources:
-    # This is the request for storage. Should be available in the cluster.
     requests:
       storage: {{ .Values.minio.storage }}
 ---
-apiVersion: apps/v1
+apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   # This name uniquely identifies the Deployment
   name: testkube-minio-{{ .Release.Namespace }}
+  labels:
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 6 }}
+    {{- end }}
+  {{- if .Values.globalAnnotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
+    {{- if .Values.minio.matchLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- end }}
       app: testkube-minio-{{ .Release.Namespace }} # has to match .spec.template.metadata.labels
   strategy:
     # Specifies the strategy used to replace old Pods by new ones
@@ -33,65 +42,71 @@ spec:
   template:
     metadata:
       labels:
-        # This label is used as a selector in Service definition
+      {{- if .Values.minio.matchLabels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+      {{- end }}
+      # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
       # Volumes used by this deployment
       volumes:
-      - name: data
-        # This volume is based on PVC
-        persistentVolumeClaim:
-          # Name of the PVC created earlier
-          claimName: testkube-minio-pv-claim-{{ .Release.Namespace }}
-      containers:
-      - name: testkube-minio-{{ .Release.Namespace }}
-        # Volume mounts for this container
-        volumeMounts:
-        # Volume 'data' is mounted to path '/data'
         - name: data
-          mountPath: "/data"
-        # Pulls the lastest Minio image from Docker Hub
-        image: {{ .Values.minio.image }}
-        args:
-        - server
-        - /data
-        - --console-address
-        - ":9090"
-        env:
-        # MinIO access key and secret key
-        - name: MINIO_ROOT_USER
-          value: {{ .Values.minio.minioRootUser }}
-        - name: MINIO_ROOT_PASSWORD
-          value: {{ .Values.minio.minioRootPassword }}
-        - name: CONSOLE_PORT
-          value: "9090"
-        - name: CONSOLE_TLS_PORT
-          value: "9443"
-        ports:
-        - containerPort: 9000
-          name: http
-        - containerPort: 9090
-          name: web
-        - containerPort: 9443
-          name: https
-        # Readiness probe detects situations when MinIO server instance
-        # is not ready to accept traffic. Kubernetes doesn't forward
-        # traffic to the pod while readiness checks fail.
-        readinessProbe:
-          httpGet:
-            path: /minio/health/ready
-            port: 9000
-          initialDelaySeconds: 120
-          periodSeconds: 20
-        # Liveness probe detects situations where MinIO server instance
-        # is not working properly and needs restart. Kubernetes automatically
-        # restarts the pods if liveness checks fail.
-        livenessProbe:
-          httpGet:
-            path: /minio/health/live
-            port: 9000
-          initialDelaySeconds: 120
-          periodSeconds: 20
+          # This volume is based on PVC
+          persistentVolumeClaim:
+            # Name of the PVC created earlier
+            claimName: testkube-minio-pv-claim-{{ .Release.Namespace }}
+      containers:
+        - name: testkube-minio-{{ .Release.Namespace }}
+          # Volume mounts for this container
+          volumeMounts:
+            # Volume 'data' is mounted to path '/data'
+            - name: data
+              mountPath: "/data"
+          # Pulls the lastest Minio image from Docker Hub
+          image: {{ .Values.minio.image }}
+          args:
+            - server
+            - /data
+            - --console-address
+            - ":9090"
+          env:
+            # MinIO access key and secret key
+            - name: MINIO_ROOT_USER
+              value: {{ .Values.minio.minioRootUser }}
+            - name: MINIO_ROOT_PASSWORD
+              value: {{ .Values.minio.minioRootPassword }}
+            - name: CONSOLE_PORT
+              value: "9090"
+            - name: CONSOLE_TLS_PORT
+              value: "9443"
+          {{- if .Values.minio.extraEnvVars }}
+          {{- include "global.tplvalues.render" (dict "value" .Values.minio.extraEnvVars "context" $) | nindent 6 }}
+          {{- end }}
+          ports:
+            - containerPort: 9000
+              name: http
+            - containerPort: 9090
+              name: web
+            - containerPort: 9443
+              name: https
+          # Readiness probe detects situations when MinIO server instance
+          # is not ready to accept traffic. Kubernetes doesn't forward
+          # traffic to the pod while readiness checks fail.
+          readinessProbe:
+            httpGet:
+              path: /minio/health/ready
+              port: 9000
+            initialDelaySeconds: 120
+            periodSeconds: 20
+          # Liveness probe detects situations where MinIO server instance
+          # is not working properly and needs restart. Kubernetes automatically
+          # restarts the pods if liveness checks fail.
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: 9000
+            initialDelaySeconds: 120
+            periodSeconds: 20
       {{- if  .Values.minio.serviceAccountName }}
       serviceAccountName: {{ .Values.minio.serviceAccountName }}
       {{- end }}
@@ -128,4 +143,7 @@ spec:
   selector:
     # Looks for labels `app:minio` in the namespace and applies the spec
     app: testkube-minio-{{ .Release.Namespace }}
-{{- end }}
+    {{- if .Values.minio.matchLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- end }}
+  {{- end }}

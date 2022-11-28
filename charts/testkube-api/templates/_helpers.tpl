@@ -24,22 +24,12 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "testkube-api.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Common labels
+API labels
 */}}
 {{- define "testkube-api.labels" -}}
-helm.sh/chart: {{ include "testkube-api.chart" . }}
-{{ include "testkube-api.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "global.labels.standard" . }}
+{{ include "testkube-api.selectorLabels" . }}
 {{- end }}
 
 {{/*
@@ -85,25 +75,8 @@ Define API image
 {{- end -}}
 
 {{/*
-Add extra env variables
+NATS Uri
 */}}
-{{- define "testkube-api.extraVars" -}}
-{{- if typeIs "string" .value }}
-    {{- tpl .value .context }}
-{{- else }}
-    {{- tpl (.value | toYaml) .context }}
+{{- define "testkube-api.nats.uri" -}}
+"nats://{{ .Release.Name }}-nats"
 {{- end }}
-{{- end -}}
-
-{{/*
-Renders a value that contains template.
-Usage:
-{{ include "testkube-api.render" ( dict "value" .Values.path.to.the.Value "context" $) }}
-*/}}
-{{- define "testkube-api.render" -}}
-    {{- if typeIs "string" .value }}
-        {{- tpl .value .context }}
-    {{- else }}
-        {{- tpl (.value | toYaml) .context }}
-    {{- end }}
-{{- end -}}

@@ -8,6 +8,7 @@
 global:
   imageRegistry: ""
   imagePullSecrets: []
+  labels: []
 
 nameOverride: "testkube"
 fullnameOverride: "testkube"
@@ -44,13 +45,15 @@ mongodb:
 testkube-api:
   prometheus:
     enabled: false
-  ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
-  ## For example:
-  monitoringLabels: []
-#    release: myrelease
+    ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
+    ## For example:
+    monitoringLabels: []
+    ## Scrape interval
+    interval: 15s
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
   image:
+    registry: docker.io
     repository: kubeshop/testkube-api-server
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
@@ -59,8 +62,8 @@ testkube-api:
   ## @param extraEnvVars Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-#    - name: FOO
-#      value: BAR
+  #    - name: FOO
+  #      value: BAR
   service:
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
     port: 8088
@@ -108,7 +111,7 @@ testkube-api:
       []
       # - hosts:
       #     - testkube.example.com
-      #   secretName: testkube-cert-secret
+    #   secretName: testkube-cert-secret
   cliIngress:
     enabled: false
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
@@ -141,7 +144,7 @@ testkube-api:
       []
       # - hosts:
       #     - testkube.example.com
-      #   secretName: testkube-cert-secret
+    #   secretName: testkube-cert-secret
   storage:
     endpoint: ""
     endpoint_port: "9000"
@@ -212,7 +215,7 @@ testkube-dashboard:
       []
       # - hosts:
       #     - testkube.example.com
-      #   secretName: testkube-cert-secret
+    #   secretName: testkube-cert-secret
     apiServerEndpoint: "" # get the address of the endpoint or set it using helm
   oauth2:
     enabled: false

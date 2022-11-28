@@ -3,9 +3,15 @@ kind: Pod
 metadata:
   name: "{{ include "testkube-api.fullname" . }}-test-connection"
   labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- include "global.labels.standard" . | nindent 4 }}
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
     "helm.sh/hook": test
+    {{- if .Values.globalAnnotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   containers:
     - name: wget
