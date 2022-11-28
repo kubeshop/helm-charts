@@ -29,4 +29,3 @@ dependencies:
     version: 0.1.0
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../global"
-

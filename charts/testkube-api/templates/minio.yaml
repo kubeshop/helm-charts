@@ -34,7 +34,7 @@ spec:
     {{- if .Values.minio.matchLabels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
     {{- end }}
-    app: testkube-minio-{{ .Release.Namespace }} # has to match .spec.template.metadata.labels
+      app: testkube-minio-{{ .Release.Namespace }} # has to match .spec.template.metadata.labels
   strategy:
     # Specifies the strategy used to replace old Pods by new ones
     # Refer: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
@@ -46,7 +46,7 @@ spec:
       {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
       {{- end }}
       # This label is used as a selector in Service definition
-      app: testkube-minio-{{ .Release.Namespace }}
+        app: testkube-minio-{{ .Release.Namespace }}
     spec:
       # Volumes used by this deployment
       volumes:
