@@ -80,7 +80,7 @@ spec:
             - name: CONSOLE_TLS_PORT
               value: "9443"
           {{- if .Values.minio.extraEnvVars }}
-          {{- include "global.tplvalues.render" (dict "value" .Values.minio.extraEnvVars "context" $) | nindent 6 }}
+          {{- include "global.tplvalues.render" (dict "value" .Values.minio.extraEnvVars "context" $) | nindent 12 }}
           {{- end }}
           ports:
             - containerPort: 9000

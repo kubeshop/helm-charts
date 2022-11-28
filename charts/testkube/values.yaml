@@ -62,8 +62,8 @@ testkube-api:
   ## @param extraEnvVars Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-  #    - name: FOO
-  #      value: BAR
+  #  - name: FOO
+  #    value: BAR
   service:
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
     port: 8088
@@ -72,6 +72,9 @@ testkube-api:
     enabled: true
   minio:
     enabled: true
+    extraEnvVars: []
+    # - name: FOO
+    #   value: BAR
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -184,8 +187,8 @@ testkube-dashboard:
   ## @param extraEnvVars Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-  ##  - name: FOO
-  ##    value: BAR
+  #  - name: FOO
+  #    value: BAR
   ingress:
     enabled: false
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.

@@ -13,6 +13,10 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+
+extraEnvVars:
+  - name: jhelf
+    value: ffggg
 ## Labels to add to all deployed objects
 globalLabels: {}
 
@@ -174,6 +178,9 @@ nats:
 minio:
   ## Deploy Minio server to the cluster
   enabled: true
+  extraEnvVars:
+    - name: dfrg
+      value: dfrg
   ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
   ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:

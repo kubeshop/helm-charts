@@ -108,17 +108,17 @@ spec:
               value:  "{{ .Values.cliIngress.oauth.provider }}"
             - name: TESTKUBE_OAUTH_SCOPES
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
-          {{- if .Values.cloud.key }}
-          - name: TESTKUBE_CLOUD_API_KEY
-            value:  "{{ .Values.cloud.key}}"
-          {{- end}}
-          {{- if .Values.cloud.url }}
-          - name: TESTKUBE_CLOUD_URL
-            value:  "{{ .Values.cloud.url}}"
-          {{- end}}
-          {{- if .Values.extraEnvVars }}
-          {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
-          {{- end }}
+            {{- if .Values.cloud.key }}
+            - name: TESTKUBE_CLOUD_API_KEY
+              value:  "{{ .Values.cloud.key}}"
+            {{- end}}
+            {{- if .Values.cloud.url }}
+            - name: TESTKUBE_CLOUD_URL
+              value:  "{{ .Values.cloud.url}}"
+            {{- end}}
+            {{- if .Values.extraEnvVars }}
+            {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-api.image" . }}
