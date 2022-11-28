@@ -2128,6 +2128,33 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/common-0.1.0/common-0.1.0.tgz
     version: 0.1.0
+  global:
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-11-28T13:09:58.457103397Z"
+    description: A Library Helm Chart for definitions that can be shared by Helm templates
+      in other charts.
+    digest: 06da831e61d03ec59a5ef319e87178d6ba90bced744f6a4b791bbc7c2c340a1e
+    home: https://github.com/kubeshop/helm-charts/tree/main/charts/global
+    keywords:
+    - global
+    - helper
+    - template
+    - function
+    - testkube
+    maintainers:
+    - name: Testkube
+      url: https://github.com/kubeshop/testkube
+    name: global
+    sources:
+    - https://github.com/kubeshop/helm-charts
+    - https://testkube.io/
+    type: library
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/global-0.1.0/global-0.1.0.tgz
+    version: 0.1.0
   kusk-gateway:
   - apiVersion: v2
     appVersion: v1.3.19
@@ -27451,4 +27478,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-25T16:44:18.955235777Z"
+generated: "2022-11-28T13:09:59.048959722Z"
