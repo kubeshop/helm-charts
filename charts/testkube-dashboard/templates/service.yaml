@@ -4,9 +4,15 @@ metadata:
   name: {{ include "testkube-dashboard.fullname" . }}
   labels:
     {{- include "testkube-dashboard.labels" . | nindent 4 }}
+  {{- if .Values.globalLabels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+  {{- end }}
   {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 8 }}
+  {{- end }}
+  {{- if .Values.globalAnnotations }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   type: {{ .Values.service.type }}

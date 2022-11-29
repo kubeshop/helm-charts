@@ -4,7 +4,16 @@ kind: Service
 metadata:
   name: {{ .Values.oauth2.name }}
   labels:
-    {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+    {{- include "testkube-oauth2.selectorLabels" . | nindent 4 }}
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.globalAnnotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.oauth2.serviceAnnotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.serviceAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   ports:
     - port: {{ .Values.oauth2.port }}
@@ -12,5 +21,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{ .Values.oauth2.selector }}: {{ .Values.oauth2.name }}
+    {{- include "testkube-oauth2.selectorLabels" . | nindent 4 }}
 {{- end }}

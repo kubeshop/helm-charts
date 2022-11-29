@@ -77,12 +77,24 @@ Define Dashboard image
 {{- end -}}
 
 {{/*
-Add extra env variables
+Define Oauth2 selector labels
 */}}
-{{- define "testkube-dashboard.extraVars" -}}
-{{- if typeIs "string" .value }}
-    {{- tpl .value .context }}
-{{- else }}
-    {{- tpl (.value | toYaml) .context }}
+{{- define "testkube-oauth2.selectorLabels" -}}
+selector: k8s-app
 {{- end }}
+
+{{/*
+Define Oauth2 image
+*/}}
+{{- define "testkube-oauth2.image" -}}
+{{- $registryName := .Values.oauth2.image.registry -}}
+{{- $repositoryName := .Values.oauth2.image.repository -}}
+{{- $tag := .Values.oauth2.image.tag -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
+    {{- else -}}
+      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+     {{- end -}}
+{{- end -}}
 {{- end -}}

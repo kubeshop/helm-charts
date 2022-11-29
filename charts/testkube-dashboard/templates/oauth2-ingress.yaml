@@ -1,17 +1,21 @@
 {{- if .Values.oauth2.enabled -}}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else -}}
-apiVersion: extensions/v1
-{{- end }}
+apiVersion: {{ include "global.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ .Values.oauth2.name }}
+  {{- if .Values.globalLabels } }
+  labels:
+  {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.oauth2.ingress.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.ingress.labels "context" $ ) | nindent 4 }}
+  {{- end }}
   {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.globalAnnotations }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
