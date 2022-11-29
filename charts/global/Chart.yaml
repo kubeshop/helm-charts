@@ -1,14 +1,14 @@
 apiVersion: v2
 version: 0.1.0
-name: common
+name: global
 description: A Library Helm Chart for definitions that can be shared by Helm templates in other charts.
-home: https://github.com/kubeshop/helm-charts/tree/main/charts/common
+home: https://github.com/kubeshop/helm-charts/tree/main/charts/global
 type: library
 # This version number should be incremented each time the changes are made to the chart and its templates, including the app version.
 annotations:
   category: Infrastructure
 keywords:
-  - common
+  - global
   - helper
   - template
   - function

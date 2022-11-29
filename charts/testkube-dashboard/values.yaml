@@ -44,7 +44,7 @@ securityContext:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
+# runAsNonRoot: true
 # runAsUser: 1000
 
 service:
@@ -64,7 +64,7 @@ ingress:
   tls:
     []
     # - hosts:
-    #     - testkube.example.com
+  #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
 oauth2:
@@ -95,7 +95,7 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
   # requests:
-  #   cpu: 100m
+#   cpu: 100m
 #   memory: 128Mi
 
 autoscaling:

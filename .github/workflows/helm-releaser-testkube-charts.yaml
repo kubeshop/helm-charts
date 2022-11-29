@@ -5,6 +5,7 @@ on:
     paths:
       - "charts/testkube**"
       - "charts/testkube-api/**"
+      - ".github/workflows/helm-releaser-testkube-charts.yaml"
     branches:
       - main
 
@@ -30,9 +31,9 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
-          version: v3.4.0
+          version: v3.10.0
 
       - name: Installing repositories
         run: |
@@ -173,9 +174,9 @@ jobs:
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
-          version: v3.4.0
+          version: v3.10.0
 
       - name: Installing repositories
         run: |

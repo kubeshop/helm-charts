@@ -1,10 +1,10 @@
-# Testkube Common Library Chart
+# Testkube global Library Chart
 
 A [Library Chart](https://helm.sh/docs/topics/library_charts/#helm) for definitions that can be shared by Helm templates in other charts.
 ##Usage
 ```sh
 dependencies:
-  - name: common
+  - name: global
     version: 1.x.x
     repository: https://kubeshop.github.io/helm-charts
 ```
@@ -13,12 +13,12 @@ dependencies:
 $ helm dependency update
 ``
 
-Example of using `common` template:
+Example of using `global` template:
 ```sh
 apiVersion: v1
 kind: ConfigMap
 metadata:
-name: {{ include "common.names.fullname" . }}
+name: {{ include "global.names.fullname" . }}
 data:
 myvalue: "Hello World"
 ```

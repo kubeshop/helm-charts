@@ -1,9 +1,14 @@
-apiVersion: apps/v1
+apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
-  labels:
-    {{- include "testkube-api.labels" . | nindent 4 }}
+  labels: {{- include "testkube-api.labels" . | nindent 6 }}
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 6 }}
+    {{- end }}
+  {{- if .Values.globalAnnotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -19,12 +24,15 @@ spec:
       {{- end }}
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
+          {{- if .Values.podLabels }}
+          {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
+          {{- end }}
     spec:
       {{- with .Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: testkube-api-server-{{ .Release.Name }}
+      serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,6 +49,7 @@ spec:
               {{- else }}
               value: "{{ .Values.mongodb.dsn }}"
               {{- end }}
+              {{- if .Values.nats.enabled }}
             - name: NATS_URI
               {{- if .Values.nats.secretName }}
               valueFrom:
@@ -48,7 +57,8 @@ spec:
                   name: {{ .Values.nats.secretName }}
                   key: {{ .Values.nats.secretKey }}
               {{- else }}
-              value: "{{ .Values.nats.uri }}"
+              value: {{ include "testkube-api.nats.uri" . }}
+              {{- end }}
               {{- end }}
             - name: POSTMANEXECUTOR_URI
               value: "{{ .Values.postmanExecutorURI }}"
@@ -104,17 +114,17 @@ spec:
               value:  "{{ .Values.cliIngress.oauth.provider }}"
             - name: TESTKUBE_OAUTH_SCOPES
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
-          {{- if .Values.cloud.key }}
-          - name: TESTKUBE_CLOUD_API_KEY
-            value:  "{{ .Values.cloud.key}}"
-          {{- end}}
-          {{- if .Values.cloud.url }}
-          - name: TESTKUBE_CLOUD_URL
-            value:  "{{ .Values.cloud.url}}"
-          {{- end}}
-          {{- if .Values.extraEnvVars }}
-          {{ include "testkube-api.extraVars" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
-          {{- end }}
+            {{- if .Values.cloud.key }}
+            - name: TESTKUBE_CLOUD_API_KEY
+              value:  "{{ .Values.cloud.key}}"
+            {{- end}}
+            {{- if .Values.cloud.url }}
+            - name: TESTKUBE_CLOUD_URL
+              value:  "{{ .Values.cloud.url}}"
+            {{- end}}
+            {{- if .Values.extraEnvVars }}
+            {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
+            {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-api.image" . }}
