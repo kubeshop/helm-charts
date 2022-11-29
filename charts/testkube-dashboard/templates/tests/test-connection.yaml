@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: "{{ include "testkube-dashboard.fullname" . }}-test-connection"
   labels:
-    {{- include "testkube-dashboard.labels" . | nindent 4 }}
+    {{- include "global.labels.standard" . | nindent 4 }}
     {{- if .Values.globalLabels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -11,7 +11,7 @@ metadata:
     "helm.sh/hook": test
     {{- if .Values.globalAnnotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
-    {{- end } }
+    {{- end }}
 spec:
   containers:
     - name: wget
