@@ -6,21 +6,24 @@
   {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
   {{- end }}
 {{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else -}}
-apiVersion: extensions/v1
-{{- end }}
+apiVersion: {{ include "global.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-{{ .Release.Name }}
+  name: {{ include "testkube-dashboard.fullname" . }}-{{ .Release.Name }}
   labels:
     {{- include "testkube-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.ingress.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.ingress.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+    {{- end }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- if .Values.globalAnnotations }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}

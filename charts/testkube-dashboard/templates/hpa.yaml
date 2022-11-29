@@ -5,9 +5,21 @@ metadata:
   name: {{ include "testkube-dashboard.fullname" . }}
   labels:
     {{- include "testkube-dashboard.labels" . | nindent 4 }}
+    {{- if .Values.autoscaling.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.globalLabels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.autoscaling.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.globalAnnotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
 spec:
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
     kind: Deployment
     name: {{ include "testkube-dashboard.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
