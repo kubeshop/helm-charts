@@ -5,6 +5,7 @@ on:
     paths:
       - "charts/testkube**"
       - "charts/testkube-api/**"
+      - ".github/workflows/helm-releaser-testkube-charts.yaml"
     branches:
       - main
 
