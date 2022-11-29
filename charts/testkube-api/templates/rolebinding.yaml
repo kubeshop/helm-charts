@@ -160,3 +160,18 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
+
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRoleBinding
+metadata:
+  name: persistentvolumeclaims-crb-{{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}

@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Name }}
+  namespace: {{ .Namespace }}
+spec:
+  {{- if gt .ActiveDeadlineSeconds 0 }}
+  activeDeadlineSeconds: {{ .ActiveDeadlineSeconds }}
+  {{- end }}
+  template:
+    spec:
+      {{- if ne .InitImage "" }}
+      initContainers:
+      - name: {{ .Name }}-init
+        image: {{ .InitImage }}
+        imagePullPolicy: Always
+        command:
+          - "/bin/runner"
+          - '{{ .Jsn }}'
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+        {{- if .ArtifactRequest }}
+        - name: artifact-volume
+          mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+        {{- end }}
+      {{- end }}
+      containers:
+      - name: {{ .Name }}
+        image: {{ .Image }}
+        imagePullPolicy: Always
+        {{- if gt (len .Command) 0 }}
+        command:
+        {{- range $cmd := .Command }}
+        - {{ $cmd -}}
+        {{- end }}
+        {{- end -}}
+        {{- if gt (len .Args) 0 }}
+        args:
+        {{- range $arg := .Args }}
+        - {{ $arg -}}
+        {{- end }}
+        {{- end }}
+        {{- if .WorkingDir }}
+        workingDir: {{ .WorkingDir }}
+        {{- end }}
+        volumeMounts:
+        - name: data-volume
+          mountPath: /data
+        {{- if .ArtifactRequest }}
+        - name: artifact-volume
+          mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+        {{- end }}
+      volumes:
+      - name: data-volume
+        emptyDir: {}
+      {{- if .ArtifactRequest }}
+      - name: artifact-volume
+        persistentVolumeClaim:
+          claimName: {{ .Name }}-pvc
+      {{- end }}
+      restartPolicy: Never
+      {{ if .ServiceAccountName }}
+      serviceAccountName: {{.ServiceAccountName }}
+      {{ end }}      
+      {{- if gt (len .ImagePullSecrets) 0 }}
+      imagePullSecrets:
+      {{- range $secret := .ImagePullSecrets }}
+      - name: {{ $secret -}}
+      {{- end }}
+      {{- end }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: {{ .DelaySeconds }}
