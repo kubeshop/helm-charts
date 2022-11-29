@@ -438,6 +438,25 @@ spec:
                       items:
                         type: string
                       type: array
+                    artifactRequest:
+                      description: artifact request body for container executors with
+                        test artifacts
+                      properties:
+                        dirs:
+                          description: artifact directories
+                          items:
+                            type: string
+                          type: array
+                        volumeMountPath:
+                          description: artifact volume mount path
+                          type: string
+                        storageClassName:
+                          description: artifact storage class name
+                          type: string
+                      required:
+                      - volumeMountPath
+                      - storageClassName
+                      type: object
                     command:
                       description: container executor binary command
                       items:

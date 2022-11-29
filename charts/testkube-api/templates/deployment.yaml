@@ -94,6 +94,12 @@ spec:
               value: "{{ .Release.Namespace }}"
             - name: TESTKUBE_TEMPLATE_JOB
               value: "{{ .Files.Get "job-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_JOB
+              value: "{{ .Files.Get "job-container-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_SCRAPER
+              value: "{{ .Files.Get "job-scraper-template.yml" | b64enc }}"
+            - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
+              value: "{{ .Files.Get "pvc-container-template.yml" | b64enc }}"
             - name: JOB_SERVICE_ACCOUNT_NAME
               value: "{{ .Values.jobServiceAccountName }}"
             - name: APISERVER_FULLNAME
