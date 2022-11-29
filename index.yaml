@@ -3996,6 +3996,37 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-11-29T08:38:19.464400013Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.6.8
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.15
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.4
+    - name: global
+      repository: file://../global
+      version: 0.1.0
+    description: A Helm chart for testkube.
+    digest: 876295161d99f247733da20d76d6726ff492ddca8f102d06b18001a1ba3b5506
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.43/testkube-1.7.43.tgz
+    version: 1.7.43
+  - apiVersion: v2
     created: "2022-11-28T13:42:29.568013696Z"
     dependencies:
     - name: testkube-operator
@@ -21947,6 +21978,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.7.15
+    created: "2022-11-29T08:38:19.55758795Z"
+    description: A Helm chart for Testkube api
+    digest: efaf9d653eaf57edf4ecc5b64a239c440922496a01df31d735a5cfe1b8d1e565
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.7.15/testkube-api-1.7.15.tgz
+    version: 1.7.15
+  - apiVersion: v2
     appVersion: 1.7.14
     created: "2022-11-28T13:42:29.709751173Z"
     dependencies:
@@ -27568,4 +27609,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-11-28T13:42:29.73328532Z"
+generated: "2022-11-29T08:38:19.577621373Z"
