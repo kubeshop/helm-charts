@@ -48,9 +48,9 @@ jobs:
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
-          version: v3.4.0
+          version: v3.10.0
 
       - name: Modify executors.json file if any executor Docker image was updated
         if: ${{ github.event.client_payload.image_tag_executor }}
