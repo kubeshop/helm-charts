@@ -158,7 +158,7 @@ roleRef:
   name: watchers-cluster-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
-    name: testkube-api-server-{{ .Release.Name }}
+    name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
 ---
@@ -173,5 +173,5 @@ roleRef:
   name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
-    name: testkube-api-server-{{ .Release.Name }}
+    name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
