@@ -49,9 +49,11 @@ spec:
               {{- else }}
               value: "{{ .Values.mongodb.dsn }}"
               {{- end }}
-              {{- if .Values.nats.enabled }}
+              {{- if .Values.mongodb.sslCertSecret }}
             - name: API_MONGO_SSL_CERT
-              value: "{{ .Values.mongodb.sslCertSecret }}"
+              value: {{ .Values.mongodb.sslCertSecret }}
+              {{- end }}
+              {{- if .Values.nats.enabled }}
             - name: NATS_URI
               {{- if .Values.nats.secretName }}
               valueFrom:
