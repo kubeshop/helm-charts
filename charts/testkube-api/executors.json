@@ -113,7 +113,7 @@
         "name": "executor-scraper",
         "executor": {
             "executor_type": "scraper",
-            "image": "kubeshop/testkube-executor-scraper:1.0.1",
+            "image": "kubeshop/testkube-executor-scraper:1.0.2",
             "types":[]
         }
     },
