@@ -160,6 +160,8 @@ mongodb:
   ## or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
+  ## SSL certificate secret reference
+  # sslCertSecret: mongo-ssl-certs
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
