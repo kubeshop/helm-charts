@@ -50,6 +50,8 @@ spec:
               value: "{{ .Values.mongodb.dsn }}"
               {{- end }}
               {{- if .Values.nats.enabled }}
+            - name: API_MONGO_SSL_CERT
+              value: "{{ .Values.mongodb.sslCertSecret }}"
             - name: NATS_URI
               {{- if .Values.nats.secretName }}
               valueFrom:
