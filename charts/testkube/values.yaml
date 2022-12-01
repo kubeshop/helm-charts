@@ -8,7 +8,7 @@
 ## @param global.labels Labels to add to all deployed objects
 ## @param global.annotations Annotations to add to all deployed objects
 global:
-  imageRegistry: "yuliia"
+  imageRegistry: ""
   imagePullSecrets: []
   labels: {}
   annotations: {}
@@ -273,7 +273,7 @@ testkube-dashboard:
   ##Oauth parameters
   oauth2:
     ## Use oauth
-    enabled: true
+    enabled: false
     ## Oauth Deployment name
     name: oauth2-proxy
     ## Ingress path
