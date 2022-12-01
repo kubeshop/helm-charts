@@ -3996,6 +3996,37 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-12-01T14:54:15.287872284Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.7.1
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.19
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.9.0
+    - name: global
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.1.0
+    description: A Helm chart for testkube.
+    digest: 9f40fa879b9275aa687104feb05a9779ab38f1c561b9ece5010ff13c4e68306d
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.54/testkube-1.7.54.tgz
+    version: 1.7.54
+  - apiVersion: v2
     created: "2022-12-01T13:54:36.135492304Z"
     dependencies:
     - name: testkube-operator
@@ -25161,6 +25192,16 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.9.0
+    created: "2022-12-01T14:54:15.387981652Z"
+    description: A Helm chart for Kubernetes
+    digest: 53d42ff590284996280ee9ff63704fce2857d8af7a69b06f970d08a12405884f
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.9.0/testkube-dashboard-1.9.0.tgz
+    version: 1.9.0
+  - apiVersion: v2
     appVersion: 1.8.4
     created: "2022-11-25T16:44:18.93405239Z"
     description: A Helm chart for Kubernetes
@@ -27979,4 +28020,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-01T13:54:36.246564841Z"
+generated: "2022-12-01T14:54:15.406980154Z"
