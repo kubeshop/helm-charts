@@ -3996,6 +3996,37 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-12-01T13:54:36.135492304Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.7.1
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.19
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.4
+    - name: global
+      repository: https://kubeshop.github.io/helm-charts
+      version: 0.1.0
+    description: A Helm chart for testkube.
+    digest: edc7f1b36890bc5990c1bcbe547d01c6290f1bdb5e746be771c762029b55550c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.53/testkube-1.7.53.tgz
+    version: 1.7.53
+  - apiVersion: v2
     created: "2022-12-01T13:07:23.692020905Z"
     dependencies:
     - name: testkube-operator
@@ -22257,6 +22288,16 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.7.19
+    created: "2022-12-01T13:54:36.227226038Z"
+    description: A Helm chart for Testkube api
+    digest: 98f409ad674a4d6032b299234589bd36de993add48b1f5f4478734ae44d3cd01
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.7.19/testkube-api-1.7.19.tgz
+    version: 1.7.19
+  - apiVersion: v2
     appVersion: 1.7.18
     created: "2022-12-01T11:14:27.67967281Z"
     description: A Helm chart for Testkube api
@@ -27938,4 +27979,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-01T13:07:24.148981028Z"
+generated: "2022-12-01T13:54:36.246564841Z"
