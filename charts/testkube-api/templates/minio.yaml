@@ -63,7 +63,7 @@ spec:
             - name: data
               mountPath: "/data"
           # Pulls the lastest Minio image from Docker Hub
-          image: {{ .Values.minio.image }}
+          image: {{ include "global.images.image" (dict "imageRoot" .Values.minio.image "global" .Values.global) }}
           args:
             - server
             - /data

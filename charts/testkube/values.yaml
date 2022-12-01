@@ -8,7 +8,7 @@
 ## @param global.labels Labels to add to all deployed objects
 ## @param global.annotations Annotations to add to all deployed objects
 global:
-  imageRegistry: ""
+  imageRegistry: "yuliia"
   imagePullSecrets: []
   labels: {}
   annotations: {}
@@ -81,7 +81,10 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    image: minio/minio:latest
+    image:
+      registry: docker.io
+      repository: minio/minio
+      tag: latest
     serviceAccountName: ""
     minioRootUser: "minio"
     minioRootPassword: "minio123"
@@ -270,7 +273,7 @@ testkube-dashboard:
   ##Oauth parameters
   oauth2:
     ## Use oauth
-    enabled: false
+    enabled: true
     ## Oauth Deployment name
     name: oauth2-proxy
     ## Ingress path

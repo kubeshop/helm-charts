@@ -188,7 +188,10 @@ minio:
   ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
   ## Minio image from DockerHub
-  image: minio/minio:latest
+  image:
+    registry: docker.io
+    repository: minio/minio
+    tag: latest
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username

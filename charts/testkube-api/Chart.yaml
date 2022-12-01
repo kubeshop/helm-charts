@@ -5,8 +5,8 @@ type: application
 version: 1.7.16
 appVersion: 1.7.16
 ##Uncomment for local testing of testkube-api chart only
-#dependencies:
-#  - name: global
-#    version: 0.1.0
-#    #repository: https://kubeshop.github.io/helm-charts
-#    repository: "file://../global"
+dependencies:
+  - name: global
+    version: 0.1.0
+    #repository: https://kubeshop.github.io/helm-charts
+    repository: "file://../global"
