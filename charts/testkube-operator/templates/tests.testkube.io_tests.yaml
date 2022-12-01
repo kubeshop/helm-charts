@@ -447,15 +447,15 @@ spec:
                           items:
                             type: string
                           type: array
-                        volumeMountPath:
-                          description: artifact volume mount path
-                          type: string
                         storageClassName:
                           description: artifact storage class name
                           type: string
+                        volumeMountPath:
+                          description: artifact volume mount path
+                          type: string
                       required:
-                      - volumeMountPath
                       - storageClassName
+                      - volumeMountPath
                       type: object
                     command:
                       description: container executor binary command
@@ -493,6 +493,9 @@ spec:
                             type: string
                         type: object
                       type: array
+                    jobTemplate:
+                      description: job template extensions
+                      type: string
                     name:
                       description: test execution custom name
                       type: string
