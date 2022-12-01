@@ -11,8 +11,8 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "testkube-dashboard.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if contains $name .Release.Name }}
@@ -24,22 +24,12 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "testkube-dashboard.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Common labels
+Dashboard labels
 */}}
 {{- define "testkube-dashboard.labels" -}}
-helm.sh/chart: {{ include "testkube-dashboard.chart" . }}
-{{ include "testkube-dashboard.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "global.labels.standard" . }}
+{{ include "testkube-dashboard.selectorLabels" . }}
 {{- end }}
 
 {{/*
@@ -61,6 +51,7 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
+{{/*
 Define Dashboard image
 */}}
 {{- define "testkube-dashboard.image" -}}
@@ -82,19 +73,3 @@ Define Oauth2 selector labels
 {{- define "testkube-oauth2.selectorLabels" -}}
 selector: k8s-app
 {{- end }}
-
-{{/*
-Define Oauth2 image
-*/}}
-{{- define "testkube-oauth2.image" -}}
-{{- $registryName := .Values.oauth2.image.registry -}}
-{{- $repositoryName := .Values.oauth2.image.repository -}}
-{{- $tag := .Values.oauth2.image.tag -}}
-{{- if .Values.global }}
-    {{- if .Values.global.imageRegistry }}
-      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
-    {{- else -}}
-      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
-     {{- end -}}
-{{- end -}}
-{{- end -}}

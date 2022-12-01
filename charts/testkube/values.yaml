@@ -5,10 +5,13 @@
 #Global image parameters
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets [array] Global Docker registry secret names as an array
+## @param global.labels Labels to add to all deployed objects
+## @param global.annotations Annotations to add to all deployed objects
 global:
   imageRegistry: ""
   imagePullSecrets: []
-  labels: []
+  labels: {}
+  annotations: {}
 
 nameOverride: "testkube"
 fullnameOverride: "testkube"
@@ -172,26 +175,68 @@ testkube-api:
   executors: ""
   jobServiceAccountName: ""
 
+##Testkube Dashboard parameters
 testkube-dashboard:
+  ##deploy dashboard
   enabled: true
+
+  ##Overrides Chart name
   nameOverride: "dashboard"
+
+  ##Full name that overrides Chart name
   fullnameOverride: "testkube-dashboard"
+
+  ##Dashboard image
+  ## image.registry Dashboard image registry. Can be overridden by global parameters
+  ## image.repository Dashboard image name
+  ## image.tag Dashboard image tag
+  ## image.pullPolicy Dashboard Image pull policy
   image:
+    registry: docker.io
     repository: kubeshop/testkube-dashboard
     pullPolicy: Always
     # tag: "main" # it will take tag from appVersion.
+
+  ## Testkube Dashboard Pod annotations
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  podAnnotations: {}
+
+  ## Extra labels for Testkube Dashboard pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  podLabels: {}
+
+  ## Number of Testkube Dashboard Pod replicas
+  replicaCount: 1
+
+  ## Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext: {}
+  # fsGroup: 2000
+
+  ##Service parameters
   service:
+    ## Adapter service type
     type: ClusterIP
+    ##Dashboard port
     port: 8080
+    ## Additional custom annotations for the service
     annotations: {}
-  ## @param extraEnvVars Extra environment variables to be set on deployment
+
+  ## Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
+
+  ##Ingress parameters
   ingress:
+    ##Use ingress
     enabled: false
-    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
+    ## Specific Ingress labels
+    labels: {}
+    ## Specific Ingress annotations
+    annotations: {}
+    ## Additional annotations for the Ingress resource.
     ## e.g annotations for NGINX Ingress Controller:
     ## annotations:
     ##   kubernetes.io/ingress.class: nginx
@@ -207,29 +252,63 @@ testkube-dashboard:
     ##   nginx.ingress.kubernetes.io/auth-url: ""
     ##   nginx.ingress.kubernetes.io/auth-signin: ""
     ##   nginx.ingress.kubernetes.io/access-control-allow-origin: ""
+    ##
+    ##Path to controller
     path: /
     ## Hostnames must be provided if Ingress is enabled.
-    hosts:
-      []
-    # - testkube.example.com
+    hosts: []
+     # - testkube.example.com
     tlsenabled: false
-    # Placing a host in the TLS config will indicate a certificate should be created
-    tls:
-      []
+    ## Placing a host in the TLS config will indicate a certificate should be created
+    tls: []
       # - hosts:
       #     - testkube.example.com
-    #   secretName: testkube-cert-secret
+      #   secretName: testkube-cert-secret
+    ##Testkube API Server endpoint
     apiServerEndpoint: "" # get the address of the endpoint or set it using helm
+
+  ##Oauth parameters
   oauth2:
+    ## Use oauth
     enabled: false
+    ## Oauth Deployment name
     name: oauth2-proxy
+    ## Ingress path
     path: /oauth2
+    ## Oauth container port
     port: 4180
-    selector: k8s-app
+    ## Oauth2 specific labels
+    labels: {}
+    ## Oauth2 specific annotations
+    annotations: {}
+    ## Oauth2 Service annotations
+    serviceAnnotations: {}
+    ## Add additional labels to the pod (evaluated as a template)
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+    podLabels: {}
+    ## Array with extra environment variables to add to Locator nodes
+    extraEnvVars: []
+    ## Oauth2 pod annotations
+    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    podAnnotations: {}
+    ## image.registry Oauth image registry. Can be overridden by global parameters
+    ## image.repository Oauth image name
+    ## image.tag Oauth image tag
+    ## image.pullPolicy OauthI Image pull policy
     image:
-      repository: quay.io/oauth2-proxy/oauth2-proxy
+      registry: quay.io
+      repository: oauth2-proxy/oauth2-proxy
       tag: latest
       pullPolicy: Always
+    ## Pod environment variables for Teskube UI authentication
+    ## Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/
+    ##
+    ## clientId Client ID from Github OAuth application
+    ## clientSecret Client Secret from Github OAuth application
+    ## githubOrg Github organization - if you need to provide access only to members of your organization
+    ## cookieSecret cookie secret generated using OpenSSL
+    ## cookieSecure false - for http connection, true - for https connections
+    ## redirectUrl "http://demo.testkube.io/oauth2/callback"
     env:
       clientId: ""
       clientSecret: ""
@@ -237,6 +316,61 @@ testkube-dashboard:
       cookieSecret: ""
       cookieSecure: "false"
       redirectUrl: "http://testkube.example.com/oauth2/callback"
+
+    ## Add additional Ingress labels
+    ingress:
+      labels: {}
+
+  ## Autoscaling parameters
+  ## Enable autoscaling for Testkube dashboard deployment
+  ## Minimum number of replicas to scale back
+  ## Maximum number of replicas to scale out
+  ## Target CPU utilization percentage
+  ## Target Memory utilization percentage
+  ## Specific autoscaling labels
+  ## Specific autoscaling annotations
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    targetCPU: 80
+  # targetMemoryUtilizationPercentage: 80
+    labels: {}
+    annotations: {}
+
+  ## Node labels for pod assignment.
+  nodeSelector: {}
+
+  ## Tolerations for pod assignment.
+  tolerations: []
+
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  affinity: {}
+
+  ## Service Account parameters
+  serviceAccount:
+    ## Specifies whether a service account should be created
+    create: true
+    ## Annotations to add to the service account
+    ## Annotations to add to the service account
+    annotations: {}
+    ## The name of the service account to use.
+    ## If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  ## Testkube Dashboard resource requests and limits
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  resources: {}
+#    limits:
+#      cpu: 100m
+#      memory: 128Mi
+#    requests:
+#      cpu: 100m
+#      memory: 128Mi
 
 testkube-operator:
   imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"

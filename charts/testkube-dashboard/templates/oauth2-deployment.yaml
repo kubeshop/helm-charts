@@ -3,14 +3,16 @@ apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: {{ .Values.oauth2.name }}
-  labels:
-    {{- include "testkube-oauth2.selectorLabels" . | nindent 4 } }
-    {{- if .Values.globalLabels } }
-    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 } }
-    {{- end } }
-    {{- if .Values.globalAnnotations }}
-  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
-    {{ - end }}
+  labels: {{- include "testkube-oauth2.selectorLabels" . | nindent 4 }}
+    {{- if .Values.oauth2.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
     {{- if .Values.oauth2.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.annotations "context" $ ) | nindent 4 }}
     {{- end }}
@@ -24,12 +26,12 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "testkube-oauth2.selectorLabels" . | nindent 6 }}
+        {{- include "testkube-oauth2.selectorLabels" . | nindent 8 }}
         {{- if .Values.oauth2.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
       {{- if .Values.oauth2.podAnnotations }}
-      annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 6 }}
+      annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
     spec:
       containers:
@@ -59,7 +61,7 @@ spec:
         {{- if .Values.oauth2.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvVars "context" $) | nindent 8 | trim }}
         {{- end }}
-        image: {{ include "testkube-oauth2.image" . }}
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.oauth2.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
         name: {{ .Values.oauth2.name }}
         ports:
