@@ -166,7 +166,7 @@ testkube-api:
   resources:
     requests:
       cpu: 200m
-      memory: 100Mi
+      memory: 200Mi
 
   mongodb:
     dsn: "mongodb://testkube-mongodb:27017"

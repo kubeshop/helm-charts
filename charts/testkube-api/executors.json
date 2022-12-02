@@ -3,7 +3,7 @@
         "name": "jmeter-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-jmeter-executor:0.0.8",
+            "image": "kubeshop/testkube-jmeter-executor:0.0.9",
             "types":["jmeter/test"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": ["artifacts"]
@@ -113,7 +113,7 @@
         "name": "executor-scraper",
         "executor": {
             "executor_type": "scraper",
-            "image": "kubeshop/testkube-executor-scraper:1.0.1",
+            "image": "kubeshop/testkube-executor-scraper:1.0.2",
             "types":[]
         }
     },

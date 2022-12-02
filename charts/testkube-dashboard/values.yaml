@@ -43,7 +43,7 @@ image:
   repository: kubeshop/testkube-dashboard
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.8.4"
+  # tag: "1.9.0"
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -144,7 +144,7 @@ oauth2:
   image:
     registry: quay.io
     repository: oauth2-proxy/oauth2-proxy
-    tag: "1.8.4"
+    tag: "1.9.0"
     pullPolicy: Always
   ## Pod environment variables for Teskube UI authentication
   ## Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/

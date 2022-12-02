@@ -45,7 +45,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   ## Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.7.16"
+  # tag: "1.7.18"
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -160,6 +160,8 @@ mongodb:
   ## or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
+  ## SSL certificate secret reference
+  # sslCertSecret: mongo-ssl-certs
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
