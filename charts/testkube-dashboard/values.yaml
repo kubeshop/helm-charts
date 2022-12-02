@@ -130,6 +130,12 @@ oauth2:
   ## Add additional labels to the pod (evaluated as a template)
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
+  ## Array of args for oauth2 provider or github as default
+  args: []
+    #- --provider=github
+    #- --email-domain=*
+    #- --upstream=file:///dev/null
+    #- --show-debug-on-error=true
   ## Array with extra environment variables
   extraEnvVars: []
   ## Oauth2 pod annotations
