@@ -120,7 +120,10 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    image: minio/minio:latest
+    image:
+      registry: docker.io
+      repository: minio/minio
+      tag: latest
   uiIngress:
     enabled: true
     annotations:
