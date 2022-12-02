@@ -1,29 +1,28 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "testkube-dashboard.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
-  {{- end }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-{{- else -}}
-apiVersion: extensions/v1
-{{- end }}
+apiVersion: {{ include "global.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-{{ .Release.Name }}
+  name: {{ include "testkube-dashboard.fullname" $ }}-{{ .Release.Name }}
   labels:
     {{- include "testkube-dashboard.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+    {{- if .Values.ingress.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.ingress.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version)) }}
+    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
+    {{- end }}
+    {{- if .Values.ingress.annotations }}
+    {{- include "global.tplvalues.render" (dict "value" .Values.ingress.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version) }}
   ingressClassName: {{ .Values.ingress.className }}
   {{- end }}
   {{- if .Values.ingress.tls }}
@@ -46,14 +45,14 @@ spec:
           - path: {{ $.Values.ingress.path }}
             pathType: Prefix
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.Version }}
               service:
-                name: {{ $fullName }}
+                name: {{ include "testkube-dashboard.fullname" $ }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ $.Values.service.port }}
               {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              serviceName: {{- include "testkube-dashboard.fullname" $ -}}
+              servicePort: {{ $.Values.service.port  }}
           {{- end }}
     {{- end }}
 {{- end }}
