@@ -36,10 +36,16 @@ spec:
     spec:
       containers:
       - args:
+        {{- if .Values.oauth2.args }}
+        {{- range .Values.oauth2.args }}
+        - {{ . }}
+        {{- end }}  
+        {{- else }}
         - --provider=github
         - --email-domain=*
         - --upstream=file:///dev/null
         - --show-debug-on-error=true
+        {{- end }}
         # Register a new application
         # https://github.com/settings/applications/new
         env:
