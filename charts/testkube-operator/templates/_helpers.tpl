@@ -48,13 +48,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Deployment labels
-*/}}
-{{- define "testkube-operator.deployLabels" -}}
-control-plane: controller-manager
-{{- end }}
-
-{{/*
 Create the name of the service account to use
 */}}
 {{- define "testkube-operator.serviceAccountName" -}}
