@@ -178,6 +178,10 @@ testkube-api:
   executors: ""
   jobServiceAccountName: ""
 
+  ##Test Connection pod
+  testConnection:
+    enabled: true
+
 ##Testkube Dashboard parameters
 testkube-dashboard:
   ##deploy dashboard
@@ -374,12 +378,16 @@ testkube-dashboard:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   resources: {}
-#    limits:
-#      cpu: 100m
-#      memory: 128Mi
-#    requests:
-#      cpu: 100m
-#      memory: 128Mi
+  #  limits:
+  #    cpu: 100m
+  #    memory: 128Mi
+  #  requests:
+  #    cpu: 100m
+  #    memory: 128Mi
+
+  ##Test Connection pod
+  testConnection:
+    enabled: true
 
 testkube-operator:
   ### @section  Global image parameters
@@ -609,6 +617,10 @@ testkube-operator:
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
+
+  ##Test Connection pod
+  testConnection:
+    enabled: true
 
 preUpgradeHook:
   name: mongodb-upgrade

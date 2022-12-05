@@ -264,3 +264,7 @@ prometheus:
   interval: 15s
   ## Additional monitoring labels
   monitoringLabels: []
+
+##Test Connection pod
+testConnection:
+  enabled: false

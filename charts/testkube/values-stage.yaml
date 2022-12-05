@@ -226,6 +226,10 @@ testkube-api:
   slackToken: ""
   executors: ""
 
+  ##Test Connection pod
+  testConnection:
+    enabled: true
+
 testkube-dashboard:
   enabled: true
   nameOverride: "dashboard"
@@ -280,5 +284,25 @@ testkube-dashboard:
       cookieSecure: "false"
       redirectUrl: "http://integration.testkube.io/oauth2/callback"
 
+  ##Test Connection pod
+  testConnection:
+    enabled: true
+
 testkube-operator:
-  imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
+  ##Proxy Image parameters
+  ## image.registry Proxy image registry
+  ## image.repository Proxy image name
+  ## image.tag Proxy image tag
+  ## image.pullPolicy Proxy Image pull policy
+  proxy:
+    image:
+      registry: gcr.io
+      repository: kubebuilder/kube-rbac-proxy
+      tag: "v0.8.0"
+    ## Proxy Container Port
+    containerPort: 8443
+
+  ##Test Connection pod
+  testConnection:
+    enabled: true
+

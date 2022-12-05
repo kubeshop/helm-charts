@@ -241,3 +241,7 @@ tolerations: []
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
 affinity: {}
+
+##Test Connection pod
+testConnection:
+  enabled: false
