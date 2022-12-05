@@ -271,8 +271,8 @@ testkube-dashboard:
       # - hosts:
       #     - testkube.example.com
       #   secretName: testkube-cert-secret
-    ##Testkube API Server endpoint
-    apiServerEndpoint: "" # get the address of the endpoint or set it using helm
+  ##Testkube API Server endpoint
+  apiServerEndpoint: "" # get the address of the endpoint or set it using helm
 
   ##Oauth parameters
   oauth2:
