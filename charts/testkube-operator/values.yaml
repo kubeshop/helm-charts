@@ -36,7 +36,7 @@ image:
   repository: kubeshop/testkube-operator
   pullPolicy: ""
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.7.1"
+  #tag: "1.7.1"
 
 ##Proxy Image parameters
 ## image.registry Proxy image registry
