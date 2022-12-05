@@ -5,7 +5,7 @@
 			"text": {
 				"type": "plain_text",
 				"emoji": true,
-				"text": "Execution {{ .ExecutionID }} of {{ .TestName }} status {{ .Status }}"
+				"text": "Execution {{ .ExecutionName }} of {{ .TestName }} status {{ .Status }}"
 			}
 		},
 		{
@@ -133,7 +133,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "{{ .BackTick }}kubectl testkube get execution {{ .ExecutionID }} {{ .BackTick }}\n"
+				"text": "`kubectl testkube get execution {{ .ExecutionName }} `\n"
 			}
 		},
 		{
