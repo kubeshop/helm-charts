@@ -2,36 +2,48 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  name: webhook-cert-create
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
-    {{- with .Values.webhook.patch.annotations }}
-    {{- toYaml . | nindent 4 }}
+    {{- if .Values.webhook.patch.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
   labels:
     {{- include "testkube-operator.labels" . | nindent 4 }}
     app.kubernetes.io/component: admission-webhook
-    {{- with .Values.webhook.patch.labels }}
-    {{- toYaml . | nindent 4 }}
+    {{- if .Values.webhook.patch.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.labels "context" $ ) | nindent 4 }}
     {{- end }}
-  name: webhook-cert-create
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   template:
     metadata:
       {{- if .Values.webhook.patch.podAnnotations }}
-      annotations: {{ toYaml .Values.webhook.patch.podAnnotations | nindent 8 }}
-      {{- end }}
+      annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.podAnnotations "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.global.annotations }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "testkube-operator.labels" . | nindent 8 }}
         app.kubernetes.io/component: admission-webhook
         {{- with .Values.webhook.patch.labels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.webhook.migrate.enabled }}
       initContainers:
         - name: migrate
-          image: {{ .Values.webhook.migrate.image.repository }}:{{ .Values.webhook.migrate.image.version }}
+          image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.migrate.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
           args:
             - delete
@@ -43,7 +55,7 @@ spec:
       {{- end }}
       containers:
         - name: create
-          image: {{ .Values.webhook.patch.image.repository }}:{{ .Values.webhook.patch.image.version }}
+          image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.patch.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
           args:
             - create
@@ -59,12 +71,11 @@ spec:
             - tls.crt
             - --ca-name
             - ca.crt
-          securityContext:
-            allowPrivilegeEscalation: false
+          securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
           {{- if .Values.webhook.createSecretJob.resources }}
           resources: {{ toYaml .Values.webhook.createSecretJob.resources | nindent 12 }}
           {{- end }}
-      restartPolicy: OnFailure
+      restartPolicy: {{ .Values.webhook.migrate.restartPolicy }} OnFailure
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
       {{- if .Values.webhook.patch.nodeSelector }}
       nodeSelector: {{ toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
@@ -76,5 +87,5 @@ spec:
       securityContext:
         {{- toYaml .Values.webhook.patch.securityContext | nindent 8 }}
       {{- end }}
-  backoffLimit: 1
+  backoffLimit: {{ .Values.webhook.migrate.backoffLimit }}
 {{- end }}

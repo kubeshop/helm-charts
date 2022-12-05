@@ -149,7 +149,7 @@ securityContext:
 
 ## Service parameters
 service:
-  ## @param service.type Adapter service type
+  ## Adapter service type
   type: ClusterIP
   ## HTTP Port
   port: 8088

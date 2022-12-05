@@ -376,12 +376,233 @@ testkube-dashboard:
 #      memory: 128Mi
 
 testkube-operator:
-  imageProxy: "gcr.io/kubebuilder/kube-rbac-proxy:v0.8.0"
-  ## @param extraEnvVars Extra environment variables to be set on deployment
+  ### @section  Global image parameters
+  ## Global Docker image registry
+  ## Global Docker registry secret names as an array
+  ## Labels to add to all deployed objects
+  ## Annotations to add to all deployed objects
+  global:
+    imageRegistry: ""
+    imagePullSecrets: []
+    labels: {}
+    annotations: {}
+
+  ### @section Common parameters
+  ## Kubernetes version (using Helm capabilities if not set)
+  kubeVersion: ""
+
+  ## Number of Testkube Operator Pod replicas
+  replicaCount: 1
+
+  ## Chart parameters
+  ## nameOverride Overrides Chart name
+  ## fullnameOverride Full name that overrides Chart name
+  nameOverride: "testkube-operator"
+  fullnameOverride: "testkube-operator"
+
+  ##Proxy Image parameters
+  ## image.registry Proxy image registry
+  ## image.repository Proxy image name
+  ## image.tag Proxy image tag
+  ## image.pullPolicy Proxy Image pull policy
+  proxy:
+    image:
+      registry: gcr.io
+      repository: kubebuilder/kube-rbac-proxy
+      tag: "v0.8.0"
+    ## Proxy Container Port
+    containerPort: 8443
+
+  ##Testkube Operator full name
+  apiFullname: "testkube-api-server"
+  ##Testkube Operator port
+  apiPort: 8088
+
+  ## Service Account parameters
+  serviceAccount:
+    ## Specifies whether a service account should be created
+    create: true
+    ## Annotations to add to the service account
+    annotations: {}
+    ## The name of the service account to use.
+    ## If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  ## Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
-#    - name: FOO
-#      value: BAR
+  #  - name: FOO
+  #    value: BAR
+
+  ## Wait 15 seconds before performing the first probe
+  initialDelaySeconds: 15
+
+  ## Specifies that the kubelet should perform a liveness probe every 20 seconds.
+  periodSeconds: 20
+
+  ## Perform a liveness probe on specified port
+  livenessProbePort: 8081
+
+  ## Manager container port
+  containerPort: 9443
+
+  ## Perform a readiness probe on specified port
+  readinessProbePort: 8081
+
+  ## Wait 5 seconds before performing readiness probe
+  readinessProbeinitialDelaySeconds: 5
+
+  ## Specifies that the kubelet should perform a readiness probe every 10 seconds.
+  readinessProbeperiodSeconds: 10
+
+  ## Configure Security Context for Manager Container
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ##
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+
+  ##Name of the metrics server. If not specified, default name from the template is used
+  metricsServiceName: ""
+
+  ## Terminating a container that failed its liveness or startup probe after 10s
+  terminationGracePeriodSeconds: 10
+
+  ## Testkube Operator Pod security Context
+  securityContext:
+    runAsNonRoot: true
+
+  ## Testkube Operator Pod Volume
+  volumes:
+    secret:
+      defaultMode: 420
+
+  ##Webhook parameters
+  webhook:
+    ## Use webhook
+    enabled: true
+    ## Name of the webhook
+    name: testkube-operator-webhook-admission
+    ## Webhook specific labels
+    labels: {}
+    ## Webhook specific annotations
+    annotations: {}
+
+    ##Migrate Job parameters
+    migrate:
+      ## Deploy Migrate Job
+      enabled: true
+      ## image.registry Migrate container job image registry
+      ## image.repository Migrate container job image name
+      ## image.tag Migrate container job image tag
+      ## image.pullPolicy Migrate container job image pull policy
+      image:
+        registry: docker.io
+        repository: bitnami/kubectl
+        version: 1.22.15
+        pullPolicy: ""
+      ## Configure Security Context for Migrate Container
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+      ##
+      securityContext:
+        allowPrivilegeEscalation: false
+      ## Number of retries before considering a Job as failed
+      backoffLimit: 1
+
+    ##Patch Job parameters
+    patch:
+      enabled: true
+      ## image.registry patch container job image registry
+      ## image.repository patch container image name
+      ## image.tag pathc container image tag
+      ## image.pullPolicy patch container image pull policy
+      image:
+        registry: docker.io
+        repository: dpejcev/kube-webhook-certgen
+        version: 1.0.6
+        pullPolicy: ""
+      ## Annotations to add to the patch Job
+      annotations: {}
+      ## Pod annotations to add to the patch Job
+      podAnnotations: {}
+      ## Pod specific labels
+      labels: {}
+      ## Configure Security Context for Migrate Container
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+      ##
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        fsGroup: 2000
+      ## Name of teh SA to use by patch Job
+      serviceAccount:
+        ## SA specific annotations
+        annotations: {}
+        ## SA name
+        name: testkube-operator-webhook-cert-mgr
+      ##Node labels for pod assignment
+      ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+      ##
+      nodeSelector:
+        kubernetes.io/os: linux
+      ## tolerations Tolerations for pod assignment
+      ### Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+      ###
+      tolerations: []
+
+    ## Webhook certificate
+    certificate:
+      ## Webhook certificate secret name
+      secretName: webhook-server-cert
+
+    createSecretJob:
+      resources: {}
+        # limits:
+        #   cpu: 10m
+        #   memory: 20Mi
+        # requests:
+        #   cpu: 10m
+      #   memory: 20Mi
+    ## Patch Webhook resource requests and limits
+    patchWebhookJob:
+      resources: {}
+
+  ## Create RBAC roles for users and controller
+  rbac:
+    create: true
+
+  ## Service Parameters
+  service:
+    ## Adapter service type
+    type: ClusterIP
+    ## HTTP Port
+    port: 80
+
+  ## Testkube Operator resource requests and limits
+  resources:
+    requests:
+      cpu: 30m
+      memory: 30Mi
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  ## Node labels for Testkube Operator pod assignment.
+  nodeSelector: {}
+
+  ## Tolerations for Testkube Operator  assignment.
+  tolerations: []
+
+  ## Affinity for Testkube Operator pod assignment.
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  affinity: {}
 
 preUpgradeHook:
   name: mongodb-upgrade

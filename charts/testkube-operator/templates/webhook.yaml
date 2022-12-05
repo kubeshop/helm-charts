@@ -2,16 +2,23 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  {{- if .Values.webhook.annotations }}
-  annotations: {{ toYaml .Values.webhook.annotations | nindent 4 }}
-  {{- end }}
+  name: {{ .Values.webhook.name }}
+  annotations:
+    {{- if .Values.webhook.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
   labels:
-    {{- include "testkube-operator.labels" . | nindent 4 }}
     app.kubernetes.io/component: admission-webhook
+    {{- include "testkube-operator.labels" . | nindent 4 }}
     {{- with .Values.webhook.labels }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
-  name: {{ .Values.webhook.name }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
 webhooks:
 - admissionReviewVersions:
   - v1

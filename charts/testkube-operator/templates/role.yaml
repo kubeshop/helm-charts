@@ -1,10 +1,17 @@
 {{- if .Values.rbac.create -}}
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
-  name: testkube-operator-manager-role
+  name: {{ .Release.Name }}-operator-manager-role
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 rules:
 - apiGroups:
   - executor.testkube.io
@@ -191,10 +198,17 @@ rules:
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
-  name: testkube-operator-metrics-reader
+  name: {{ .Release.Name }}-operator-metrics-reader
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 rules:
 - nonResourceURLs:
   - /metrics
@@ -203,10 +217,17 @@ rules:
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
-  name: testkube-operator-proxy-role
+  name: {{ .Release.Name }}-operator-proxy-role
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -223,10 +244,17 @@ rules:
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: testkube-operator-leader-election-role
+  name: {{ .Release.Name }}-operator-leader-election-role
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
   namespace: {{ .Release.Namespace }}
 rules:
 - apiGroups:
@@ -263,9 +291,16 @@ rules:
 
 ---
 
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
   name: cronjobs-cluster-role
 rules:
 - apiGroups:
@@ -286,15 +321,21 @@ rules:
 ---
 
 {{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
-apiVersion: rbac.authorization.k8s.io/v1
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
   labels:
     {{- include "testkube-operator.labels" . | nindent 4 }}
     app.kubernetes.io/component: admission-webhook
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
   name: testkube-operator-webhook-cert-mgr
   namespace: {{ .Release.Namespace }}
 rules:
