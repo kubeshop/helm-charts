@@ -75,7 +75,7 @@ spec:
           {{- if .Values.webhook.createSecretJob.resources }}
           resources: {{ toYaml .Values.webhook.createSecretJob.resources | nindent 12 }}
           {{- end }}
-      restartPolicy: {{ .Values.webhook.migrate.restartPolicy }} OnFailure
+      restartPolicy: {{ .Values.webhook.migrate.restartPolicy }}
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
       {{- if .Values.webhook.patch.nodeSelector }}
       nodeSelector: {{ toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
