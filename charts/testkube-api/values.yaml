@@ -67,6 +67,18 @@ analyticsEnabled: true
 ## Integration with Slack.
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 slackToken: ""
+slackEvents: 
+- "start-test"
+- "end-test-success"
+- "end-test-failed"
+- "end-test-aborted"
+- "end-test-timeout"
+- "start-testsuite"
+- "end-testsuite-success"
+- "end-testsuite-failed"
+- "end-testsuite-aborted"
+- "end-testsuite-timeout"
+slackTemplate: ""
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
