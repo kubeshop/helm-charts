@@ -3996,6 +3996,37 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2022-12-06T08:40:04.718530337Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.7.2
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.0.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.17.5
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.7.24
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.9.2
+    - name: global
+      repository: file://../global
+      version: 0.1.0
+    description: A Helm chart for testkube.
+    digest: 3b42e756afe8583ae5901ece3a258f30503fdb4b86d1ae5b78bd8d4b5a56bdda
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.7.64/testkube-1.7.64.tgz
+    version: 1.7.64
+  - apiVersion: v2
     created: "2022-12-05T14:56:12.326763164Z"
     dependencies:
     - name: testkube-operator
@@ -26508,6 +26539,21 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    appVersion: 1.7.2
+    created: "2022-12-06T08:40:05.137821123Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.0
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 1231938a013efb203b13b7afa333c82c8e343ebf17a5dd451ae9354830ad7483
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-1.7.2/testkube-operator-1.7.2.tgz
+    version: 1.7.2
+  - apiVersion: v2
     created: "2022-12-01T10:07:47.903899545Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
@@ -28402,4 +28448,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-05T14:56:12.475661924Z"
+generated: "2022-12-06T08:40:05.157236983Z"
