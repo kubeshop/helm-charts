@@ -8,16 +8,12 @@
 global:
   imageRegistry: ""
   imagePullSecrets: []
+  labels: {}
+  annotations: {}
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
-
-## Labels to add to all deployed objects
-globalLabels: {}
-
-## Annotations to add to all deployed objects
-globalAnnotations: {}
 
 ## Number of Testkube API Pod replicas
 replicaCount: 1
@@ -67,14 +63,15 @@ analyticsEnabled: true
 ## Integration with Slack.
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 slackToken: ""
+
+## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
 executors: ""
 
 ## Testkube API resource requests and limits
-resources:
-  {}
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -153,6 +150,8 @@ service:
   type: ClusterIP
   ## HTTP Port
   port: 8088
+  ## Annotations
+  annotations: {}
 
 ##MongoDB parameters
 mongodb:
@@ -177,6 +176,8 @@ nats:
 minio:
   ## Deploy Minio server to the cluster
   enabled: true
+  ## Minio extra vars
+  extraEnvVars: {}
   ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
   ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
@@ -217,19 +218,17 @@ uiIngress:
   ## The Path to Nginx.
   path: /results/(v\d/executions.*)
   ## Hostnames must be provided if Ingress is enabled.
-  hosts:
-    []
+  hosts: []
   # - testkube.example.com
   ## Enable TLS configuration for the hostname defined at `uiIngress.hosts` parameter
   tlsenabled: false
   ## Placing a host in the TLS config will indicate a certificate should be created
-  tls:
-    []
+  tls: []
   # - hosts:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
-## uiIngress parameters
+## cliIngress parameters
 cliIngress:
   ## Use cliIngress
   enabled: false
@@ -251,8 +250,7 @@ cliIngress:
   # - testkube.example.com
   tlsenabled: false
   # Placing a host in the TLS config will indicate a certificate should be created
-  tls:
-    []
+  tls: []
   # - hosts:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
@@ -264,7 +262,7 @@ prometheus:
   ## Scrape interval
   interval: 15s
   ## Additional monitoring labels
-  monitoringLabels: []
+  monitoringLabels: {}
 
 ##Test Connection pod
 testConnection:

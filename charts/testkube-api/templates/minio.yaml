@@ -22,18 +22,18 @@ metadata:
   # This name uniquely identifies the Deployment
   name: testkube-minio-{{ .Release.Namespace }}
   labels:
-    {{- if .Values.globalLabels }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 6 }}
-      {{- end }}
-  {{- if .Values.globalAnnotations }}
-  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
   selector:
     matchLabels:
-    {{- if .Values.minio.matchLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
-    {{- end }}
+      {{- if .Values.minio.matchLabels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+      {{- end }}
       app: testkube-minio-{{ .Release.Namespace }} # has to match .spec.template.metadata.labels
   strategy:
     # Specifies the strategy used to replace old Pods by new ones

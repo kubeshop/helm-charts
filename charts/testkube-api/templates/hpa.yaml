@@ -4,18 +4,18 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "testkube-api.fullname" . }}
   labels: {{- include "global.labels.standard" . | nindent 4 }}
-  {{- if .Values.autoscaling.labels }}
-  {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.labels "context" $ ) | nindent 4 }}
-  {{- end }}
-  {{- if .Values.globalLabels }}
-  {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
-  {{- end }}
-  {{- if .Values.autoscaling.annotations }}
+    {{- if .Values.autoscaling.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.autoscaling.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.annotations "context" $ ) | nindent 4 }}
-  {{- end }}
-  {{- if .Values.globalAnnotations }}
-  {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
-  {{- end }}
+    {{- end }}
+    {{- if .Values.global.annotations}}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   scaleTargetRef:
     apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}

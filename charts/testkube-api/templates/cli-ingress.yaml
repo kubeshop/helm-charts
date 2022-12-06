@@ -1,38 +1,28 @@
 {{- if .Values.cliIngress.enabled -}}
-  {{- $fullName := include "testkube-api.fullname" . -}}
-  {{- $svcPort := .Values.service.port -}}
-  {{- if and .Values.cliIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.cliIngress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.cliIngress.annotations "kubernetes.io/ingress.class" .Values.cliIngress.className}}
-  {{- end }}
-  {{- end }}
-  {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-  {{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1
-  {{- else -}}
-apiVersion: extensions/v1
-  {{- end }}
+apiVersion: {{ include "global.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: cli-{{ $fullName }}-{{ .Release.Name }}
+  name: cli-{{ include "testkube-api.fullname" $ }}-{{ .Release.Name }}
   labels:
-    {{- include "global.labels.standard" . | nindent 4 }}
-      {{- if .Values.uiIngress.labels }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.uiIngress.labels "context" $ ) | nindent 4 }}
-      {{- end }}
-      {{- if .Values.globalLabels }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
-      {{- end }}
-  {{- with .Values.cliIngress.annotations }}
+    {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.cliIngress.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.cliIngress.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-      {{- end }}
-      {{- if .Values.globalAnnotations }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.globalAnnotations "context" $ ) | nindent 4 }}
-      {{- end }}
+    {{- if and .Values.cliIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version)) }}
+    kubernetes.io/ingress.class: {{ .Values.cliIngress.className }}
+    {{- end }}
+    {{- if .Values.cliIngress.annotations }}
+    {{- include "global.tplvalues.render" (dict "value" .Values.cliIngress.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
-  {{- if and .Values.cliIngress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  {{- if and .Values.cliIngress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version) }}
   ingressClassName: {{ .Values.cliIngress.className }}
   {{- end }}
   {{- if .Values.cliIngress.tls }}
@@ -55,14 +45,14 @@ spec:
           - path: {{ $.Values.cliIngress.path }}
             pathType: Prefix
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.Version }}
               service:
-                name: {{ $fullName }}
+                name: {{ include "testkube-api.fullname" $ }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ $.Values.service.port }}
               {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              serviceName: {{ include "testkube-api.fullname" $ }}
+              servicePort: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
   {{- end }}

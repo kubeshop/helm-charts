@@ -150,7 +150,7 @@ oauth2:
   image:
     registry: quay.io
     repository: oauth2-proxy/oauth2-proxy
-    tag: "1.9.2"
+    tag: latest
     pullPolicy: Always
   ## Pod environment variables for Teskube UI authentication
   ## Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/

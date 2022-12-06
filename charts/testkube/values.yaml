@@ -46,15 +46,23 @@ mongodb:
       memory: 100Mi
 
 testkube-api:
+  ##Monitoring parameters
   prometheus:
+    ##Use monitoring
     enabled: false
-    ## @param testkube-api.monitoringLabels The name of the label to use in serviceMonitor if Prometheus is enabled
-    ## For example:
-    monitoringLabels: []
+    ## The name of the label to use in serviceMonitor if Prometheus is enabled
+    monitoringLabels: {}
     ## Scrape interval
     interval: 15s
+
+  ## nameOverride Overrides Chart name
+  ## fullnameOverride Full name that overrides Chart name
   nameOverride: "api-server"
   fullnameOverride: "testkube-api-server"
+
+  ### @section  Global image parameters
+  ## Global Docker image registry
+  ## Global Docker registry secret names as an array
   image:
     registry: docker.io
     repository: kubeshop/testkube-api-server
@@ -62,35 +70,65 @@ testkube-api:
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
     # tag: "latest"
-  ## @param extraEnvVars Extra environment variables to be set on deployment
+  ## Extra environment variables to be set on deployment
   ## For example:
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
+
+  ## Service parameters
   service:
+    ## Adapter service type
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
+    ## HTTP Port
     port: 8088
+    ## Service Annotations
     annotations: {}
+
+  ## NATS parameters
+  ## ref: https://github.com/nats-io/nats-server
   nats:
+  ## Use NATS
     enabled: true
+
+  ## MINIO parameters
   minio:
+    ## Use minio
     enabled: true
-    extraEnvVars: []
+    ## Minio extra vars
+    extraEnvVars: {}
     # - name: FOO
     #   value: BAR
+    ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
+    ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+    accessModes:
+      - ReadWriteOnce
+    ## Node labels for pod assignment.
     nodeSelector: {}
+    ## Tolerations for pod assignment.
     tolerations: []
+    ## Affinity for pod assignment.
+    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+    ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
     affinity: {}
+    ## Minio image from DockerHub
     image:
       registry: docker.io
       repository: minio/minio
       tag: latest
+    ## ServiceAccount name to use for Minio
     serviceAccountName: ""
+    ## Root username
+    ## Root password
     minioRootUser: "minio"
     minioRootPassword: "minio123"
+    ## PVC Storage Request for MinIO. Should be available in the cluster.
     storage: 10Gi
+
+  ## uiIngress parameters
   uiIngress:
-    enabled: false
+    ## Use Ingress
+    enabled: true
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
     ## e.g annotations for NGINX Ingress Controller:
     ## annotations:
@@ -112,17 +150,19 @@ testkube-api:
     path: /results/(v\d/executions.*)
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
-      []
-    # - testkube.example.com
+      - testkube.example.com
     tlsenabled: false
-    # Placing a host in the TLS config will indicate a certificate should be created
+    ## Placing a host in the TLS config will indicate a certificate should be created
     tls:
       []
       # - hosts:
       #     - testkube.example.com
     #   secretName: testkube-cert-secret
+
+  ## cliIngress parameters
   cliIngress:
-    enabled: false
+    ## Use ingress
+    enabled: true
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
     ## e.g annotations for NGINX Ingress Controller:
     ## annotations:
@@ -136,7 +176,7 @@ testkube-api:
     ##   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     ##   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
-    # parameters to check oauth token (by default github one)
+    ## parameters to check oauth token (by default github one)
     oauth:
       clientID: ""
       clientSecret: ""
@@ -145,8 +185,7 @@ testkube-api:
     path: /results/(v\d/.*)
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
-      []
-    # - testkube.example.com
+      - testkube.example.com
     tlsenabled: false
     # Placing a host in the TLS config will indicate a certificate should be created
     tls:
@@ -154,6 +193,8 @@ testkube-api:
       # - hosts:
       #     - testkube.example.com
     #   secretName: testkube-cert-secret
+
+  ## Storage for Testkube API. Now Minio is used:
   storage:
     endpoint: ""
     endpoint_port: "9000"
@@ -163,19 +204,27 @@ testkube-api:
     token: ""
     SSL: false
     scrapperEnabled: true
+
+  ## Testkube API resource requests and limits
   resources:
     requests:
       cpu: 200m
       memory: 200Mi
 
+  ##MongoDB parametes
   mongodb:
     dsn: "mongodb://testkube-mongodb:27017"
     # secretName: testkube-secrets
     # secretKey: mongo-dsn
 
+  ## Enable analytics for Testkube
   analyticsEnabled: true
+  ## Integration with Slack.
+  ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
   slackToken: ""
+  ## base64 encoded executors.json alike data
   executors: ""
+  ## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
 
   ##Test Connection pod
