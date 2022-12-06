@@ -70,6 +70,14 @@ spec:
               value: "{{ .Values.analyticsEnabled }}"
             - name: SLACK_TOKEN
               value: "{{ .Values.slackToken }}"
+            - name: SLACK_EVENTS
+              value: '[ {{ include "testkube-api.slackEvents" .}} ]'
+            - name: SLACK_TEMPLATE
+              {{- if .Values.slackTemplate }}
+              value:  "{{ .Values.slackTemplate }}"
+              {{- else }}
+              value: "{{ .Files.Get "slack-template.json" | b64enc }}"
+              {{- end }}
             - name: "STORAGE_ENDPOINT"
               {{- if .Values.storage.endpoint }}
               value:  "{{ .Values.storage.endpoint }}"

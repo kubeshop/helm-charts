@@ -64,6 +64,19 @@ analyticsEnabled: true
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 slackToken: ""
 
+slackEvents: 
+- "start-test"
+- "end-test-success"
+- "end-test-failed"
+- "end-test-aborted"
+- "end-test-timeout"
+- "start-testsuite"
+- "end-testsuite-success"
+- "end-testsuite-failed"
+- "end-testsuite-aborted"
+- "end-testsuite-timeout"
+slackTemplate: ""
+
 ## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
 jobServiceAccountName: ""
 
