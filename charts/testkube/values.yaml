@@ -222,9 +222,6 @@ testkube-api:
   ## Integration with Slack.
   ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
   slackToken: ""
-<<<<<<< HEAD
-  ## base64 encoded executors.json alike data
-=======
   slackEvents: 
   - "start-test"
   - "end-test-success"
@@ -237,7 +234,7 @@ testkube-api:
   - "end-testsuite-aborted"
   - "end-testsuite-timeout"
   slackTemplate: ""
->>>>>>> 9c32fb828fb25e214774d842c56126cca025e3f7
+  ## base64 encoded executors.json alike data
   executors: ""
   ## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
