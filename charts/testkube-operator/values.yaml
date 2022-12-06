@@ -214,6 +214,8 @@ service:
   type: ClusterIP
   ## HTTP Port
   port: 80
+  ## Annotations
+  annotations: {}
 
 ## Testkube Operator resource requests and limits
 resources:

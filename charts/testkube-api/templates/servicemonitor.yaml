@@ -7,8 +7,8 @@ metadata:
     {{- if .Values.prometheus.monitoringLabels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.prometheus.monitoringLabels "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if .Values.globalLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
   endpoints:
@@ -18,8 +18,8 @@ spec:
   port: http
   selector:
     matchLabels:
-    {{- include "testkube-api.selectorLabels" . | nindent 6 }}
-    {{- if .Values.prometheus.matchLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.prometheus.matchLabels  "context" $ ) | nindent 6 }}
-    {{- end }}
+      {{- include "testkube-api.selectorLabels" . | nindent 6 }}
+      {{- if .Values.prometheus.matchLabels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.prometheus.matchLabels  "context" $ ) | nindent 6 }}
+      {{- end }}
   {{ end }}

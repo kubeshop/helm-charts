@@ -10,6 +10,9 @@ metadata:
   annotations:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
+    {{- if .Values.service.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.service.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
