@@ -45,7 +45,7 @@ image:
   repository: kubeshop/testkube-api-server
   pullPolicy: Always
   ## Overrides the image tag whose default is the chart appVersion.
-  # tag: "1.7.23"
+  # tag: "1.7.24"
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -194,6 +194,7 @@ minio:
     registry: docker.io
     repository: minio/minio
     tag: latest
+
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username
