@@ -149,7 +149,7 @@ securityContext:
 
 ## Service parameters
 service:
-  ## @param service.type Adapter service type
+  ## Adapter service type
   type: ClusterIP
   ## HTTP Port
   port: 8088
@@ -193,7 +193,8 @@ minio:
   image:
     registry: docker.io
     repository: minio/minio
-    tag: "1.7.24"
+    tag: latest
+
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username
@@ -264,3 +265,7 @@ prometheus:
   interval: 15s
   ## Additional monitoring labels
   monitoringLabels: []
+
+##Test Connection pod
+testConnection:
+  enabled: false

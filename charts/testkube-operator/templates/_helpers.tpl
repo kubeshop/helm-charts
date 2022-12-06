@@ -31,15 +31,12 @@ Create chart name and version as used by the chart label.
 {{- end }}
 
 {{/*
-Common labels
+Operator labels
 */}}
 {{- define "testkube-operator.labels" -}}
-helm.sh/chart: {{ include "testkube-operator.chart" . }}
-{{ include "testkube-operator.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{ include "global.labels.standard" . }}
+{{ include "testkube-operator.selectorLabels" . }}
 {{- end }}
 
 {{/*
@@ -73,6 +70,17 @@ Create the name of the webhook service account to use
 {{- end }}
 
 {{/*
+Create testkube operator metrics server name
+*/}}
+{{- define "testkube-operator.metricsServiceName" -}}
+{{- if .Values.metricsServiceName }}
+{{- default .Values.metricsServiceName }}
+{{- else }}
+{{- default "testkube-operator-controller-manager-metrics-service" }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create testkube operator webhook service name
 */}}
 {{- define "testkube-operator.webhookServiceName" -}}
@@ -101,15 +109,4 @@ Define Operator image
       {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
     {{- end -}}
 {{- end -}}
-{{- end -}}
-
-{{/*
-Add extra env variables
-*/}}
-{{- define "testkube-operator.extraVars" -}}
-{{- if typeIs "string" .value }}
-    {{- tpl .value .context }}
-{{- else }}
-    {{- tpl (.value | toYaml) .context }}
-{{- end }}
 {{- end -}}

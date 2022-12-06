@@ -61,11 +61,12 @@ then
     sed -i "s/^appVersion: .*$/appVersion: $version_full/" ../charts/$target_folder/Chart.yaml
     echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
     cat ../charts/$target_folder/Chart.yaml
-    
+
+    # Commented out editing values files since there are mane `tag` fields that can be modified
     # Editing Docker tag image for $target_folder:
-    sed -i "s/tag:.*$/tag: \"$version_full\"/" ../charts/$target_folder/values.yaml
-    echo -e "\nChecking changes made to Docker image:\n"
-    grep -i "tag" ../charts/$target_folder/values.yaml
+#    sed -i "s/tag:.*$/tag: \"$version_full\"/" ../charts/$target_folder/values.yaml
+#    echo -e "\nChecking changes made to Docker image:\n"
+#    grep -i "tag" ../charts/$target_folder/values.yaml
     
     # Editing TestKube's dependency Chart.yaml for $target_folder:
     sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $version_full/}" ../charts/testkube/Chart.yaml

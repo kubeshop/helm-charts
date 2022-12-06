@@ -1,3 +1,4 @@
+{{- if .Values.testConnection.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -19,3 +20,4 @@ spec:
       command: ['wget']
       args: ['{{ include "testkube-dashboard.fullname" . }}:{{ .Values.service.port }}']
   restartPolicy: Never
+{{- end }}

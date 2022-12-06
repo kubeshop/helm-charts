@@ -1,11 +1,15 @@
----
-
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
-    control-plane: controller-manager
-  name: testkube-operator-controller-manager-metrics-service
+  name: {{ include "testkube-operator.metricsServiceName" . }}
+  labels: {{- include "testkube-operator.selectorLabels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations:
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
@@ -16,16 +20,21 @@ spec:
     control-plane: controller-manager
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "testkube-operator.webhookServiceName" . }}
+  labels: {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations:
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
   namespace: {{ .Release.Namespace }}
 spec:
   ports:
   - port: 443
     protocol: TCP
-    targetPort: 9443
-  selector:
-    control-plane: controller-manager
+    targetPort: {{ .Values.containerPort }}
+  selector: {{ include "testkube-operator.selectorLabels" . | nindent 6 }}
