@@ -684,6 +684,7 @@ testkube-operator:
     enabled: true
 
 preUpgradeHook:
+  enabled: true
   name: mongodb-upgrade
   serviceAccount:
     create: true
