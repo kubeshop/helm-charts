@@ -48,6 +48,7 @@ proxy:
     registry: gcr.io
     repository: kubebuilder/kube-rbac-proxy
     tag: "v0.8.0"
+    pullPolicy: Always
   ## Proxy Container Port
   containerPort: 8443
 
@@ -155,7 +156,7 @@ webhook:
     ## image.pullPolicy patch container image pull policy
     image:
       registry: docker.io
-      repository: dpejcev/kube-webhook-certgen
+      repository: kubeshop/kube-webhook-certgen
       tag: 1.0.6
       pullPolicy: ""
     ## Annotations to add to the patch Job
