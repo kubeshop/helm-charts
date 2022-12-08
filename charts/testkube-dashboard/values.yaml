@@ -143,6 +143,8 @@ oauth2:
   podAnnotations: {}
   ## Oauth2 Service annotations
   serviceAnnotations: {}
+  ## Oauth2 Service type
+  serviceType: ClusterIP
   ## image.registry Oauth image registry. Can be overridden by global parameters
   ## image.repository Oauth image name
   ## image.tag Oauth image tag
