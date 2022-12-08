@@ -22,4 +22,5 @@ spec:
       name: http
   selector:
     {{- include "testkube-oauth2.selectorLabels" . | nindent 4 }}
+  type: {{ .Values.oauth2.serviceType }}
 {{- end }}

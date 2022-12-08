@@ -351,6 +351,8 @@ testkube-dashboard:
     annotations: {}
     ## Oauth2 Service annotations
     serviceAnnotations: {}
+    ## Oauth2 Service type
+    serviceType: ClusterIP
     ## Add additional labels to the pod (evaluated as a template)
     ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
     podLabels: {}
