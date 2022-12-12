@@ -165,6 +165,8 @@ service:
   port: 8088
   ## Annotations
   annotations: {}
+  ## Service labels
+  labels: {}
 
 ##MongoDB parameters
 mongodb:

@@ -94,7 +94,6 @@ Create testkube operator webhook certificate
 {{- default "testkube-operator-serving-cert" }}
 {{- end }}
 
-
 {{/*
 Define Operator image
 */}}

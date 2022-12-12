@@ -24,8 +24,9 @@ metadata:
 spec:
   template:
     metadata:
-      {{- if .Values.webhook.patch.podAnnotations }}
-      annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.podAnnotations "context" $ ) | nindent 8 }}
+      annotations:
+        {{- if .Values.webhook.patch.podAnnotations }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.podAnnotations "context" $ ) | nindent 8 }}
         {{- end }}
         {{- if .Values.global.annotations }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 8 }}
