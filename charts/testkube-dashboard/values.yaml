@@ -127,9 +127,11 @@ oauth2:
   labels: {}
   ## Oauth2 specific annotations
   annotations: {}
-  ## Add additional labels to the pod (evaluated as a template)
+  ## Add additional labels to the pod
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   podLabels: {}
+  ## Add additional service labels
+  serviceLabels: {}
   ## Array of args for oauth2 provider or github as default
   args: []
     #- --provider=github
