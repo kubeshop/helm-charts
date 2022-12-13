@@ -5,7 +5,6 @@ metadata:
   name: "{{ include "testkube-operator.fullname" . }}-test-connection"
   labels:
     {{- include "testkube-operator.labels" . | nindent 4 }}
-    {{- include "global.labels.standard" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
