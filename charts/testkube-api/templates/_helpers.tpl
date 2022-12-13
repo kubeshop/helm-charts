@@ -80,14 +80,3 @@ NATS Uri
 {{- define "testkube-api.nats.uri" -}}
 "nats://{{ .Release.Name }}-nats"
 {{- end }}
-
-{{/*
-Define slackEvents
-*/}}
-{{- define "testkube-api.slackEvents" -}}
-{{- $list := list }}
-{{- range .Values.slackEvents }}
-{{- $list = append $list (printf "\"%s\"" .) }}
-{{- end }}
-{{- join ", " $list }}
-{{- end }}
