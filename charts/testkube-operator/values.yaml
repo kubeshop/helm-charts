@@ -187,6 +187,8 @@ webhook:
     ### Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     ###
     tolerations: []
+    ## Number of retries before considering a Job as failed
+    backoffLimit: 1
 
   ## Webhook certificate
   certificate:
