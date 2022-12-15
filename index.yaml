@@ -3795,6 +3795,16 @@ entries:
   kusk-gateway-dashboard:
   - apiVersion: v2
     appVersion: v1.2.6
+    created: "2022-12-15T11:36:49.675828879Z"
+    description: A Helm chart for Kusk Gateway API's dashboard
+    digest: c2ef060769790a7f4188f39c318fd0d32d56473a5f9c065af59d1d1d0d4cd343
+    name: kusk-gateway-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-dashboard-0.1.19/kusk-gateway-dashboard-0.1.19.tgz
+    version: 0.1.19
+  - apiVersion: v2
+    appVersion: v1.2.6
     created: "2022-12-12T11:43:34.88706653Z"
     description: A Helm chart for Kusk Gateway API's dashboard
     digest: f690718f3f4e65c776eccc4fa81263b0d80aa3e889eb0506f80d3de3578ae3c1
@@ -29244,4 +29254,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2022-12-14T15:08:14.454076469Z"
+generated: "2022-12-15T11:36:49.695087398Z"
