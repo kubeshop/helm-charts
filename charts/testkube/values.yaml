@@ -118,7 +118,7 @@ testkube-api:
   ## uiIngress parameters
   uiIngress:
     ## Use Ingress
-    enabled: true
+    enabled: false
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
     ## e.g annotations for NGINX Ingress Controller:
     ## annotations:
@@ -152,7 +152,7 @@ testkube-api:
   ## cliIngress parameters
   cliIngress:
     ## Use ingress
-    enabled: true
+    enabled: false
     ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
     ## e.g annotations for NGINX Ingress Controller:
     ## annotations:
