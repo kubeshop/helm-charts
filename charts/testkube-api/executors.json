@@ -13,7 +13,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.15",
+            "image": "kubeshop/testkube-ginkgo-executor:0.0.16",
             "types":["ginkgo/test"],
             "content_types": ["string", "file-uri", "git-file", "git-dir"],
             "features": ["artifacts", "junit-report"]
