@@ -67,9 +67,15 @@ spec:
           {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
+      {{- if .Values.webhook.patch.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.tolerations }}
+      tolerations: {{ toYaml .Values.webhook.patch.tolerations | nindent 8 }}
+      {{- end }}
       {{- if .Values.webhook.patch.securityContext }}
       securityContext:
         {{- toYaml .Values.webhook.patch.securityContext | nindent 8 }}
       {{- end }}
-  backoffLimit: 1
+  backoffLimit: {{ .Values.webhook.patch.backoffLimit }}
 {{- end }}

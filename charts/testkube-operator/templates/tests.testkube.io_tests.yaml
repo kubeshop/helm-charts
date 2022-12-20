@@ -507,6 +507,9 @@ spec:
                       description: test execution number
                       format: int32
                       type: integer
+                    preRunScript:
+                      description: script to run before test execution
+                      type: string 
                     secretEnvs:
                       additionalProperties:
                         type: string
