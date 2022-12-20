@@ -260,6 +260,7 @@ rules:
       - services
       - events
       - namespaces
+      - configmaps
     verbs:
       - get
       - list
