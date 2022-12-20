@@ -11,7 +11,7 @@ dependencies:
   - name: mongodb
     condition: mongodb.enabled
     version: 11.0.0
-    repository: https://charts.bitnami.com/bitnami
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
   - name: nats
     condition: testkube-api.nats.enabled
     version: 0.19.1

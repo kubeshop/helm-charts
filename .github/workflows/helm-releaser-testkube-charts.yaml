@@ -38,7 +38,7 @@ jobs:
       - name: Installing repositories
         run: |
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
-          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
@@ -181,7 +181,7 @@ jobs:
       - name: Installing repositories
         run: |
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
-          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
