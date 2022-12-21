@@ -4,6 +4,8 @@ postgresql:
   # be able to function properly.
   enabled: true
   architecture: standalone
+  image:
+    tag: 14.6.0-debian-11-r13
 
   # credentials for accessing the database
   auth:
