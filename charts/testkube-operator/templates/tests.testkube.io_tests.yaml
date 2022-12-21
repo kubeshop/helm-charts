@@ -653,11 +653,27 @@ spec:
             status:
               description: TestStatus defines the observed state of Test
               properties:
-                executions_count:
-                  type: integer
-                last_execution:
-                  format: date-time
-                  type: string
+                latestExecution:
+                  description: latest execution result
+                  properties:
+                    endTime:
+                      description: test end time
+                      format: date-time
+                      type: string
+                    id:
+                      description: execution id
+                      type: string
+                    number:
+                      description: execution number
+                      format: int32
+                      type: integer
+                    startTime:
+                      description: test start time
+                      format: date-time
+                      type: string
+                    status:
+                      type: string
+                  type: object
               type: object
           type: object
       served: true
