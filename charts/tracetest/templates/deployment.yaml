@@ -40,6 +40,9 @@ spec:
             - name: http
               containerPort: {{ .Values.server.httpPort }}
               protocol: TCP
+            - name: otlp
+              containerPort: 21321
+              protocol: TCP
           livenessProbe:
             httpGet:
               path: /

@@ -15,5 +15,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: 21321
+      targetPort: otlp
+      protocol: TCP
+      name: otlp
   selector:
     {{- include "tracetest.selectorLabels" . | nindent 4 }}
