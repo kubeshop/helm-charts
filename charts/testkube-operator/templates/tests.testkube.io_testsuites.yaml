@@ -508,10 +508,6 @@ spec:
                     id:
                       description: execution id
                       type: string
-                    number:
-                      description: test suite execution number
-                      format: int32
-                      type: integer
                     startTime:
                       description: test suite execution start time
                       format: date-time
