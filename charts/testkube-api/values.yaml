@@ -53,7 +53,7 @@ fullnameOverride: "testkube-api-server"
 ## Running Testkube in Agent mode
 cloud:
   ## URL of the Cloud Saas Control Plane
-  url: ""
+  url: "agent.testkube.io:443"
   ## License Key
   key: ""
 
