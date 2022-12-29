@@ -210,6 +210,8 @@ minio:
   storage: 10Gi
   ## Selector labels to match
   matchLabels: []
+  ## Resources limits and requests
+  resources: {}
 
 ## uiIngress parameters
 uiIngress:
