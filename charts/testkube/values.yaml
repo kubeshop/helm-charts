@@ -196,6 +196,7 @@ testkube-api:
     token: ""
     SSL: false
     scrapperEnabled: true
+    logsBucket: "logs"
 
   ## Testkube API resource requests and limits
   resources:
