@@ -123,6 +123,7 @@ storage:
   token: ""
   SSL: false
   scrapperEnabled: true
+  logsBucket: "logs"
 
 ## Service Account parameters
 serviceAccount:
