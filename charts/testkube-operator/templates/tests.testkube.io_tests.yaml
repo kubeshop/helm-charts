@@ -510,6 +510,9 @@ spec:
                     preRunScript:
                       description: script to run before test execution
                       type: string 
+                    scraperTemplate:
+                      description: scraper template extensions
+                      type: string
                     secretEnvs:
                       additionalProperties:
                         type: string

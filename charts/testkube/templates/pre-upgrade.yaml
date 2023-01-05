@@ -24,6 +24,9 @@ spec:
       - name: kubectl
         image: "k8s.gcr.io/hyperkube:v1.12.1"
         imagePullPolicy: "IfNotPresent"
+        {{- if .Values.preUpgradeHook.resources }}
+        resources: {{- toYaml .Values.preUpgradeHook.resources | nindent 10 }}
+        {{- end }}
         command:
         - /bin/bash
         - -c
