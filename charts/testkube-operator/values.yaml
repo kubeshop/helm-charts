@@ -146,6 +146,8 @@ webhook:
       allowPrivilegeEscalation: false
     ## Number of retries before considering a Job as failed
     backoffLimit: 1
+    ## Resources limits and requests
+    resources: {}
 
 ##Patch Job parameters
   patch:
@@ -196,13 +198,7 @@ webhook:
     secretName: webhook-server-cert
 
   createSecretJob:
-    resources:
-      # limits:
-      #   cpu: 10m
-      #   memory: 20Mi
-      # requests:
-      #   cpu: 10m
-      #   memory: 20Mi
+    resources: {}
   ## Patch Webhook resource requests and limits
   patchWebhookJob:
     resources: {}
@@ -221,20 +217,17 @@ service:
   annotations: {}
 
 ## Testkube Operator resource requests and limits
-resources:
-  requests:
-    cpu: 30m
-    memory: 30Mi
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+#  limits:
+#    cpu: 100m
+#    memory: 128Mi
+#  requests:
+#    cpu: 100m
+#    memory: 128Mi
 
 ## Node labels for Testkube Operator pod assignment.
 nodeSelector: {}

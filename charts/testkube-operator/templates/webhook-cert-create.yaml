@@ -57,6 +57,9 @@ spec:
             - --namespace
             - {{ .Release.Namespace }}
             - --ignore-not-found
+          {{- if .Values.webhook.migrate.resources }}
+          resources: {{ toYaml .Values.webhook.migrate.resources | nindent 12 }}
+          {{- end }}
       {{- end }}
       containers:
         - name: create

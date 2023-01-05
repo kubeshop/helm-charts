@@ -19,5 +19,8 @@ spec:
       image: busybox
       command: ['wget']
       args: ['{{ include "testkube-operator.fullname" . }}:{{ .Values.service.port }}']
+      {{- if .Values.testConnection.resources }}
+      resources: {{ toYaml .Values.testConnection.resources | nindent 8 }}
+      {{- end }}
   restartPolicy: Never
 {{- end }}

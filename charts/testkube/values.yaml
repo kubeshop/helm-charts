@@ -114,6 +114,8 @@ testkube-api:
     minioRootPassword: "minio123"
     ## PVC Storage Request for MinIO. Should be available in the cluster.
     storage: 10Gi
+    ## Resources limits and requests
+    resources: {}
 
   ## uiIngress parameters
   uiIngress:
@@ -225,6 +227,7 @@ testkube-api:
   ##Test Connection pod
   testConnection:
     enabled: true
+    resources: {}
 
 ##Testkube Dashboard parameters
 testkube-dashboard:
@@ -423,34 +426,14 @@ testkube-dashboard:
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   resources: {}
-  #  limits:
-  #    cpu: 100m
-  #    memory: 128Mi
-  #  requests:
-  #    cpu: 100m
-  #    memory: 128Mi
 
   ##Test Connection pod
   testConnection:
     enabled: true
+    resources: {}
 
 ##Testkube Operator parameters
 testkube-operator:
-  ### @section  Global image parameters
-  ## Global Docker image registry
-  ## Global Docker registry secret names as an array
-  ## Labels to add to all deployed objects
-  ## Annotations to add to all deployed objects
-  global:
-    imageRegistry: ""
-    imagePullSecrets: []
-    labels: {}
-    annotations: {}
-
-  ### @section Common parameters
-  ## Kubernetes version (using Helm capabilities if not set)
-  kubeVersion: ""
-
   ## Number of Testkube Operator Pod replicas
   replicaCount: 1
 
@@ -555,6 +538,8 @@ testkube-operator:
         allowPrivilegeEscalation: false
       ## Number of retries before considering a Job as failed
       backoffLimit: 1
+      ## Resources limits and requests
+      resources: {}
 
     ##Patch Job parameters
     patch:
@@ -605,17 +590,10 @@ testkube-operator:
     ## Create job resources
     createSecretJob:
       resources: {}
-        # limits:
-        #   cpu: 10m
-        #   memory: 20Mi
-        # requests:
-        #   cpu: 10m
-      #   memory: 20Mi
 
     ## Patch Webhook resource requests and limits
     patchWebhookJob:
       resources: {}
-
   ## Create RBAC roles for users and controller
   rbac:
     create: true
@@ -628,20 +606,11 @@ testkube-operator:
     port: 80
 
   ## Testkube Operator resource requests and limits
-  resources:
-    requests:
-      cpu: 30m
-      memory: 30Mi
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-    # limits:
-    #   cpu: 100m
-    #   memory: 128Mi
-    # requests:
-    #   cpu: 100m
-    #   memory: 128Mi
 
   ## Node labels for Testkube Operator pod assignment.
   nodeSelector: {}
@@ -657,13 +626,16 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
+    resources: {}
 
 ##MongoDB pre-upgrade parameters
 preUpgradeHook:
   ## Upgrade hook is enabled
   enabled: true
-  ## Upgrdae hook name
+  ## Upgrade hook name
   name: mongodb-upgrade
+  ## Specify resource limits and requests
+  resources: {}
   ## Create SA for upgrdae hook
   serviceAccount:
     create: true
