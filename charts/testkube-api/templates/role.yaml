@@ -99,6 +99,8 @@ rules:
       - tests/status
     verbs:
       - get
+      - patch
+      - update
 
 ---
 
@@ -147,6 +149,8 @@ rules:
       - testsuites/status
     verbs:
       - get
+      - patch
+      - update
 
 ---
 
