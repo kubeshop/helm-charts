@@ -51,6 +51,8 @@ proxy:
     pullPolicy: Always
   ## Proxy Container Port
   containerPort: 8443
+  ## Resources limits and requests for kube-rbac-proxy container
+  resources: {}
 
 ##Testkube Operator full name
 apiFullname: "testkube-api-server"
