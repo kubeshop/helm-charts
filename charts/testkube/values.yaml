@@ -456,6 +456,8 @@ testkube-operator:
       tag: "v0.8.0"
     ## Proxy Container Port
     containerPort: 8443
+    ## Resources limits and requests for kube-rbac-proxy container
+    resources: {}
 
   ##Testkube API full name
   apiFullname: "testkube-api-server"

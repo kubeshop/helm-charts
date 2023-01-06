@@ -37,6 +37,9 @@ spec:
         - --v=10
         image: {{ include "global.images.image" (dict "imageRoot" .Values.proxy.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+        {{- if .Values.proxy.resources }}
+        resources: {{ toYaml .Values.proxy.resources | nindent 10 }}
+        {{- end }}
         ports:
         - containerPort: {{ .Values.proxy.containerPort }}
           name: https
