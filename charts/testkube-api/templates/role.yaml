@@ -1,3 +1,4 @@
+{{ if .Values.rbac.create }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
@@ -304,3 +305,5 @@ rules:
       - create
       - get
       - delete
+
+{{ end }}
