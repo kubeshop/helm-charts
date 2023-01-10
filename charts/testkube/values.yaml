@@ -35,6 +35,8 @@ mongodb:
 
 ### Testkube API parameters
 testkube-api:
+  rbac:
+    create: true
   ## Monitoring parameters
   prometheus:
     ## Use monitoring
@@ -78,7 +80,7 @@ testkube-api:
   ## NATS parameters
   ## ref: https://github.com/nats-io/nats-server
   nats:
-  ## Use NATS
+    ## Use NATS
     enabled: true
 
   ## MINIO parameters
@@ -308,11 +310,13 @@ testkube-dashboard:
     ##Path to controller
     path: /
     ## Hostnames must be provided if Ingress is enabled.
-    hosts: []
-     # - testkube.example.com
+    hosts:
+      []
+      # - testkube.example.com
     tlsenabled: false
     ## Placing a host in the TLS config will indicate a certificate should be created
-    tls: []
+    tls:
+      []
       # - hosts:
       #     - testkube.example.com
       #   secretName: testkube-cert-secret
@@ -343,7 +347,8 @@ testkube-dashboard:
     ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
     podLabels: {}
     ## Array of args for oauth2 provider or github as default
-    args: []
+    args:
+      []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
@@ -435,6 +440,7 @@ testkube-dashboard:
 
 ##Testkube Operator parameters
 testkube-operator:
+  installCRD: true
   ## Number of Testkube Operator Pod replicas
   replicaCount: 1
 
@@ -609,7 +615,8 @@ testkube-operator:
     port: 80
 
   ## Testkube Operator resource requests and limits
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
