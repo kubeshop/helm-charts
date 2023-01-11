@@ -37,6 +37,24 @@ spec:
                   description: Action represents what needs to be executed for selected
                     Execution
                   type: string
+              conditions:
+                description: What resource conditions should be matched
+                items:
+                  description: TestTriggerCondition is used for definition of condition
+                    for test triggers
+                  properties:
+                    status:
+                      description: TestTriggerConditionStatuses defines condition
+                        statuses for test triggers
+                      type: string
+                    type:
+                      description: test trigger condition
+                      type: string
+                  required:
+                    - status
+                    - type
+                  type: object
+                type: array
                 event:
                   description: On which Event for a Resource should an Action be triggered
                   type: string
