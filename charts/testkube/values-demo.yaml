@@ -102,6 +102,9 @@ mongodb:
     clusterIP: ""
 
 testkube-api:
+  rbac:
+    createRoles: true
+    createRoleBindings: true
   prometheus:
     enabled: false
   nameOverride: "api-server"
@@ -314,6 +317,14 @@ testkube-dashboard:
     enabled: true
 
 testkube-operator:
+  # should roles and roles bindings be created
+  rbac:
+    createRoles: true
+    createRoleBindings: true
+
+  # should the CRDs be installed
+  installCRD: true
+
   ##Proxy Image parameters
   ## image.registry Proxy image registry
   ## image.repository Proxy image name
@@ -330,4 +341,3 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
-

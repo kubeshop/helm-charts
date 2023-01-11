@@ -36,7 +36,9 @@ mongodb:
 ### Testkube API parameters
 testkube-api:
   rbac:
-    create: true
+    createRoles: true
+    createRoleBindings: true
+
   ## Monitoring parameters
   prometheus:
     ## Use monitoring
@@ -440,7 +442,14 @@ testkube-dashboard:
 
 ##Testkube Operator parameters
 testkube-operator:
+  # should roles and roles bindings be created
+  rbac:
+    createRoles: true
+    createRoleBindings: true
+
+  # should the CRDs be installed
   installCRD: true
+
   ## Number of Testkube Operator Pod replicas
   replicaCount: 1
 
