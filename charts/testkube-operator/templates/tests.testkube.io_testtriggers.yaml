@@ -37,24 +37,33 @@ spec:
                   description: Action represents what needs to be executed for selected
                     Execution
                   type: string
-              conditions:
+              conditionSpec:
                 description: What resource conditions should be matched
-                items:
-                  description: TestTriggerCondition is used for definition of condition
-                    for test triggers
-                  properties:
-                    status:
-                      description: TestTriggerConditionStatuses defines condition
-                        statuses for test triggers
-                      type: string
-                    type:
-                      description: test trigger condition
-                      type: string
-                  required:
-                    - status
-                    - type
-                  type: object
-                type: array
+                properties:
+                  conditions:
+                    description: list of test trigger conditions
+                    items:
+                      description: TestTriggerCondition is used for definition of
+                        the condition for test triggers
+                      properties:
+                        status:
+                          description: TestTriggerConditionStatuses defines condition
+                            statuses for test triggers
+                          type: string
+                        type:
+                          description: test trigger condition
+                          type: string
+                      required:
+                      - status
+                      - type
+                      type: object
+                    type: array
+                  timeout:
+                    description: duration in seconds the test trigger waits for conditions,
+                      until its stopped
+                    format: int32
+                    type: integer
+                type: object
                 event:
                   description: On which Event for a Resource should an Action be triggered
                   type: string
