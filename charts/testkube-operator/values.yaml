@@ -161,7 +161,7 @@ webhook:
     image:
       registry: docker.io
       repository: kubeshop/kube-webhook-certgen
-      tag: 1.0.6
+      tag: 1.0.11
       pullPolicy: ""
     ## Annotations to add to the patch Job
     annotations: {}

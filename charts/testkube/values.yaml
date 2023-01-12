@@ -32,6 +32,10 @@ mongodb:
     requests:
       cpu: 150m
       memory: 100Mi
+  image:
+    registry: docker.io
+    repository: zcube/bitnami-compat-mongodb
+    tag: 5.0.10-debian-11-r19
 
 ### Testkube API parameters
 testkube-api:
