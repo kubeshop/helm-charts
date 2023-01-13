@@ -4156,7 +4156,7 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
-    created: "2023-01-13T18:14:32.962246833Z"
+    created: "2023-01-13T18:15:06.737341716Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -4180,12 +4180,12 @@ entries:
       repository: file://../global
       version: 0.1.0
     description: A Helm chart for testkube.
-    digest: 42a6bf325da9bd69c49cc9a94db6a550afdda29316528905d172e1de4179a472
+    digest: fcd6c73908c0f06f1ab1e645fb551c7aedc75c8a8793b6e77877e7525195c123
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.8.80/testkube-1.8.80.tgz
-    version: 1.8.80
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.8.81/testkube-1.8.81.tgz
+    version: 1.8.81
   - apiVersion: v2
     created: "2023-01-13T18:12:58.78787749Z"
     dependencies:
@@ -32256,4 +32256,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-13T18:14:33.086349521Z"
+generated: "2023-01-13T18:15:06.890763402Z"
