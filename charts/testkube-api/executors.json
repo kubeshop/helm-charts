@@ -83,7 +83,7 @@
         "name": "curl-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-curl-executor:1.0.16",
+            "image": "kubeshop/testkube-curl-executor:1.0.17",
             "types":["curl/test"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": []
