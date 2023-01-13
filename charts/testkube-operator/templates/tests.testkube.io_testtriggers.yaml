@@ -57,13 +57,13 @@ spec:
                         - status
                         - type
                         type: object
-                    type: array
-                  timeout:
-                    description: duration in seconds the test trigger waits for conditions,
-                      until its stopped
-                    format: int32
-                    type: integer
-                type: object
+                      type: array
+                    timeout:
+                      description: duration in seconds the test trigger waits for conditions,
+                        until its stopped
+                      format: int32
+                      type: integer
+                  type: object
                 event:
                   description: On which Event for a Resource should an Action be triggered
                   type: string
