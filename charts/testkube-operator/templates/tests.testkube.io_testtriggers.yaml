@@ -73,7 +73,7 @@ spec:
                   type: string
                 resource:
                   description: For which Resource do we monitor Event which triggers
-                    an Action
+                    an Action on certain conditions
                   type: string
                 resourceSelector:
                   description: ResourceSelector identifies which Kubernetes Objects
