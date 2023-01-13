@@ -116,6 +116,8 @@ testkube-api:
     storage: 10Gi
     ## Resources limits and requests
     resources: {}
+    ## Wait 120 seconds before performing the first probe
+    initialDelaySeconds: 120
 
   ## uiIngress parameters
   uiIngress:
