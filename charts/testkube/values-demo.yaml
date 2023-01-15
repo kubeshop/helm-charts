@@ -102,6 +102,9 @@ mongodb:
     clusterIP: ""
 
 testkube-api:
+  rbac:
+    createRoles: true
+    createRoleBindings: true
   prometheus:
     enabled: false
   nameOverride: "api-server"
@@ -236,6 +239,13 @@ testkube-api:
     token: ""
     SSL: false
     scrapperEnabled: true
+      
+  ## Logs storage for Testkube API.
+  logs:
+    ## where the logs should be stored there are 2 possible valuse : minio|mongo
+    storage: "minio"
+    ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
+    bucket: "testkube-logs"
 
   mongodb:
     dsn: "mongodb://testkube-mongodb:27017"
@@ -314,6 +324,14 @@ testkube-dashboard:
     enabled: true
 
 testkube-operator:
+  # should roles and roles bindings be created
+  rbac:
+    createRoles: true
+    createRoleBindings: true
+
+  # should the CRDs be installed
+  installCRD: true
+
   ##Proxy Image parameters
   ## image.registry Proxy image registry
   ## image.repository Proxy image name
@@ -330,4 +348,3 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
-

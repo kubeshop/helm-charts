@@ -15,6 +15,9 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+rbac:
+  create: true
+
 ## Number of Testkube API Pod replicas
 replicaCount: 1
 
@@ -73,7 +76,8 @@ jobServiceAccountName: ""
 executors: ""
 
 ## Testkube API resource requests and limits
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -123,7 +127,13 @@ storage:
   token: ""
   SSL: false
   scrapperEnabled: true
-  logsBucket: "logs"
+
+## Logs storage for Testkube API.
+logs:
+  ## where the logs should be stored there are 2 possible valuse : minio|mongo
+  storage: "minio"
+  ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
+  bucket: "testkube-logs"
 
 ## Service Account parameters
 serviceAccount:
@@ -213,6 +223,8 @@ minio:
   matchLabels: []
   ## Resources limits and requests
   resources: {}
+  ## Wait 120 seconds before performing the first probe
+  initialDelaySeconds: 120
 
 ## uiIngress parameters
 uiIngress:
@@ -252,8 +264,7 @@ cliIngress:
   ## The Path to Nginx.
   path: /results/(v\d/.*)
   ## Hostnames must be provided if Ingress is enabled.
-  hosts:
-    []
+  hosts: []
   # - testkube.example.com
   tlsenabled: false
   # Placing a host in the TLS config will indicate a certificate should be created

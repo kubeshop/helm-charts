@@ -101,7 +101,13 @@ spec:
             - name: "SCRAPPERENABLED"
               value:  "{{ .Values.storage.scrapperEnabled }}"
             - name: "LOGS_BUCKET"
-              value:  "{{ .Values.storage.logsBucket }}"
+              value:  "{{ .Values.logs.bucket }}"
+            - name: "LOGS_STORAGE"
+              {{- if .Values.logs.storage }}
+              value:  "{{ .Values.logs.storage }}"
+              {{- else }}
+              value:  "mongo"
+              {{- end }}
             - name: TESTKUBE_DEFAULT_EXECUTORS
               {{- if .Values.executors }}
               value:  "{{ .Values.executors }}"

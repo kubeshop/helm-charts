@@ -17,6 +17,9 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+## Should we install CRDS - when they can be installed from other Testkube instance
+installCRD: true
+
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 
@@ -128,7 +131,7 @@ webhook:
   ## Webhook specific annotations
   annotations: {}
 
-##Migrate Job parameters
+  ##Migrate Job parameters
   migrate:
     ## Deploy Migrate Job
     enabled: true
@@ -151,7 +154,7 @@ webhook:
     ## Resources limits and requests
     resources: {}
 
-##Patch Job parameters
+  ##Patch Job parameters
   patch:
     enabled: true
     ## image.registry patch container job image registry
@@ -178,7 +181,7 @@ webhook:
       fsGroup: 2000
     ## Name of teh SA to use by patch Job
     serviceAccount:
-     ## SA specific annotations
+      ## SA specific annotations
       annotations: {}
       ## SA name
       name: testkube-operator-webhook-cert-mgr
@@ -196,7 +199,7 @@ webhook:
 
   ## Webhook certificate
   certificate:
-  ## Webhook certificate secret name
+    ## Webhook certificate secret name
     secretName: webhook-server-cert
 
   createSecretJob:
@@ -219,7 +222,8 @@ service:
   annotations: {}
 
 ## Testkube Operator resource requests and limits
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
