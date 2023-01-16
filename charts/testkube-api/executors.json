@@ -53,7 +53,7 @@
         "name": "soapui-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-soapui-executor:0.1.16",
+            "image": "kubeshop/testkube-soapui-executor:0.1.17",
             "types":["soapui/xml"],
             "content_types": ["string", "file-uri", "git-file"],
             "features": ["artifacts"]
