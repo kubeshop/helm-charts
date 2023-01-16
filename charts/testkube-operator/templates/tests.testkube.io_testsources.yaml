@@ -68,6 +68,23 @@ spec:
                     - key
                     - name
                     type: object
+                  certificateSecret:
+                    description: Testkube internal reference for secret storage in
+                      Kubernetes secrets
+                    properties:
+                      key:
+                        description: object key
+                        type: string
+                      name:
+                        description: object name
+                        type: string
+                      namespace:
+                        description: object kubernetes namespace
+                        type: string
+                    required:
+                    - key
+                    - name
+                    type: object
                   type:
                     description: VCS repository type
                     type: string
