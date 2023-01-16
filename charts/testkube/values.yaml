@@ -263,7 +263,7 @@ testkube-api:
     dsn: "mongodb://testkube-mongodb:27017"
     # secretName: testkube-secrets
     # secretKey: mongo-dsn
-    allowDiskUse: true   
+    allowDiskUse: true
 
   ## Enable analytics for Testkube
   analyticsEnabled: true

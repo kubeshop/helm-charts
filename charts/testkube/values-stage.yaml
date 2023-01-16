@@ -234,7 +234,7 @@ testkube-api:
     # or you can pass mongo dsn from secret
     # secretName: testkube-secrets
     # secretKey: mongo-dsn
-    allowDiskUse: true   
+    allowDiskUse: true
 
   analyticsEnabled: true
   slackToken: ""
