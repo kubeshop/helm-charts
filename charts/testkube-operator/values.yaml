@@ -141,8 +141,8 @@ webhook:
     ## image.pullPolicy Migrate container job image pull policy
     image:
       registry: docker.io
-      repository: bitnami/kubectl
-      tag: 1.22.15
+      repository: rancher/kubectl
+      tag: v1.23.7
       pullPolicy: ""
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
@@ -164,7 +164,7 @@ webhook:
     image:
       registry: docker.io
       repository: kubeshop/kube-webhook-certgen
-      tag: 1.0.6
+      tag: 1.0.11
       pullPolicy: ""
     ## Annotations to add to the patch Job
     annotations: {}
