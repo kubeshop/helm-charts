@@ -176,6 +176,7 @@ mongodb:
   # secretKey: mongo-dsn
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
+  allowDiskUse: true  
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server

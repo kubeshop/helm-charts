@@ -53,6 +53,12 @@ spec:
             - name: API_MONGO_SSL_CERT
               value: {{ .Values.mongodb.sslCertSecret }}
               {{- end }}
+            - name: API_MONGO_ALLOW_DISK_USE
+              {{- if .Values.mongodb.allowDiskUse }}
+              value: "true"
+              {{- else }}
+              value: "false"
+              {{- end }}
               {{- if .Values.nats.enabled }}
             - name: NATS_URI
               {{- if .Values.nats.secretName }}
