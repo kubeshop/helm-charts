@@ -8,8 +8,7 @@ on:
       - ".github/workflows/helm-releaser-testkube-charts.yaml"
       - "scripts/**"
     branches:
-#      - main
-      - update-tk-chart-script
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}

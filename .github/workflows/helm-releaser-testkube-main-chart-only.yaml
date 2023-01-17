@@ -1,0 +1,34 @@
+name: Releasing Testkube main helm chart
+
+on:
+  push:
+    paths:
+      - "charts/testkube**"
+      - "!charts/testkube/Chart.yaml"
+      - "!charts/testkube-api/Chart.yaml"
+      - "!charts/testkube-dashboard/Chart.yaml"
+      - "!charts/testkube-operator/Chart.yaml"
+      - "!charts/testkube-api/executors.json"
+    branches:
+      - update-tk-chart-script
+
+jobs:
+  release_charts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Update main Chart.yaml
+        run: |
+          cd ./scripts
+          chmod +x main_chart_releaser.sh
+          ./main_chart_releaser.sh --main-chart true
