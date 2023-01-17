@@ -45,6 +45,7 @@ jobs:
       - name: Update main Chart.yaml
         run: |
           cd ./scripts
+          chmod +x main_chart_releaser.sh
           ./main_chart_releaser.sh --main-chart true
 
 #      - name: Run chart-releaser
