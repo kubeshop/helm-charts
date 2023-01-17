@@ -42,9 +42,9 @@ sed -i "s/^version:.*/version: $tk_version_full_bumped/" ../charts/testkube/Char
 echo -e "\nChecking if testkube's main Chart.yaml version has been updated:\n"
 grep -iE "^version" ../charts/testkube/Chart.yaml
 
-# Commiting and pushing changes:
-git add -A
-git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart version."
-
-# git push origin main
-git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts update-tk-chart-script
+## Commiting and pushing changes:
+#git add -A
+#git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart version."
+#
+## git push origin main
+#git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts update-tk-chart-script
