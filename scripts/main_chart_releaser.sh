@@ -18,7 +18,22 @@ function update_tk_main_chart_version {
     tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
 }
 
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        -m|--main-chart) main_chart="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
 
+## Call tk_version_full_bumped function
+if [[ $main_chart == "true" ]]
+then
+    # Updating TestKube's main chart patch version:
+    update_tk_main_chart_version
+else
+    update_tk_main_chart_version
+fi
 # Checking new TestKube full version:
 echo "New main TestKube's chart version is: $tk_version_full_bumped"
 
