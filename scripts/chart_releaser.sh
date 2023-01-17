@@ -30,7 +30,7 @@ done
 
 # Getting testkube-api chart version based on the pushed TAG:
 version_full=$(echo $RELEASE_VERSION | sed 's/^v//')
-echo "Version recieved: $version_full"
+echo "Version received: $version_full"
 
 # Getting TestKube main chart version:
 if [[ $version_full =~ [0-9].[0-9].0$ ]]
@@ -98,4 +98,4 @@ git add -A
 git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 
 # git push origin main
-git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts update-tk-chart-script
