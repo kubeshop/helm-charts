@@ -47,4 +47,4 @@ git add -A
 git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart version."
 
 # git push origin main
-git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts update-tk-chart-script
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
