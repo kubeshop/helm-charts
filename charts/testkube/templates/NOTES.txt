@@ -1,1 +1,5 @@
-`Enjoy testing with testkube!`
+Enjoy testing with Testkube!
+
+For our Cloud Users!
+Please note that Testkube agent was installed successfully. We are currently initialising your connection to Testkube Cloud. This can take up to 5 minutes.
+
