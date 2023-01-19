@@ -1,5 +1,4 @@
+{{- if index .Values "testkube-api" "cloud" "key" }}
+Testkube agent installed successfully. We're initialising your connection to Testkube Cloud. This can take up to 5 minutes.
+{{- end }}
 Enjoy testing with Testkube!
-
-For our Cloud Users!
-Please note that Testkube agent was installed successfully. We are currently initialising your connection to Testkube Cloud. This can take up to 5 minutes.
-
