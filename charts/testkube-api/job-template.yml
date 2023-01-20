@@ -18,7 +18,11 @@ spec:
           - '{{ .Jsn }}'
         volumeMounts:
         - name: data-volume
-          mountPath: /data 
+          mountPath: /data
+        {{- if .CertificateSecret }}
+        - name: {{ .CertificateSecret }}
+          mountPath: /etc/certs
+        {{- end }}
       containers:
       - name: {{ .Name }}
         image: {{ .Image }}
@@ -29,9 +33,18 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /data
+        {{- if .CertificateSecret }}
+        - name: {{ .CertificateSecret }}
+          mountPath: /etc/certs
+        {{- end }}
       volumes:
       - name: data-volume
         emptyDir: {}
+      {{- if .CertificateSecret }}
+      - name: {{ .CertificateSecret }}
+        secret:
+          secretName: {{ .CertificateSecret }}
+      {{- end }}
       restartPolicy: Never
       {{ if .ServiceAccountName }}
       serviceAccountName: {{ .ServiceAccountName }}
