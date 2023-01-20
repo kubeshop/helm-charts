@@ -431,6 +431,10 @@ spec:
                 executionRequest:
                   description: test execution request body
                   properties:
+                    negativeTest:
+                      description: negative test will fail if it is a success and it will succeed
+                        if it is a failure
+                      type: boolean
                     activeDeadlineSeconds:
                       description: Optional duration in seconds the pod may be active
                         on the node relative to StartTime before the system will actively
