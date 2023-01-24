@@ -97,6 +97,13 @@ testkube-api:
   #  - name: FOO
   #    value: BAR
 
+  ## Running Testkube in Agent mode
+  cloud:
+    ## URL of the Cloud Saas Control Plane
+    url: "agent.testkube.io:443"
+    ## License Key
+    key: ""
+
   ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   tolerations:
