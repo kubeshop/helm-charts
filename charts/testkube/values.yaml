@@ -646,7 +646,7 @@ testkube-operator:
       image:
         registry: docker.io
         repository: dpejcev/kube-webhook-certgen
-        version: 1.0.6
+        version: 1.0.11
         pullPolicy: Always
       ## Annotations to add to the patch Job
       annotations: {}
