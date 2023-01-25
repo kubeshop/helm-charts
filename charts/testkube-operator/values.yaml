@@ -163,9 +163,9 @@ webhook:
     ## image.pullPolicy patch container image pull policy
     image:
       registry: docker.io
-      repository: kubeshop/kube-webhook-certgen
+      repository: dpejcev/kube-webhook-certgen
       tag: 1.0.11
-      pullPolicy: ""
+      pullPolicy: Always
     ## Annotations to add to the patch Job
     annotations: {}
     ## Pod annotations to add to the patch Job
