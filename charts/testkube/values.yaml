@@ -128,6 +128,8 @@ testkube-api:
   nats:
     ## Use NATS
     enabled: true
+    ## NATS URI that overrides default
+    uri: "nats://testkube-nats"
 
   ## MINIO parameters
   minio:
