@@ -4156,6 +4156,37 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2023-01-27T02:28:59.94114579Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.8.13
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.31
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.19.1
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.8.38
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.8.14
+    - name: global
+      repository: file://../global
+      version: 0.1.0
+    description: A Helm chart for testkube.
+    digest: e6d941b505f97de524cf877a8c8281d41ed43acd21ef1cd37a4f46aaac4f305a
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.8.129/testkube-1.8.129.tgz
+    version: 1.8.129
+  - apiVersion: v2
     created: "2023-01-26T09:22:36.651258936Z"
     dependencies:
     - name: testkube-operator
@@ -27036,6 +27067,20 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.8.38
+    created: "2023-01-27T02:29:00.019209896Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.0
+    description: A Helm chart for Testkube api
+    digest: 6be2b1f208dc22b3b3f5dc4c60a387fac82d084a6bc60f947e6b522674f2ee18
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.8.38/testkube-api-1.8.38.tgz
+    version: 1.8.38
+  - apiVersion: v2
     appVersion: 1.8.37
     created: "2023-01-25T23:20:03.025093048Z"
     dependencies:
@@ -33955,4 +34000,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-01-26T09:22:36.751330136Z"
+generated: "2023-01-27T02:29:00.042893909Z"
