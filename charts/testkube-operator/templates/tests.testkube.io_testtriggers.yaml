@@ -61,6 +61,9 @@ spec:
                         description: TestTriggerCondition is used for definition of
                           the condition for test triggers
                         properties:
+                          reason:
+                            description: test trigger condition reason
+                            type: string
                           status:
                             description: TestTriggerConditionStatuses defines condition
                               statuses for test triggers
