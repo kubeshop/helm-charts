@@ -128,6 +128,8 @@ testkube-api:
   nats:
     ## Use NATS
     enabled: true
+    ## NATS URI that overrides default
+    uri: "nats://testkube-nats"
 
   ## MINIO parameters
   minio:
@@ -646,8 +648,8 @@ testkube-operator:
       image:
         registry: docker.io
         repository: dpejcev/kube-webhook-certgen
-        version: 1.0.6
-        pullPolicy: ""
+        version: 1.0.11
+        pullPolicy: Always
       ## Annotations to add to the patch Job
       annotations: {}
       ## Pod annotations to add to the patch Job

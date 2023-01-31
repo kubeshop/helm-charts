@@ -3,9 +3,12 @@ name: Releasing Helm charts.
 on:
   push:
     paths:
-      - "charts/testkube**"
-      - "charts/testkube-api/**"
       - ".github/workflows/helm-releaser-testkube-charts.yaml"
+      - "charts/testkube/Chart.yaml"
+      - "charts/testkube-api/Chart.yaml"
+      - "charts/testkube-dashboard/Chart.yaml"
+      - "charts/testkube-operator/Chart.yaml"
+      - "charts/testkube-api/executors.json"
     branches:
       - main
 
