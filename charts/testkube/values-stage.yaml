@@ -219,7 +219,7 @@ testkube-api:
     accessKey: "minio123"
     location: ""
     token: ""
-    bucket: ""
+    bucket: "testkube-artifacts"
     SSL: false
     scrapperEnabled: true
   
