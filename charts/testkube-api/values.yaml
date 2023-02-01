@@ -125,6 +125,7 @@ storage:
   accessKey: "minio123"
   location: ""
   token: ""
+  bucket: ""
   SSL: false
   scrapperEnabled: true
 
