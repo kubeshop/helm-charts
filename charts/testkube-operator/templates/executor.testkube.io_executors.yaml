@@ -88,11 +88,6 @@ spec:
                 meta:
                   description: Meta data about executor
                   properties:
-                    contentTypes:
-                      description: supported content types
-                      items:
-                        type: string
-                      type: array
                     docsURI:
                       description: URI for executor docs
                       type: string
