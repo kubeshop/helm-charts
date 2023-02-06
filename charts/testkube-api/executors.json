@@ -89,7 +89,7 @@
         "name": "gradle-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-gradle-executor:0.1.15",
+            "image": "kubeshop/testkube-gradle-executor:0.1.16",
             "types": [
                 "gradle/project",
                 "gradle/test",
