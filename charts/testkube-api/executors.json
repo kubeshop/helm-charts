@@ -69,7 +69,7 @@
         "name": "maven-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-maven-executor:0.1.14",
+            "image": "kubeshop/testkube-maven-executor:0.1.15",
             "types": [
                 "maven/project",
                 "maven/test",
