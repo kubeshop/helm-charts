@@ -57,6 +57,7 @@ spec:
             - --namespace
             - {{ .Release.Namespace }}
             - --ignore-not-found
+          securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
           {{- if .Values.webhook.migrate.resources }}
           resources: {{ toYaml .Values.webhook.migrate.resources | nindent 12 }}
           {{- end }}
