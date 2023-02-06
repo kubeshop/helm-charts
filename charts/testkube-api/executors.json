@@ -153,7 +153,7 @@
         "name": "k6-executor",
         "executor": {
             "executor_type": "job",
-            "image": "kubeshop/testkube-k6-executor:0.0.23",
+            "image": "kubeshop/testkube-k6-executor:0.0.24",
             "types": [
                 "k6/script"
             ],
