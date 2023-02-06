@@ -90,6 +90,8 @@ spec:
               {{- else }}
               value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
               {{- end }}
+            - name: "STORAGE_BUCKET"
+              value:  "{{ .Values.storage.bucket }}"
             - name: "STORAGE_ACCESSKEYID"
               value:  "{{ .Values.storage.accessKeyId }}"
             - name: "STORAGE_SECRETACCESSKEY"
