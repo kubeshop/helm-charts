@@ -789,8 +789,6 @@ spec:
                     - stopOnFailure
                     type: object
                   type: array
-              required:
-              - steps
               type: object
             status:
               description: TestSuiteStatus defines the observed state of TestSuite
