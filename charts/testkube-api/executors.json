@@ -7,7 +7,7 @@
             "types": [
                 "playwright/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "git-dir"
             ],
             "features": [
@@ -27,7 +27,7 @@
             "types": [
                 "jmeter/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file"
@@ -49,7 +49,7 @@
             "types": [
                 "ginkgo/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
@@ -75,7 +75,7 @@
                 "maven/test",
                 "maven/integration-test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "git-dir"
             ],
             "features": [],
@@ -95,7 +95,7 @@
                 "gradle/test",
                 "gradle/integrationTest"
             ],
-            "content_types": [
+            "contentTypes": [
                 "git-dir"
             ],
             "features": [],
@@ -114,7 +114,7 @@
                 "kubepug/yaml",
                 "kubepug/json"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
@@ -135,7 +135,7 @@
             "types": [
                 "soapui/xml"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file"
@@ -157,7 +157,7 @@
             "types": [
                 "k6/script"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
@@ -178,7 +178,7 @@
             "types": [
                 "cypress/project"
             ],
-            "content_types": [
+            "contentTypes": [
                 "git-dir"
             ],
             "features": [
@@ -199,7 +199,7 @@
             "types": [
                 "curl/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file"
@@ -219,7 +219,7 @@
             "types": [
                 "postman/collection"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file"
@@ -239,7 +239,7 @@
             "types": [
                 "artillery/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
