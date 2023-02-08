@@ -2,7 +2,7 @@
     {
         "name": "playwright-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-playwright-executor:0.0.1",
             "types": [
                 "playwright/test"
@@ -22,7 +22,7 @@
     {
         "name": "jmeter-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-jmeter-executor:0.0.14",
             "types": [
                 "jmeter/test"
@@ -44,7 +44,7 @@
     {
         "name": "ginkgo-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-ginkgo-executor:0.0.20",
             "types": [
                 "ginkgo/test"
@@ -68,7 +68,7 @@
     {
         "name": "maven-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-maven-executor:0.1.15",
             "types": [
                 "maven/project",
@@ -88,7 +88,7 @@
     {
         "name": "gradle-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-gradle-executor:0.1.16",
             "types": [
                 "gradle/project",
@@ -108,7 +108,7 @@
     {
         "name": "kubepug-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-kubepug-executor:0.0.15",
             "types": [
                 "kubepug/yaml",
@@ -130,7 +130,7 @@
     {
         "name": "soapui-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-soapui-executor:0.1.18",
             "types": [
                 "soapui/xml"
@@ -152,7 +152,7 @@
     {
         "name": "k6-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-k6-executor:0.0.24",
             "types": [
                 "k6/script"
@@ -173,7 +173,7 @@
     {
         "name": "cypress-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-cypress-executor:1.1.26",
             "types": [
                 "cypress/project"
@@ -194,7 +194,7 @@
     {
         "name": "curl-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-curl-executor:1.0.18",
             "types": [
                 "curl/test"
@@ -214,7 +214,7 @@
     {
         "name": "postman-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-postman-executor:1.0.18",
             "types": [
                 "postman/collection"
@@ -234,7 +234,7 @@
     {
         "name": "artillery-executor",
         "executor": {
-            "executor_type": "job",
+            "executorType": "job",
             "image": "kubeshop/testkube-artillery-executor:0.0.25",
             "types": [
                 "artillery/test"
@@ -255,7 +255,7 @@
     {
         "name": "executor-scraper",
         "executor": {
-            "executor_type": "scraper",
+            "executorType": "scraper",
             "image": "kubeshop/testkube-executor-scraper:1.0.4",
             "types": []
         }
@@ -263,7 +263,7 @@
     {
         "name": "executor-init",
         "executor": {
-            "executor_type": "init",
+            "executorType": "init",
             "image": "kubeshop/testkube-executor-init:0.7.30",
             "types": []
         }
