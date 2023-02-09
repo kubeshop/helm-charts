@@ -474,7 +474,8 @@ spec:
                     envs:
                       additionalProperties:
                         type: string
-                      description: environment variables passed to executor
+                      description: 'Environment variables passed to executor. Deprecated:
+                        use Basic Variables instead'
                       type: object
                     executionLabels:
                       additionalProperties:
@@ -525,7 +526,8 @@ spec:
                     secretEnvs:
                       additionalProperties:
                         type: string
-                      description: execution variables passed to executor from secrets
+                      description: 'Execution variables passed to executor from secrets.
+                        Deprecated: use Secret Variables instead'
                       type: object
                     sync:
                       description: whether to start execution sync or async
