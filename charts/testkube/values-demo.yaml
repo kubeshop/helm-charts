@@ -257,6 +257,7 @@ testkube-api:
 
   analyticsEnabled: true
   slackToken: ""
+  slackSecret: ""
   slackTemplate: ""
   slackConfig: ""
   executors: ""
