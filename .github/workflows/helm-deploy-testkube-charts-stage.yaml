@@ -152,7 +152,7 @@ jobs:
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install testkube kubectl plugin and disable telemetry
-        run: bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh ) && kubectl testkube disable telemetry
+        run: bash < <(curl -sSLf https://get.testkube.io ) && kubectl testkube disable telemetry
 
       - name: Checkout tests from main Testkube repo
         uses: actions/checkout@v3
