@@ -67,7 +67,7 @@ analyticsEnabled: true
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 ## Slack token from the testkube authentication endpoint
 slackToken: ""
- ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
+## Slack secret to store slackToken, the key name should be SLACK_TOKEN
 slackSecret: ""
 ## Slack template for the events sent to Slack
 slackTemplate: ""
