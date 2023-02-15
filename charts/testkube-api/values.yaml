@@ -16,7 +16,8 @@ global:
 kubeVersion: ""
 
 rbac:
-  create: true
+  createRoles: true
+  createRoleBindings: true
 
 ## Number of Testkube API Pod replicas
 replicaCount: 1

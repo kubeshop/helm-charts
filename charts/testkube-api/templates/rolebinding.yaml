@@ -1,4 +1,4 @@
-{{ if .Values.rbac.create }}
+{{ if .Values.rbac.createRoleBindings }}
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding

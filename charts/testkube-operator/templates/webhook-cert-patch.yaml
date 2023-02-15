@@ -56,7 +56,7 @@ spec:
             - --secret-name
             - {{ .Values.webhook.certificate.secretName }}
             - --webhook-name
-            - {{ .Values.webhook.name }}
+            - {{ .Release.Name }}-{{ .Values.webhook.name }}
             - --patch-validating=true
             - --patch-mutating=false
             - --crd-api-groups

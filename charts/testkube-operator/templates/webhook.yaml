@@ -2,7 +2,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: {{ .Values.webhook.name }}
+  name: {{ .Release.Name }}-{{ .Values.webhook.name }}
   annotations:
     {{- if .Values.webhook.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.annotations "context" $ ) | nindent 4 }}

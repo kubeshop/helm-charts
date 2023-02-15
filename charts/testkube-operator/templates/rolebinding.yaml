@@ -1,4 +1,4 @@
-{{- if .Values.rbac.create -}}
+{{- if .Values.rbac.createRoleBindings -}}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -71,7 +71,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
-  name: cronjobs-cluster-rolebinding
+  name: {{ .Release.Name }}-cronjobs-cluster-rolebinding
   labels:
   {{- if .Values.global.labels }}
   {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -82,7 +82,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cronjobs-cluster-role
+  name: {{ .Release.Name }}-cronjobs-cluster-role
 subjects:
 - kind: ServiceAccount
   name: {{ include "testkube-operator.serviceAccountName" . }}

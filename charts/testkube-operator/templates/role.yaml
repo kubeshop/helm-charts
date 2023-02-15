@@ -1,4 +1,4 @@
-{{- if .Values.rbac.create -}}
+{{- if .Values.rbac.createRoles -}}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -301,7 +301,7 @@ metadata:
     {{- if .Values.global.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
-  name: cronjobs-cluster-role
+  name: {{ .Release.Name }}-cronjobs-cluster-role
 rules:
 - apiGroups:
   - ""

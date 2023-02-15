@@ -125,7 +125,7 @@ webhook:
   ## Use webhook
   enabled: true
   ## Name of the webhook
-  name: testkube-operator-webhook-admission
+  name: webhook-admission
   ## Webhook specific labels
   labels: {}
   ## Webhook specific annotations
@@ -210,7 +210,8 @@ webhook:
 
 ## Create RBAC roles for users and controller
 rbac:
-  create: true
+  createRoles: true
+  createRoleBindings: true
 
 ## Service Parameters
 service:
