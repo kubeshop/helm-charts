@@ -256,7 +256,7 @@
         "name": "executor-scraper",
         "executor": {
             "executorType": "scraper",
-            "image": "kubeshop/testkube-executor-scraper:1.0.4",
+            "image": "kubeshop/testkube-executor-scraper:1.0.5",
             "types": []
         }
     },
