@@ -99,21 +99,21 @@ spec:
       {{- range $configmap := .EnvConfigMaps }}
       {{- if and $configmap.Mount $configmap.Reference }}
       - name: {{ $configmap.Reference.Name }}
-          configmap:
-            name: {{ $configmap.Reference.Name }}
+        configmap:
+          name: {{ $configmap.Reference.Name }}
       {{- end }}
       {{- end }}
       {{- range $secret := .EnvSecrets }}
       {{- if and $secret.Mount $secret.Reference }}
       - name: {{ $secret.Reference.Name }}
-          secret:
-            secretName: {{ $secret.Reference.Name }}
+        secret:
+          secretName: {{ $secret.Reference.Name }}
       {{- end }}
       {{- end }}
       restartPolicy: Never
       {{- if .ServiceAccountName }}
       serviceAccountName: {{.ServiceAccountName }}
-      {{- end }}      
+      {{- end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
       {{- range $secret := .ImagePullSecrets }}
