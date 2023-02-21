@@ -23,7 +23,7 @@
         "name": "jmeter-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-jmeter-executor:0.0.14",
+            "image": "kubeshop/testkube-jmeter-executor:0.0.15",
             "types": [
                 "jmeter/test"
             ],
