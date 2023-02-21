@@ -101,6 +101,8 @@ spec:
               value: "{{ .Values.storage.accessKey }}"
             - name: "STORAGE_LOCATION"
               value: "{{ .Values.storage.location }}"
+            - name: "STORAGE_REGION"
+              value: "{{ .Values.storage.region }}"
             - name: "STORAGE_TOKEN"
               value: "{{ .Values.storage.token }}"
             - name: "STORAGE_SSL"
