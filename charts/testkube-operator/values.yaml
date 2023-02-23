@@ -52,8 +52,6 @@ proxy:
     repository: kubebuilder/kube-rbac-proxy
     tag: "v0.8.0"
     pullPolicy: Always
-  ## Proxy Container Port
-  containerPort: 8443
   ## Resources limits and requests for kube-rbac-proxy container
   resources: {}
 
@@ -86,9 +84,6 @@ periodSeconds: 20
 
 ## Perform a liveness probe on specified port
 livenessProbePort: 8081
-
-## Manager container port
-containerPort: 9443
 
 ## Perform a readiness probe on specified port
 readinessProbePort: 8081
