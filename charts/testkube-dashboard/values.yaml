@@ -91,10 +91,6 @@ service:
   ## Additional custom annotations for the service
   annotations: {}
 
-##Dashboard container port
-container:
-  port: 8080
-
 ##Ingress parameters
 ingress:
   ## Use Ingress
