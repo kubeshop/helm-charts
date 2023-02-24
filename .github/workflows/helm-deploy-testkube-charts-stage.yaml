@@ -2,15 +2,15 @@ name: Releasing Testkube Helm charts to Stage k8s Cluster.
 
 concurrency: staging_cluster
 
-on:
-  repository_dispatch:
-    types:
-      [
-        trigger-workflow,
-        trigger-workflow-dashboard,
-        trigger-workflow-operator,
-        trigger-workflow-executor,
-      ]
+#on:
+#  repository_dispatch:
+#    types:
+#      [
+#        trigger-workflow,
+#        trigger-workflow-dashboard,
+#        trigger-workflow-operator,
+#        trigger-workflow-executor,
+#      ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
