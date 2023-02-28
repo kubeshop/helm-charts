@@ -196,7 +196,7 @@ testkube-api:
     ## for websockets
     ##  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     ##  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    path: /results/(v\d/executions.*)
+    path: /results/v1
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
@@ -231,7 +231,7 @@ testkube-api:
       clientSecret: ""
       provider: "github"
       scopes: ""
-    path: /results/(v\d/.*)
+    path: /results/v1
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
@@ -551,8 +551,6 @@ testkube-operator:
       registry: gcr.io
       repository: kubebuilder/kube-rbac-proxy
       tag: "v0.8.0"
-    ## Proxy Container Port
-    containerPort: 8443
     ## Resources limits and requests for kube-rbac-proxy container
     resources: {}
 
@@ -582,8 +580,6 @@ testkube-operator:
   periodSeconds: 20
   ## Perform a liveness probe on specified port
   livenessProbePort: 8081
-  ## Manager container port
-  containerPort: 9443
   ## Perform a readiness probe on specified port
   readinessProbePort: 8081
   ## Wait 5 seconds before performing readiness probe

@@ -3,7 +3,7 @@
         "name": "playwright-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-playwright-executor:0.0.3",
+            "image": "kubeshop/testkube-playwright-executor:0.0.4",
             "types": [
                 "playwright/test"
             ],
@@ -47,7 +47,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.24",
+            "image": "kubeshop/testkube-ginkgo-executor:0.0.25",
             "types": [
                 "ginkgo/test"
             ],
@@ -160,7 +160,7 @@
         "name": "k6-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-k6-executor:0.0.26",
+            "image": "kubeshop/testkube-k6-executor:0.0.27",
             "types": [
                 "k6/script"
             ],
