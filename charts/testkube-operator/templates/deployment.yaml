@@ -50,7 +50,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: {{ include "testkube-operator.image" . }}
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
