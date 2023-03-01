@@ -1,8 +1,8 @@
 {{ if .Values.rbac.createRoles }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: executors-cluster-role-{{ .Release.Name }}
+  name: executors-role-{{ .Release.Name }}-{{ .Release.Namespace }}
 rules:
   - apiGroups:
       - executor.testkube.io
@@ -17,13 +17,19 @@ rules:
       - patch
       - delete
       - deletecollection
+  - apiGroups:
+      - executor.testkube.io
+    resources:
+      - executors/status
+    verbs:
+      - get
 
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: jobs-cluster-role-{{ .Release.Name }}
+  name: jobs-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - batch
@@ -50,9 +56,9 @@ rules:
 
 # permissions for end users to edit tests.
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: script-cluster-role-{{ .Release.Name }}
+  name: script-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - tests.testkube.io
@@ -77,9 +83,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: test-cluster-role-{{ .Release.Name }}
+  name: test-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - tests.testkube.io
@@ -106,9 +112,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: secrets-cluster-role-{{ .Release.Name }}
+  name: secrets-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - ""
@@ -127,9 +133,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: testsuite-cluster-role-{{ .Release.Name }}
+  name: testsuite-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - tests.testkube.io
@@ -156,9 +162,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: webhook-cluster-role-{{ .Release.Name }}
+  name: webhook-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - executor.testkube.io
@@ -183,9 +189,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: configmaps-cluster-role-{{ .Release.Name }}
+  name: configmaps-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - ""
@@ -200,9 +206,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: testsource-cluster-role-{{ .Release.Name }}
+  name: testsource-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - tests.testkube.io
@@ -227,9 +233,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: testtriggers-cluster-role-{{ .Release.Name }}
+  name: testtriggers-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - tests.testkube.io
@@ -254,9 +260,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: watchers-cluster-role-{{ .Release.Name }}
+  name: watchers-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - ""
@@ -293,9 +299,9 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
-  name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
+  name: persistentvolumeclaims-role-{{ .Release.Name }}
 rules:
   - apiGroups:
       - ""

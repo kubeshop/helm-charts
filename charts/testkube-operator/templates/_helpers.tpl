@@ -109,3 +109,14 @@ Define Operator image
     {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define testkube operator namespace
+*/}}
+{{- define "testkube-operator.namespace" -}}
+{{- if .Values.namespace }}
+{{- default .Values.namespace }}
+{{- else }}
+{{- default "testkube-system" }}
+{{- end }}
+{{- end }}

@@ -1,13 +1,13 @@
 {{ if .Values.rbac.createRoleBindings }}
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
-  name: executors-crb-{{ .Release.Name }}
+  name: executors-crb-{{ .Release.Name }}-{{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: executors-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: executors-role-{{ .Release.Name }}-{{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -16,13 +16,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: jobs-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: jobs-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: jobs-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -31,13 +31,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: scripts-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: script-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: script-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -46,13 +46,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: tests-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: test-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: test-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -61,13 +61,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: secrets-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: secrets-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: secrets-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -76,13 +76,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testsuites-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testsuite-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testsuite-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -91,13 +91,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: webhooks-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: webhook-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: webhook-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -106,13 +106,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: configmaps-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: configmaps-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: configmaps-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -121,13 +121,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testsources-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testsource-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testsource-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -136,13 +136,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testtriggers-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testtriggers-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testtriggers-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -151,13 +151,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: watchers-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: watchers-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: watchers-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -166,13 +166,13 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: persistentvolumeclaims-crb-{{ .Release.Name }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: persistentvolumeclaims-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}

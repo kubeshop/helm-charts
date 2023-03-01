@@ -2,7 +2,7 @@ apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: testkube-operator-controller-manager
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
   labels:
     control-plane: controller-manager
     {{- if .Values.global.labels }}

@@ -442,6 +442,10 @@ testkube-dashboard:
 
 ##Testkube Operator parameters
 testkube-operator:
+  ## deploy Opearotor chart
+  enabled: true
+  ## namespace to deploy Testkube Operator
+  namespace: ""
   # should roles and roles bindings be created
   rbac:
     createRoles: true
@@ -548,7 +552,7 @@ testkube-operator:
         registry: docker.io
         repository: bitnami/kubectl
         version: 1.22.15
-        pullPolicy: ""
+        pullPolicy: Always
       ## Configure Security Context for Migrate Container
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
       ##

@@ -23,6 +23,9 @@ installCRD: true
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 
+## Namespace to install Testkube Operator
+namespace: ""
+
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
@@ -143,7 +146,7 @@ webhook:
       registry: docker.io
       repository: bitnami/kubectl
       tag: 1.22.15
-      pullPolicy: ""
+      pullPolicy: Always
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
