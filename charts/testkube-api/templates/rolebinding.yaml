@@ -1,12 +1,12 @@
 {{ if .Values.rbac.createRoleBindings }}
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: executors-crb-{{ .Release.Name }}-{{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: executors-role-{{ .Release.Name }}-{{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
