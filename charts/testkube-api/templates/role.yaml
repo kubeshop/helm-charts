@@ -1,6 +1,6 @@
 {{ if .Values.rbac.createRoles }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRole
+kind: Role
 metadata:
   name: executors-role-{{ .Release.Name }}-{{ .Release.Namespace }}
 rules:
