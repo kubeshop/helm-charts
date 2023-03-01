@@ -68,6 +68,10 @@ spec:
                     - key
                     - name
                     type: object
+                  certificateSecret:
+                    description: certificateSecret is a reference to a secret
+                      containing a certificate to use for git authentication
+                    type: string
                   type:
                     description: VCS repository type
                     type: string

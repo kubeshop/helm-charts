@@ -30,7 +30,7 @@ done
 
 # Getting testkube-api chart version based on the pushed TAG:
 version_full=$(echo $RELEASE_VERSION | sed 's/^v//')
-echo "Version recieved: $version_full"
+echo "Version received: $version_full"
 
 # Getting TestKube main chart version:
 if [[ $version_full =~ [0-9].[0-9].0$ ]]

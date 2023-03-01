@@ -389,6 +389,10 @@ spec:
                             - key
                             - name
                           type: object
+                        certificateSecret:
+                          description: certificateSecret is a reference to a secret
+                            containing a certificate to use for git authentication
+                          type: string
                         type:
                           description: VCS repository type
                           type: string
@@ -427,6 +431,10 @@ spec:
                 executionRequest:
                   description: test execution request body
                   properties:
+                    negativeTest:
+                      description: negative test will fail if it is a success and it will succeed
+                        if it is a failure
+                      type: boolean
                     activeDeadlineSeconds:
                       description: Optional duration in seconds the pod may be active
                         on the node relative to StartTime before the system will actively
@@ -463,10 +471,67 @@ spec:
                       items:
                         type: string
                       type: array
+                    envConfigMaps:
+                      description: config map references
+                      items:
+                        description: Reference to env resource
+                        properties:
+                          mapToVariables:
+                            description: whether we shoud map to variables from resource
+                            type: boolean
+                          mount:
+                            description: whether we shoud mount resource
+                            type: boolean
+                          mountPath:
+                            description: where we shoud mount resource
+                            type: string
+                          reference:
+                            description: LocalObjectReference contains enough information
+                              to let you locate the referenced object inside the same
+                              namespace.
+                            properties:
+                              name:
+                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                  TODO: Add other useful fields. apiVersion, kind, uid?'
+                                type: string
+                            type: object
+                        required:
+                        - reference
+                        type: object
+                      type: array
+                    envSecrets:
+                      description: secret references
+                      items:
+                        description: Reference to env resource
+                        properties:
+                          mapToVariables:
+                            description: whether we shoud map to variables from resource
+                            type: boolean
+                          mount:
+                            description: whether we shoud mount resource
+                            type: boolean
+                          mountPath:
+                            description: where we shoud mount resource
+                            type: string
+                          reference:
+                            description: LocalObjectReference contains enough information
+                              to let you locate the referenced object inside the same
+                              namespace.
+                            properties:
+                              name:
+                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                  TODO: Add other useful fields. apiVersion, kind, uid?'
+                                type: string
+                            type: object
+                        required:
+                        - reference
+                        type: object
+                      type: array
                     envs:
                       additionalProperties:
                         type: string
-                      description: environment variables passed to executor
+                      description: 'Environment variables passed to executor. Deprecated:
+                        use Basic Variables instead'
                       type: object
                     executionLabels:
                       additionalProperties:
@@ -517,7 +582,8 @@ spec:
                     secretEnvs:
                       additionalProperties:
                         type: string
-                      description: execution variables passed to executor from secrets
+                      description: 'Execution variables passed to executor from secrets.
+                        Deprecated: use Secret Variables instead'
                       type: object
                     sync:
                       description: whether to start execution sync or async

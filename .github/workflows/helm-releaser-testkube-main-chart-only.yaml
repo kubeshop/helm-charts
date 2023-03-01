@@ -1,14 +1,14 @@
-name: Releasing Helm charts.
+name: Releasing Testkube main helm chart
 
 on:
   push:
     paths:
-      - ".github/workflows/helm-releaser-testkube-charts.yaml"
-      - "charts/testkube/Chart.yaml"
-      - "charts/testkube-api/Chart.yaml"
-      - "charts/testkube-dashboard/Chart.yaml"
-      - "charts/testkube-operator/Chart.yaml"
-      - "charts/testkube-api/executors.json"
+      - "charts/testkube**"
+      - "!charts/testkube/Chart.yaml"
+      - "!charts/testkube-api/Chart.yaml"
+      - "!charts/testkube-dashboard/Chart.yaml"
+      - "!charts/testkube-operator/Chart.yaml"
+      - "!charts/testkube-api/executors.json"
     branches:
       - main
 
@@ -17,6 +17,7 @@ env:
   GKE_CLUSTER_NAME_DEV: ${{ secrets.GKE_CLUSTER_NAME_DEV }} # Add your cluster name here.
   GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube # Add your deployment name here.
+
 
 jobs:
   release_charts:
@@ -33,15 +34,11 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Install Helm
-        uses: azure/setup-helm@v3
-        with:
-          version: v3.10.0
-
-      - name: Installing repositories
+      - name: Update main Chart.yaml
         run: |
-          helm repo add helm-charts https://kubeshop.github.io/helm-charts
-          helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+          cd ./scripts
+          chmod +x main_chart_releaser.sh
+          ./main_chart_releaser.sh --main-chart true
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1

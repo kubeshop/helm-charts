@@ -4,6 +4,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
   name: testtriggers.tests.testkube.io
 spec:
   group: tests.testkube.io
@@ -14,7 +15,20 @@ spec:
     singular: testtrigger
   scope: Namespaced
   versions:
-    - name: v1
+    - additionalPrinterColumns:
+        - jsonPath: .spec.resource
+          name: Resource
+          type: string
+        - jsonPath: .spec.event
+          name: Event
+          type: string
+        - jsonPath: .spec.execution
+          name: Execution
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+      name: v1
       schema:
         openAPIV3Schema:
           description: TestTrigger is the Schema for the testtriggers API
@@ -38,6 +52,41 @@ spec:
                   description: Action represents what needs to be executed for selected
                     Execution
                   type: string
+                conditionSpec:
+                  description: What resource conditions should be matched
+                  properties:
+                    conditions:
+                      description: list of test trigger conditions
+                      items:
+                        description: TestTriggerCondition is used for definition of
+                          the condition for test triggers
+                        properties:
+                          reason:
+                            description: test trigger condition reason
+                            type: string
+                          status:
+                            description: TestTriggerConditionStatuses defines condition
+                              statuses for test triggers
+                            type: string
+                          type:
+                            description: test trigger condition
+                            type: string
+                        required:
+                          - status
+                          - type
+                        type: object
+                      type: array
+                    timeout:
+                      description: duration in seconds the test trigger waits for conditions,
+                        until its stopped
+                      format: int32
+                      type: integer
+                  type: object
+                delay:
+                  description: Delay is a duration string which specifies how long should
+                    the test be delayed after a trigger is matched
+                  format: duration
+                  type: string
                 event:
                   description: On which Event for a Resource should an Action be triggered
                   type: string
@@ -47,7 +96,7 @@ spec:
                   type: string
                 resource:
                   description: For which Resource do we monitor Event which triggers
-                    an Action
+                    an Action on certain conditions
                   type: string
                 resourceSelector:
                   description: ResourceSelector identifies which Kubernetes Objects
@@ -107,8 +156,8 @@ spec:
                       type: string
                   type: object
                 testSelector:
-                  description: TestSelector identifies on which Kubernetes Objects
-                    an Action should be taken
+                  description: TestSelector identifies on which Testkube Kubernetes
+                    Objects an Action should be taken
                   properties:
                     labelSelector:
                       description: LabelSelector is used to identify a group of Kubernetes

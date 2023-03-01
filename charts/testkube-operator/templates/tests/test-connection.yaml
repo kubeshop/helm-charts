@@ -24,4 +24,8 @@ spec:
       resources: {{ toYaml .Values.testConnection.resources | nindent 8 }}
       {{- end }}
   restartPolicy: Never
+  {{- with .Values.testConnection.tolerations }}
+  tolerations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 {{- end }}

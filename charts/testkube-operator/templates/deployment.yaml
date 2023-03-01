@@ -41,7 +41,7 @@ spec:
         resources: {{ toYaml .Values.proxy.resources | nindent 10 }}
         {{- end }}
         ports:
-        - containerPort: {{ .Values.proxy.containerPort }}
+        - containerPort: 9443
           name: https
       - name: manager
         args:
@@ -73,7 +73,7 @@ spec:
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
         {{- end }}
         ports:
-        - containerPort: {{ .Values.containerPort }}
+        - containerPort: 8443
           name: webhook-server
           protocol: TCP
         readinessProbe:

@@ -237,17 +237,27 @@ testkube-api:
     accessKey: "minio123"
     location: ""
     token: ""
+    bucket: "testkube-artifacts"
     SSL: false
     scrapperEnabled: true
+      
+  ## Logs storage for Testkube API.
+  logs:
+    ## where the logs should be stored there are 2 possible valuse : minio|mongo
+    storage: "minio"
+    ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
+    bucket: "testkube-logs"
 
   mongodb:
     dsn: "mongodb://testkube-mongodb:27017"
     # or you can pass mongo dsn from secret
     # secretName: testkube-secrets
     # secretKey: mongo-dsn
+    allowDiskUse: true
 
   analyticsEnabled: true
   slackToken: ""
+  slackSecret: ""
   slackTemplate: ""
   slackConfig: ""
   executors: ""

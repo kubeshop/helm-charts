@@ -55,8 +55,6 @@ proxy:
     repository: kubebuilder/kube-rbac-proxy
     tag: "v0.8.0"
     pullPolicy: Always
-  ## Proxy Container Port
-  containerPort: 8443
   ## Resources limits and requests for kube-rbac-proxy container
   resources: {}
 
@@ -89,9 +87,6 @@ periodSeconds: 20
 
 ## Perform a liveness probe on specified port
 livenessProbePort: 8081
-
-## Manager container port
-containerPort: 9443
 
 ## Perform a readiness probe on specified port
 readinessProbePort: 8081
@@ -144,9 +139,9 @@ webhook:
     ## image.pullPolicy Migrate container job image pull policy
     image:
       registry: docker.io
-      repository: bitnami/kubectl
-      tag: 1.22.15
-      pullPolicy: Always
+      repository: rancher/kubectl
+      tag: v1.23.7
+      pullPolicy: ""
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
@@ -166,9 +161,9 @@ webhook:
     ## image.pullPolicy patch container image pull policy
     image:
       registry: docker.io
-      repository: kubeshop/kube-webhook-certgen
-      tag: 1.0.6
-      pullPolicy: ""
+      repository: dpejcev/kube-webhook-certgen
+      tag: 1.0.11
+      pullPolicy: Always
     ## Annotations to add to the patch Job
     annotations: {}
     ## Pod annotations to add to the patch Job
@@ -213,8 +208,7 @@ webhook:
 
 ## Create RBAC roles for users and controller
 rbac:
-  createRoles: true
-  createRoleBindings: true
+  create: true
 
 ## Service Parameters
 service:

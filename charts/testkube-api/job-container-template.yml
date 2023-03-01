@@ -20,9 +20,25 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /data
+        {{- if .CertificateSecret }}
+        - name: {{ .CertificateSecret }}
+          mountPath: /etc/certs
+        {{- end }}
         {{- if .ArtifactRequest }}
         - name: artifact-volume
           mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+        {{- end }}
+        {{- range $configmap := .EnvConfigMaps }}
+        {{- if and $configmap.Mount $configmap.Reference }}
+        - name: {{ $configmap.Reference.Name }}
+          mountPath: {{ $configmap.MountPath }}
+        {{- end }}
+        {{- end }}
+        {{- range $secret := .EnvSecrets }}
+        {{- if and $secret.Mount $secret.Reference }}
+        - name: {{ $secret.Reference.Name }}
+          mountPath: {{ $secret.MountPath }}
+        {{- end }}
         {{- end }}
       {{- end }}
       containers:
@@ -47,22 +63,57 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /data
+        {{- if .CertificateSecret }}
+        - name: {{ .CertificateSecret }}
+          mountPath: /etc/certs
+        {{- end }}
         {{- if .ArtifactRequest }}
         - name: artifact-volume
           mountPath: {{ .ArtifactRequest.VolumeMountPath }}
         {{- end }}
+        {{- range $configmap := .EnvConfigMaps }}
+        {{- if and $configmap.Mount $configmap.Reference }}
+        - name: {{ $configmap.Reference.Name }}
+          mountPath: {{ $configmap.MountPath }}
+        {{- end }}
+        {{- end }}
+        {{- range $secret := .EnvSecrets }}
+        {{- if and $secret.Mount $secret.Reference }}
+        - name: {{ $secret.Reference.Name }}
+          mountPath: {{ $secret.MountPath }}
+        {{- end }}
+        {{- end }}
       volumes:
       - name: data-volume
         emptyDir: {}
+      {{- if .CertificateSecret }}
+      - name: {{ .CertificateSecret }}
+        secret:
+          secretName: {{ .CertificateSecret }}
+      {{- end }}
       {{- if .ArtifactRequest }}
       - name: artifact-volume
         persistentVolumeClaim:
           claimName: {{ .Name }}-pvc
       {{- end }}
+      {{- range $configmap := .EnvConfigMaps }}
+      {{- if and $configmap.Mount $configmap.Reference }}
+      - name: {{ $configmap.Reference.Name }}
+        configmap:
+          name: {{ $configmap.Reference.Name }}
+      {{- end }}
+      {{- end }}
+      {{- range $secret := .EnvSecrets }}
+      {{- if and $secret.Mount $secret.Reference }}
+      - name: {{ $secret.Reference.Name }}
+        secret:
+          secretName: {{ $secret.Reference.Name }}
+      {{- end }}
+      {{- end }}
       restartPolicy: Never
       {{- if .ServiceAccountName }}
       serviceAccountName: {{.ServiceAccountName }}
-      {{- end }}      
+      {{- end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
       {{- range $secret := .ImagePullSecrets }}

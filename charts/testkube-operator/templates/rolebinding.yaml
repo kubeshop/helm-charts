@@ -1,4 +1,4 @@
-{{- if .Values.rbac.createRoleBindings -}}
+{{ if .Values.rbac.create }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -62,7 +62,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: testkube-operator-leader-election-role
+  name: {{ .Release.Namespace }}-operator-leader-election-role
 subjects:
 - kind: ServiceAccount
   name: {{ include "testkube-operator.serviceAccountName" . }}

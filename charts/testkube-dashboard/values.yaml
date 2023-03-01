@@ -71,7 +71,6 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
-
 ## Configure Container Security Context for Testkube Dashboard
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 securityContext:

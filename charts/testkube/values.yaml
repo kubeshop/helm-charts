@@ -32,10 +32,40 @@ mongodb:
     requests:
       cpu: 150m
       memory: 100Mi
+  ## Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
+  ## Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
+  image:
+    registry: docker.io
+    repository: zcube/bitnami-compat-mongodb
+    tag: 5.0.10-debian-11-r19
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+
+  ## NATS chart parameter
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+nats:
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+  natsbox:
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
 
 ### Testkube API parameters
 testkube-api:
   rbac:
+    create: true
     createRoles: true
     createRoleBindings: true
 
@@ -68,6 +98,21 @@ testkube-api:
   #  - name: FOO
   #    value: BAR
 
+  ## Running Testkube in Agent mode
+  cloud:
+    ## URL of the Cloud Saas Control Plane
+    url: "agent.testkube.io:443"
+    ## License Key
+    key: ""
+
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+
   ## Service parameters
   service:
     ## Adapter service type
@@ -84,6 +129,8 @@ testkube-api:
   nats:
     ## Use NATS
     enabled: true
+    ## NATS URI that overrides default
+    uri: "nats://testkube-nats"
 
   ## MINIO parameters
   minio:
@@ -99,8 +146,13 @@ testkube-api:
       - ReadWriteOnce
     ## Node labels for pod assignment.
     nodeSelector: {}
-    ## Tolerations for pod assignment.
-    tolerations: []
+    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
     ## Affinity for pod assignment.
     ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
     ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
@@ -120,6 +172,8 @@ testkube-api:
     storage: 10Gi
     ## Resources limits and requests
     resources: {}
+    ## Wait 60 seconds before performing the first probe
+    initialDelaySeconds: 60
 
   ## uiIngress parameters
   uiIngress:
@@ -143,7 +197,7 @@ testkube-api:
     ## for websockets
     ##  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     ##  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    path: /results/(v\d/executions.*)
+    path: /results/v1
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
@@ -178,7 +232,7 @@ testkube-api:
       clientSecret: ""
       provider: "github"
       scopes: ""
-    path: /results/(v\d/.*)
+    path: /results/v1
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
@@ -198,9 +252,16 @@ testkube-api:
     accessKey: "minio123"
     location: ""
     token: ""
+    bucket: "testkube-artifacts"
     SSL: false
     scrapperEnabled: true
-    logsBucket: "logs"
+  
+  ## Logs storage for Testkube API.
+  logs:
+    ## where the logs should be stored there are 2 possible valuse : minio|mongo
+    storage: "minio"
+    ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
+    bucket: "testkube-logs"
 
   ## Testkube API resource requests and limits
   resources:
@@ -213,6 +274,7 @@ testkube-api:
     dsn: "mongodb://testkube-mongodb:27017"
     # secretName: testkube-secrets
     # secretKey: mongo-dsn
+    allowDiskUse: true
 
   ## Enable analytics for Testkube
   analyticsEnabled: true
@@ -221,6 +283,8 @@ testkube-api:
   ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
   ## Slack token from the testkube authentication endpoint
   slackToken: ""
+  ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
+  slackSecret: ""
   ## Slack template for the events sent to Slack
   slackTemplate: ""
   ## Slack config for the events, tests, testsuites and channels
@@ -233,6 +297,13 @@ testkube-api:
   testConnection:
     enabled: true
     resources: {}
+    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
 
 ##Testkube Dashboard parameters
 testkube-dashboard:
@@ -411,8 +482,13 @@ testkube-dashboard:
   ## Node labels for pod assignment.
   nodeSelector: {}
 
-  ## Tolerations for pod assignment.
-  tolerations: []
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
 
   ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
@@ -439,6 +515,13 @@ testkube-dashboard:
   testConnection:
     enabled: true
     resources: {}
+    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
 
 ##Testkube Operator parameters
 testkube-operator:
@@ -448,8 +531,7 @@ testkube-operator:
   namespace: ""
   # should roles and roles bindings be created
   rbac:
-    createRoles: true
-    createRoleBindings: true
+    create: true
 
   # should the CRDs be installed
   installCRD: true
@@ -473,8 +555,6 @@ testkube-operator:
       registry: gcr.io
       repository: kubebuilder/kube-rbac-proxy
       tag: "v0.8.0"
-    ## Proxy Container Port
-    containerPort: 8443
     ## Resources limits and requests for kube-rbac-proxy container
     resources: {}
 
@@ -504,8 +584,6 @@ testkube-operator:
   periodSeconds: 20
   ## Perform a liveness probe on specified port
   livenessProbePort: 8081
-  ## Manager container port
-  containerPort: 9443
   ## Perform a readiness probe on specified port
   readinessProbePort: 8081
   ## Wait 5 seconds before performing readiness probe
@@ -550,8 +628,8 @@ testkube-operator:
       ## image.pullPolicy Migrate container job image pull policy
       image:
         registry: docker.io
-        repository: bitnami/kubectl
-        version: 1.22.15
+        repository: rancher/kubectl
+        version: v1.23.7
         pullPolicy: Always
       ## Configure Security Context for Migrate Container
       ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
@@ -573,8 +651,8 @@ testkube-operator:
       image:
         registry: docker.io
         repository: dpejcev/kube-webhook-certgen
-        version: 1.0.6
-        pullPolicy: ""
+        version: 1.0.11
+        pullPolicy: Always
       ## Annotations to add to the patch Job
       annotations: {}
       ## Pod annotations to add to the patch Job
@@ -599,10 +677,13 @@ testkube-operator:
       ##
       nodeSelector:
         kubernetes.io/os: linux
-      ## tolerations Tolerations for pod assignment
-      ### Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-      ###
-      tolerations: []
+      ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+      ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+      tolerations:
+        - key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+          effect: NoSchedule
 
     ## Webhook certificate
     certificate:
@@ -616,9 +697,6 @@ testkube-operator:
     ## Patch Webhook resource requests and limits
     patchWebhookJob:
       resources: {}
-  ## Create RBAC roles for users and controller
-  rbac:
-    create: true
 
   ## Service Parameters
   service:
@@ -638,8 +716,13 @@ testkube-operator:
   ## Node labels for Testkube Operator pod assignment.
   nodeSelector: {}
 
-  ## Tolerations for Testkube Operator  assignment.
-  tolerations: []
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
 
   ## Affinity for Testkube Operator pod assignment.
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -650,6 +733,13 @@ testkube-operator:
   testConnection:
     enabled: true
     resources: {}
+    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
 
 ##MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -662,3 +752,10 @@ preUpgradeHook:
   ## Create SA for upgrdae hook
   serviceAccount:
     create: true
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule

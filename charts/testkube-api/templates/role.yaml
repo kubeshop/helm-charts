@@ -1,4 +1,4 @@
-{{ if .Values.rbac.createRoles }}
+{{ if .Values.rbac.create }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:

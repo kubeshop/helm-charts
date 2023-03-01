@@ -15,9 +15,9 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+## create roles and rolebindings
 rbac:
-  createRoles: true
-  createRoleBindings: true
+  create: true
 
 ## Number of Testkube API Pod replicas
 replicaCount: 1
@@ -68,6 +68,8 @@ analyticsEnabled: true
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 ## Slack token from the testkube authentication endpoint
 slackToken: ""
+## Slack secret to store slackToken, the key name should be SLACK_TOKEN
+slackSecret: ""
 ## Slack template for the events sent to Slack
 slackTemplate: ""
 ## Slack config for the events, tests, testsuites and channels
@@ -126,9 +128,16 @@ storage:
   accessKey: "minio123"
   location: ""
   token: ""
+  bucket: "testkube-artifacts"
   SSL: false
   scrapperEnabled: true
-  logsBucket: "logs"
+
+## Logs storage for Testkube API.
+logs:
+  ## where the logs should be stored there are 2 possible valuse : minio|mongo
+  storage: "minio"
+  ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
+  bucket: "testkube-logs"
 
 ## Service Account parameters
 serviceAccount:
@@ -171,6 +180,7 @@ mongodb:
   # secretKey: mongo-dsn
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
+  allowDiskUse: true
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
@@ -180,7 +190,6 @@ nats:
   ## load URI from secrets
   # secretName: XXX
   # secretKey: XXX
-  uri: "nats://testkube-nats"
 
 ## MINIO parameters
 minio:
@@ -218,6 +227,8 @@ minio:
   matchLabels: []
   ## Resources limits and requests
   resources: {}
+  ## Wait 120 seconds before performing the first probe
+  initialDelaySeconds: 120
 
 ## uiIngress parameters
 uiIngress:

@@ -85,6 +85,21 @@ spec:
                 job_template:
                   description: Job template to launch executor
                   type: string
+                meta:
+                  description: Meta data about executor
+                  properties:
+                    docsURI:
+                      description: URI for executor docs
+                      type: string
+                    iconURI:
+                      description: URI for executor icon
+                      type: string
+                    tooltips:
+                      additionalProperties:
+                        type: string
+                      description: executor tooltips
+                      type: object
+                  type: object
                 types:
                   description: Types defines what types can be handled by executor e.g.
                     "postman/collection", ":curl/command" etc
