@@ -141,7 +141,7 @@ webhook:
       registry: docker.io
       repository: rancher/kubectl
       tag: v1.23.7
-      pullPolicy: ""
+      pullPolicy: Always
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
