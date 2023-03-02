@@ -1,3 +1,4 @@
+{{- if not (.Capabilities.APIVersions.Has "tests.testkube.io/v1") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -33,3 +34,4 @@ spec:
                 kubectl create namespace {{ include "testkube-operator.namespace" . }};
               fi
       restartPolicy: Never
+{{ end }}
