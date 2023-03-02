@@ -50,6 +50,7 @@ mongodb:
   ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  fullnameOverride: testkube-nats
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
