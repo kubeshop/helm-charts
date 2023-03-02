@@ -9,8 +9,7 @@
 ## global.annotations Annotations to add to all deployed objects
 global:
   imageRegistry: ""
-  imagePullSecrets:
-    - secretsssssssssss
+  imagePullSecrets: []
   labels: {}
   annotations: {}
 
