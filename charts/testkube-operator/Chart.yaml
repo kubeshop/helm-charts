@@ -6,6 +6,6 @@ version: 1.9.3
 appVersion: 1.9.3
 dependencies:
   - name: global
-    version: 0.1.0
+    version: 0.1.1
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../global"

@@ -213,7 +213,7 @@ minio:
     registry: docker.io
     repository: minio/minio
     tag: latest
-
+    pullPolicy: Always
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username

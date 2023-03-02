@@ -9,7 +9,8 @@
 ## global.annotations Annotations to add to all deployed objects
 global:
   imageRegistry: ""
-  imagePullSecrets: []
+  imagePullSecrets:
+    - secretsssssssssss
   labels: {}
   annotations: {}
 
@@ -51,8 +52,8 @@ mongodb:
   ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
   ## example on how to pass secrets to NATS deployment
-  #imagePullSecrets:
-  #  - name: secret
+#  imagePullSecrets:
+#    - name: secret
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
