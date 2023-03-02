@@ -63,7 +63,7 @@ spec:
                   name: {{ .Values.nats.secretName }}
                   key: {{ .Values.nats.secretKey }}
               {{- else }}
-              value: {{ include "testkube-api.nats.uri" . }}
+              value: "nats://{{ .Release.Name }}-nats"
               {{- end }}
               {{- end }}
             - name: POSTMANEXECUTOR_URI
