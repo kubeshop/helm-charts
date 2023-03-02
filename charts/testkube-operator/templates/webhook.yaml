@@ -27,7 +27,7 @@ webhooks:
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ include "testkube-operator.namespace" . }}
       path: /validate-tests-testkube-io-v1-testtrigger
   failurePolicy: Fail
   name: vtesttrigger.kb.io
