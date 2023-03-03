@@ -103,9 +103,14 @@ Define Operator image
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
 {{- if .Values.global }}
     {{- if .Values.global.imageRegistry }}
-      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
-    {{- else -}}
-      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+      {{- $registryName = .Values.global.imageRegistry -}}
     {{- end -}}
 {{- end -}}
+{{- $separator := ":" -}}
+{{- $termination := $tag -}}
+{{- if .Values.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $termination = .Values.image.digest | toString -}}
+{{- end -}}
+{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $termination -}}
 {{- end -}}
