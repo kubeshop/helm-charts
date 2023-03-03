@@ -3,7 +3,7 @@
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-operator-manager-role
   labels:
@@ -220,7 +220,7 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-operator-proxy-role
   labels:
@@ -248,7 +248,7 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-operator-leader-election-role
   labels:
@@ -295,7 +295,7 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   labels:
     {{- if .Values.global.labels }}

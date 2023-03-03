@@ -3,7 +3,7 @@
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-operator-manager-rolebinding
   labels:
@@ -16,7 +16,7 @@ metadata:
   namespace: {{ include "testkube-operator.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-operator-manager-role
 subjects:
 - kind: ServiceAccount
@@ -26,7 +26,7 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-operator-proxy-rolebinding
   labels:
@@ -39,7 +39,7 @@ metadata:
   namespace: {{ include "testkube-operator.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-operator-proxy-role
 subjects:
 - kind: ServiceAccount
@@ -49,7 +49,7 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-operator-leader-election-rolebinding
   labels:
@@ -62,7 +62,7 @@ metadata:
   namespace: {{ include "testkube-operator.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-operator-leader-election-role
 subjects:
 - kind: ServiceAccount
@@ -72,7 +72,7 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: {{ .Release.Name }}-cronjobs-rolebinding
   labels:
@@ -85,7 +85,7 @@ metadata:
   namespace: {{ include "testkube-operator.namespace" . }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
+  kind: ClusterRole
   name: {{ .Release.Name }}-cronjobs-role
 subjects:
 - kind: ServiceAccount
