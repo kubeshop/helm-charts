@@ -50,6 +50,9 @@ mongodb:
   ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  ## example on how to pass secrets to NATS deployment
+#  imagePullSecrets:
+#    - name: secret
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
@@ -61,6 +64,7 @@ nats:
         operator: Equal
         value: arm64
         effect: NoSchedule
+
 
 ### Testkube API parameters
 testkube-api:

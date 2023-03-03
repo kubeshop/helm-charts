@@ -41,10 +41,7 @@ spec:
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
         - name: patch
           image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.patch.image "global" .Values.global) }}

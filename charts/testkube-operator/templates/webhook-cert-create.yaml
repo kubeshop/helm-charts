@@ -41,11 +41,8 @@ spec:
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       {{- if .Values.webhook.migrate.enabled }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       initContainers:
         - name: migrate
           image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.migrate.image "global" .Values.global) }}
