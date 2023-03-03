@@ -60,7 +60,9 @@ Define Dashboard image
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
 {{- if .Values.global }}
     {{- if .Values.global.imageRegistry }}
-      {{- $registryName = .Values.global.imageRegistry -}}
+        {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
     {{- end -}}
 {{- end -}}
 {{- $separator := ":" -}}
@@ -68,8 +70,8 @@ Define Dashboard image
 {{- if .Values.image.digest }}
     {{- $separator = "@" -}}
     {{- $termination = .Values.image.digest | toString -}}
-{{- end -}}
 {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $termination -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
