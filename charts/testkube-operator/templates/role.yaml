@@ -1,5 +1,4 @@
 {{ if .Values.rbac.create }}
-{{- if not (.Capabilities.APIVersions.Has "tests.testkube.io/v1") }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -371,5 +370,4 @@ rules:
   - update
 {{- end }}
 
-{{- end -}}
 {{- end -}}

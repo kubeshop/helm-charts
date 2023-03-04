@@ -1,5 +1,4 @@
 {{- if .Values.testConnection.enabled }}
-  {{- if not (.Capabilities.APIVersions.Has "tests.testkube.io/v1") }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -29,5 +28,4 @@ spec:
   tolerations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
-{{- end }}
 {{- end }}

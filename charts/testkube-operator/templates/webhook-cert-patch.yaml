@@ -1,5 +1,4 @@
 {{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
-  {{- if not (.Capabilities.APIVersions.Has "tests.testkube.io/v1") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -82,4 +81,3 @@ spec:
       {{- end }}
   backoffLimit: {{ .Values.webhook.patch.backoffLimit }}
 {{- end }}
-  {{- end }}

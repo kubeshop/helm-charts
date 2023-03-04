@@ -1,5 +1,4 @@
 {{- if .Values.webhook.enabled }}
-  {{- if not (.Capabilities.APIVersions.Has "tests.testkube.io/v1") }}
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
@@ -42,5 +41,4 @@ webhooks:
     resources:
     - testtriggers
   sideEffects: None
-{{- end }}
 {{- end }}
