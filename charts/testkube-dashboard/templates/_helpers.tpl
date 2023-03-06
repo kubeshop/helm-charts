@@ -58,22 +58,21 @@ Define Dashboard image
 {{- $registryName := .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
-{{- if .Values.global }}
-    {{- if .Values.global.imageRegistry }}
-        {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
-    {{- else -}}
-        {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
-    {{- end -}}
-{{- end -}}
 {{- $separator := ":" -}}
-{{- $termination := $tag -}}
 {{- if .Values.image.digest }}
     {{- $separator = "@" -}}
-    {{- $termination = .Values.image.digest | toString -}}
-{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $termination -}}
+    {{- $tag = .Values.image.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
-
 {{/*
 Define Oauth2 selector labels
 */}}
