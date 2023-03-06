@@ -38,6 +38,7 @@ podSecurityContext: {}
 ## image.registry Testkube API image registry
 ## image.repository Testkube API image name
 ## image.tag Testkube API image tag
+## image.digest Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## image.pullPolicy Testkube API Image pull policy
 image:
   registry: docker.io
@@ -45,6 +46,7 @@ image:
   pullPolicy: Always
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
+  digest: ""
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
