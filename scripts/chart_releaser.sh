@@ -23,6 +23,7 @@ while [[ "$#" -gt 0 ]]; do
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
         -e|--testkube-executor-name) executor_name="$2"; shift ;;
         -m|--main-chart) main_chart="$2"; shift ;;
+        -b|--branch) branch="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -97,5 +98,11 @@ fi
 git add -A
 git commit -m "Tag: $version_full; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 
-# git push origin main
-git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+if [[ $branch == "true" ]]
+then
+    # git push -u origin release-branch
+    git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts "release-$version_full"
+else
+    # git push origin main
+    git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+fi
