@@ -290,3 +290,26 @@ prometheus:
 ##Test Connection pod
 testConnection:
   enabled: false
+
+## Set custom livenessProbe
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+    scheme: HTTP
+  failureThreshold: 3              
+  initialDelaySeconds: 180
+  periodSeconds: 30
+  successThreshold: 1
+  timeoutSeconds: 10 
+
+## Set custom readinessProbe
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  failureThreshold: 3              
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  successThreshold: 1
+  timeoutSeconds: 10    
