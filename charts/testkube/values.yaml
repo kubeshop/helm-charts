@@ -204,7 +204,7 @@ testkube-api:
     ## for websockets
     ##  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     ##  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    path: /results/(v\d/executions.*)
+    path: /results/(v\d/.*)
     ## Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
