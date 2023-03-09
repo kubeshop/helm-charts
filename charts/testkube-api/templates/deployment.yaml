@@ -1,4 +1,4 @@
-apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "testkube-api.fullname" . }}
@@ -6,8 +6,10 @@ metadata:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     {{- if .Values.global.annotations}}
-  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -77,18 +79,14 @@ spec:
             - name: SLACK_TOKEN
               value: "{{ .Values.slackToken }}"
             {{- end }}
+            {{- if .Values.slackConfig }}
             - name: SLACK_CONFIG
-              {{- if .Values.slackConfig }}
               value:  "{{ .Values.slackConfig }}"
-              {{- else }}
-              value: "{{ .Files.Get "slack-config.json" | b64enc }}"
-              {{- end }}
+            {{- end }}
+            {{- if .Values.slackTemplate }}
             - name: SLACK_TEMPLATE
-              {{- if .Values.slackTemplate }}
               value:  "{{ .Values.slackTemplate }}"
-              {{- else }}
-              value: "{{ .Files.Get "slack-template.json" | b64enc }}"
-              {{- end }}
+            {{- end }}
             - name: "STORAGE_ENDPOINT"
               {{- if .Values.storage.endpoint }}
               value:  "{{ .Values.storage.endpoint }}"
@@ -117,22 +115,12 @@ spec:
               {{- else }}
               value:  "mongo"
               {{- end }}
+            {{- if .Values.slackTemplate }}
             - name: TESTKUBE_DEFAULT_EXECUTORS
-              {{- if .Values.executors }}
               value:  "{{ .Values.executors }}"
-              {{- else }}
-              value: "{{ .Files.Get "executors.json" | b64enc }}"
-              {{- end }}
+            {{- end }}
             - name: TESTKUBE_NAMESPACE
               value: "{{ .Release.Namespace }}"
-            - name: TESTKUBE_TEMPLATE_JOB
-              value: "{{ .Files.Get "job-template.yml" | b64enc }}"
-            - name: TESTKUBE_CONTAINER_TEMPLATE_JOB
-              value: "{{ .Files.Get "job-container-template.yml" | b64enc }}"
-            - name: TESTKUBE_CONTAINER_TEMPLATE_SCRAPER
-              value: "{{ .Files.Get "job-scraper-template.yml" | b64enc }}"
-            - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
-              value: "{{ .Files.Get "pvc-container-template.yml" | b64enc }}"
             - name: JOB_SERVICE_ACCOUNT_NAME
               value: "{{ .Values.jobServiceAccountName }}"
             - name: APISERVER_FULLNAME
@@ -158,6 +146,8 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}
+            - name: TESTKUBE_CONFIG_DIR
+              value: /app/config
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-api.image" . }}
@@ -169,13 +159,20 @@ spec:
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}          
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /app/config
+              name: testkube-config
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: testkube-config
+          configMap:
+            name: {{ include "testkube-api.fullname" . }}
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}

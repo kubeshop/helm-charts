@@ -10,9 +10,9 @@ metadata:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
-    {{- if .Values.autoscaling.annotations }}
+  {{- if .Values.autoscaling.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.autoscaling.annotations "context" $ ) | nindent 4 }}
-    {{- end }}
+  {{- end }}
     {{- if .Values.global.annotations}}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
