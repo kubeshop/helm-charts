@@ -8,7 +8,8 @@
                 "playwright/test"
             ],
             "contentTypes": [
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -30,7 +31,8 @@
             "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -53,7 +55,8 @@
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts",
@@ -76,7 +79,8 @@
                 "maven/integration-test"
             ],
             "contentTypes": [
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -96,7 +100,8 @@
                 "gradle/integrationTest"
             ],
             "contentTypes": [
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -118,7 +123,8 @@
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -138,7 +144,8 @@
             "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -161,7 +168,8 @@
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -179,7 +187,8 @@
                 "cypress/project"
             ],
             "contentTypes": [
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts",
@@ -202,7 +211,8 @@
             "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -222,7 +232,8 @@
             "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
             "features": [],
             "meta": {
@@ -243,7 +254,8 @@
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [],
             "meta": {
