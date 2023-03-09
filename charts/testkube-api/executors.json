@@ -246,7 +246,7 @@
         "name": "artillery-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-artillery-executor:0.0.27",
+            "image": "kubeshop/testkube-artillery-executor:0.0.28",
             "types": [
                 "artillery/test"
             ],
