@@ -30,11 +30,11 @@ spec:
       resource:
         name: cpu
         {{- if semverCompare "<1.23-0" (include "global.capabilities.kubeVersion" .) }}
-        targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
         {{- else }}
         target:
           type: Utilization
-          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+          averageUtilization: {{ .Values.autoscaling.targetCPUUtilizationPercentage }}
         {{- end }}
     {{- end }}
     {{- if .Values.autoscaling.targetMemoryUtilizationPercentage }}

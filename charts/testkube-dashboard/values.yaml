@@ -115,7 +115,7 @@ ingress:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
-##Oauth parameters
+## Oauth parameters
 oauth2:
   ## Use oauth
   enabled: false
@@ -200,8 +200,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  targetCPU: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
   labels: {}
   annotations: {}
 
