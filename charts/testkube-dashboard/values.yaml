@@ -33,6 +33,18 @@ podLabels: {}
 podSecurityContext: {}
 # fsGroup: 2000
 
+## Configure Container Security Context for Testkube Dashboard container
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+
 ### @section Specific parameters
 ## image.registry Testkube Dashboard image registry
 ## image.repository Dashboard API image name
@@ -50,8 +62,8 @@ image:
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: dashboard
-fullnameOverride: testkube-dashboard
+nameOverride: ""
+fullnameOverride: ""
 
 ## Testkube API Server Endpoint
 apiServerEndpoint: ""
@@ -72,17 +84,6 @@ serviceAccount:
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
-
-## Configure Container Security Context for Testkube Dashboard
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 ## Service parameters
 service:
@@ -114,7 +115,7 @@ ingress:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
-##Oauth parameters
+## Oauth parameters
 oauth2:
   ## Use oauth
   enabled: false
@@ -199,8 +200,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  targetCPU: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
   labels: {}
   annotations: {}
 

@@ -29,11 +29,6 @@ podAnnotations: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-## Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-podSecurityContext: {}
-# fsGroup: 2000
-
 ### @section Specific parameters
 ## image.registry Testkube API image registry
 ## image.repository Testkube API image name
@@ -43,7 +38,7 @@ podSecurityContext: {}
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
   digest: ""
@@ -51,10 +46,10 @@ image:
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: "api-server"
-fullnameOverride: "testkube-api-server"
+nameOverride: ""
+fullnameOverride: ""
 
-## TESTKUBE API Deployment parameters
+## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
   ## URL of the Cloud Saas Control Plane
@@ -126,7 +121,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 ## Node labels for Testkube API pod assignment.
 nodeSelector: {}
@@ -168,17 +163,14 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+podSecurityContext: {}
+
 ## Configure Container Security Context for Testkube API
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ##
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-# runAsUser: 1000
+securityContext: {}
 
 ## Service parameters
 service:
@@ -232,8 +224,8 @@ minio:
   image:
     registry: docker.io
     repository: minio/minio
-    tag: latest
-    pullPolicy: Always
+    tag: 2023.2.27
+    pullPolicy: IfNotPresent
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username
@@ -246,8 +238,18 @@ minio:
   matchLabels: []
   ## Resources limits and requests
   resources: {}
-  ## Wait 120 seconds before performing the first probe
-  initialDelaySeconds: 120
+  ## MinIO Liveness probe configuration
+  livenessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
+  ## MinIO Readiness probe configuration
+  readinessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
+  ## MinIO Pod Security Context
+  podSecurityContext: {}
+  ## MinIO Container Security Context
+  securityContext: {}
 
 ## uiIngress parameters
 uiIngress:
@@ -296,9 +298,9 @@ cliIngress:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
-##Prometheus monitoring
+## Prometheus monitoring
 prometheus:
-  ## Deploy Prometheus to cluster
+  ## Toggle whether to install ServiceMonitor
   enabled: false
   ## Scrape interval
   interval: 15s
@@ -309,25 +311,25 @@ prometheus:
 testConnection:
   enabled: false
 
-## Set custom livenessProbe
+## Testkube API Liveness probe
 livenessProbe:
   httpGet:
     path: /health
     port: http
     scheme: HTTP
   failureThreshold: 3
-  initialDelaySeconds: 180
-  periodSeconds: 30
+  initialDelaySeconds: 30
+  periodSeconds: 15
   successThreshold: 1
   timeoutSeconds: 10
 
-## Set custom readinessProbe
+## Testkube API Readiness probe
 readinessProbe:
   httpGet:
     path: /health
     port: http
   failureThreshold: 3
-  initialDelaySeconds: 60
-  periodSeconds: 30
+  initialDelaySeconds: 45
+  periodSeconds: 15
   successThreshold: 1
   timeoutSeconds: 10

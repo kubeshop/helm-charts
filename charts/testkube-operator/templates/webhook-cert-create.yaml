@@ -46,7 +46,7 @@ spec:
       initContainers:
         - name: migrate
           image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.migrate.image "global" .Values.global) }}
-          imagePullPolicy: {{ .Values.webhook.patch.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.webhook.migrate.image.pullPolicy }}
           args:
             - delete
             - secret
@@ -77,9 +77,9 @@ spec:
             - tls.crt
             - --ca-name
             - ca.crt
-          securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
-          {{- if .Values.webhook.createSecretJob.resources }}
-          resources: {{ toYaml .Values.webhook.createSecretJob.resources | nindent 12 }}
+          securityContext: {{- toYaml .Values.webhook.patch.createSecretJob.securityContext | nindent 12 }}
+          {{- if .Values.webhook.patch.createSecretJob.resources }}
+          resources: {{ toYaml .Values.webhook.patch.createSecretJob.resources | nindent 12 }}
           {{- end }}
       restartPolicy: OnFailure
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
@@ -89,9 +89,9 @@ spec:
       {{- if .Values.webhook.patch.tolerations }}
       tolerations: {{ toYaml .Values.webhook.patch.tolerations | nindent 8 }}
       {{- end }}
-      {{- if .Values.webhook.patch.securityContext }}
+      {{- if .Values.webhook.patch.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.webhook.patch.securityContext | nindent 8 }}
+        {{- toYaml .Values.webhook.patch.podSecurityContext | nindent 8 }}
       {{- end }}
   backoffLimit: {{ .Values.webhook.migrate.backoffLimit }}
 {{- end }}
