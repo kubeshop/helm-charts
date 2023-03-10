@@ -62,6 +62,9 @@ cloud:
   ## License Key
   key: ""
 
+## Extra Environment Variables which will be injected into the Testkube API container
+extraEnvVars: {}
+
 ## Enable analytics for Testkube
 analyticsEnabled: true
 
@@ -69,11 +72,16 @@ analyticsEnabled: true
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 ## Slack token from the testkube authentication endpoint
 slackToken: ""
+
 ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
 slackSecret: ""
+
 ## Slack template for the events sent to Slack
 slackTemplate: ""
+
 ## Slack config for the events, tests, testsuites and channels
+slackConfig: ""
+
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
@@ -297,19 +305,19 @@ livenessProbe:
     path: /health
     port: http
     scheme: HTTP
-  failureThreshold: 3              
+  failureThreshold: 3
   initialDelaySeconds: 180
   periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 10 
+  timeoutSeconds: 10
 
 ## Set custom readinessProbe
 readinessProbe:
   httpGet:
     path: /health
     port: http
-  failureThreshold: 3              
+  failureThreshold: 3
   initialDelaySeconds: 60
   periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 10    
+  timeoutSeconds: 10
