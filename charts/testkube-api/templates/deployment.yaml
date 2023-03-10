@@ -20,11 +20,12 @@ spec:
       {{- include "testkube-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- if .Values.podAnnotations }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- end }}
+
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
           {{- if .Values.podLabels }}
