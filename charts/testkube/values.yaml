@@ -707,9 +707,9 @@ testkube-operator:
   ## Perform a readiness probe on specified port
   readinessProbePort: 8081
   ## Wait 5 seconds before performing readiness probe
-  readinessProbeinitialDelaySeconds: 5
+  readinessProbeInitialDelaySeconds: 5
   ## Specifies that the kubelet should perform a readiness probe every 10 seconds.
-  readinessProbeperiodSeconds: 10
+  readinessProbePeriodSeconds: 10
 
   ## Testkube Operator Pod Security Context
   podSecurityContext: {}
