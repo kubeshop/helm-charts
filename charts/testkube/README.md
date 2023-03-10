@@ -165,21 +165,30 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.uiIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-dashboard | object | `{"affinity":{},"apiServerEndpoint":"","autoscaling":{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPU":80,"targetCPUUtilizationPercentage":80},"enabled":true,"extraEnvVars":[],"fullnameOverride":"testkube-dashboard","image":{"digest":"","pullPolicy":"Always","registry":"docker.io","repository":"kubeshop/testkube-dashboard"},"ingress":{"annotations":{},"enabled":false,"hosts":[],"labels":{},"path":"/","tls":[],"tlsenabled":false},"nodeSelector":{},"oauth2":{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback"},"extraEnvVars":[],"image":{"pullPolicy":"Always","registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP"},"podAnnotations":{},"podLabels":{},"podSecurityContext":{},"replicaCount":1,"resources":{},"securityContext":{},"service":{"annotations":{},"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Testkube Dashboard parameters |
 | testkube-dashboard.affinity | object | `{}` | Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set |
+| testkube-dashboard.apiServerEndpoint | string | `""` | Testkube API Server endpoint |
 | testkube-dashboard.autoscaling | object | `{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPU":80,"targetCPUUtilizationPercentage":80}` | Specific autoscaling annotations |
 | testkube-dashboard.enabled | bool | `true` | Deploy dashboard |
 | testkube-dashboard.extraEnvVars | list | `[]` | For example: |
 | testkube-dashboard.fullnameOverride | string | `"testkube-dashboard"` | Full name that overrides Chart name |
 | testkube-dashboard.image | object | `{"digest":"","pullPolicy":"Always","registry":"docker.io","repository":"kubeshop/testkube-dashboard"}` | image.digest Dashboard Image digest. If set, will override the tag |
+| testkube-dashboard.ingress | object | `{"annotations":{},"enabled":false,"hosts":[],"labels":{},"path":"/","tls":[],"tlsenabled":false}` | Ingress parameters |
 | testkube-dashboard.ingress.annotations | object | `{}` | Specific Ingress annotations |
+| testkube-dashboard.ingress.enabled | bool | `false` | Use ingress |
 | testkube-dashboard.ingress.hosts | list | `[]` | Hostnames must be provided if Ingress is enabled. |
 | testkube-dashboard.ingress.labels | object | `{}` | Specific Ingress labels |
-| testkube-dashboard.ingress.path | string | `"/"` | nginx.ingress.kubernetes.io/access-control-allow-origin: "" # #Path to controller |
+| testkube-dashboard.ingress.path | string | `"/"` | Path to controller |
 | testkube-dashboard.ingress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-dashboard.nodeSelector | object | `{}` | Node labels for pod assignment. |
+| testkube-dashboard.oauth2 | object | `{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback"},"extraEnvVars":[],"image":{"pullPolicy":"Always","registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP"}` | Oauth parameters |
 | testkube-dashboard.oauth2.annotations | object | `{}` | Oauth2 specific annotations |
 | testkube-dashboard.oauth2.args | list | `[]` | Array of args for oauth2 provider or github as default |
 | testkube-dashboard.oauth2.enabled | bool | `false` | Use oauth |
-| testkube-dashboard.oauth2.env | object | `{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback"}` | redirectUrl "http://demo.testkube.io/oauth2/callback" |
+| testkube-dashboard.oauth2.env.clientId | string | `""` | Client ID from Github OAuth application |
+| testkube-dashboard.oauth2.env.clientSecret | string | `""` | Client Secret from Github OAuth application |
+| testkube-dashboard.oauth2.env.cookieSecret | string | `""` | cookie secret generated using OpenSSL |
+| testkube-dashboard.oauth2.env.cookieSecure | string | `"false"` | false for http connection, true for https connections |
+| testkube-dashboard.oauth2.env.githubOrg | string | `""` | if you need to provide access only to members of your organization |
+| testkube-dashboard.oauth2.env.redirectUrl | string | `"http://testkube.example.com/oauth2/callback"` | "http://demo.testkube.io/oauth2/callback" |
 | testkube-dashboard.oauth2.extraEnvVars | list | `[]` | Array with extra environment variables to add to Locator nodes |
 | testkube-dashboard.oauth2.image | object | `{"pullPolicy":"Always","registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"}` | image.pullPolicy OauthI Image pull policy |
 | testkube-dashboard.oauth2.ingress | object | `{"labels":{}}` | Add additional Ingress labels |
@@ -200,20 +209,21 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard.securityContext | object | `{}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container |
 | testkube-dashboard.service | object | `{"annotations":{},"port":8080,"type":"ClusterIP"}` | Service parameters |
 | testkube-dashboard.service.annotations | object | `{}` | Additional custom annotations for the service |
+| testkube-dashboard.service.port | int | `8080` | Dashboard port |
 | testkube-dashboard.service.type | string | `"ClusterIP"` | Adapter service type |
 | testkube-dashboard.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Service Account parameters |
 | testkube-dashboard.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | testkube-dashboard.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | testkube-dashboard.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
+| testkube-dashboard.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
 | testkube-dashboard.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm |
 | testkube-dashboard.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm |
+| testkube-operator | object | `{"affinity":{},"apiFullname":"testkube-api-server","apiPort":8088,"extraEnvVars":[],"fullnameOverride":"testkube-operator","image":{"digest":"","pullPolicy":"","registry":"docker.io","repository":"kubeshop/testkube-operator"},"installCRD":true,"livenessProbe":{"initialDelaySeconds":3},"metricsServiceName":"","nodeSelector":{},"podSecurityContext":{},"proxy":{"image":{"registry":"gcr.io","repository":"kubebuilder/kube-rbac-proxy","tag":"v0.8.0"},"resources":{}},"rbac":{"createRoleBindings":true,"createRoles":true},"readinessProbe":{"initialDelaySeconds":3},"replicaCount":1,"resources":{},"securityContext":{"readOnlyRootFilesystem":true},"service":{"port":80,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"terminationGracePeriodSeconds":10,"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"secret":{"defaultMode":420}},"webhook":{"annotations":{},"certificate":{"secretName":"webhook-server-cert"},"enabled":true,"labels":{},"migrate":{"backoffLimit":1,"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"rancher/kubectl","version":"v1.23.7"},"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"name":"testkube-operator-webhook-admission","patch":{"annotations":{},"createSecretJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"dpejcev/kube-webhook-certgen","version":"1.0.11"},"labels":{},"nodeSelector":{"kubernetes.io/os":"linux"},"patchWebhookJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"podAnnotations":{},"podSecurityContext":{},"serviceAccount":{"annotations":{},"name":"testkube-operator-webhook-cert-mgr"},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}}}` | Testkube Operator parameters |
 | testkube-operator.affinity | object | `{}` | Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set |
 | testkube-operator.apiFullname | string | `"testkube-api-server"` | Testkube API full name |
 | testkube-operator.apiPort | int | `8088` | Testkube Operator port |
 | testkube-operator.extraEnvVars | list | `[]` | For example: |
-| testkube-operator.fullnameOverride | string | `"testkube-operator"` |  |
 | testkube-operator.image | object | `{"digest":"","pullPolicy":"","registry":"docker.io","repository":"kubeshop/testkube-operator"}` | image.digest Testkube Operator image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
-| testkube-operator.installCRD | bool | `true` |  |
 | testkube-operator.livenessProbe | object | `{"initialDelaySeconds":3}` | Testkube Operator Liveness Probe parameters |
 | testkube-operator.livenessProbe.initialDelaySeconds | int | `3` | Initial delay seconds for liveness probe |
 | testkube-operator.metricsServiceName | string | `""` | Name of the metrics server. If not specified, default name from the template is used |
@@ -222,8 +232,6 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.proxy | object | `{"image":{"registry":"gcr.io","repository":"kubebuilder/kube-rbac-proxy","tag":"v0.8.0"},"resources":{}}` | Testkube Operator rbac-proxy settings |
 | testkube-operator.proxy.image | object | `{"registry":"gcr.io","repository":"kubebuilder/kube-rbac-proxy","tag":"v0.8.0"}` | image.pullPolicy Proxy Image pull policy |
 | testkube-operator.proxy.resources | object | `{}` | Testkube Operator rbac-proxy resource settings |
-| testkube-operator.rbac.createRoleBindings | bool | `true` |  |
-| testkube-operator.rbac.createRoles | bool | `true` |  |
 | testkube-operator.readinessProbe | object | `{"initialDelaySeconds":3}` | Testkube Operator Readiness Probe parameters |
 | testkube-operator.readinessProbe.initialDelaySeconds | int | `3` | Initial delay seconds for readiness probe |
 | testkube-operator.replicaCount | int | `1` | Number of Testkube Operator Pod replicas |
@@ -238,7 +246,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | testkube-operator.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
 | testkube-operator.terminationGracePeriodSeconds | int | `10` | Terminating a container that failed its liveness or startup probe after 10s |
-| testkube-operator.testConnection.enabled | bool | `true` |  |
+| testkube-operator.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
 | testkube-operator.testConnection.resources | object | `{}` | Test Connection resource settings |
 | testkube-operator.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm |
 | testkube-operator.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm |
@@ -249,6 +257,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.certificate.secretName | string | `"webhook-server-cert"` | Webhook certificate secret name |
 | testkube-operator.webhook.enabled | bool | `true` | Use webhook |
 | testkube-operator.webhook.labels | object | `{}` | Webhook specific labels |
+| testkube-operator.webhook.migrate | object | `{"backoffLimit":1,"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"rancher/kubectl","version":"v1.23.7"},"resources":{},"securityContext":{"readOnlyRootFilesystem":true}}` | Migrate Job parameters |
 | testkube-operator.webhook.migrate.backoffLimit | int | `1` | Number of retries before considering a Job as failed |
 | testkube-operator.webhook.migrate.enabled | bool | `true` | Deploy Migrate Job |
 | testkube-operator.webhook.migrate.image | object | `{"pullPolicy":"Always","registry":"docker.io","repository":"rancher/kubectl","version":"v1.23.7"}` | image.pullPolicy Migrate container job image pull policy |
@@ -263,7 +272,6 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.createSecretJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container |
 | testkube-operator.webhook.patch.image | object | `{"pullPolicy":"Always","registry":"docker.io","repository":"dpejcev/kube-webhook-certgen","version":"1.0.11"}` | image.pullPolicy patch container image pull policy |
 | testkube-operator.webhook.patch.labels | object | `{}` | Pod specific labels |
-| testkube-operator.webhook.patch.nodeSelector | object | `{"kubernetes.io/os":"linux"}` | Ref: https://kubernetes.io/docs/user-guide/node-selection/ # |
 | testkube-operator.webhook.patch.patchWebhookJob | object | `{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}}` | Patch job config |
 | testkube-operator.webhook.patch.patchWebhookJob.resources | object | `{}` | kube-webhook-certgen patch webhook Job resource settings |
 | testkube-operator.webhook.patch.patchWebhookJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container |

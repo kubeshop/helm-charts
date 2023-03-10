@@ -451,7 +451,7 @@ testkube-dashboard:
   service:
     # -- Adapter service type
     type: ClusterIP
-    ##Dashboard port
+    # -- Dashboard port
     port: 8080
     # -- Additional custom annotations for the service
     annotations: {}
@@ -462,9 +462,9 @@ testkube-dashboard:
   #  - name: FOO
   #    value: BAR
 
-  ##Ingress parameters
+  # -- Ingress parameters
   ingress:
-    ##Use ingress
+    # -- Use ingress
     enabled: false
     # -- Specific Ingress labels
     labels: {}
@@ -486,8 +486,8 @@ testkube-dashboard:
     # --   nginx.ingress.kubernetes.io/auth-url: ""
     # --   nginx.ingress.kubernetes.io/auth-signin: ""
     # --   nginx.ingress.kubernetes.io/access-control-allow-origin: ""
-    ##
-    ##Path to controller
+
+    # -- Path to controller
     path: /
     # -- Hostnames must be provided if Ingress is enabled.
     hosts:
@@ -500,10 +500,10 @@ testkube-dashboard:
       # - hosts:
       #     - testkube.example.com
       #   secretName: testkube-cert-secret
-  ##Testkube API Server endpoint
+  # -- Testkube API Server endpoint
   apiServerEndpoint: "" # get the address of the endpoint or set it using helm
 
-  ##Oauth parameters
+  # -- Oauth parameters
   oauth2:
     # -- Use oauth
     enabled: false
@@ -549,19 +549,20 @@ testkube-dashboard:
       pullPolicy: Always
     # -- Pod environment variables for Teskube UI authentication
     # -- Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/
-    ##
-    # -- clientId Client ID from Github OAuth application
-    # -- clientSecret Client Secret from Github OAuth application
-    # -- githubOrg Github organization - if you need to provide access only to members of your organization
-    # -- cookieSecret cookie secret generated using OpenSSL
-    # -- cookieSecure false - for http connection, true - for https connections
-    # -- redirectUrl "http://demo.testkube.io/oauth2/callback"
+
+
     env:
+      # -- Client ID from Github OAuth application
       clientId: ""
+      # -- Client Secret from Github OAuth application
       clientSecret: ""
+      # -- if you need to provide access only to members of your organization
       githubOrg: ""
+      # -- cookie secret generated using OpenSSL
       cookieSecret: ""
+      # -- false for http connection, true for https connections
       cookieSecure: "false"
+      # -- "http://demo.testkube.io/oauth2/callback"
       redirectUrl: "http://testkube.example.com/oauth2/callback"
 
     # -- Add additional Ingress labels
@@ -614,7 +615,7 @@ testkube-dashboard:
   # -- Testkube Dashboard resource settings
   resources: {}
 
-  ##Test Connection pod
+  # -- Test Connection pod
   testConnection:
     enabled: true
     resources: {}
@@ -626,7 +627,7 @@ testkube-dashboard:
         value: arm64
         effect: NoSchedule
 
-##Testkube Operator parameters
+# -- Testkube Operator parameters
 testkube-operator:
   fullnameOverride: "testkube-operator"
 
@@ -724,7 +725,7 @@ testkube-operator:
     labels: {}
     # -- Webhook specific annotations
     annotations: {}
-    ##Migrate Job parameters
+    # -- Migrate Job parameters
     migrate:
       # -- Deploy Migrate Job
       enabled: true
@@ -778,7 +779,7 @@ testkube-operator:
         name: testkube-operator-webhook-cert-mgr
       # -- Node labels for pod assignment
       # -- Ref: https://kubernetes.io/docs/user-guide/node-selection/
-      ##
+
       nodeSelector:
         kubernetes.io/os: linux
       # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -841,7 +842,7 @@ testkube-operator:
   # -- Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
 
-  ##Test Connection pod
+  # -- Test Connection pod
   testConnection:
     enabled: true
     # -- Test Connection resource settings
