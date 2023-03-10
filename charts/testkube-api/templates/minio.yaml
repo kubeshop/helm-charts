@@ -16,7 +16,7 @@ spec:
     requests:
       storage: {{ .Values.minio.storage }}
 ---
-apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   # This name uniquely identifies the Deployment
@@ -57,7 +57,7 @@ spec:
             # Name of the PVC created earlier
             claimName: testkube-minio-pv-claim-{{ .Release.Namespace }}
       containers:
-        - name: testkube-minio-{{ .Release.Namespace }}
+        - name: testkube-minio
           # Volume mounts for this container
           volumeMounts:
             # Volume 'data' is mounted to path '/data'
@@ -112,6 +112,10 @@ spec:
           {{- if .Values.minio.resources }}
           resources: {{ toYaml .Values.minio.resources | nindent 12 }}
           {{- end }}
+          securityContext:
+            {{- toYaml .Values.minio.securityContext | nindent 12 }}
+      securityContext:
+        {{- toYaml .Values.minio.podSecurityContext | nindent 8 }}
       {{- if  .Values.minio.serviceAccountName }}
       serviceAccountName: {{ .Values.minio.serviceAccountName }}
       {{- end }}

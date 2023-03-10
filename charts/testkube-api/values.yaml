@@ -29,12 +29,6 @@ podAnnotations: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-## Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-podSecurityContext:
-  runAsUser: 1000670000
-  runAsNonRoot: true
-
 ### @section Specific parameters
 ## image.registry Testkube API image registry
 ## image.repository Testkube API image name
@@ -169,16 +163,14 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+podSecurityContext: {}
+
 ## Configure Container Security Context for Testkube API
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ##
-securityContext:
-#  allowPrivilegeEscalation: false
-#  seccompProfile:
-#    type: RuntimeDefault
-#  capabilities:
-#    drop:
-#      - ALL
+securityContext: {}
 
 ## Service parameters
 service:
@@ -248,6 +240,10 @@ minio:
   resources: {}
   ## Wait 120 seconds before performing the first probe
   initialDelaySeconds: 120
+  ## MinIO Pod Security Context
+  podSecurityContext: {}
+  ## MinIO Container Security Context
+  securityContext: {}
 
 ## uiIngress parameters
 uiIngress:
