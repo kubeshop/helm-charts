@@ -206,7 +206,7 @@ webhook:
 
     patchWebhookJob:
       ## Patch Webhook job container security context
-      securityContext:
+      securityContext: {}
 #        readOnlyRootFilesystem: true
 #        allowPrivilegeEscalation: false
 #        seccompProfile:
