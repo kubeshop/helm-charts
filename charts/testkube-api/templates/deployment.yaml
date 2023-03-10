@@ -48,13 +48,13 @@ spec:
               {{- else }}
               value: "{{ .Values.mongodb.dsn }}"
               {{- end }}
-              {{- if .Values.mongodb.sslCertSecret }}
+            {{- if .Values.mongodb.sslCertSecret }}
             - name: API_MONGO_SSL_CERT
               value: {{ .Values.mongodb.sslCertSecret }}
-              {{- end }}
+            {{- end }}
             - name: API_MONGO_ALLOW_DISK_USE
               value: "{{ .Values.mongodb.allowDiskUse }}"
-              {{- if .Values.nats.enabled }}
+            {{- if .Values.nats.enabled }}
             - name: NATS_URI
               {{- if .Values.nats.secretName }}
               valueFrom:
@@ -64,7 +64,7 @@ spec:
               {{- else }}
               value: {{ include "testkube-api.nats.uri" . }}
               {{- end }}
-              {{- end }}
+            {{- end }}
             - name: POSTMANEXECUTOR_URI
               value: "{{ .Values.postmanExecutorURI }}"
             - name: TESTKUBE_ANALYTICS_ENABLED
@@ -115,9 +115,25 @@ spec:
               {{- else }}
               value:  "mongo"
               {{- end }}
-            {{- if .Values.slackTemplate }}
+            {{- if .Values.executors }}
             - name: TESTKUBE_DEFAULT_EXECUTORS
               value:  "{{ .Values.executors }}"
+            {{- end }}
+            {{- if .Values.templates.job }}
+            - name: TESTKUBE_TEMPLATE_JOB
+              value: "{{ .Values.templates.job }}"
+            {{- end }}
+            {{- if .Values.templates.jobContainer }}
+            - name: TESTKUBE_CONTAINER_TEMPLATE_JOB
+              value: "{{ .Values.templates.jobContainer }}"
+            {{- end }}
+            {{- if .Values.templates.scraperContainer }}
+            - name: TESTKUBE_CONTAINER_TEMPLATE_SCRAPER
+              value: "{{ .Values.templates.scraperContainer }}"
+            {{- end }}
+            {{- if .Values.templates.pvcContainer }}
+            - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
+              value: "{{ .Values.templates.pvcContainer }}"
             {{- end }}
             - name: TESTKUBE_NAMESPACE
               value: "{{ .Release.Namespace }}"

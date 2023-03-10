@@ -82,6 +82,16 @@ slackTemplate: ""
 ## Slack config for the events, tests, testsuites and channels
 slackConfig: ""
 
+templates:
+  ## Base64 encoded Job template
+  job: ""
+  ## Base64 encoded Job Container template
+  jobContainer: ""
+  ## Base64 encoded Scraper Container template
+  scraperContainer: ""
+  ## Base64 encoded PVC Container template
+  pvcContainer: ""
+
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
