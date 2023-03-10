@@ -16,7 +16,7 @@ spec:
     requests:
       storage: {{ .Values.minio.storage }}
 ---
-apiVersion: apps/v1
+apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   # This name uniquely identifies the Deployment
