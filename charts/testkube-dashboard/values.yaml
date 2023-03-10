@@ -62,8 +62,8 @@ image:
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: dashboard
-fullnameOverride: testkube-dashboard
+nameOverride: ""
+fullnameOverride: ""
 
 ## Testkube API Server Endpoint
 apiServerEndpoint: ""

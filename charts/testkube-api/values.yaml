@@ -46,10 +46,10 @@ image:
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: "api-server"
-fullnameOverride: "testkube-api-server"
+nameOverride: ""
+fullnameOverride: ""
 
-## TESTKUBE API Deployment parameters
+## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
   ## URL of the Cloud Saas Control Plane
@@ -238,8 +238,14 @@ minio:
   matchLabels: []
   ## Resources limits and requests
   resources: {}
-  ## Wait 120 seconds before performing the first probe
-  initialDelaySeconds: 120
+  ## MinIO Liveness probe configuration
+  livenessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
+  ## MinIO Readiness probe configuration
+  readinessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
   ## MinIO Pod Security Context
   podSecurityContext: {}
   ## MinIO Container Security Context
@@ -292,9 +298,9 @@ cliIngress:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
-##Prometheus monitoring
+## Prometheus monitoring
 prometheus:
-  ## Deploy Prometheus to cluster
+  ## Toggle whether to install ServiceMonitor
   enabled: false
   ## Scrape interval
   interval: 15s
@@ -305,25 +311,25 @@ prometheus:
 testConnection:
   enabled: false
 
-## Set custom livenessProbe
+## Testkube API Liveness probe
 livenessProbe:
   httpGet:
     path: /health
     port: http
     scheme: HTTP
   failureThreshold: 3
-  initialDelaySeconds: 180
-  periodSeconds: 30
+  initialDelaySeconds: 30
+  periodSeconds: 15
   successThreshold: 1
   timeoutSeconds: 10
 
-## Set custom readinessProbe
+## Testkube API Readiness probe
 readinessProbe:
   httpGet:
     path: /health
     port: http
   failureThreshold: 3
-  initialDelaySeconds: 60
-  periodSeconds: 30
+  initialDelaySeconds: 45
+  periodSeconds: 15
   successThreshold: 1
   timeoutSeconds: 10

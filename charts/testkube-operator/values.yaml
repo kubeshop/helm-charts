@@ -21,14 +21,17 @@ kubeVersion: ""
 ## Should we install CRDS - when they can be installed from other Testkube instance
 installCRD: true
 
+## Additional labels for Testkube Operator pod
+podLabels: {}
+
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: "testkube-operator"
-fullnameOverride: "testkube-operator"
+nameOverride: ""
+fullnameOverride: ""
 
 ### @section Specific parameters
 ## image.registry Testkube Operator image registry
@@ -59,7 +62,7 @@ proxy:
   ## Resources limits and requests for kube-rbac-proxy container
   resources: {}
 
-##Testkube Operator full name
+## Testkube Operator full name
 apiFullname: "testkube-api-server"
 ##Testkube Operator port
 apiPort: 8088
@@ -80,23 +83,15 @@ extraEnvVars: []
 #  - name: FOO
 #    value: BAR
 
-## Wait 15 seconds before performing the first probe
-initialDelaySeconds: 15
+## Liveness probe configuration
+livenessProbe:
+  initialDelaySeconds: 3
+  periodSeconds: 10
 
-## Specifies that the kubelet should perform a liveness probe every 20 seconds.
-periodSeconds: 20
-
-## Perform a liveness probe on specified port
-livenessProbePort: 8081
-
-## Perform a readiness probe on specified port
-readinessProbePort: 8081
-
-## Wait 5 seconds before performing readiness probe
-readinessProbeInitialDelaySeconds: 5
-
-## Specifies that the kubelet should perform a readiness probe every 10 seconds.
-readinessProbePeriodSeconds: 10
+## Readiness probe configuration
+readinessProbe:
+  initialDelaySeconds: 3
+  periodSeconds: 10
 
 ##Name of the metrics server. If not specified, default name from the template is used
 metricsServiceName: ""

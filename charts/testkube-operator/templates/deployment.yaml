@@ -72,15 +72,15 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: {{ .Values.livenessProbePort }}
-          initialDelaySeconds: {{ .Values.initialDelaySeconds }}
-          periodSeconds: {{ .Values.periodSeconds }}
+            port: 8081
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
         readinessProbe:
           httpGet:
             path: /readyz
-            port: {{ .Values.readinessProbePort }}
-          initialDelaySeconds: {{ .Values.readinessProbeInitialDelaySeconds }}
-          periodSeconds: {{ .Values.readinessProbePeriodSeconds }}
+            port: 8081
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
         {{- if .Values.resources }}
         resources: {{ toYaml .Values.resources | nindent 10 }}
         {{- end }}

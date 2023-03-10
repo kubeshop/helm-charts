@@ -34,8 +34,6 @@ spec:
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           env:
@@ -166,8 +164,6 @@ spec:
             {{- end }}
             - name: TESTKUBE_CONFIG_DIR
               value: /app/config
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -183,6 +179,10 @@ spec:
           volumeMounts:
             - mountPath: /app/config
               name: testkube-config
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
