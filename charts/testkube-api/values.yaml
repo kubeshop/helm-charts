@@ -31,8 +31,9 @@ podLabels: {}
 
 ## Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-podSecurityContext: {}
-# fsGroup: 2000
+podSecurityContext:
+  runAsUser: 1000670000
+  runAsNonRoot: true
 
 ### @section Specific parameters
 ## image.registry Testkube API image registry
@@ -43,7 +44,7 @@ podSecurityContext: {}
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
   digest: ""
@@ -154,13 +155,12 @@ serviceAccount:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ##
 securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-# runAsUser: 1000
+#  allowPrivilegeEscalation: false
+#  seccompProfile:
+#    type: RuntimeDefault
+#  capabilities:
+#    drop:
+#      - ALL
 
 ## Service parameters
 service:
@@ -214,8 +214,8 @@ minio:
   image:
     registry: docker.io
     repository: minio/minio
-    tag: latest
-    pullPolicy: Always
+    tag: 2023.2.27
+    pullPolicy: IfNotPresent
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username
@@ -297,19 +297,19 @@ livenessProbe:
     path: /health
     port: http
     scheme: HTTP
-  failureThreshold: 3              
+  failureThreshold: 3
   initialDelaySeconds: 180
   periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 10 
+  timeoutSeconds: 10
 
 ## Set custom readinessProbe
 readinessProbe:
   httpGet:
     path: /health
     port: http
-  failureThreshold: 3              
+  failureThreshold: 3
   initialDelaySeconds: 60
   periodSeconds: 30
   successThreshold: 1
-  timeoutSeconds: 10    
+  timeoutSeconds: 10

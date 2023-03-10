@@ -262,7 +262,7 @@ testkube-api:
     bucket: "testkube-artifacts"
     SSL: false
     scrapperEnabled: true
-  
+
   ## Logs storage for Testkube API.
   logs:
     ## where the logs should be stored there are 2 possible valuse : minio|mongo
@@ -291,15 +291,15 @@ testkube-api:
       port: http
       scheme: HTTP
     ## Amount of request failures before the container receives a terminate signal
-    failureThreshold: 3 
-    ## Time to wait after the initial deployment before performing first probe            
+    failureThreshold: 3
+    ## Time to wait after the initial deployment before performing first probe
     initialDelaySeconds: 180
     ## How often (in seconds) to perform the probes. This value sends one probe every 30 seconds
     periodSeconds: 30
     ## Minimum consecutive successes for the probe to be considered successful after having failed
     successThreshold: 1
     ## Number of seconds after which the probe times out
-    timeoutSeconds: 10 
+    timeoutSeconds: 10
 
   ## Set custom readinessProbe
   readinessProbe:
@@ -309,15 +309,15 @@ testkube-api:
       port: http
       scheme: HTTP
     ## Amount of request failures before the container receives a terminate signal
-    failureThreshold: 3 
-    ## Time to wait after the initial deployment before performing first probe            
+    failureThreshold: 3
+    ## Time to wait after the initial deployment before performing first probe
     initialDelaySeconds: 60
     ## How often (in seconds) to perform the probes. This value sends one probe every 30 seconds
     periodSeconds: 30
     ## Minimum consecutive successes for the probe to be considered successful after having failed
     successThreshold: 1
     ## Number of seconds after which the probe times out
-    timeoutSeconds: 10      
+    timeoutSeconds: 10
 
   ## Enable analytics for Testkube
   analyticsEnabled: true
@@ -348,6 +348,20 @@ testkube-api:
         value: arm64
         effect: NoSchedule
 
+  ## Testkube API Pod Security Context
+  podSecurityContext:
+    runAsUser: 1000670000
+    runAsNonRoot: true
+
+  ## Security Context for testkube-api container
+  securityContext:
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
+
 ##Testkube Dashboard parameters
 testkube-dashboard:
   ##deploy dashboard
@@ -357,7 +371,7 @@ testkube-dashboard:
   ##Full name that overrides Chart name
   fullnameOverride: "testkube-dashboard"
 
-  ##Dashboard image
+  ## Dashboard image
   ## image.registry Dashboard image registry. Can be overridden by global parameters
   ## image.repository Dashboard image name
   ## image.tag Dashboard image tag
@@ -383,8 +397,17 @@ testkube-dashboard:
 
   ## Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext: {}
-  # fsGroup: 2000
+  podSecurityContext:
+    runAsUser: 1000670000
+    runAsNonRoot: true
+
+  securityContext:
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
 
   ##Service parameters
   service:
@@ -615,9 +638,9 @@ testkube-operator:
     ## Resources limits and requests for kube-rbac-proxy container
     resources: {}
 
-  ##Testkube API full name
+  ## Testkube API full name
   apiFullname: "testkube-api-server"
-  ##Testkube Operator port
+  ## Testkube Operator port
   apiPort: 8088
 
   ## Service Account parameters
@@ -648,19 +671,26 @@ testkube-operator:
   ## Specifies that the kubelet should perform a readiness probe every 10 seconds.
   readinessProbeperiodSeconds: 10
 
-  ## Configure Security Context for Manager Container
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  ##
-  containerSecurityContext:
+  ## Testkube Operator Pod Security Context
+  podSecurityContext:
+    runAsUser: 1000670000
+    runAsNonRoot: true
+
+  ## Security Context for Manager Container
+  securityContext:
+    readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
   ## Name of the metrics server. If not specified, default name from the template is used
   metricsServiceName: ""
   ## Terminating a container that failed its liveness or startup probe after 10s
   terminationGracePeriodSeconds: 10
-  ## Testkube Operator Pod security Context
-  securityContext:
-    runAsNonRoot: true
-  ## Testkube Operator Pod Volume
+
+  # Testkube Operator Pod Volume
   volumes:
     secret:
       defaultMode: 420
@@ -688,11 +718,15 @@ testkube-operator:
         repository: rancher/kubectl
         version: v1.23.7
         pullPolicy: Always
-      ## Configure Security Context for Migrate Container
-      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-      ##
+      ## Security Context for Migrate Container
       securityContext:
+        readOnlyRootFilesystem: true
         allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+        capabilities:
+          drop:
+            - ALL
       ## Number of retries before considering a Job as failed
       backoffLimit: 1
       ## Resources limits and requests
@@ -716,13 +750,11 @@ testkube-operator:
       podAnnotations: {}
       ## Pod specific labels
       labels: {}
-      ## Configure Security Context for Migrate Container
-      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-      ##
-      securityContext:
+      ## Security Context for Migrate Container
+      podSecurityContext:
         runAsNonRoot: true
-        runAsUser: 2000
-        fsGroup: 2000
+        runAsUser: 1000670000
+
       ## Name of teh SA to use by patch Job
       serviceAccount:
         ## SA specific annotations
@@ -741,22 +773,36 @@ testkube-operator:
           operator: Equal
           value: arm64
           effect: NoSchedule
+      ## Create job config
+      createSecretJob:
+        ## Security Context for Create Container
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+              - ALL
+        resources: {}
+
+      ## Patch job config
+      patchWebhookJob:
+        ## Security Context for Patch Container
+        securityContext:
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+              - ALL
+        resources: {}
 
     ## Webhook certificate
     certificate:
       ## Webhook certificate secret name
       secretName: webhook-server-cert
-
-    ## Create job resources
-    createSecretJob:
-      resources: {}
-
-    ## Patch Webhook resource requests and limits
-    patchWebhookJob:
-      resources: {}
-  ## Create RBAC roles for users and controller
-  rbac:
-    create: true
 
   ## Service Parameters
   service:

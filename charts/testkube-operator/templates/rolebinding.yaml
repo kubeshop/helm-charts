@@ -4,7 +4,7 @@
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Release.Name }}-operator-manager-rolebinding
+  name: testkube-operator-manager-rolebinding
   labels:
   {{- if .Values.globalLabels }}
   {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
@@ -26,7 +26,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Release.Name }}-operator-proxy-rolebinding
+  name: testkube-operator-proxy-rolebinding
   labels:
   {{- if .Values.globalLabels }}
   {{- include "global.tplvalues.render" ( dict "value" .Values.globalLabels "context" $ ) | nindent 4 }}
@@ -48,7 +48,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: {{ .Release.Name }}-operator-leader-election-rolebinding
+  name: testkube-operator-leader-election-rolebinding
   labels:
   {{- if .Values.global.labels }}
   {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -60,7 +60,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ .Release.Namespace }}-operator-leader-election-role
+  name: testkube-operator-leader-election-role
 subjects:
 - kind: ServiceAccount
   name: {{ include "testkube-operator.serviceAccountName" . }}
@@ -94,7 +94,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
-  name: {{ .Release.Name }}-operator-webhook-cert-mgr
+  name: testkube-operator-webhook-cert-mgr
   namespace: {{ .Release.Namespace }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
