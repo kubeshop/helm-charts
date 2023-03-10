@@ -13,19 +13,29 @@ global:
   labels: {}
   annotations: {}
 
-## MongoDB Upgrade Pod Security Context
-podSecurityContext:
-  runAsUser: 1000670000
-  runAsNonRoot: true
+##MongoDB pre-upgrade parameters
+preUpgradeHook:
+  ## Upgrade hook is enabled
+  enabled: true
+  ## Upgrade hook name
+  name: mongodb-upgrade
+  ## Specify resource limits and requests
+  resources: {}
+  ## Create SA for upgrdae hook
+  serviceAccount:
+    create: true
+  ## MongoDB Upgrade Pod Security Context
+  podSecurityContext: {}
+  ## Security Context for MongoDB Upgrade kubectl container
+  securityContext: {}
+  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
 
-## Security Context for MongoDB Upgrade kubectl container
-securityContext:
-  allowPrivilegeEscalation: false
-  seccompProfile:
-    type: RuntimeDefault
-  capabilities:
-    drop:
-      - ALL
 
 ### MongoDB parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -61,18 +71,12 @@ mongodb:
       effect: NoSchedule
   ## MongoDB Pod Security Context
   podSecurityContext:
-    runAsUser: 1000670000
-    fsGroup: 1000670000
-    runAsNonRoot: true
+  # For OpenShift clusters use the following settings:
+#    fsGroup: 1000670000
   ## Security Context for MongoDB container
   containerSecurityContext:
-    allowPrivilegeEscalation: false
-    runAsUser: 1000670000
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
+  # For OpenShift clusters use the following settings:
+#    runAsGroup: 1000670000
 
   ## NATS chart parameter
   ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -86,48 +90,34 @@ nats:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  ## NATS Pod Security Context
+  securityContext: {}
+  ## NATS container settings
+  nats:
+    ## Security Context for NATS container
+    securityContext: {}
+    ## NATS resource settings
+    resources: {}
+  ## Reloader container settings
   reloader:
-    securityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
+    ## Security Context for Reloader container
+    securityContext: {}
+  ## NATS Box container settings
   natsbox:
-    securityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
+    ## Security Context for NATS Box container
+    securityContext: {}
+    ## NATS Box tolerations settings
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
-  nats:
-    securityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
-  ## Security Context for metrics container
+  ## Exporter container settings
   exporter:
-    securityContext:
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
-  ## NATS Pod Security Context
-  securityContext:
-    runAsUser: 1000670000
-    runAsNonRoot: true
+    ## Security Context for Exporter container
+    securityContext: {}
+    ## Exporter resources settings
+    resources: {}
 
 ### Testkube API parameters
 testkube-api:
@@ -240,24 +230,14 @@ testkube-api:
     minioRootPassword: "minio123"
     ## PVC Storage Request for MinIO. Should be available in the cluster.
     storage: 10Gi
-    ## Resources limits and requests
+    ## MinIO Resources settings
     resources: {}
     ## Wait 60 seconds before performing the first probe
     initialDelaySeconds: 60
     ## MinIO Pod Security Context
-    podSecurityContext:
-      runAsUser: 1000670000
-      runAsNonRoot: true
+    podSecurityContext: {}
     ## Security Context for MinIO container
-    securityContext:
-      fsGroup: 1000670000
-      runAsGroup: 1000670000
-      allowPrivilegeEscalation: false
-      seccompProfile:
-        type: RuntimeDefault
-      capabilities:
-        drop:
-          - ALL
+    securityContext: {}
 
   ## uiIngress parameters
   uiIngress:
@@ -405,17 +385,19 @@ testkube-api:
   slackToken: ""
   ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
   slackSecret: ""
-  ## Slack template for the events sent to Slack
+  ## Slack template for the events sent to Slack as base64-encoded string
   slackTemplate: ""
-  ## Slack config for the events, tests, testsuites and channels
+  ## Slack config for the events, tests, testsuites and channels as base64-encoded string
   slackConfig: ""
+  ## default executors as base64-encoded string
   executors: ""
   ## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
 
-  ##Test Connection pod
+  ## Test Connection pod
   testConnection:
     enabled: true
+    ## Test Connection resource settings
     resources: {}
     ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
@@ -426,18 +408,10 @@ testkube-api:
         effect: NoSchedule
 
   ## Testkube API Pod Security Context
-  podSecurityContext:
-    runAsUser: 1000670000
-    runAsNonRoot: true
+  podSecurityContext: {}
 
   ## Security Context for testkube-api container
-  securityContext:
-    allowPrivilegeEscalation: false
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
+  securityContext: {}
 
 ##Testkube Dashboard parameters
 testkube-dashboard:
@@ -474,17 +448,9 @@ testkube-dashboard:
 
   ## Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext:
-    runAsUser: 1000670000
-    runAsNonRoot: true
+  podSecurityContext: {}
 
-  securityContext:
-    allowPrivilegeEscalation: false
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
+  securityContext: {}
 
   ##Service parameters
   service:
@@ -650,11 +616,7 @@ testkube-dashboard:
     ## If not set and create is true, a name is generated using the fullname template
     name: ""
 
-  ## Testkube Dashboard resource requests and limits
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## Testkube Dashboard resource settings
   resources: {}
 
   ##Test Connection pod
@@ -702,17 +664,18 @@ testkube-operator:
     #tag: "1.7.1"
     digest: ""
 
-  ##Proxy Image parameters
-  ## image.registry Proxy image registry
-  ## image.repository Proxy image name
-  ## image.tag Proxy image tag
-  ## image.pullPolicy Proxy Image pull policy
+  ## Testkube Operator rbac-proxy settings
   proxy:
+    ## Proxy Image parameters
+    ## image.registry Proxy image registry
+    ## image.repository Proxy image name
+    ## image.tag Proxy image tag
+    ## image.pullPolicy Proxy Image pull policy
     image:
       registry: gcr.io
       repository: kubebuilder/kube-rbac-proxy
       tag: "v0.8.0"
-    ## Resources limits and requests for kube-rbac-proxy container
+    ## Testkube Operator rbac-proxy resource settings
     resources: {}
 
   ## Testkube API full name
@@ -749,19 +712,13 @@ testkube-operator:
   readinessProbeperiodSeconds: 10
 
   ## Testkube Operator Pod Security Context
-  podSecurityContext:
-    runAsUser: 1000670000
-    runAsNonRoot: true
+  podSecurityContext: {}
+
 
   ## Security Context for Manager Container
   securityContext:
     readOnlyRootFilesystem: true
-    allowPrivilegeEscalation: false
-    seccompProfile:
-      type: RuntimeDefault
-    capabilities:
-      drop:
-        - ALL
+
   ## Name of the metrics server. If not specified, default name from the template is used
   metricsServiceName: ""
   ## Terminating a container that failed its liveness or startup probe after 10s
@@ -798,15 +755,10 @@ testkube-operator:
       ## Security Context for Migrate Container
       securityContext:
         readOnlyRootFilesystem: true
-        allowPrivilegeEscalation: false
-        seccompProfile:
-          type: RuntimeDefault
-        capabilities:
-          drop:
-            - ALL
+
       ## Number of retries before considering a Job as failed
       backoffLimit: 1
-      ## Resources limits and requests
+      ## Migrate job resources settings
       resources: {}
 
     ##Patch Job parameters
@@ -827,10 +779,8 @@ testkube-operator:
       podAnnotations: {}
       ## Pod specific labels
       labels: {}
-      ## Security Context for Migrate Container
-      podSecurityContext:
-        runAsUser: 1000670000
-        runAsNonRoot: true
+      ## kube-webhook-certgen Job Security Context
+      podSecurityContext: {}
 
       ## Name of teh SA to use by patch Job
       serviceAccount:
@@ -855,12 +805,7 @@ testkube-operator:
         ## Security Context for Create Container
         securityContext:
           readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          seccompProfile:
-            type: RuntimeDefault
-          capabilities:
-            drop:
-              - ALL
+        ## kube-webhook-certgen create secret Job resource settings
         resources: {}
 
       ## Patch job config
@@ -868,12 +813,7 @@ testkube-operator:
         ## Security Context for Patch Container
         securityContext:
           readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          seccompProfile:
-            type: RuntimeDefault
-          capabilities:
-            drop:
-              - ALL
+        ## kube-webhook-certgen patch webhook Job resource settings
         resources: {}
 
     ## Webhook certificate
@@ -888,9 +828,8 @@ testkube-operator:
     ## HTTP Port
     port: 80
 
-  ## Testkube Operator resource requests and limits
-  resources:
-    {}
+  ## Testkube Operator resource settings
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -915,6 +854,7 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
+    ## Test Connection resource settings
     resources: {}
     ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
@@ -924,21 +864,3 @@ testkube-operator:
         value: arm64
         effect: NoSchedule
 
-##MongoDB pre-upgrade parameters
-preUpgradeHook:
-  ## Upgrade hook is enabled
-  enabled: true
-  ## Upgrade hook name
-  name: mongodb-upgrade
-  ## Specify resource limits and requests
-  resources: {}
-  ## Create SA for upgrdae hook
-  serviceAccount:
-    create: true
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
