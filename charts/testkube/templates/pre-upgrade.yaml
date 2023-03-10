@@ -37,7 +37,10 @@ spec:
               then kubectl scale deployment {{ .Release.Name }}-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi
-
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       restartPolicy: Never
       {{- if .Values.preUpgradeHook.tolerations }}
       tolerations: {{ toYaml .Values.preUpgradeHook.tolerations | nindent 8 }}

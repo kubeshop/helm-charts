@@ -13,6 +13,20 @@ global:
   labels: {}
   annotations: {}
 
+## MongoDB Upgrade Pod Security Context
+podSecurityContext:
+  runAsUser: 1000670000
+  runAsNonRoot: true
+
+## Security Context for MongoDB Upgrade kubectl container
+securityContext:
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: RuntimeDefault
+  capabilities:
+    drop:
+      - ALL
+
 ### MongoDB parameters
 ## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -45,6 +59,20 @@ mongodb:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  ## MongoDB Pod Security Context
+  podSecurityContext:
+    runAsUser: 1000670000
+    fsGroup: 1000670000
+    runAsNonRoot: true
+  ## Security Context for MongoDB container
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    runAsUser: 1000670000
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+        - ALL
 
   ## NATS chart parameter
   ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -58,13 +86,48 @@ nats:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  reloader:
+    securityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
   natsbox:
+    securityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
-
+  nats:
+    securityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
+  ## Security Context for metrics container
+  exporter:
+    securityContext:
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
+  ## NATS Pod Security Context
+  securityContext:
+    runAsUser: 1000670000
+    runAsNonRoot: true
 
 ### Testkube API parameters
 testkube-api:
@@ -181,6 +244,20 @@ testkube-api:
     resources: {}
     ## Wait 60 seconds before performing the first probe
     initialDelaySeconds: 60
+    ## MinIO Pod Security Context
+    podSecurityContext:
+      runAsUser: 1000670000
+      runAsNonRoot: true
+    ## Security Context for MinIO container
+    securityContext:
+      fsGroup: 1000670000
+      runAsGroup: 1000670000
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+          - ALL
 
   ## uiIngress parameters
   uiIngress:
@@ -752,8 +829,8 @@ testkube-operator:
       labels: {}
       ## Security Context for Migrate Container
       podSecurityContext:
-        runAsNonRoot: true
         runAsUser: 1000670000
+        runAsNonRoot: true
 
       ## Name of teh SA to use by patch Job
       serviceAccount:
