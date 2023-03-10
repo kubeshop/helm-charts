@@ -245,6 +245,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.apiPort | int | `8088` | Testkube Operator port |
 | testkube-operator.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-operator.fullnameOverride | string | `"testkube-operator"` |  |
+| testkube-operator.healthcheckPort | int | `8081` | Testkube Operator healthcheck port |
 | testkube-operator.image.digest | string | `""` | Testkube Operator image digest |
 | testkube-operator.image.pullPolicy | string | `""` | Testkube Operator image pull policy |
 | testkube-operator.image.registry | string | `"docker.io"` | Testkube Operator registry |
@@ -276,14 +277,12 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.testConnection.resources | object | `{}` | Test Connection resource settings |
 | testkube-operator.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-operator.volumes | object | `{"secret":{"defaultMode":420}}` | Testkube Operator Pod Volume |
-| testkube-operator.webhook | object | `{"annotations":{},"certificate":{"secretName":"webhook-server-cert"},"enabled":true,"labels":{},"migrate":{"backoffLimit":1,"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"rancher/kubectl","version":"v1.23.7"},"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"name":"testkube-operator-webhook-admission","patch":{"annotations":{},"createSecretJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"dpejcev/kube-webhook-certgen","version":"1.0.11"},"labels":{},"nodeSelector":{"kubernetes.io/os":"linux"},"patchWebhookJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"podAnnotations":{},"podSecurityContext":{},"serviceAccount":{"annotations":{},"name":"testkube-operator-webhook-cert-mgr"},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}}` | Webhook parameters |
+| testkube-operator.volumes.secret.defaultMode | int | `420` | Testkube Operator webhook certificate volume default mode |
 | testkube-operator.webhook.annotations | object | `{}` | Webhook specific annotations |
 | testkube-operator.webhook.certificate | object | `{"secretName":"webhook-server-cert"}` | Webhook certificate |
 | testkube-operator.webhook.certificate.secretName | string | `"webhook-server-cert"` | Webhook certificate secret name |
 | testkube-operator.webhook.enabled | bool | `true` | Use webhook |
 | testkube-operator.webhook.labels | object | `{}` | Webhook specific labels |
-| testkube-operator.webhook.migrate | object | `{"backoffLimit":1,"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"rancher/kubectl","version":"v1.23.7"},"resources":{},"securityContext":{"readOnlyRootFilesystem":true}}` | Migrate Job parameters |
 | testkube-operator.webhook.migrate.backoffLimit | int | `1` | Number of retries before considering a Job as failed |
 | testkube-operator.webhook.migrate.enabled | bool | `true` | Deploy Migrate Job |
 | testkube-operator.webhook.migrate.image.pullPolicy | string | `"Always"` | Migrate container job image pull policy |
@@ -294,11 +293,11 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.migrate.securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for webhook migrate Container |
 | testkube-operator.webhook.migrate.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
 | testkube-operator.webhook.name | string | `"testkube-operator-webhook-admission"` | Name of the webhook |
-| testkube-operator.webhook.patch | object | `{"annotations":{},"createSecretJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"enabled":true,"image":{"pullPolicy":"Always","registry":"docker.io","repository":"dpejcev/kube-webhook-certgen","version":"1.0.11"},"labels":{},"nodeSelector":{"kubernetes.io/os":"linux"},"patchWebhookJob":{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}},"podAnnotations":{},"podSecurityContext":{},"serviceAccount":{"annotations":{},"name":"testkube-operator-webhook-cert-mgr"},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Patch Job parameters |
 | testkube-operator.webhook.patch.annotations | object | `{}` | Annotations to add to the patch Job |
-| testkube-operator.webhook.patch.createSecretJob | object | `{"resources":{},"securityContext":{"readOnlyRootFilesystem":true}}` | Create job config |
 | testkube-operator.webhook.patch.createSecretJob.resources | object | `{}` | kube-webhook-certgen create secret Job resource settings |
 | testkube-operator.webhook.patch.createSecretJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for webhook create container |
+| testkube-operator.webhook.patch.createSecretJob.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
+| testkube-operator.webhook.patch.enabled | bool | `true` |  |
 | testkube-operator.webhook.patch.image.pullPolicy | string | `"Always"` | patch job image pull policy |
 | testkube-operator.webhook.patch.image.registry | string | `"docker.io"` | patch job image registry |
 | testkube-operator.webhook.patch.image.repository | string | `"dpejcev/kube-webhook-certgen"` | patch job image name |
@@ -307,9 +306,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.nodeSelector | object | `{"kubernetes.io/os":"linux"}` | Node labels for pod assignment |
 | testkube-operator.webhook.patch.patchWebhookJob.resources | object | `{}` | kube-webhook-certgen patch webhook Job resource settings |
 | testkube-operator.webhook.patch.patchWebhookJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for webhook patch container |
+| testkube-operator.webhook.patch.patchWebhookJob.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
 | testkube-operator.webhook.patch.podAnnotations | object | `{}` | Pod annotations to add to the patch Job |
 | testkube-operator.webhook.patch.podSecurityContext | object | `{}` | kube-webhook-certgen Job Security Context |
-| testkube-operator.webhook.patch.serviceAccount | object | `{"annotations":{},"name":"testkube-operator-webhook-cert-mgr"}` | Name of teh SA to use by patch Job |
 | testkube-operator.webhook.patch.serviceAccount.annotations | object | `{}` | SA specific annotations |
 | testkube-operator.webhook.patch.serviceAccount.name | string | `"testkube-operator-webhook-cert-mgr"` | SA name |
 | testkube-operator.webhook.patch.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |

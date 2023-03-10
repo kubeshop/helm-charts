@@ -64,8 +64,10 @@ proxy:
 
 ## Testkube Operator full name
 apiFullname: "testkube-api-server"
-##Testkube Operator port
+## Testkube Operator port
 apiPort: 8088
+## Testkube Operator healthcheck port
+healthcheckPort: 8081
 
 ## Service Account parameters
 serviceAccount:
@@ -121,7 +123,7 @@ volumes:
   secret:
     defaultMode: 420
 
-##Webhook parameters
+## Webhook parameters
 webhook:
   ## Use webhook
   enabled: true

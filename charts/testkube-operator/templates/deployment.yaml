@@ -44,7 +44,7 @@ spec:
           {{- toYaml .Values.securityContext | nindent 10 }}
       - name: manager
         args:
-        - --health-probe-bind-address=:8081
+        - --health-probe-bind-address=:{{ .Values.healthcheckPort }}
         - --metrics-bind-address=127.0.0.1:8080
         - --leader-elect
         command:
@@ -72,13 +72,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8081
+            port: {{ .Values.healthcheckPort }}
           initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
         readinessProbe:
           httpGet:
             path: /readyz
-            port: 8081
+            port: {{ .Values.healthcheckPort }}
           initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
           periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
         {{- if .Values.resources }}

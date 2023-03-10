@@ -686,6 +686,8 @@ testkube-operator:
   apiFullname: "testkube-api-server"
   # -- Testkube Operator port
   apiPort: 8088
+  # -- Testkube Operator healthcheck port
+  healthcheckPort: 8081
 
   # Service Account parameters
   serviceAccount:
@@ -720,12 +722,13 @@ testkube-operator:
   # -- Terminating a container that failed its liveness or startup probe after 10s
   terminationGracePeriodSeconds: 10
 
-  # -- Testkube Operator Pod Volume
+  # Testkube Operator Pod Volume
   volumes:
     secret:
+      # -- Testkube Operator webhook certificate volume default mode
       defaultMode: 420
 
-  # -- Webhook parameters
+  # Webhook parameters
   webhook:
     # -- Use webhook
     enabled: true
@@ -735,7 +738,7 @@ testkube-operator:
     labels: {}
     # -- Webhook specific annotations
     annotations: {}
-    # -- Migrate Job parameters
+    # Migrate Job parameters
     migrate:
       # -- Deploy Migrate Job
       enabled: true
@@ -759,7 +762,7 @@ testkube-operator:
       # -- Migrate job resources settings
       resources: {}
 
-    # -- Patch Job parameters
+    # Patch Job parameters
     patch:
       enabled: true
       image:
@@ -781,7 +784,7 @@ testkube-operator:
       # -- kube-webhook-certgen Job Security Context
       podSecurityContext: {}
 
-      # -- Name of teh SA to use by patch Job
+      # Testkube Operator Service Account parameters
       serviceAccount:
         # -- SA specific annotations
         annotations: {}
@@ -799,20 +802,22 @@ testkube-operator:
           operator: Equal
           value: arm64
           effect: NoSchedule
-      # -- Create job config
+      # Create Job config
       createSecretJob:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
         # -- Security Context for webhook create container
         securityContext:
+          # -- Make root filesystem of the container read-only
           readOnlyRootFilesystem: true
         # -- kube-webhook-certgen create secret Job resource settings
         resources: {}
 
-      # Patch job config
+      # Patch Job config
       patchWebhookJob:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
         # -- Security Context for webhook patch container
         securityContext:
+          # -- Make root filesystem of the container read-only
           readOnlyRootFilesystem: true
         # -- kube-webhook-certgen patch webhook Job resource settings
         resources: {}
