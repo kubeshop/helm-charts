@@ -36,9 +36,10 @@ metadata:
     {{- end }}
   namespace: {{ .Release.Namespace }}
 spec:
+  type: ClusterIP
   ports:
   - port: 443
     protocol: TCP
-    targetPort: {{ .Values.containerPort }}
+    targetPort: 9443
   selector:
     control-plane: controller-manager

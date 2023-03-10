@@ -63,6 +63,9 @@ cloud:
   ## License Key
   key: ""
 
+## Extra Environment Variables which will be injected into the Testkube API container
+extraEnvVars: {}
+
 ## Enable analytics for Testkube
 analyticsEnabled: true
 
@@ -70,11 +73,26 @@ analyticsEnabled: true
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 ## Slack token from the testkube authentication endpoint
 slackToken: ""
+
 ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
 slackSecret: ""
+
 ## Slack template for the events sent to Slack
 slackTemplate: ""
+
 ## Slack config for the events, tests, testsuites and channels
+slackConfig: ""
+
+templates:
+  ## Base64 encoded Job template
+  job: ""
+  ## Base64 encoded Job Container template
+  jobContainer: ""
+  ## Base64 encoded Scraper Container template
+  scraperContainer: ""
+  ## Base64 encoded PVC Container template
+  pvcContainer: ""
+
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
