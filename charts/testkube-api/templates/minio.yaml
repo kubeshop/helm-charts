@@ -109,8 +109,6 @@ spec:
               port: 9000
             initialDelaySeconds: {{ .Values.minio.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.minio.readinessProbe.periodSeconds }}
-          securityContext:
-            {{- toYaml .Values.minio.securityContext | nindent 12 }}
           {{- if .Values.minio.resources }}
           resources: {{ toYaml .Values.minio.resources | nindent 12 }}
           {{- end }}
