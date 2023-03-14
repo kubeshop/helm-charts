@@ -28,10 +28,7 @@ spec:
         {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       serviceAccountName: {{ include "testkube-dashboard.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}

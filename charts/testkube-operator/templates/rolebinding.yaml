@@ -121,6 +121,5 @@ subjects:
     name: {{ include "testkube-operator.webhook.serviceAccountName" . }}
     namespace: {{ include "testkube-operator.namespace" . }}
 {{- end }}
-
   {{- end -}}
 

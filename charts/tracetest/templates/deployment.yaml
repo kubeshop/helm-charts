@@ -33,8 +33,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           args:
-          - -config
+          - --config
           - '/app/config/config.yaml'
+          - --provisioning-file
+          - '/app/config/provisioning.yaml'
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

@@ -2,5 +2,10 @@ apiVersion: v2
 name: testkube-dashboard
 description: A Helm chart for Kubernetes
 type: application
-version: 1.9.2-beta1
-appVersion: 1.9.2-beta1
+version: 1.10.1
+appVersion: 1.10.1
+dependencies:
+  - name: global
+    version: 0.1.1
+    #repository: https://kubeshop.github.io/helm-charts
+    repository: "file://../global"

@@ -43,10 +43,7 @@ spec:
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
         - name: patch
           image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.patch.image "global" .Values.global) }}
@@ -63,9 +60,9 @@ spec:
             - --patch-mutating=false
             - --crd-api-groups
             - tests.testkube.io,executor.testkube.io
-          securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
-          {{- if .Values.webhook.patchWebhookJob.resources }}
-          resources: {{ toYaml .Values.webhook.patchWebhookJob.resources | nindent 12 }}
+          securityContext: {{- toYaml .Values.webhook.patch.patchWebhookJob.securityContext | nindent 12 }}
+          {{- if .Values.webhook.patch.patchWebhookJob.resources }}
+          resources: {{ toYaml .Values.webhook.patch.patchWebhookJob.resources | nindent 12 }}
           {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
@@ -75,9 +72,9 @@ spec:
       {{- if .Values.webhook.patch.tolerations }}
       tolerations: {{ toYaml .Values.webhook.patch.tolerations | nindent 8 }}
       {{- end }}
-      {{- if .Values.webhook.patch.securityContext }}
+      {{- if .Values.webhook.patch.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.webhook.patch.securityContext | nindent 8 }}
+        {{- toYaml .Values.webhook.patch.podSecurityContext | nindent 8 }}
       {{- end }}
   backoffLimit: {{ .Values.webhook.patch.backoffLimit }}
 {{- end }}
