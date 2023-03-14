@@ -145,8 +145,10 @@ nats:
 
 # Testkube API parameters
 testkube-api:
-  # -- Testkube API fullname override
-  fullnameOverride: "testkube-api-server"
+  # -- Testkube API full name override
+  fullnameOverride: testkube-api-server
+  # -- Testkube API name override
+  nameOverride: api-server
 
   rbac:
     # -- Toggle whether to install Testkube API RBAC roles
@@ -432,8 +434,10 @@ testkube-dashboard:
   # -- Deploy dashboard
   enabled: true
 
-  # -- Full name that overrides Chart name
-  fullnameOverride: "testkube-dashboard"
+  # -- Testkube Dashboard fullname override
+  fullnameOverride: testkube-dashboard
+  # -- Testkube Dashboard name override
+  nameOverride: dashboard
 
   # Dashboard image
   image:
@@ -642,7 +646,10 @@ testkube-dashboard:
         effect: NoSchedule
 
 testkube-operator:
-  fullnameOverride: "testkube-operator"
+  # -- Testkube Operator fullname override
+  fullnameOverride: testkube-operator
+  # -- Testkube Operator name override
+  nameOverride: testkube-operator
 
   rbac:
     # -- should the operator create the RBAC roles
