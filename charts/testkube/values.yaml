@@ -80,13 +80,13 @@ mongodb:
       effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-  podSecurityContext:
+  podSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  fsGroup: 1000670000
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
-  containerSecurityContext:
+  containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
 
