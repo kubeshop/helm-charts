@@ -7,11 +7,16 @@ Testkube is an open-source platform that simplifies the deployment and managemen
 ## Install
 
 IMPORTANT!
-Please note that there was a bug related to labels change that caused issues during upgrade to newer versions. It was valid for versions `1.9.143` - `1.9.150`. It has been fixed since version `1.9.151`.
-For those who are still using the mentioned versions there are two ways to address this issue:
-- complete reinstall of the Testkube helm-chart; 
-- upgrade to the latest version, setting empty values of `fullnameOverride` and `nameOverride` for `testkube-api` and `testkube-dashboard` in `values.yaml`:
 
+Please note that there was a bug related to the label changes that caused some issues during upgrade to newer versions. 
+It was valid for versions `1.9.143` - `1.9.151`. It has been fixed since version `1.9.152`.
+
+For those who are still using the affected versions, there are two ways to address this issue:
+1. Reinstall the Testkube helm-chart. 
+
+OR 
+
+2. Upgrade to the latest version setting empty values for the following parameters in `values.yaml`:
 ```aidl
 testkube-api:
   fullnameOverride: ""
@@ -21,8 +26,6 @@ testkube-dashboard:
   fullnameOverride: ""
   nameOverride: ""
 ```
-
-
 
 Add `kubeshop` Helm repository and fetch latest charts info:
 
