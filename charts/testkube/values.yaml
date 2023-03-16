@@ -19,6 +19,12 @@ preUpgradeHook:
   enabled: true
   # -- Upgrade hook name
   name: mongodb-upgrade
+  # -- Specify image
+  image:
+    registry: k8s.gcr.io
+    repository: hyperkube
+    tag: v1.12.1
+    pullPolicy: Always
   # -- Specify resource limits and requests
   resources: {}
   # -- Create SA for upgrade hook
