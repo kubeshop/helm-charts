@@ -23,8 +23,8 @@ spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
       - name: kubectl
-        image: "k8s.gcr.io/hyperkube:v1.12.1"
-        imagePullPolicy: "IfNotPresent"
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgradeHook.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.preUpgradeHook.image.pullPolicy }}
         {{- if .Values.preUpgradeHook.resources }}
         resources: {{- toYaml .Values.preUpgradeHook.resources | nindent 10 }}
         {{- end }}

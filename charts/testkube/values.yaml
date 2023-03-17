@@ -19,6 +19,12 @@ preUpgradeHook:
   enabled: true
   # -- Upgrade hook name
   name: mongodb-upgrade
+  # -- Specify image
+  image:
+    registry: k8s.gcr.io
+    repository: hyperkube
+    tag: v1.12.1
+    pullPolicy: Always
   # -- Specify resource limits and requests
   resources: {}
   # -- Create SA for upgrade hook
@@ -80,13 +86,13 @@ mongodb:
       effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-  podSecurityContext:
+  podSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  fsGroup: 1000670000
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for MongoDB container
-  containerSecurityContext:
+  containerSecurityContext: {}
   # For OpenShift clusters use the following settings:
   #  runAsGroup: 1000670000
 
@@ -145,8 +151,10 @@ nats:
 
 # Testkube API parameters
 testkube-api:
-  # -- Testkube API fullname override
-  fullnameOverride: "testkube-api-server"
+  # -- Testkube API full name override
+  fullnameOverride: testkube-api-server
+  # -- Testkube API name override
+  nameOverride: api-server
 
   rbac:
     # -- Toggle whether to install Testkube API RBAC roles
@@ -432,8 +440,10 @@ testkube-dashboard:
   # -- Deploy dashboard
   enabled: true
 
-  # -- Full name that overrides Chart name
-  fullnameOverride: "testkube-dashboard"
+  # -- Testkube Dashboard fullname override
+  fullnameOverride: testkube-dashboard
+  # -- Testkube Dashboard name override
+  nameOverride: dashboard
 
   # Dashboard image
   image:
@@ -642,7 +652,10 @@ testkube-dashboard:
         effect: NoSchedule
 
 testkube-operator:
-  fullnameOverride: "testkube-operator"
+  # -- Testkube Operator fullname override
+  fullnameOverride: testkube-operator
+  # -- Testkube Operator name override
+  nameOverride: testkube-operator
 
   rbac:
     # -- should the operator create the RBAC roles
