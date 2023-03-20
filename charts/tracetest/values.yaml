@@ -17,14 +17,11 @@ postgresql:
 # Provisioning allows to define initial settings to be loaded into the database on first run. 
 # These will only be applied when running tracetest against an empty database. If tracetest has already
 # been configured, the provisioning settings are ignored.
-provisioning: |
-  ---
+provisioning:
   # Datastore is where your application stores its traces. You can define several different datastores with
   # different names, however, only one is used by Tracetest.
   # You can see all available datastore configurations at https://kubeshop.github.io/tracetest/supported-backends/
-  type: DataStore
-  spec:
-    name: Jaeger
+  dataStore:
     # Indicates that this datastore is a jaeger instance
     type: jaeger
     # Configures how tracetest connects to jaeger.
@@ -32,40 +29,6 @@ provisioning: |
       endpoint: jaeger-query:16685
       tls:
         insecure: true
-  ---
-  type: Config
-  spec:
-    analyticsEnabled: true
-  ---
-  type: PollingProfile
-  spec:
-    name: Custom Profile
-    strategy: periodic
-    default: true
-    periodic:
-      timeout: 30s
-      retryDelay: 500ms
-  ---
-  type: Demo
-  spec:
-    name: pokeshop
-    type: pokeshop
-    enabled: true
-    pokeshop:
-      httpEndpoint: http://demo-pokemon-api.demo
-      grpcEndpoint: demo-pokemon-api.demo:8082
-  ---
-  type: Demo
-  spec:
-    name: otel
-    type: otelstore
-    enabled: true
-    opentelemetryStore:
-      frontendEndpoint: http://otel-frontend.otel-demo:8084
-      productCatalogEndpoint: http://otel-productcatalogservice.otel-demo:3550
-      cartEndpoint: http://otel-cartservice.otel-demo:7070
-      checkoutEndpoint: http://otel-checkoutservice.otel-demo:5050
-
 
 # This section configures the strategy for pooling traces from the trace backend
 poolingConfig:
