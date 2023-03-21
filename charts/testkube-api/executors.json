@@ -47,7 +47,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.27",
+            "image": "kubeshop/testkube-ginkgo-executor:1.10.9",
             "types": [
                 "ginkgo/test"
             ],
