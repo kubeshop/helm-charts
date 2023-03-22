@@ -204,7 +204,7 @@
         "name": "curl-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-curl-executor:1.10.10",
+            "image": "kubeshop/testkube-curl-executor:1.10.11",
             "types": [
                 "curl/test"
             ],
