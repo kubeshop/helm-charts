@@ -219,10 +219,15 @@ subjects:
 
 ---
 
+{{- if .Values.additionalNamespaces }}
+{{- range .Values.additionalNamespaces }}
+{{- $rangeItem := . -}}
+{{- with $ }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: RoleBinding
+kind: {{ include "testkube-api.binding" .}}
 metadata:
-  name: watchers-crb-{{ .Release.Name }}
+  name: {{ include "testkube-api.watcher.rb-name" . }}
+  namespace: {{ $rangeItem }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -238,6 +243,34 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
+---
+{{- end }}
+{{- end }}
+
+---
+
+{{- if not .Values.additionalNamespaces }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: {{ include "testkube-api.binding" .}}
+metadata:
+  name: {{ include "testkube-api.watcher.rb-name" . }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name:  watchers-cluster-role-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+  {{- end }}
 
 ---
 

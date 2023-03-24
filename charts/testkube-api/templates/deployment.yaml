@@ -159,6 +159,8 @@ spec:
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url}}"
             {{- end}}
+            - name: TESTKUBE_WATCHER_NAMESPACES
+              value: {{ join "," .Values.additionalNamespaces }}
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}
