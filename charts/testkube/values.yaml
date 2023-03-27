@@ -183,9 +183,7 @@ testkube-api:
   #  - name: FOO
   #    value: BAR
   # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
-  additionalNamespaces: {}
-  # - testkube
-    #- testkube-system
+  additionalNamespaces: []
 
   # Testkube Agent settings
   cloud:
@@ -654,8 +652,8 @@ testkube-dashboard:
 testkube-operator:
   ## deploy Operator chart
   enabled: true
-  ## namespace to deploy Testkube Operator
-  namespace: ""
+  ## namespace to deploy Testkube Operator. Default is .Release.Namespace
+  namespace: "testkube-system"
   # should roles and roles bindings be created
   rbac:
     create: true

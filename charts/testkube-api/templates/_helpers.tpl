@@ -80,18 +80,3 @@ Define API image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
-
-
-{{/*
-Define either watcher Role or ClusterRole for Testkube API
-*/}}
-{{- define "testkube-api.role" -}}
-{{ if .Values.additionalNamespaces }}
-{{- print "Role" -}}
-{{- else -}}
-{{- print "ClusterRole" -}}
-{{- end -}}
-{{- end -}}
-
-
-

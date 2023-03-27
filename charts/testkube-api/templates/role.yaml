@@ -335,7 +335,7 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: watchers-role-{{ .Release.Name }}-{{ $rangeItem }}
+  name: watchers-role-{{ .Release.Name }}
   namespace: {{ $rangeItem }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
