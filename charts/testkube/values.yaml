@@ -653,7 +653,7 @@ testkube-operator:
   ## deploy Operator chart
   enabled: true
   ## namespace to deploy Testkube Operator. Default is .Release.Namespace
-  namespace: "testkube-system"
+  namespace: "teskube-operator"
   # should roles and roles bindings be created
   rbac:
     create: true
