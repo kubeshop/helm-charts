@@ -40,6 +40,10 @@ spec:
                 items:
                   type: string
                 type: array
+              payloadObjectField:
+                description: will load the generated payload for notification inside
+                  the object
+                type: string
               selector:
                 description: Labels to filter for tests and test suites
                 type: string

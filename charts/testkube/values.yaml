@@ -591,6 +591,8 @@ testkube-dashboard:
     # -- Add additional Ingress labels
     ingress:
       labels: {}
+      # -- add Ingress annotations
+      annotations: {} 
 
   # Autoscaling parameters
   autoscaling:
