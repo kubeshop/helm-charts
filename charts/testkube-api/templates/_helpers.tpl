@@ -93,24 +93,5 @@ Define either watcher Role or ClusterRole for Testkube API
 {{- end -}}
 {{- end -}}
 
-{{/*
-Define either watcher  rolebinding or ClusterRolebinding for Testkube API
-*/}}
-{{- define "testkube-api.binding" -}}
-{{ if .Values.additionalNamespaces }}
-{{- print "RoleBinding" -}}
-{{- else -}}
-{{- print "ClusterRoleBinding" -}}
-{{- end -}}
-{{- end -}}
 
-{{/*
-Define watcher rolebinding name
-*/}}
-{{- define "testkube-api.watcher.rb-name" -}}
-{{ if .Values.additionalNamespaces }}
-{{- printf "watchers-rb-%s" .Release.Name -}}
-{{- else -}}
-{{- printf "watchers-crb-%s" .Release.Name -}}
-{{- end -}}
-{{- end -}}
+

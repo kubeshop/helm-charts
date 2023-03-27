@@ -333,9 +333,9 @@ rules:
 {{- $rangeItem := . -}}
 {{- with $ }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: {{ include "testkube-api.role" . }}
+kind: Role
 metadata:
-  name: watchers-role-{{ .Release.Name }}
+  name: watchers-role-{{ .Release.Name }}-{{ $rangeItem }}
   namespace: {{ $rangeItem }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
@@ -383,11 +383,11 @@ rules:
 
 ---
 
-{{- if not .Values.additionalNamespaces }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: {{ include "testkube-api.role" . }}
+kind: Role
 metadata:
-  name: watchers-cluster-role-{{ .Release.Name }}
+  name: watchers-role-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -427,7 +427,6 @@ rules:
       - get
       - list
       - watch
-  {{- end }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}

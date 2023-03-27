@@ -185,7 +185,7 @@ testkube-api:
   # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
   additionalNamespaces: {}
   # - testkube
-  # - testkube-system
+    #- testkube-system
 
   # Testkube Agent settings
   cloud:

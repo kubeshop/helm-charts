@@ -124,6 +124,6 @@ Define testkube operator namespace
 {{- if .Values.namespace }}
 {{- default .Values.namespace }}
 {{- else }}
-{{- default "testkube-system" }}
+{{- default .Release.Namespace }}
 {{- end }}
 {{- end }}

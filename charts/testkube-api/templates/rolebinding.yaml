@@ -224,9 +224,9 @@ subjects:
 {{- $rangeItem := . -}}
 {{- with $ }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: {{ include "testkube-api.binding" .}}
+kind: RoleBinding
 metadata:
-  name: {{ include "testkube-api.watcher.rb-name" . }}
+  name: watchers-rb-{{ .Release.Name }}
   namespace: {{ $rangeItem }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
@@ -250,11 +250,11 @@ subjects:
 
 ---
 
-{{- if not .Values.additionalNamespaces }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: {{ include "testkube-api.binding" .}}
+kind: RoleBinding
 metadata:
-  name: {{ include "testkube-api.watcher.rb-name" . }}
+  name: watchers-rb-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -264,14 +264,12 @@ metadata:
   {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name:  watchers-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name:  watchers-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-  {{- end }}
-
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
