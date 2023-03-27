@@ -26,9 +26,9 @@ spec:
         - /bin/bash
         - -c
         - >
-            export namespace=$(kubectl get namespaces | grep {{ include "testkube-operator.namespace" . }} | awk '{print $1}');
+            export namespace=$(kubectl get namespaces | grep {{ include "testkube-operator.namespace" . }} | awk '{print $1}' | head -n1 );
               if [ "$namespace" == "{{ include "testkube-operator.namespace" . }}" ];
-                then exit 0;
+                then echo "Namespace already exists";
               else
                 kubectl create namespace {{ include "testkube-operator.namespace" . }};
               fi
