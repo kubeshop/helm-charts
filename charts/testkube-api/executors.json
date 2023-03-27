@@ -137,7 +137,7 @@
         "name": "soapui-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-soapui-executor:1.10.16",
+            "image": "kubeshop/testkube-soapui-executor:1.10.17",
             "types": [
                 "soapui/xml"
             ],
