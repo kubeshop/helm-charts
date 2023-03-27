@@ -41,6 +41,9 @@ spec:
               repository:
                 description: repository of test content
                 properties:
+                  authType:
+                    description: auth type for git requests
+                    type: string
                   branch:
                     description: branch/tag name for checkout
                     type: string
