@@ -3,7 +3,7 @@
         "name": "playwright-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-playwright-executor:1.10.17",
+            "image": "kubeshop/testkube-playwright-executor:1.10.18",
             "types": [
                 "playwright/test"
             ],
