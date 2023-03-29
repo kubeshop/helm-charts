@@ -48,26 +48,29 @@ spec:
                   description: ContentTypes list of handled content types
                   items:
                     enum:
-                      - string
-                      - file-uri
-                      # Deprecated: use git instead
-                      - git-file
-                      # Deprecated: use git instead                
-                      - git-dir
-                      - git
+                    - string
+                    - file-uri
+                    # Deprecated: use git instead
+                    - git-file
+                    # Deprecated: use git instead
+                    - git-dir
+                    - git
                     type: string
                   type: array
                 executor_type:
                   description: ExecutorType one of "rest" for rest openapi based executors
                     or "job" which will be default runners for testkube or "container"
                     for container executors
+                  enum:
+                  - job
+                  - container
                   type: string
                 features:
                   description: Features list of possible features which executor handles
                   items:
                     enum:
-                      - artifacts
-                      - junit-report
+                    - artifacts
+                    - junit-report
                     type: string
                   type: array
                 image:
