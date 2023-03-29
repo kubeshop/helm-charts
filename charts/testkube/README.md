@@ -181,7 +181,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.storage.bucket | string | `"testkube-artifacts"` | MinIO Bucket |
 | testkube-api.storage.endpoint | string | `""` | MinIO endpoint |
 | testkube-api.storage.endpoint_port | string | `"9000"` | MinIO endpoint port |
-| testkube-api.storage.location | string | `""` | MinIO Location |
+| testkube-api.storage.region | string | `""` | MinIO Region |
 | testkube-api.storage.scrapperEnabled | bool | `true` | Toggle whether to enable scraper in Testkube API |
 | testkube-api.storage.token | string | `""` | MinIO Token |
 | testkube-api.testConnection.enabled | bool | `true` | Toggle whether to create Test Connection pod |
