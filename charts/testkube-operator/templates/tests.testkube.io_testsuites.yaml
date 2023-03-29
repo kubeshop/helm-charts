@@ -293,8 +293,7 @@ spec:
                             type: boolean
                         type: object
                       type:
-                        description: TestSuiteStepType defines different type of test
-                        suite steps
+                        description: TestSuiteStepType defines different type of test suite steps
                         enum:
                         - execute
                         - delay
@@ -327,8 +326,7 @@ spec:
                             type: boolean
                         type: object
                       type:
-                        description: TestSuiteStepType defines different type of test
-                        suite steps
+                        description: TestSuiteStepType defines different type of test suite steps
                         enum:
                         - execute
                         - delay
@@ -502,8 +500,7 @@ spec:
                             type: boolean
                         type: object
                       type:
-                        description: TestSuiteStepType defines different type of test
-                        suite steps
+                        description: TestSuiteStepType defines different type of test suite steps
                         enum:
                         - execute
                         - delay
