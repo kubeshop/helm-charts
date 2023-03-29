@@ -2,10 +2,10 @@ apiVersion: v2
 name: testkube
 description: Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 type: application
-version: 1.10.70
+version: 1.10.71
 dependencies:
   - name: testkube-operator
-    version: 1.10.4-beta001
+    version: 1.10.6
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
   - name: mongodb
