@@ -43,6 +43,9 @@ spec:
                 properties:
                   authType:
                     description: auth type for git requests
+                    enum:
+                    - basic
+                    - header
                     type: string
                   branch:
                     description: branch/tag name for checkout
@@ -107,6 +110,12 @@ spec:
                 - uri
                 type: object
               type:
+                enum:
+                - string
+                - file-uri
+                - git-file
+                - git-dir
+                - git
                 type: string
               uri:
                 description: uri of test content

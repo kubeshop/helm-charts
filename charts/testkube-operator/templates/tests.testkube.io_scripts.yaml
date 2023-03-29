@@ -64,9 +64,6 @@ spec:
                 repository:
                   description: repository details if exists
                   properties:
-                    authType:
-                      description: auth type for git requests
-                      type: string
                     branch:
                       description: branch/tag name for checkout
                       type: string
