@@ -24,6 +24,7 @@ echo "Current Testkube Chart version is: $CURRENT_VERSION"
 
 CURRENT_MAJOR=$(echo $CURRENT_VERSION | awk -F\. '{print $1}')
 CURRENT_MINOR=$(echo $CURRENT_VERSION | awk -F\. '{print $2}')
+CURRENT_PATCH=$(echo $CURRENT_VERSION | awk -F\. '{print $3}')
 
 RELEASE_MAJOR=$(echo $VERSION_FULL | awk -F\. '{print $1}')
 RELEASE_MINOR=$(echo $VERSION_FULL | awk -F\. '{print $2}')
