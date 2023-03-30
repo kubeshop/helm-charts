@@ -356,8 +356,8 @@ testkube-api:
     accessKeyId: "minio"
     # -- MinIO Secret Access Key
     accessKey: "minio123"
-    # -- MinIO Location
-    location: ""
+    # -- MinIO Region
+    region: ""
     # -- MinIO Token
     token: ""
     # -- MinIO Bucket
