@@ -58,6 +58,10 @@ cloud:
   ## License Key
   key: ""
 
+## Multinamespace feature. Disabled by default
+multinamespace:
+  enabled: false
+
 ## Extra Environment Variables which will be injected into the Testkube API container
 extraEnvVars: {}
 # - name: FOO

@@ -218,7 +218,6 @@ subjects:
     namespace: {{ .Release.Namespace }}
 
 ---
-
 {{- if .Values.additionalNamespaces }}
 {{- range .Values.additionalNamespaces }}
 {{- $rangeItem := . -}}
@@ -226,7 +225,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: watchers-rb-{{ .Release.Name }}
+  name: watchers-rb-{{ $rangeItem }}
   namespace: {{ $rangeItem }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
@@ -238,7 +237,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: watchers-role-{{ .Release.Name }}
+  name: watchers-role-{{ $rangeItem }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -249,7 +248,7 @@ subjects:
 {{- end }}
 
 ---
-
+{{- if .Values.multinamespace.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
@@ -270,6 +269,31 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
+{{- end }}
+---
+
+{{- if not .Values.multinamespace.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRoleBinding
+metadata:
+  name: watchers-rb-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name:  watchers-role-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}

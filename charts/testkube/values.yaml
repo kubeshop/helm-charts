@@ -155,6 +155,9 @@ testkube-api:
   rbac:
     create: true
 
+  # Multinamespace feature. Disabled by default
+  multinamespace:
+    enabled: false
 
   # Monitoring parameters
   prometheus:
