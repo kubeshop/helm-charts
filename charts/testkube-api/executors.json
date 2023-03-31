@@ -114,7 +114,7 @@
         "name": "kubepug-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-kubepug-executor:1.10.25",
+            "image": "kubeshop/testkube-kubepug-executor:1.10.27",
             "types": [
                 "kubepug/yaml",
                 "kubepug/json"
