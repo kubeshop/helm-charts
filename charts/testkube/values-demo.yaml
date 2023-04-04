@@ -98,7 +98,7 @@ testkube-api:
   fullnameOverride: "testkube-api-server"
   image:
     repository: kubeshop/testkube-api-server
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
     # tag: "latest"
@@ -295,7 +295,7 @@ testkube-dashboard:
   fullnameOverride: "testkube-dashboard"
   image:
     repository: kubeshop/testkube-dashboard
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     #tag: "main" #it will take the tag from appVersion
   service:
     type: ClusterIP

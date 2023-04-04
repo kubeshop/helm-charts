@@ -54,7 +54,7 @@ securityContext:
 image:
   registry: docker.io
   repository: kubeshop/testkube-dashboard
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.9.2"
   digest: ""

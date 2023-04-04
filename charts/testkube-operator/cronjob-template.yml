@@ -15,7 +15,7 @@ spec:
           containers:
           - name: curlimage
             image: curlimages/curl
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             command:
             - sh
             - -c
