@@ -80,3 +80,14 @@ Define API image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define TESTKUBE_WATCHER_NAMESPACES variable
+*/}}
+{{- define "testkube-api.watcher-namespaces" -}}
+{{- if .Values.multinamespace.enabled }}
+{{ join "," (concat (list .Release.Namespace) .Values.additionalNamespaces) }}
+{{- else }}
+{{- printf "" }}
+{{- end }}
+{{- end }}

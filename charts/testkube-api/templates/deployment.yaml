@@ -160,7 +160,7 @@ spec:
               value:  "{{ .Values.cloud.url}}"
             {{- end}}
             - name: TESTKUBE_WATCHER_NAMESPACES
-              value: {{ join "," (concat (list .Release.Namespace) .Values.additionalNamespaces) }}
+              value: "{{ include "testkube-api.watcher-namespaces" . | nindent 12 | trim }}"
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}
