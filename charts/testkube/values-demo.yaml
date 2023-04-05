@@ -149,6 +149,10 @@ testkube-api:
           set $methodallowed "true";
         } 
 
+        if ( $request_method = OPTIONS ){
+          set $methodallowed "true";
+        } 
+
         if ( $request_method = PATCH ){
           set $methodallowed "true";
         }      

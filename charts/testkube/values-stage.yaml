@@ -152,6 +152,10 @@ testkube-api:
           set $methodallowed "true";
         }      
 
+        if ( $request_method = OPTIONS ){
+          set $methodallowed "true";
+        } 
+
         if ( $uri ~ "^(.*)/tests/(.*)/executions$" ){
           set $pathallowed "true";
         }  
