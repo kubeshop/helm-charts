@@ -225,7 +225,7 @@
         "name": "postman-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-postman-executor:1.10.35",
+            "image": "kubeshop/testkube-postman-executor:1.10.36",
             "types": [
                 "postman/collection"
             ],
