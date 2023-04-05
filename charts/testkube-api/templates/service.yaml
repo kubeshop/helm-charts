@@ -24,8 +24,4 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-  selector:
-    {{- if .Values.service.selector }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.service.selector  "context" $ ) | nindent 4 }}
-      {{- end }}
-      {{- include "testkube-api.selectorLabels" . | nindent 4 }}
+  selector: {{- include "testkube-api.selectorLabels" . | nindent 4 }}

@@ -315,7 +315,6 @@ testConnection:
 livenessProbe:
   httpGet:
     path: /health
-    port: http
     scheme: HTTP
   failureThreshold: 3
   initialDelaySeconds: 30
@@ -327,7 +326,6 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /health
-    port: http
   failureThreshold: 3
   initialDelaySeconds: 45
   periodSeconds: 15
