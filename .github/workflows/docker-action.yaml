@@ -29,13 +29,12 @@ jobs:
           location: ${{ secrets.GKE_ZONE_DEV }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Create test
-        id: create_test
-        uses: kubeshop/testkube-docker-action@4a81be5e738c88baef80b11e63c6087cd09a0ed0
+      - name: Run test
+        id: run_test
+        uses: kubeshop/testkube-docker-action@bf0fd9c391ca6847b07b6fd9b50fc2f8299507fa
         with:
-          command: create
+          command: run
           resource: test
           namespace: testkube
-          parameters: "--type k6/script --name testkube-github-action"
-          stdin: "import http from 'k6/http';\nimport { sleep,check } from 'k6';"
+          parameters: "artillery-executor-smoke -f"
 
