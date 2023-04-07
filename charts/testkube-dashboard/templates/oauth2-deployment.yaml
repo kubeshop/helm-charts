@@ -74,6 +74,14 @@ spec:
         ports:
         - containerPort: {{ .Values.oauth2.port }}
           protocol: TCP
+        {{- with .Values.oauth2.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+      {{- with .Values.oauth2.volumes }}
+      volumes:
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
       {{- with .Values.oauth2.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
