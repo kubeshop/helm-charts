@@ -594,7 +594,19 @@ testkube-dashboard:
     ingress:
       labels: {}
       # -- add Ingress annotations
-      annotations: {} 
+      annotations: {}
+
+    ## -- Add volumes for Oauth2
+    volumes: []
+    #  - name: test-volume
+    #    gcePersistentDisk:
+    #      pdName: my-data-disk
+    #      fsType: ext4
+
+    ## Add volumeMounts for Oauth2
+    volumeMounts: []
+    #  - mountPath: /mypath
+    #    name: git-volume
 
   # Autoscaling parameters
   autoscaling:
