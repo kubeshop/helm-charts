@@ -362,6 +362,8 @@ testkube-api:
     token: ""
     # -- MinIO Bucket
     bucket: "testkube-artifacts"
+    # -- MinIO Expiration period in days
+    expiration: 0
     # -- MinIO Use SSL
     SSL: false
     # -- Toggle whether to enable scraper in Testkube API

@@ -103,6 +103,8 @@ spec:
               {{- end }}
             - name: "STORAGE_BUCKET"
               value:  "{{ .Values.storage.bucket }}"
+            - name: "STORAGE_EXPIRATION"
+              value:  "{{ .Values.storage.expiration }}"
             - name: "STORAGE_ACCESSKEYID"
               value:  "{{ .Values.storage.accessKeyId }}"
             - name: "STORAGE_SECRETACCESSKEY"

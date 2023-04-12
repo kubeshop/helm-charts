@@ -152,6 +152,8 @@ storage:
   region: ""
   token: ""
   bucket: "testkube-artifacts"
+  # expiration period in days
+  expiration: 0
   SSL: false
   scrapperEnabled: true
 
