@@ -70,7 +70,7 @@ spec:
                   name: {{ .Values.nats.secretName }}
                   key: {{ .Values.nats.secretKey }}
               {{- else }}
-              value: {{ include "testkube-api.nats.uri" . }}
+              value: "nats://{{ .Release.Name }}-nats"
               {{- end }}
             {{- end }}
             - name: POSTMANEXECUTOR_URI
@@ -167,6 +167,8 @@ spec:
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url}}"
             {{- end}}
+            - name: TESTKUBE_WATCHER_NAMESPACES
+              value: "{{ include "testkube-api.watcher-namespaces" . | nindent 12 | trim }}"
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}

@@ -15,6 +15,7 @@ For those who are still using the affected versions, there are two ways to addre
 1. Reinstall the Testkube helm-chart. 
 
 OR 
+
 2. Upgrade to the latest version setting empty values for the following parameters in `values.yaml`:
 ```aidl
 testkube-api:

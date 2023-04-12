@@ -5,6 +5,7 @@ metadata:
   name: webhook-cert-patch
   annotations:
     "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "6"
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     {{- if .Values.webhook.patch.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.annotations "context" $ ) | nindent 4 }}
@@ -21,6 +22,7 @@ metadata:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 spec:
   template:
     metadata:
@@ -49,11 +51,11 @@ spec:
           args:
             - patch
             - --namespace
-            - {{ .Release.Namespace }}
+            - {{ include "testkube-operator.namespace" . }}
             - --secret-name
             - {{ .Values.webhook.certificate.secretName }}
             - --webhook-name
-            - {{ .Values.webhook.name }}
+            - {{ .Release.Name }}-{{ .Values.webhook.name }}
             - --patch-validating=true
             - --patch-mutating=false
             - --crd-api-groups

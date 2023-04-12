@@ -5,6 +5,7 @@ metadata:
   name: webhook-cert-create
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "6"
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     {{- if .Values.webhook.patch.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.patch.annotations "context" $ ) | nindent 4 }}
@@ -21,6 +22,7 @@ metadata:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 spec:
   template:
     metadata:
@@ -52,7 +54,7 @@ spec:
             - secret
             - {{ .Values.webhook.certificate.secretName }}
             - --namespace
-            - {{ .Release.Namespace }}
+            - {{ include "testkube-operator.namespace" . }}
             - --ignore-not-found
           securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
           {{- if .Values.webhook.migrate.resources }}
@@ -66,9 +68,9 @@ spec:
           args:
             - create
             - --host
-            - {{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }},{{ include "testkube-operator.webhookServiceName" . }}.{{ .Release.Namespace }}.svc
+            - {{ include "testkube-operator.webhookServiceName" . }}.{{ include "testkube-operator.namespace" . }},{{ include "testkube-operator.webhookServiceName" . }}.{{ include "testkube-operator.namespace" . }}.svc
             - --namespace
-            - {{ .Release.Namespace }}
+            - {{ include "testkube-operator.namespace" . }}
             - --secret-name
             - {{ .Values.webhook.certificate.secretName }}
             - --key-name
@@ -93,5 +95,5 @@ spec:
       securityContext:
         {{- toYaml .Values.webhook.patch.podSecurityContext | nindent 8 }}
       {{- end }}
-  backoffLimit: {{ .Values.webhook.migrate.backoffLimit }}
+  backoffLimit: 5
 {{- end }}

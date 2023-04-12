@@ -13,6 +13,7 @@ metadata:
     {{- if .Values.global.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 spec:
   containers:
     - name: wget

@@ -116,3 +116,14 @@ Define Operator image
     {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define testkube operator namespace
+*/}}
+{{- define "testkube-operator.namespace" -}}
+{{- if .Values.namespace }}
+{{- default .Values.namespace }}
+{{- else }}
+{{- default .Release.Namespace }}
+{{- end }}
+{{- end }}

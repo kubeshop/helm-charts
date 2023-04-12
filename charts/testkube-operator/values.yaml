@@ -27,6 +27,9 @@ podLabels: {}
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 
+## Namespace to install Testkube Operator
+namespace: ""
+
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
@@ -128,7 +131,7 @@ webhook:
   ## Use webhook
   enabled: true
   ## Name of the webhook
-  name: testkube-operator-webhook-admission
+  name: webhook-admission
   ## Webhook specific labels
   labels: {}
   ## Webhook specific annotations
@@ -146,7 +149,7 @@ webhook:
       registry: docker.io
       repository: rancher/kubectl
       tag: v1.23.7
-      pullPolicy: "IfNotPresent"
+      pullPolicy: Always
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##

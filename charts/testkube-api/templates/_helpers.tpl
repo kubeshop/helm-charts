@@ -82,13 +82,12 @@ Define API image
 {{- end -}}
 
 {{/*
-NATS Uri
+Define TESTKUBE_WATCHER_NAMESPACES variable
 */}}
-{{- define "testkube-api.nats.uri" -}}
-{{- if .Values.nats.uri -}}
-    {{- print .Values.nats.uri -}}
-{{- else -}}
-    "nats://{{ .Release.Name }}-nats"
-{{- end -}}
+{{- define "testkube-api.watcher-namespaces" -}}
+{{- if .Values.multinamespace.enabled }}
+{{ join "," (concat (list .Release.Namespace) .Values.additionalNamespaces) }}
+{{- else }}
+{{- printf "" }}
 {{- end }}
-
+{{- end }}
