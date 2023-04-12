@@ -20,5 +20,4 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-  selector:
-    {{- include "testkube-dashboard.selectorLabels" . | nindent 4 }}
+  selector: {{- include "testkube-dashboard.selectorLabels" . | nindent 4 }}

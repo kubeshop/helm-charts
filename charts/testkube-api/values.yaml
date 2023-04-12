@@ -201,6 +201,11 @@ mongodb:
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
   allowDiskUse: true
+  # to use docdb with TLS, set dbType to docdb and allowTLS to true
+  # dbType possible values: docdb|mongo; empty string defaults to mongo
+  # dbType: docdb
+  # allowTLS will be checked for docdb; on true: docdb ca certs will be downloaded and used
+  # allowTLS: true
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
@@ -337,6 +342,7 @@ readinessProbe:
   httpGet:
     path: /health
     port: http
+    scheme: HTTP
   failureThreshold: 3
   initialDelaySeconds: 45
   periodSeconds: 15

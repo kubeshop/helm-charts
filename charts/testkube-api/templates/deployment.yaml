@@ -52,6 +52,14 @@ spec:
             - name: API_MONGO_SSL_CERT
               value: {{ .Values.mongodb.sslCertSecret }}
             {{- end }}
+            {{- if .Values.mongodb.dbType }}
+            - name: API_MONGO_DB_TYPE
+              value: {{ .Values.mongodb.dbType }}
+            {{- end }}
+            {{- if .Values.mongodb.allowTLS }}
+            - name: API_MONGO_ALLOW_TLS
+              value: {{ .Values.mongodb.allowTLS }}
+            {{- end }}
             - name: API_MONGO_ALLOW_DISK_USE
               value: "{{ .Values.mongodb.allowDiskUse }}"
             {{- if .Values.nats.enabled }}

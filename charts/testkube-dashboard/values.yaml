@@ -54,7 +54,7 @@ securityContext:
 image:
   registry: docker.io
   repository: kubeshop/testkube-dashboard
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.9.2"
   digest: ""
@@ -177,7 +177,16 @@ oauth2:
   ## Add additional Ingress labels
   ingress:
     labels: {}
-
+  ## Add volumes for Oauth2
+  volumes: []
+#  - name: test-volume
+#    gcePersistentDisk:
+#      pdName: my-data-disk
+#      fsType: ext4
+  ## Add volumeMounts for Oauth2
+  volumeMounts: []
+#  - mountPath: /mypath
+#    name: git-volume
 ## Testkube Dashboard resource requests and limits
 resources: {}
 #   limits:

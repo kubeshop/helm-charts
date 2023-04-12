@@ -24,7 +24,7 @@ preUpgradeHook:
     registry: k8s.gcr.io
     repository: hyperkube
     tag: v1.12.1
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
   # -- Specify resource limits and requests
   resources: {}
   # -- Create SA for upgrade hook
@@ -177,7 +177,7 @@ testkube-api:
     # Overrides the image tag whose default is the chart appVersion.
     # tag: "latest"
     # -- Testkube API image tag
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # -- Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
     digest: ""
     # Overrides the image tag whose default is the chart appVersion.
@@ -454,7 +454,7 @@ testkube-dashboard:
     # -- Dashboard image name
     repository: kubeshop/testkube-dashboard
     # -- Dashboard image tag
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # -- Dashboard Image pull policy
     # tag: "main" # it will take tag from appVersion.
     # -- Dashboard Image digest. If set, will override the tag
@@ -596,7 +596,19 @@ testkube-dashboard:
     ingress:
       labels: {}
       # -- add Ingress annotations
-      annotations: {} 
+      annotations: {}
+
+    ## -- Add volumes for Oauth2
+    volumes: []
+    #  - name: test-volume
+    #    gcePersistentDisk:
+    #      pdName: my-data-disk
+    #      fsType: ext4
+
+    ## Add volumeMounts for Oauth2
+    volumeMounts: []
+    #  - mountPath: /mypath
+    #    name: git-volume
 
   # Autoscaling parameters
   autoscaling:
@@ -768,7 +780,7 @@ testkube-operator:
         # -- Migrate container job image tag
         version: v1.23.7
         # -- Migrate container job image pull policy
-        pullPolicy: Always
+        pullPolicy: IfNotPresent
       # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
       # -- Security Context for webhook migrate Container
       securityContext:
