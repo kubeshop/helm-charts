@@ -195,9 +195,17 @@ spec:
               containerPort: 8088
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+              scheme: HTTP
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+              scheme: HTTP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
