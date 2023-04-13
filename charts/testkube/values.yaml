@@ -117,6 +117,8 @@ nats:
     securityContext: {}
     # -- NATS resource settings
     resources: {}
+    # -- Max payload
+    maxPayload: 8MB
 
   # Reloader container settings
   reloader:
