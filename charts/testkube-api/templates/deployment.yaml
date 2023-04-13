@@ -165,6 +165,10 @@ spec:
               value: "{{ include "testkube-api.fullname" . }}"
             - name: APISERVER_CONFIG
               value: "testkube-api-server-config-{{ .Release.Namespace }}"
+            {{- if .Values.httpBodyLimit }}
+            - name: APISERVER_HTTP_BODY_LIMIT
+              value: {{ .Values.httpBodyLimit }}
+            {{- end}}
             - name: TESTKUBE_OAUTH_CLIENTID
               value:  "{{ .Values.cliIngress.oauth.clientID }}"
             - name: TESTKUBE_OAUTH_CLIENTSECRET
