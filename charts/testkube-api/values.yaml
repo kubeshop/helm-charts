@@ -202,6 +202,9 @@ mongodb:
   # secretKey: mongo-dsn
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
+  # sslCAFileKey: sslCertificateAuthorityFile
+  # sslClientFileKey: sslClientCertificateKeyFile
+  # sslClientFilePassKey: sslClientCertificateKeyFilePassword
   allowDiskUse: true
   # to use docdb with TLS, set dbType to docdb and allowTLS to true
   # dbType possible values: docdb|mongo; empty string defaults to mongo
