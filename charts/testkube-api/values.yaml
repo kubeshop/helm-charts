@@ -198,7 +198,7 @@ mongodb:
   ## or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
-  ## SSL certificate secret referece
+  ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
   # sslCAFileKey: sslCertificateAuthorityFile
   # sslClientFileKey: sslClientCertificateKeyFile
