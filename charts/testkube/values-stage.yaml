@@ -94,6 +94,13 @@ mongodb:
     repository: zcube/bitnami-compat-mongodb
     tag: 5.0.10-debian-11-r19
 
+nats:
+  # NATS container settings
+  nats:
+    limits:
+      # -- Max payload
+      maxPayload: 8MB
+
 testkube-api:
   prometheus:
     enabled: false
