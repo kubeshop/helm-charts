@@ -180,6 +180,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.storage.accessKey | string | `"minio123"` | MinIO Secret Access Key |
 | testkube-api.storage.accessKeyId | string | `"minio"` | MinIO Access Key ID |
 | testkube-api.storage.bucket | string | `"testkube-artifacts"` | MinIO Bucket |
+| testkube-api.storage.expiration | int | `0` | MinIO Expiration in days |
 | testkube-api.storage.endpoint | string | `""` | MinIO endpoint |
 | testkube-api.storage.endpoint_port | string | `"9000"` | MinIO endpoint port |
 | testkube-api.storage.region | string | `""` | MinIO Region |

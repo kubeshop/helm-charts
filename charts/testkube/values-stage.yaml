@@ -218,6 +218,8 @@ testkube-api:
     region: ""
     token: ""
     bucket: "testkube-artifacts"
+    # -- MinIO Expiration period in days
+    expiration: 0
     SSL: false
     scrapperEnabled: true
 
