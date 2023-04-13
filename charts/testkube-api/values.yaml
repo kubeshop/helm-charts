@@ -332,24 +332,9 @@ testConnection:
 
 ## Testkube API Liveness probe
 livenessProbe:
-  httpGet:
-    path: /health
-    port: http
-    scheme: HTTP
-  failureThreshold: 3
   initialDelaySeconds: 30
-  periodSeconds: 15
-  successThreshold: 1
-  timeoutSeconds: 10
+
 
 ## Testkube API Readiness probe
 readinessProbe:
-  httpGet:
-    path: /health
-    port: http
-    scheme: HTTP
-  failureThreshold: 3
   initialDelaySeconds: 45
-  periodSeconds: 15
-  successThreshold: 1
-  timeoutSeconds: 10
