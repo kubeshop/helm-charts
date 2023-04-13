@@ -88,6 +88,13 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
+nats:
+  # NATS container settings
+  nats:
+    limits:
+      # -- Max payload
+      maxPayload: 8MB
+
 testkube-api:
   rbac:
     createRoles: true
