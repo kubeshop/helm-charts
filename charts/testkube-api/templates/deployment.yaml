@@ -192,6 +192,10 @@ spec:
             {{- end }}
             - name: TESTKUBE_CONFIG_DIR
               value: /app/config
+            {{- if .Values.global }}
+            - name: TESTKUBE_REGISTRY
+              value:  {{ .Values.global.imageRegistry }}
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
