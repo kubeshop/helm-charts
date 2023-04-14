@@ -281,3 +281,10 @@ affinity: {}
 ##Test Connection pod
 testConnection:
   enabled: false
+
+preUpgrade:
+  image:
+    registry: k8s.gcr.io
+    repository: hyperkube
+    tag: v1.12.1
+    pullPolicy: IfNotPresent

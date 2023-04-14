@@ -20,8 +20,8 @@ spec:
       serviceAccountName: {{ include "testkube-operator.namespace" . }}
       containers:
       - name: kubectl
-        image: "k8s.gcr.io/hyperkube:v1.12.1"
-        imagePullPolicy: "IfNotPresent"
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.preUpgrade.image.pullPolicy }}
         command:
         - /bin/bash
         - -c
