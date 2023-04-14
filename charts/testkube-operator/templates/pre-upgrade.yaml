@@ -20,7 +20,7 @@ spec:
       serviceAccountName: {{ include "testkube-operator.namespace" . }}
       containers:
       - name: kubectl
-        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image "global" .Values.global) }}
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image) }}
         imagePullPolicy: {{ .Values.preUpgrade.image.pullPolicy }}
         command:
         - /bin/bash
