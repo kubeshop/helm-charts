@@ -274,6 +274,7 @@ testkube-api:
     timeoutSeconds: 10
 
   analyticsEnabled: true
+  testResultTimeout: "2h"
   slackToken: ""
   slackSecret: ""
   slackTemplate: ""
