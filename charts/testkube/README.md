@@ -116,7 +116,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHook.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
 | preUpgradeHook.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.analyticsEnabled | bool | `true` | Enable analytics for Testkube |
-| testkube-api.testResultTimeout | string | `2h` | Testkube timeout for test results |
+| testkube-api.podStartTimeout | string | `30m` | Testkube timeout for pod start |
 | testkube-api.cliIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
 | testkube-api.cliIngress.enabled | bool | `false` | Use ingress |
 | testkube-api.cliIngress.hosts | list | `["testkube.example.com"]` | Hostnames must be provided if Ingress is enabled. |
