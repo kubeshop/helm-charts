@@ -71,8 +71,8 @@ extraEnvVars: {}
 additionalNamespaces: []
 ## Enable analytics for Testkube
 analyticsEnabled: true
-# -- Testkube timeout for test results
-testResultTimeout: "2h"
+# -- Testkube timeout for pod start
+podStartTimeout: "30m"
 
 ## Integration with Slack.
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/

@@ -196,8 +196,8 @@ spec:
             - name: TESTKUBE_REGISTRY
               value:  {{ .Values.global.imageRegistry }}
             {{- end }}
-            - name: TESTKUBE_TEST_RESULT_TIMEOUT
-              value:  "{{ .Values.testResultTimeout }}"
+            - name: TESTKUBE_POD_START_TIMEOUT
+              value:  "{{ .Values.podStartTimeout }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
