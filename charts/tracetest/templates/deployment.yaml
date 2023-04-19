@@ -34,7 +34,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           env:
           - name: TRACETEST_DEV
-            value: {{ .Values.env.tracetestDev }}
+            value: "{{ .Values.env.tracetestDev }}"
           args:
           - --config
           - '/app/config/config.yaml'
