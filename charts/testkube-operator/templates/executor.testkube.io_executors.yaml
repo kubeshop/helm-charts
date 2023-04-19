@@ -35,12 +35,12 @@ spec:
               description: ExecutorSpec defines the desired state of Executor
               properties:
                 args:
-                  description: container executor binary arguments
+                  description: executor binary arguments
                   items:
                     type: string
                   type: array
                 command:
-                  description: container executor default binary command
+                  description: executor default binary command
                   items:
                     type: string
                   type: array

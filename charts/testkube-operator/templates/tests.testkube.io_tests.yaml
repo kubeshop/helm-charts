@@ -459,6 +459,12 @@ spec:
                       items:
                         type: string
                       type: array
+                    argsMode:
+                      description: usage mode for arguments
+                      enum:
+                      - append
+                      - override
+                      type: string
                     artifactRequest:
                       description: artifact request body for container executors with
                         test artifacts
@@ -479,7 +485,7 @@ spec:
                       - volumeMountPath
                       type: object
                     command:
-                      description: container executor binary command
+                      description: executor binary command
                       items:
                         type: string
                       type: array
