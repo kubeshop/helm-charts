@@ -254,6 +254,17 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-artillery-executor:1.11.5",
+            "command": [
+                "artillery"
+            ],
+            "args": [
+                "run",
+                "<runPath>",
+                "--dotenv",
+                "<envFile>",
+                "-o",
+                "<reportFile>"
+            ],
             "types": [
                 "artillery/test"
             ],
