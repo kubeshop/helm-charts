@@ -206,6 +206,12 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-curl-executor:1.11.5",
+            "command": [
+                "curl"
+            ],
+            "args": [
+                "-is"
+            ],
             "types": [
                 "curl/test"
             ],
