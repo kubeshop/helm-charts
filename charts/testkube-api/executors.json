@@ -221,7 +221,7 @@
                 "git-file",
                 "git"
             ],
-            "features": [],
+            "features": ["artifacts"],
             "meta": {
                 "iconURI": "curl",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-curl"
@@ -275,7 +275,7 @@
                 "git-dir",
                 "git"
             ],
-            "features": [],
+            "features": ["artifacts"],
             "meta": {
                 "iconURI": "artillery",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-artillery"
