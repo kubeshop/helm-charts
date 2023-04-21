@@ -466,23 +466,19 @@ spec:
                       - override
                       type: string
                     artifactRequest:
-                      description: artifact request body for container executors with
-                        test artifacts
+                      description: artifact request body with test artifacts
                       properties:
                         dirs:
-                          description: artifact directories
+                          description: artifact directories for scraping
                           items:
                             type: string
                           type: array
                         storageClassName:
-                          description: artifact storage class name
+                          description: artifact storage class name for container executor
                           type: string
                         volumeMountPath:
-                          description: artifact volume mount path
+                          description: artifact volume mount path for container executor
                           type: string
-                      required:
-                      - storageClassName
-                      - volumeMountPath
                       type: object
                     command:
                       description: executor binary command
