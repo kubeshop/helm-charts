@@ -232,7 +232,20 @@
         "name": "postman-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-postman-executor:1.11.5",
+            "image": "kubeshop/testkube-postman-executor",
+            "command": [
+                "newman"
+            ],
+            "args": [
+                "run",
+                "<runPath>",
+                "-e",
+                "<envFile>",
+                "--reporters",
+                "cli,json",
+                "--reporter-json-export",
+                "<reportFile>"
+            ],
             "types": [
                 "postman/collection"
             ],
@@ -242,7 +255,7 @@
                 "git-file",
                 "git"
             ],
-            "features": [],
+            "features": ["artifacts"],
             "meta": {
                 "iconURI": "postman",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-postman"
