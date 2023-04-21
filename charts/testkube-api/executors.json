@@ -116,6 +116,14 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-kubepug-executor:1.11.5",
+            "command": [
+                "kubepug"
+            ],
+            "args": [
+                "--format=json", 
+                "--input-file",
+                "<runPath>"
+            ],
             "types": [
                 "kubepug/yaml",
                 "kubepug/json"
@@ -127,7 +135,7 @@
                 "git-dir",
                 "git"
             ],
-            "features": [],
+            "features": ["artifacts"],
             "meta": {
                 "iconURI": "kubepug",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-kubepug"
