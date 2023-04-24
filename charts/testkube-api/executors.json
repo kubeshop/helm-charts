@@ -74,6 +74,16 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-maven-executor:1.11.5",
+            "command": [
+                "mvn"
+            ],
+            "args": [
+                "--settings",
+                "<settingsFile>",
+                "<goalName>",
+                "-Duser.home",
+                "<mavenHome>"
+            ],
             "types": [
                 "maven/project",
                 "maven/test",
@@ -95,6 +105,15 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-gradle-executor:1.11.5",
+            "command": [
+                "gradle"
+            ],
+            "args": [
+                "--no-daemon",
+                "<taskName>",
+                "-p",
+                "<projectDir>"
+            ],
             "types": [
                 "gradle/project",
                 "gradle/test",
