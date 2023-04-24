@@ -25,6 +25,22 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-jmeter-executor:1.11.5",
+            "command": [
+                "<entryPoint>"
+            ],
+            "args": [
+                "-n",
+                "-j",
+                "<logFile>",
+                "-t",
+                "<runPath>",
+                "-l",
+                "<jtlFile",
+                "-e",
+                "-o",
+                "<reportFile>",
+                "<envVars>"
+            ],
             "types": [
                 "jmeter/test"
             ],
