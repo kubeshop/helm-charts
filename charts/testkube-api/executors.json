@@ -35,7 +35,7 @@
                 "-t",
                 "<runPath>",
                 "-l",
-                "<jtlFile",
+                "<jtlFile>",
                 "-e",
                 "-o",
                 "<reportFile>",
