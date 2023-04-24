@@ -147,6 +147,12 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-soapui-executor:1.11.5",
+            "command": [
+                "/bin/sh",
+                "/usr/local/SmartBear/EntryPoint.sh"
+            ],
+            "args": [
+            ],
             "types": [
                 "soapui/xml"
             ],
