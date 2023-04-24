@@ -1,3 +1,4 @@
+{{- if .Values.preUpgrade.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -18,10 +19,14 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}-operator-pre-upgrade
     spec:
       serviceAccountName:  {{ .Release.Name }}-operator-pre-upgrade-sa
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
       - name: kubectl
         image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.preUpgrade.image.pullPolicy }}
+        {{- if .Values.preUpgrade.resources }}
+        resources: {{- toYaml .Values.preUpgrade.resources | nindent 10 }}
+        {{- end }}
         command:
         - /bin/bash
         - -c
@@ -32,4 +37,12 @@ spec:
               else
                 kubectl create namespace {{ include "testkube-operator.namespace" . }};
               fi
+        securityContext:
+          {{- toYaml .Values.preUpgrade.securityContext | nindent 10 }}
+      securityContext:
+        {{- toYaml .Values.preUpgrade.podSecurityContext | nindent 8 }}
       restartPolicy: Never
+      {{- if .Values.preUpgrade.tolerations }}
+      tolerations: {{ toYaml .Values.preUpgrade.tolerations | nindent 8 }}
+      {{- end }}
+{{- end }}
