@@ -208,6 +208,7 @@
                 "/usr/local/SmartBear/EntryPoint.sh"
             ],
             "args": [
+                "<runPath>"
             ],
             "types": [
                 "soapui/xml"
@@ -232,6 +233,14 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-k6-executor:1.11.5",
+            "command": [
+                "k6"
+            ],
+            "args": [
+                "<k6command>",
+                "<envVars>",
+                "<runPath>"
+            ],
             "types": [
                 "k6/script"
             ],
