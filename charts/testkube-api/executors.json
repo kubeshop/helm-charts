@@ -76,7 +76,7 @@
                 "--keep-going",
                 "--trace",
                 "--junit-report",
-                "report.xml",
+                "<reportFile>",
                 "<runPath>"
             ],
             "types": [
