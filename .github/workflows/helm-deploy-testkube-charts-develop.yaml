@@ -63,7 +63,7 @@ jobs:
           echo ::set-output name=dashboard_image_tag::$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
 
       - name: Deploy if Testkube API image is updated
-        if: ${{ github.event.client_payload.image_tag }}
+        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
           helm dependency update ./charts/testkube
           helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
