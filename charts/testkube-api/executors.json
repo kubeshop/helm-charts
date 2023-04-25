@@ -109,7 +109,9 @@
                 "git-dir",
                 "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "maven",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-maven"
@@ -139,7 +141,9 @@
                 "git-dir",
                 "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "gradle",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-gradle"
@@ -170,7 +174,9 @@
                 "git-dir",
                 "git"
             ],
-            "features": ["artifacts"],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "kubepug",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-kubepug"
@@ -221,7 +227,9 @@
                 "git-dir",
                 "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "k6",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-k6"
@@ -233,6 +241,18 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-cypress-executor:1.11.5",
+            "command": [
+                "./node_modules/cypress/bin/cypress"
+            ],
+            "args": [
+                "run",
+                "--reporter",
+                "junit",
+                "--reporter-options",
+                "mochaFile=<reportFile>,toConsole=false",
+                "--env",
+                "<envVars>"
+            ],
             "types": [
                 "cypress/project"
             ],
@@ -270,7 +290,9 @@
                 "git-file",
                 "git"
             ],
-            "features": ["artifacts"],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "curl",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-curl"
@@ -304,7 +326,9 @@
                 "git-file",
                 "git"
             ],
-            "features": ["artifacts"],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "postman",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-postman"
@@ -337,7 +361,9 @@
                 "git-dir",
                 "git"
             ],
-            "features": ["artifacts"],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "artillery",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-artillery"
