@@ -65,6 +65,20 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-ginkgo-executor:1.11.5",
+            "command": [
+                "ginkgo"
+            ],
+            "args": [
+                "-r",
+                "-p",
+                "--randomize-all",
+                "--randomize-suites",
+                "--keep-going",
+                "--trace",
+                "--junit-report",
+                "report.xml",
+                "<runPath>"
+            ],
             "types": [
                 "ginkgo/test"
             ],
