@@ -250,6 +250,8 @@
                 "junit",
                 "--reporter-options",
                 "mochaFile=<reportFile>,toConsole=false",
+                "--project",
+                "<projectPath>",
                 "--env",
                 "<envVars>"
             ],
