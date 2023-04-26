@@ -4,6 +4,14 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-playwright-executor:1.11.5",
+            "command": [
+                "<depManager>"
+            ],
+            "args": [
+                "<depCommand>",
+                "playwright",
+                "test"
+            ],
             "types": [
                 "playwright/test"
             ],
