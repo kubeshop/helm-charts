@@ -245,7 +245,7 @@
                 "k6"
             ],
             "args": [
-                "<k6command>",
+                "<k6Command>",
                 "<envVars>",
                 "<runPath>"
             ],
