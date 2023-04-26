@@ -1,23 +1,23 @@
-name: Releasing Testkube Helm charts to Develop k8s Cluster.
+name: Releasing Testkube Helm charts to Pre-release k8s Cluster.
 
-concurrency: develop_cluster
+concurrency: pre-release_cluster
 
 on:
   repository_dispatch:
     types:
       [
-        trigger-workflow-api-develop,
-        trigger-workflow-dashboard-develop,
-        trigger-workflow-operator-develop,
-        trigger-workflow-executor-develop
+        trigger-workflow-api-pre-release,
+        trigger-workflow-dashboard-pre-release,
+        trigger-workflow-operator-pre-release,
+        trigger-workflow-executor-pre-release
       ]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_DEVELOP }}
-  GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }}
+  GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_PRE_RELEASE }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE_PRE_RELEASE }}
   DEPLOYMENT_NAME: testkube
-  ENV: develop
+  ENV: pre-release
 
 
 jobs:
