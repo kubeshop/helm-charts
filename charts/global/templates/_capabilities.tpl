@@ -52,12 +52,8 @@ Return the appropriate apiVersion for ingress.
 Return the appropriate apiVersion for Horizontal Pod Autoscaler.
 */}}
 {{- define "global.capabilities.hpa.apiVersion" -}}
-{{- if semverCompare "<1.23-0" (include "global.capabilities.kubeVersion" .context) -}}
-{{- if .beta2 -}}
+{{- if semverCompare "<1.23-0" (include "global.capabilities.kubeVersion" .) -}}
 {{- print "autoscaling/v2beta2" -}}
-{{- else -}}
-{{- print "autoscaling/v2beta1" -}}
-{{- end -}}
 {{- else -}}
 {{- print "autoscaling/v2" -}}
 {{- end -}}
