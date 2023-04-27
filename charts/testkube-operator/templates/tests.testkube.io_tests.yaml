@@ -483,6 +483,9 @@ spec:
                       items:
                         type: string
                       type: array
+                    cronJobTemplate:
+                      description: cron job template extensions
+                      type: string
                     envConfigMaps:
                       description: config map references
                       items:
