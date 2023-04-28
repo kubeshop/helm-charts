@@ -135,7 +135,7 @@ testkube-api:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-develop
+      kubernetes.io/ingress.global-static-ip-name: testkube-beta
       # add an annotation indicating the issuer to use.
       # cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -185,8 +185,8 @@ testkube-api:
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - develop.testkube.io
-        secretName: testkube-develop-cert-secret
+          - beta.testkube.io
+        secretName: testkube-beta-cert-secret
   cliIngress:
     enabled: false
     annotations:
@@ -204,12 +204,12 @@ testkube-api:
       scopes: ""
       path: /results/(v\d/.*)
     hosts:
-      - develop.testkube.io
+      - demo.testkube.io
     tlsenabled: "false"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - develop.testkube.io
-        secretName: testkube-develop-cert-secret
+          - demo.testkube.io
+        secretName: testkube-demo-cert-secret
   storage:
     endpoint: ""
     endpoint_port: "9000"
@@ -306,7 +306,7 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
-      kubernetes.io/ingress.global-static-ip-name: testkube-develop
+      kubernetes.io/ingress.global-static-ip-name: testkube-beta
       # add an annotation indicating the issuer to use.
       cert-manager.io/cluster-issuer: letsencrypt-prod
       # controls whether the ingress is modified ‘in-place’,
@@ -314,13 +314,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - develop.testkube.io
+      - beta.testkube.io
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - develop.testkube.io
-        secretName: testkube-develop-cert-secret
-  apiServerEndpoint: "develop.testkube.io/results" #get the address of the endpoint or set it using helm
+          - beta.testkube.io
+        secretName: testkube-beta-cert-secret
+  apiServerEndpoint: "beta.testkube.io/results" #get the address of the endpoint or set it using helm
   oauth2:
     enabled: false
     name: oauth2-proxy
@@ -337,7 +337,7 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://develop.testkube.io/oauth2/callback"
+      redirectUrl: "http://beta.testkube.io/oauth2/callback"
 
   ##Test Connection pod
   testConnection:
