@@ -20,7 +20,7 @@ spec:
             - sh
             - -c
             args:
-            - 'curl -X POST -H "Content-Type: application/json" -d ''{{ .Data }}'' "http://{{ .ServiceName }}:{{ .ServicePort}}/v1/{{ .Resource }}/{{ .Id }}/executions"'
+            - 'curl -X POST -H "Content-Type: application/json" -d ''{{ .Data }}'' "http://{{ .ServiceName }}.{{ .Namespace }}.svc.cluster.local:{{ .ServicePort}}/v1/{{ .Resource }}/{{ .Id }}/executions"'
           restartPolicy: Never
       backoffLimit: 0
       ttlSecondsAfterFinished: 180
