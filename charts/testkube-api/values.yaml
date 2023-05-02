@@ -82,9 +82,6 @@ slackToken: ""
 ## Slack secret to store slackToken, the key name should be SLACK_TOKEN
 slackSecret: ""
 
-## Slack template for the events sent to Slack
-slackTemplate: ""
-
 ## Slack config for the events, tests, testsuites and channels
 slackConfig: ""
 
