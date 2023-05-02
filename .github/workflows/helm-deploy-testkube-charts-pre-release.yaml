@@ -120,7 +120,6 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_FOOTER: "Kubeshop --> TestKube"
 
-## Add tests
   test_suite_run:
     name: test suite for GKE cluster
     runs-on: ubuntu-latest
