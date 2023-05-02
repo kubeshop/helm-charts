@@ -283,8 +283,29 @@ testConnection:
   enabled: false
 
 preUpgrade:
+  # -- Upgrade hook is enabled
+  enabled: true
+  # -- Specify image
   image:
     registry: k8s.gcr.io
     repository: hyperkube
     tag: v1.12.1
     pullPolicy: IfNotPresent
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
