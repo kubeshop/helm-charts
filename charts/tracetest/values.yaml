@@ -109,6 +109,7 @@ telemetry:
 server:
   # Indicates the port that Tracetest will run ons
   httpPort: 11633
+  otlpPort: 4317
   # Indicates which telemetry components will be used by Tracetest
   telemetry:
     # The exporter that tracetest will use to send telemetry
@@ -158,8 +159,6 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 11633
-  otlpPort: 4317
   annotations: {}
 
 ingress:

@@ -11,11 +11,11 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.server.httpPort }}
       targetPort: http
       protocol: TCP
       name: http
-    - port: {{ .Values.service.otlpPort }}
+    - port: {{ .Values.server.otlpPort }}
       targetPort: otlp
       protocol: TCP
       name: otlp
