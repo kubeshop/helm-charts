@@ -1,4 +1,4 @@
-name: Releasing Testkube Helm charts to Develop k8s Cluster on Repository Dispatch
+name: Releasing Testkube Helm charts to Develop k8s Cluster on commit to develop
 
 concurrency: develop_cluster
 
