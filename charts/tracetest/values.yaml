@@ -159,6 +159,7 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 11633
+  otlpPort: 4317
   annotations: {}
 
 ingress:
