@@ -21,6 +21,10 @@ data:
   pvc-container-template.yml: |
 {{ .Files.Get "pvc-container-template.yml" | indent 4 }}
   slack-config.json: |
-{{ .Files.Get "slack-config.json" | indent 4 }}
+{{- if .Values.slackConfig }}
+  {{ toJson .Values.slackConfig | indent 4 }}
+{{- else }}
+  {{ .Files.Get "slack-config.json" | indent 4 }}
+{{- end }}
   slack-template.json: |
 {{ .Files.Get "slack-template.json" | indent 4 }}
