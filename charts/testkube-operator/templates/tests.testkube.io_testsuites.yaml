@@ -338,6 +338,9 @@ spec:
                 executionRequest:
                   description: test suite execution request body
                   properties:
+                    cronJobTemplate:
+                      description: cron job template extensions
+                      type: string
                     executionLabels:
                       additionalProperties:
                         type: string
