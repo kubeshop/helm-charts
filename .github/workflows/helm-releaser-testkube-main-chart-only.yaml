@@ -48,28 +48,6 @@ jobs:
           CR_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
           CR_SKIP_EXISTING: true
 
-      - name: Generate changelog
-        uses: charmixer/auto-changelog-action@v1
-        with:
-          token: ${{ secrets.CI_BOT_TOKEN }}
-
-      - name: Commit files
-        env:
-          CI_USER: kubeshop-bot
-          CI_EMAIL: kubeshop-bot@kubeshop.io
-        run: |
-          git config --local user.email "$CI_EMAIL"
-          git config --local user.name "$CI_USER"
-          git add CHANGELOG.md && git commit -m 'Updated CHANGELOG.md' && echo "push=true" >> $GITHUB_ENV || echo "No changes to CHANGELOG.md"
-
-      - name: Push changes
-        if: env.push == 'true'
-        env:
-          CI_USER: kubeshop-bot
-          CI_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
-        run: |
-          git push "https://$CI_USER:$CI_TOKEN@github.com/$GITHUB_REPOSITORY.git" HEAD:main
-
   notify_slack_if_helm_chart_release_fails:
     runs-on: ubuntu-latest
     needs: release_charts
