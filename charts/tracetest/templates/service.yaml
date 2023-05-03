@@ -15,7 +15,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-    - port: 21321
+    - port: {{ .Values.service.otlpPort }}
       targetPort: otlp
       protocol: TCP
       name: otlp

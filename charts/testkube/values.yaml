@@ -415,10 +415,8 @@ testkube-api:
   slackToken: ""
   # -- Slack secret to store slackToken, the key name should be SLACK_TOKEN
   slackSecret: ""
-  # -- Slack template for the events sent to Slack as base64-encoded string
-  slackTemplate: ""
-  # -- Slack config for the events, tests, testsuites and channels as base64-encoded string
-  slackConfig: ""
+  # -- Slack config for the events, tests, testsuites and channels
+  slackConfig:
   # -- default executors as base64-encoded string
   executors: ""
   # -- SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
