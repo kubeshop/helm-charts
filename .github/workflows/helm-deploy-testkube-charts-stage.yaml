@@ -9,7 +9,6 @@ on:
         trigger-workflow-api-release,
         trigger-workflow-dashboard-release,
         trigger-workflow-operator-release,
-        trigger-workflow-executor-release
       ]
 
 env:
@@ -53,11 +52,14 @@ jobs:
           version: v3.10.0
 
       - name: Modify executors.json file if any executor Docker image was updated
-        if: ${{ github.event.client_payload.image_tag_executor }}
+        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
-          export image_tag=${{ github.event.client_payload.image_tag_executor }}
-          export executor_name=${{ github.event.client_payload.executor_name }}
-          sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$image_tag\",/g" ./charts/testkube-api/executors.json
+          export image_tag=${{ github.event.client_payload.image_tag_api }}
+          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui"
+          for executor_name in $executor_names; do
+            sed -i "s/\(\"image\":.*$executor_name.*:\).*$/\1$image_tag,/" ./charts/testkube-api/executors.json
+          done
+
           cat ./charts/testkube-api/executors.json
 
       - name: Installing repositories
@@ -71,14 +73,8 @@ jobs:
           echo ::set-output name=operator_image_tag::$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
           echo ::set-output name=dashboard_image_tag::$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
 
-      - name: Deploy if Executors' image is update
-        if: ${{ github.event.client_payload.image_tag_executor }}
-        run: |
-          helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml  --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set mongodb.livenessProbe.enabled=false --set mongodb.reasdinessProbe.enabled=false
-
       - name: Deploy if Testkube API image is updated
-        if: ${{ github.event.client_payload.image_tag }}
+        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
           helm dependency update ./charts/testkube
           helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set mongodb.livenessProbe.enabled=false --set mongodb.reasdinessProbe.enabled=false
@@ -105,7 +101,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release successfully deployed into ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE :party_blob:!
+          SLACK_TITLE: Helm chart release successfully deployed into ${{ env.GKE_CLUSTER_NAME_STAGE }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -122,7 +118,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release failed to deploy into ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE! :boom:!
+          SLACK_TITLE: Helm chart release failed to deploy into ${{ env.GKE_CLUSTER_NAME_STAGE }} GKE! :boom:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -205,7 +201,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.test_suite_run_stage.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Test suite successfully run against ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE :party_blob:!
+          SLACK_TITLE: Test suite successfully run against ${{ env.GKE_CLUSTER_NAME_STAGE }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -222,7 +218,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.test_suite_run_stage.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Test suite FAILED to run on ${{ secrets.GKE_CLUSTER_NAME_STAGE }} GKE! :boom:!
+          SLACK_TITLE: Test suite FAILED to run on ${{ env.GKE_CLUSTER_NAME_STAGE }} GKE! :boom:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
