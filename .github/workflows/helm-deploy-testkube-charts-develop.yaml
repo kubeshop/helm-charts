@@ -81,7 +81,7 @@ jobs:
         if: ${{ github.event.client_payload.image_tag_api }}
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag_api }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }}
 
       - name: Deploy if Testkube Dashboard image is updated
         if: ${{ github.event.client_payload.image_tag_dashboard }}
@@ -105,7 +105,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release successfully deployed into ${{ secrets.GKE_CLUSTER_NAME }} GKE :party_blob:!
+          SLACK_TITLE: Helm chart release successfully deployed into ${{ env.GKE_CLUSTER_NAME }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -122,7 +122,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release failed to deploy into ${{ secrets.GKE_CLUSTER_NAME }} GKE! :boom:!
+          SLACK_TITLE: Helm chart release failed to deploy into ${{ env.GKE_CLUSTER_NAME }} GKE! :boom:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
