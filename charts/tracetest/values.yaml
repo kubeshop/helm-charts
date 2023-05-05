@@ -5,7 +5,7 @@ postgresql:
   enabled: true
   architecture: standalone
   image:
-    tag: 14.6.0-debian-11-r13
+    tag: 14.7.0-debian-11-r29
 
   # credentials for accessing the database
   auth:
