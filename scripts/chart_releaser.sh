@@ -5,8 +5,7 @@ set -o pipefail
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
-        -e|--testkube-executor-name) executor_name="$2"; shift ;;
-        -m|--main-chart) main_chart="$2"; shift ;;
+        -e|--testkube-executor) testkube_executor="$2"; shift ;;
         -b|--branch) branch="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
@@ -62,23 +61,40 @@ fi
 # Output the new chart version
 echo "New Testkube Chart version is: $NEW_VERSION"
 
-if [[ $executor_name == "" ]]
+if [[ $testkube_executor == "" ]]
 then
+    echo "Executors will not be updated"
     # Lower-casing entered helm-chart-folder name to omit any issues with Upper case letters.
     target_folder=$(echo "$target_folder" | tr '[:upper:]' '[:lower:]')
-    
+
     # Editing $target_folder Chart, and its App versions:
     sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
     sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
     echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
     cat ../charts/$target_folder/Chart.yaml
 
-    # Commented out editing values files since there are mane `tag` fields that can be modified
-    # Editing Docker tag image for $target_folder:
-#    sed -i "s/tag:.*$/tag: \"$VERSION_FULL\"/" ../charts/$target_folder/values.yaml
-#    echo -e "\nChecking changes made to Docker image:\n"
-#    grep -i "tag" ../charts/$target_folder/values.yaml
-    
+    # Editing TestKube's dependency Chart.yaml for $target_folder:
+    sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
+    echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
+    grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
+
+else
+    echo "Executors will be updated"
+    executor_name="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui"
+    for executor in $executor_name; do
+      sed -i "s/\(.*\"image\":.*$executor.*\:\).*$/\1$VERSION_FULL\",/g" ../charts/testkube-api/executors.json
+      echo -e "\nChecking if TestKube's executors.json $executor executor has been updated:\n"
+      grep -iE image ../charts/testkube-api/executors.json | grep $executor
+    done
+
+    target_folder=$(echo "$target_folder" | tr '[:upper:]' '[:lower:]')
+
+    # Editing $target_folder Chart, and its App versions:
+    sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
+    sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
+    echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
+    cat ../charts/$target_folder/Chart.yaml
+
     # Editing TestKube's dependency Chart.yaml for $target_folder:
     sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
     echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
@@ -89,20 +105,6 @@ fi
 sed -i "s/^version:.*/version: $NEW_VERSION/" ../charts/testkube/Chart.yaml
 echo -e "\nChecking if testkube's main Chart.yaml version has been updated:\n"
 grep -iE "^version" ../charts/testkube/Chart.yaml
-
-if [[ $main_chart != "true" ]]
-then
-    if [[ $executor_name != "" ]]
-    then
-        # Editing TestKube's executors.yaml if tag was pushed to main chart. E.G. to testKube:
-        sed -i "s/\(.*\"image\":.*$executor_name.*\:\).*$/\1$VERSION_FULL\",/g" ../charts/testkube-api/executors.json
-        echo -e "\nChecking if TestKube's executors.json ($executor_name executor) has been updated:\n"
-        grep -iE image ../charts/testkube-api/executors.json | grep $executor_name
-    fi
-else
-    # No reason to edit executors.json image tags as it's not a Executors' repo/tag.
-    echo "Executors.json is not updated. As this tag was not pushed into Executors' repo."
-fi
 
 # Commiting and pushing changes:
 git add -A
