@@ -29,6 +29,7 @@ metadata:
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.minio.replicaCount }}
   selector:
     matchLabels:
       {{- if .Values.minio.matchLabels }}

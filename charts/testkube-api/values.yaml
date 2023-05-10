@@ -222,6 +222,7 @@ nats:
 
 ## MINIO parameters
 minio:
+  replicaCount: 1
   ## Deploy Minio server to the cluster
   enabled: true
   ## Minio extra vars
