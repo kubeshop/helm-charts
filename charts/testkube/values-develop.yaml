@@ -157,7 +157,6 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
-          set $pathallowed "true";
         }
 
         if ( $request_method = OPTIONS ){
