@@ -157,7 +157,8 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
-        }      
+          set $pathallowed "true";
+        }
 
         if ( $request_method = OPTIONS ){
           set $methodallowed "true";
@@ -172,6 +173,10 @@ testkube-api:
         }
 
         if ( $uri ~ "^(.*)/tests$" ){
+          set $pathallowed "true";
+        }
+
+        if ( $uri ~ "^/results/v1/repositories$" ){
           set $pathallowed "true";
         }
 
