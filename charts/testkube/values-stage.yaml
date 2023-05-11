@@ -176,7 +176,7 @@ testkube-api:
           set $pathallowed "true";
         }
 
-        if ( $uri ~ "^/results/v1/repositories$" ){
+        if ( $uri ~ "^(.*)/repositories$" ){
           set $pathallowed "true";
         }
 
