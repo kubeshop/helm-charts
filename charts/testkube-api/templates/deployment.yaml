@@ -179,11 +179,19 @@ spec:
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
             {{- if .Values.cloud.key }}
             - name: TESTKUBE_CLOUD_API_KEY
-              value:  "{{ .Values.cloud.key}}"
+              value:  "{{ .Values.cloud.key }}"
             {{- end}}
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
-              value:  "{{ .Values.cloud.url}}"
+              value:  "{{ .Values.cloud.url }}"
+            {{- end}}
+            {{- if .Values.cloud.orgId }}
+            - name: TESTKUBE_CLOUD_ORG_ID
+              value:  "{{ .Values.cloud.orgId }}"
+            {{- end}}
+            {{- if .Values.cloud.envId }}
+            - name: TESTKUBE_CLOUD_ENV_ID
+              value:  "{{ .Values.cloud.envId }}"
             {{- end}}
             - name: TESTKUBE_WATCHER_NAMESPACES
               value: "{{ include "testkube-api.watcher-namespaces" . | nindent 12 | trim }}"

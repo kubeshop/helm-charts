@@ -57,6 +57,10 @@ cloud:
   url: "agent.testkube.io:443"
   ## License Key
   key: ""
+  ## Organization ID
+  orgId: ""
+  ## Environment ID
+  envId: ""
 
 ## Multinamespace feature. Disabled by default
 multinamespace:
