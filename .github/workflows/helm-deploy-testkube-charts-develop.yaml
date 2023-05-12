@@ -71,7 +71,7 @@ jobs:
           git pull origin develop
           git add ./charts/testkube-api/executors.json
           git commit -m "Update executors.json"
-          git push origin develop
+          git push --force origin develop
 
       - name: Installing repositories
         run: |
