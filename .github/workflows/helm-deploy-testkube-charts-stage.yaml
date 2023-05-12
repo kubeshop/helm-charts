@@ -63,6 +63,7 @@ jobs:
           cat ./charts/testkube-api/executors.json
 
       - name: Commit executors.json
+        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
           git config user.name "kubeshop-bot"
           git config user.email "kubeshop-bot@kubeshop.io"
