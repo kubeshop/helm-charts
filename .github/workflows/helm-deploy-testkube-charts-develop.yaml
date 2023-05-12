@@ -178,6 +178,7 @@ jobs:
           set -x
           kubectl -n testkube delete test sanity --ignore-not-found=true
           kubectl -n testkube delete secret sanity-secrets --ignore-not-found=true
+          kubectl testkube create test -f ./test/postman/TestKube-Sanity.postman_collection.json --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
 
       - name: Run Postman sanity tests
         run: kubectl testkube run test sanity -f
