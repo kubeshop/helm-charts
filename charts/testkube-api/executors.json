@@ -3,7 +3,7 @@
         "name": "playwright-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-playwright-executor:be8db65",
+            "image": "kubeshop/testkube-playwright-executor:e76c7f2",
             "command": [
                 "<depManager>"
             ],
@@ -32,7 +32,7 @@
         "name": "jmeter-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-jmeter-executor:be8db65",
+            "image": "kubeshop/testkube-jmeter-executor:e76c7f2",
             "command": [
                 "<entryPoint>"
             ],
@@ -72,7 +72,7 @@
         "name": "ginkgo-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:be8db65",
+            "image": "kubeshop/testkube-ginkgo-executor:e76c7f2",
             "command": [
                 "ginkgo"
             ],
@@ -112,7 +112,7 @@
         "name": "maven-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-maven-executor:be8db65",
+            "image": "kubeshop/testkube-maven-executor:e76c7f2",
             "command": [
                 "mvn"
             ],
@@ -145,7 +145,7 @@
         "name": "gradle-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-gradle-executor:be8db65",
+            "image": "kubeshop/testkube-gradle-executor:e76c7f2",
             "command": [
                 "gradle"
             ],
@@ -177,7 +177,7 @@
         "name": "kubepug-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-kubepug-executor:be8db65",
+            "image": "kubeshop/testkube-kubepug-executor:e76c7f2",
             "command": [
                 "kubepug"
             ],
@@ -210,7 +210,7 @@
         "name": "soapui-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-soapui-executor:be8db65",
+            "image": "kubeshop/testkube-soapui-executor:e76c7f2",
             "command": [
                 "/bin/sh",
                 "/usr/local/SmartBear/EntryPoint.sh"
@@ -240,7 +240,7 @@
         "name": "k6-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-k6-executor:be8db65",
+            "image": "kubeshop/testkube-k6-executor:e76c7f2",
             "command": [
                 "k6"
             ],
@@ -272,7 +272,7 @@
         "name": "cypress-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-cypress-executor:be8db65",
+            "image": "kubeshop/testkube-cypress-executor:e76c7f2",
             "command": [
                 "./node_modules/cypress/bin/cypress"
             ],
@@ -308,7 +308,7 @@
         "name": "curl-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-curl-executor:be8db65",
+            "image": "kubeshop/testkube-curl-executor:e76c7f2",
             "command": [
                 "curl"
             ],
@@ -337,7 +337,7 @@
         "name": "postman-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-postman-executor:be8db65",
+            "image": "kubeshop/testkube-postman-executor:e76c7f2",
             "command": [
                 "newman"
             ],
@@ -373,7 +373,7 @@
         "name": "artillery-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-artillery-executor:be8db65",
+            "image": "kubeshop/testkube-artillery-executor:e76c7f2",
             "command": [
                 "artillery"
             ],
@@ -408,7 +408,7 @@
         "name": "scraper-executor",
         "executor": {
             "executorType": "scraper",
-            "image": "kubeshop/testkube-scraper-executor:be8db65",
+            "image": "kubeshop/testkube-scraper-executor:e76c7f2",
             "types": []
         }
     },
@@ -416,7 +416,7 @@
         "name": "init-executor",
         "executor": {
             "executorType": "init",
-            "image": "kubeshop/testkube-init-executor:be8db65",
+            "image": "kubeshop/testkube-init-executor:e76c7f2",
             "types": []
         }
     }
