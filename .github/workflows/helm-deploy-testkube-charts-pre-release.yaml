@@ -54,9 +54,24 @@ jobs:
       - name: Modify executors.json file if any executor Docker image was updated
         if: ${{ github.event.client_payload.image_tag_pre_release }}
         run: |
-          export image_tag=${{ github.event.client_payload.trigger-workflow-executor-pre-release }}
-          sed -i "s/\(.*\"image\":.*kubeshop/.*\:\).*$/\1$image_tag\",/g" ./charts/testkube-api/executors.json
+          export image_tag=${{ github.event.client_payload.trigger-workflow-api-executor-pre-release }}
+          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui"
+          for executor_name in $executor_names; do
+            sed -i "s/\(\"image\":.*$executor_name.*:\).*$/\1$image_tag\",/" ./charts/testkube-api/executors.json
+          done
+
           cat ./charts/testkube-api/executors.json
+
+      - name: Commit executors.json
+        if: ${{ github.event.client_payload.image_tag_pre_release}}
+        run: |
+          git config user.name "kubeshop-bot"
+          git config user.email "kubeshop-bot@kubeshop.io"
+
+          git pull origin develop
+          git add ./charts/testkube-api/executors.json
+          git commit -m "Update executors.json"
+          git push origin develop
 
       - name: Installing repositories
         run: |
