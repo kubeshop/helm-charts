@@ -143,7 +143,7 @@ jobs:
           kubectl testkube create test -f ./test/postman/TestKube-Sanity.postman_collection.json --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
 
       - name: Run Postman sanity tests
-        run: kubectl testkube run test sanity -f
+        run: kubectl testkube run test sanity -f --git-branch develop
 
       - name: (Re)create Dashboard E2E tests (from CRD)
         working-directory: ./testkube-repo
@@ -162,7 +162,7 @@ jobs:
           kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
 
       - name: Run staging testsuite
-        run: kubectl testkube run testsuite staging-testsuite -f
+        run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop
 
   notify_slack_if_test_suite_succeeds:
     runs-on: ubuntu-latest
