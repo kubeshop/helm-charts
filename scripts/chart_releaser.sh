@@ -113,7 +113,7 @@ git commit -m "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app 
 if [[ $branch == "true" ]]
 then
     # git push -u origin release-branch
-    git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts "release-$RELEASE_VERSION"
+    git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts "release/$SERVICE/$RELEASE_VERSION"
 else
     # git push origin main
     git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
