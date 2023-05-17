@@ -169,6 +169,10 @@ spec:
             - name: APISERVER_HTTP_BODY_LIMIT
               value: {{ .Values.httpBodyLimit }}
             {{- end}}
+            {{- if .Values.httpReadBufferSize }}
+            - name: APISERVER_HTTP_READBUFFERSIZE
+              value: {{ .Values.httpReadBufferSize }}
+            {{- end}}
             - name: TESTKUBE_OAUTH_CLIENTID
               value:  "{{ .Values.cliIngress.oauth.clientID }}"
             - name: TESTKUBE_OAUTH_CLIENTSECRET
