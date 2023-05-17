@@ -341,3 +341,8 @@ readinessProbe:
 
 ## Testkube API HTTP body size limit
 ## httpBodyLimit: 1073741824
+
+## Testkube API HTTP Read buffer size (in bytes)
+## Might need further increase if observing "431 Request Header Fields Too Large from api server"
+##  See https://github.com/kubeshop/testkube/pull/2871#issuecomment-1341116696
+httpReadBufferSize: 8192
