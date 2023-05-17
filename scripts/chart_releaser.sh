@@ -44,7 +44,7 @@ elif (( RELEASE_MAJOR == CURRENT_MAJOR && RELEASE_MINOR > CURRENT_MINOR )); then
   NEW_PATCH=0
   NEW_VERSION="${NEW_MAJOR}.${NEW_MINOR}.${NEW_PATCH}"
   echo "Current minor version incremented to $NEW_MINOR."
-elif (( RELEASE_MAJOR == CURRENT_MAJOR && RELEASE_MINOR == CURRENT_MINOR )); then
+else
   # If the major and minor version numbers are the same but the patch version number is updated,
   # increment the patch version number and set the new chart version
   NEW_MAJOR=$CURRENT_MAJOR
@@ -52,10 +52,6 @@ elif (( RELEASE_MAJOR == CURRENT_MAJOR && RELEASE_MINOR == CURRENT_MINOR )); the
   NEW_PATCH=$(expr $CURRENT_PATCH + 1)
   NEW_VERSION="${NEW_MAJOR}.${NEW_MINOR}.${NEW_PATCH}"
   echo "Current patch version incremented to $NEW_PATCH."
-else
-  # Otherwise, keep the current version
-  NEW_VERSION="$CURRENT_VERSION"
-  echo "Version remains unchanged."
 fi
 
 # Output the new chart version
