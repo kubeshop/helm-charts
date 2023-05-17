@@ -39,6 +39,8 @@ spec:
             value: "{{ .Values.apiServerEndpoint }}"
           - name: REACT_APP_ROOT_ROUTE
             value: "{{ .Values.ingress.path }}"
+          - name: ENABLE_IPV6
+            value: "{{ .Values.ingress.ipv6enabled }}"
           {{- if .Values.extraEnvVars }}
           {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}
