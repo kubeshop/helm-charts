@@ -167,11 +167,11 @@ spec:
               value: "testkube-api-server-config-{{ .Release.Namespace }}"
             {{- if .Values.httpBodyLimit }}
             - name: APISERVER_HTTP_BODY_LIMIT
-              value: {{ .Values.httpBodyLimit }}
+              value: {{ .Values.httpBodyLimit | quote }}
             {{- end}}
             {{- if .Values.httpReadBufferSize }}
             - name: APISERVER_HTTP_READBUFFERSIZE
-              value: {{ .Values.httpReadBufferSize }}
+              value: {{ .Values.httpReadBufferSize | quote }}
             {{- end}}
             - name: TESTKUBE_OAUTH_CLIENTID
               value:  "{{ .Values.cliIngress.oauth.clientID }}"
