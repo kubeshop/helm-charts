@@ -284,6 +284,7 @@ testkube-api:
   slackTemplate: ""
   slackConfig: ""
   executors: ""
+  cdeventsTarget: ""
 
   ##Test Connection pod
   testConnection:

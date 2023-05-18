@@ -100,6 +100,9 @@ jobServiceAccountName: ""
 ## base64 encoded executors.json alike data
 executors: ""
 
+## target for cdevents emission via http(s)
+cdeventsTarget: ""
+
 ## Testkube API resource requests and limits
 resources:
   {}

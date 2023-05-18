@@ -421,6 +421,8 @@ testkube-api:
   executors: ""
   # -- SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
+  ## target for cdevents emission via http(s)
+  cdeventsTarget: ""
 
   # Test Connection pod
   testConnection:
