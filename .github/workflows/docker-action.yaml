@@ -29,12 +29,12 @@ jobs:
           location: ${{ secrets.GKE_ZONE_DEV }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Run test
-        id: run_test
+      - name: Get test
+        id: get_test
         uses: kubeshop/testkube-docker-action@bf0fd9c391ca6847b07b6fd9b50fc2f8299507fa
         with:
-          command: run
-          resource: test
+          command: get
+          resource: tests
           namespace: testkube
           parameters: "artillery-executor-smoke -f"
 
