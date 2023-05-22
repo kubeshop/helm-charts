@@ -303,6 +303,7 @@ testkube-api:
   slackConfig: ""
   executors: ""
   cdeventsTarget: ""
+  dashboardUri: ""
 
   ##Test Connection pod
   testConnection:
