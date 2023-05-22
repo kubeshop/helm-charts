@@ -36,5 +36,5 @@ jobs:
           command: get
           resource: tests
           namespace: testkube
-          parameters: "artillery-executor-smoke -f"
+          parameters: ""
 
