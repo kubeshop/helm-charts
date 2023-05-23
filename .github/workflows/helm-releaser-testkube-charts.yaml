@@ -47,7 +47,6 @@ jobs:
         uses: helm/chart-releaser-action@v1.2.1
         with:
           charts_dir: charts
-          mark_as_latest: true
         env:
           CR_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
           CR_SKIP_EXISTING: true
