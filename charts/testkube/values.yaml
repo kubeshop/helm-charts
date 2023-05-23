@@ -423,6 +423,8 @@ testkube-api:
   jobServiceAccountName: ""
   ## target for cdevents emission via http(s)
   cdeventsTarget: ""
+  ## dashboard uri to be used in notification events
+  dashboardUri: ""
 
   # Test Connection pod
   testConnection:

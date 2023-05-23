@@ -203,7 +203,9 @@ spec:
             - name: TESTKUBE_POD_START_TIMEOUT
               value:  "{{ .Values.podStartTimeout }}"
             - name: CDEVENTS_TARGET
-              value: "{{ .Values.cdeventsTarget }}"              
+              value: "{{ .Values.cdeventsTarget }}"
+            - name: TESTKUBE_DASHBOARD_URI
+              value: "{{ .Values.dashboardUri }}"    
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
