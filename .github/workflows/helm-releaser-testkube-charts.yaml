@@ -337,8 +337,7 @@ jobs:
           fi
 
 
-
- test_suite_run_dev:
+  test_suite_run_dev:
     name: test suite for DEV GKE.
     runs-on: ubuntu-latest
     needs: deploy-to-testkube-dev-gke
