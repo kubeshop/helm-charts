@@ -224,7 +224,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_FOOTER: "Kubeshop --> TestKube"
 
-  updat_release_notes:
+  update_release_notes:
     needs: notify_slack_if_release_succeeds
     runs-on: ubuntu-latest
     steps:
