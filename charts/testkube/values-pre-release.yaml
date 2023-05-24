@@ -326,6 +326,7 @@ testkube-dashboard:
           - beta.testkube.io
         secretName: testkube-prod-cert-secret
   apiServerEndpoint: "beta.testkube.io/results" #get the address of the endpoint or set it using helm
+  disableTelemetry: true
   oauth2:
     enabled: false
     name: oauth2-proxy

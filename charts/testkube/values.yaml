@@ -540,6 +540,9 @@ testkube-dashboard:
   # -- Testkube API Server endpoint
   apiServerEndpoint: "" # get the address of the endpoint or set it using helm
 
+  # -- Force disabling telemetry on the UI
+  disableTelemetry: false
+
   # Oauth parameters
   oauth2:
     # -- Use oauth

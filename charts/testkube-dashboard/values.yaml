@@ -68,6 +68,9 @@ fullnameOverride: ""
 ## Testkube API Server Endpoint
 apiServerEndpoint: ""
 
+## Force disabling telemetry
+disableTelemetry: false
+
 ## Array with extra environment variables
 ## e.g:
 ## extraEnvVars:
