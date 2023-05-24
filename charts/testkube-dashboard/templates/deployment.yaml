@@ -39,6 +39,8 @@ spec:
             value: "{{ .Values.apiServerEndpoint }}"
           - name: REACT_APP_ROOT_ROUTE
             value: "{{ .Values.ingress.path }}"
+          - name: REACT_APP_DISABLE_TELEMETRY
+            value: "{{ .Values.disableTelemetry }}"
           {{- if .Values.extraEnvVars }}
           {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}
