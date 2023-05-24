@@ -15,7 +15,7 @@ spec:
   {{- if .Values.prometheus.interval }}
   - interval: {{ .Values.prometheus.interval }}
   {{- end }}
-    port: http
+    targetPort: {{ .Values.service.port }}
   selector:
     matchLabels:
       {{- include "testkube-api.selectorLabels" . | nindent 6 }}
