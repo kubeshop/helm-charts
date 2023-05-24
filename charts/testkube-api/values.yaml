@@ -103,6 +103,9 @@ executors: ""
 ## target for cdevents emission via http(s)
 cdeventsTarget: ""
 
+## dashboard uri to be used in notification events
+dashboardUri: ""
+
 ## Testkube API resource requests and limits
 resources:
   {}
