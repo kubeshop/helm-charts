@@ -74,6 +74,11 @@ spec:
                             - "False"
                             - Unknown
                             type: string
+                          ttl:
+                            description: duration in seconds in the past from current
+                              time when the condition is still valid
+                            format: int32
+                            type: integer
                           type:
                             description: test trigger condition
                             type: string
