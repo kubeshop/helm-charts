@@ -57,7 +57,7 @@ jobs:
           #pull the latest changes in case other GH workflow altered executors.json file
           git pull origin develop
 
-          export image_tag=${{ github.event.client_payload.trigger-workflow-api-executor-pre-release }}
+          export image_tag=${{ github.event.client_payload.image_tag_pre_release }}
           export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
           for executor_name in $executor_names; do
             sed -i "s/\(\"image\":.*$executor_name.*:\).*$/\1$image_tag\",/" ./charts/testkube-api/executors.json
