@@ -3,7 +3,9 @@ name: Releasing Testkube Helm charts to Stage k8s Cluster.
 concurrency: staging_cluster
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - ci/test-release-flow
   repository_dispatch:
     types:
       [
