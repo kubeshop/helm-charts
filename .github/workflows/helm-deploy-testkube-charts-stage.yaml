@@ -6,9 +6,9 @@ on:
   repository_dispatch:
     types:
       [
-        trigger-workflow-api-release,
-        trigger-workflow-dashboard-release,
-        trigger-workflow-operator-release,
+          trigger-workflow-api-release,
+          trigger-workflow-dashboard-release,
+          trigger-workflow-operator-release,
       ]
 
 env:
@@ -54,6 +54,9 @@ jobs:
       - name: Modify executors.json file if any executor Docker image was updated
         if: ${{ github.event.client_payload.image_tag_api }}
         run: |
+          #pull the latest changes in case other GH workflow altered executors.json file
+          git pull origin develop
+
           export image_tag=${{ github.event.client_payload.image_tag_api }}
           export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
           for executor_name in $executor_names; do
@@ -68,10 +71,13 @@ jobs:
           git config user.name "kubeshop-bot"
           git config user.email "kubeshop-bot@kubeshop.io"
 
-          git pull origin develop
-          git add ./charts/testkube-api/executors.json
-          git commit -m "Update executors.json"
-          git push origin develop
+          if [[ $(git status --porcelain ./charts/testkube-api/executors.json) ]]; then
+              git add ./charts/testkube-api/executors.json
+              git commit -m "Update executors.json"
+              git push --force origin develop
+          else
+            echo "Executors' image tags were not updated"
+          fi
 
       - name: Installing repositories
         run: |
