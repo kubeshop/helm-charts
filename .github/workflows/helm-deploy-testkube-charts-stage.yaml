@@ -57,8 +57,6 @@ jobs:
       - name: Modify executors.json file if any executor Docker image was updated
 #        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
-          git pull origin develop
-          git config pull.rebase true
 
           export image_tag=7560fb4
           export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
