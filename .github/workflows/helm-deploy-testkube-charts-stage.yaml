@@ -77,7 +77,7 @@ jobs:
           if [[ $(git status --porcelain ./charts/testkube-api/executors.json) ]]; then
               git add ./charts/testkube-api/executors.json
               git commit -m "Update executors.json"
-              git push --force originci/test-release-flow
+              git push --force origin ci/test-release-flow
           else
             echo "Executors' image tags were not updated"
           fi
