@@ -72,10 +72,14 @@ jobs:
           git config user.name "kubeshop-bot"
           git config user.email "kubeshop-bot@kubeshop.io"
 
-          git status
-#          git add ./charts/testkube-api/executors.json
-#          git commit -m "Update executors.json"
-#          git push origin develop
+          if [[ $(git status --porcelain ./charts/testkube-api/executors.json) ]]; then
+              git add ./charts/testkube-api/executors.json
+              git commit -m "Update executors.json"
+
+          else
+            echo "Executors' image tags were not updated"
+          fi
+
 
 #      - name: Installing repositories
 #        run: |
