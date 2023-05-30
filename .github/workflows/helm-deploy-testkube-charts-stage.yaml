@@ -57,6 +57,8 @@ jobs:
       - name: Modify executors.json file if any executor Docker image was updated
 #        if: ${{ github.event.client_payload.image_tag_api }}
         run: |
+          #pull the latest changes in case other GH workflow made altered executors.json file
+          git pull origin ci/test-release-flow
 
           export image_tag=7dd14ae
           export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
@@ -75,7 +77,7 @@ jobs:
           if [[ $(git status --porcelain ./charts/testkube-api/executors.json) ]]; then
               git add ./charts/testkube-api/executors.json
               git commit -m "Update executors.json"
-
+              git push --force originci/test-release-flow
           else
             echo "Executors' image tags were not updated"
           fi
