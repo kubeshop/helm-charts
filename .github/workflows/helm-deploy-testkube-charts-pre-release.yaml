@@ -118,7 +118,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release successfully deployed into ${{ secrets.GKE_CLUSTER_NAME }} GKE :party_blob:!
+          SLACK_TITLE: Helm chart release successfully deployed into ${{ env.GKE_CLUSTER_NAME }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -135,7 +135,7 @@ jobs:
           SLACK_CHANNEL: testkube-logs
           SLACK_COLOR: ${{ needs.release_charts_if_image_updated.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release failed to deploy into ${{ secrets.GKE_CLUSTER_NAME }} GKE! :boom:!
+          SLACK_TITLE: Helm chart release failed to deploy into ${{ env.GKE_CLUSTER_NAME }} GKE! :boom:!
           SLACK_USERNAME: GitHub
           SLACK_LINK_NAMES: true
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
