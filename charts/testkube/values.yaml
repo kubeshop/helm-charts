@@ -531,6 +531,7 @@ testkube-dashboard:
     # -- Hostnames must be provided if Ingress is enabled.
     hosts:
       []
+    ipv6enabled: false
       # - testkube.example.com
     tlsenabled: false
     # -- Placing a host in the TLS config will indicate a certificate should be created

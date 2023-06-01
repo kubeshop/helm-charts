@@ -41,6 +41,8 @@ spec:
             value: "{{ .Values.ingress.path }}"
           - name: REACT_APP_DISABLE_TELEMETRY
             value: "{{ .Values.disableTelemetry }}"
+          - name: ENABLE_IPV6
+            value: "{{ .Values.ingress.ipv6enabled }}"
           {{- if .Values.extraEnvVars }}
           {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 | trim }}
           {{- end }}

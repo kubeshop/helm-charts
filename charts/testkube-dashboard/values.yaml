@@ -110,6 +110,8 @@ ingress:
   ## Hostnames must be provided if Ingress is enabled.
   hosts: []
   #  - testkube.example.com
+  ## Enable IPv6 listener
+  ipv6enabled: false
   ## Enable TLS configuration for the hostname defined at `Ingress.hosts` parameter
   tlsenabled: false
   ## placing a host in the TLS config will indicate a certificate should be created
