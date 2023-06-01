@@ -285,8 +285,8 @@ testkube-api:
   slackConfig: ""
   executors: ""
   # Requests panel here:
-  # https://webhook.site/#!/0fe2b9c7-4be2-4a64-b244-83404f8b4d70
-  cdeventsTarget: "https://webhook.site/0fe2b9c7-4be2-4a64-b244-83404f8b4d70"
+  # https://webhook.site/#!/f99d020e-8815-4bed-963c-1ed7c54a0d0c
+  cdeventsTarget: "https://webhook.site/f99d020e-8815-4bed-963c-1ed7c54a0d0c"
   dashboardUri: ""
 
   ##Test Connection pod
