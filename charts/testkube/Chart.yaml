@@ -22,7 +22,7 @@ dependencies:
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-api"
   - name: testkube-dashboard
-    version: 1.11.5
+    version: 1.12.0
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
