@@ -3,7 +3,7 @@
         "name": "zap-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-zap-executor:8e9f331",
+            "image": "kubeshop/testkube-zap-executor:1.12.0",
             "command": [
                 "<pythonScriptPath>"
             ],
