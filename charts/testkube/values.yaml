@@ -421,6 +421,10 @@ testkube-api:
   executors: ""
   # -- SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
+  ## target for cdevents emission via http(s)
+  cdeventsTarget: ""
+  ## dashboard uri to be used in notification events
+  dashboardUri: ""
 
   # Test Connection pod
   testConnection:
@@ -538,6 +542,9 @@ testkube-dashboard:
       #   secretName: testkube-cert-secret
   # -- Testkube API Server endpoint
   apiServerEndpoint: "" # get the address of the endpoint or set it using helm
+
+  # -- Force disabling telemetry on the UI
+  disableTelemetry: false
 
   # Oauth parameters
   oauth2:

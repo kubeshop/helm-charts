@@ -6,9 +6,9 @@ on:
   repository_dispatch:
     types:
       [
-          trigger-workflow-api-develop,
-          trigger-workflow-dashboard-develop,
-          trigger-workflow-operator-develop,
+        trigger-workflow-api-develop,
+        trigger-workflow-dashboard-develop,
+        trigger-workflow-operator-develop,
       ]
 
 env:
@@ -17,7 +17,6 @@ env:
   GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }}
   DEPLOYMENT_NAME: testkube
   ENV: develop
-
 
 jobs:
   release_charts_if_image_updated:
@@ -58,7 +57,7 @@ jobs:
           git pull origin develop
 
           export image_tag=${{ github.event.client_payload.image_tag_api }}
-          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui"
+          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
           for executor_name in $executor_names; do
             sed -i "s/\(\"image\":.*$executor_name.*:\).*$/\1$image_tag\",/" ./charts/testkube-api/executors.json
           done
@@ -187,7 +186,7 @@ jobs:
           kubectl testkube create test -f ./test/postman/TestKube-Sanity.postman_collection.json --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
 
       - name: Run Postman sanity tests
-        run: kubectl testkube run test sanity -f
+        run: kubectl testkube run test sanity -f --git-branch develop
 
       - name: (Re)create Dashboard E2E tests (from CRD)
         working-directory: ./testkube-repo
@@ -206,7 +205,7 @@ jobs:
           kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
 
       - name: Run staging testsuite
-        run: kubectl testkube run testsuite staging-testsuite -f
+        run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop
 
   notify_slack_if_test_suite_succeeds:
     runs-on: ubuntu-latest

@@ -157,7 +157,7 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
-        }      
+        }
 
         if ( $request_method = OPTIONS ){
           set $methodallowed "true";
@@ -172,6 +172,10 @@ testkube-api:
         }
 
         if ( $uri ~ "^(.*)/tests$" ){
+          set $pathallowed "true";
+        }
+
+        if ( $uri ~ "^(.*)/repositories$" ){
           set $pathallowed "true";
         }
 
@@ -280,6 +284,10 @@ testkube-api:
   slackTemplate: ""
   slackConfig: ""
   executors: ""
+  # Requests panel here:
+  # https://webhook.site/#!/f99d020e-8815-4bed-963c-1ed7c54a0d0c
+  cdeventsTarget: "https://webhook.site/f99d020e-8815-4bed-963c-1ed7c54a0d0c"
+  dashboardUri: ""
 
   ##Test Connection pod
   testConnection:
@@ -321,6 +329,7 @@ testkube-dashboard:
           - integration.testkube.io
         secretName: testkube-demo-cert-secret
   apiServerEndpoint: "integration.testkube.io/results" #get the address of the endpoint or set it using helm
+  disableTelemetry: true
   oauth2:
     enabled: false
     name: oauth2-proxy
@@ -360,4 +369,3 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
-

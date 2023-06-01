@@ -58,7 +58,7 @@ jobs:
           git pull origin develop
 
           export image_tag=${{ github.event.client_payload.image_tag_api }}
-          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui"
+          export executor_names="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui zap"
           for executor_name in $executor_names; do
             sed -i "s/\(\"image\":.*$executor_name.*:\).*$/\1$image_tag\",/" ./charts/testkube-api/executors.json
           done

@@ -117,6 +117,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHook.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.analyticsEnabled | bool | `true` | Enable analytics for Testkube |
 | testkube-api.podStartTimeout | string | `30m` | Testkube timeout for pod start |
+| testkube-api.cdeventsTarget | string | `""` | target for cdevents emission via http(s) |
 | testkube-api.cliIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
 | testkube-api.cliIngress.enabled | bool | `false` | Use ingress |
 | testkube-api.cliIngress.hosts | list | `["testkube.example.com"]` | Hostnames must be provided if Ingress is enabled. |
@@ -129,6 +130,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cliIngress.tlsenabled | bool | `false` | Toggle whether to enable TLS on the ingress |
 | testkube-api.cloud.key | string | `""` | Testkube Clouc License Key (for Environment) |
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
+| testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API fullname override |
@@ -200,6 +202,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard | object | `{"affinity":{},"apiServerEndpoint":"","autoscaling":{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80},"enabled":true,"extraEnvVars":[],"fullnameOverride":"testkube-dashboard","image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/testkube-dashboard"},"ingress":{"annotations":{},"enabled":false,"hosts":[],"labels":{},"path":"/","ipv6enabled":false,"tls":[],"tlsenabled":false},"nodeSelector":{},"oauth2":{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback"},"extraEnvVars":[],"image":{"pullPolicy":"Always","registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP"},"podAnnotations":{},"podLabels":{},"podSecurityContext":{},"replicaCount":1,"resources":{},"securityContext":{},"service":{"annotations":{},"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Testkube Dashboard parameters |
 | testkube-dashboard.affinity | object | `{}` | Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set |
 | testkube-dashboard.apiServerEndpoint | string | `""` | Testkube API Server endpoint |
+| testkube-dashboard.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |
 | testkube-dashboard.autoscaling.annotations | object | `{}` | Specific autoscaling annotations |
 | testkube-dashboard.autoscaling.enabled | bool | `false` | Enable autoscaling for Testkube dashboard deployment |
 | testkube-dashboard.autoscaling.labels | object | `{}` | Specific autoscaling labels |

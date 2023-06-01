@@ -154,7 +154,7 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
-        } 
+        }
 
         if ( $request_method = OPTIONS ){
           set $methodallowed "true";
@@ -189,6 +189,10 @@ testkube-api:
         }
 
         if ( $uri ~ "^(.*)/test-suite-executions/(.*)$" ){
+          set $pathallowed "true";
+        }
+
+        if ( $uri ~ "^(.*)/repositories$" ){
           set $pathallowed "true";
         }
 
@@ -298,6 +302,8 @@ testkube-api:
   slackTemplate: ""
   slackConfig: ""
   executors: ""
+  cdeventsTarget: ""
+  dashboardUri: ""
 
   ##Test Connection pod
   testConnection:
@@ -341,6 +347,7 @@ testkube-dashboard:
           - dashboard.testkube.io
         secretName: testkube-demo-cert-secret
   apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
+  disableTelemetry: true
   oauth2:
     enabled: false
     name: oauth2-proxy
