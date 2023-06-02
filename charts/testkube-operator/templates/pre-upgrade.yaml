@@ -11,6 +11,9 @@ metadata:
     "helm.sh/hook-weight": "4"
     "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
 spec:
+  {{- if .Values.preUpgrade.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ .Values.preUpgrade.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
     metadata:
       name: {{ .Release.Name }}-operator-pre-upgrade
