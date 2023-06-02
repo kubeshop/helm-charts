@@ -24,6 +24,9 @@ metadata:
     {{- end }}
   namespace: {{ include "testkube-operator.namespace" . }}
 spec:
+  {{- if .Values.webhook.migrate.ttlSecondsAfterFinished  }}
+  ttlSecondsAfterFinished: {{ .Values.webhook.migrate.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
     metadata:
       annotations:
