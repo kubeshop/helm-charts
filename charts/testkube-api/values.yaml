@@ -61,6 +61,8 @@ cloud:
   orgId: ""
   ## Environment ID
   envId: ""
+  ## true if migration from OSS
+  migrate: ""
 
 ## Multinamespace feature. Disabled by default
 multinamespace:
