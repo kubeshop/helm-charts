@@ -51,9 +51,17 @@ spec:
                   - end-testsuite-timeout
                   type: string
                 type: array
+              headers:
+                additionalProperties:
+                  type: string
+                description: webhook headers
+                type: object
               payloadObjectField:
                 description: will load the generated payload for notification inside
                   the object
+                type: string
+              payloadTemplate:
+                description: golang based template for notification payload
                 type: string
               selector:
                 description: Labels to filter for tests and test suites
