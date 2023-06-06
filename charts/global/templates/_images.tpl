@@ -3,20 +3,16 @@ Return the proper image name
 {{ include "global.images.image" ( dict "imageRoot" .Values.path.to.the.image "global" $) }}
 */}}
 {{- define "global.images.image" -}}
-{{- $registryName := .imageRoot.registry -}}
-{{- $repositoryName := .imageRoot.repository -}}
 {{- $separator := ":" -}}
-{{- $termination := .imageRoot.tag   | toString -}}
+{{- $imageDict := .imageRoot -}}
 {{- if .global }}
-    {{- if .global.imageRegistry }}
-     {{- $registryName = .global.imageRegistry -}}
-    {{- end -}}
+    {{- $imageDict := merge .imageRoot (dict "registry" .global.imageRegistry) -}}
 {{- end -}}
-{{- if .imageRoot.digest }}
-    {{- $separator = "@" -}}
-    {{- $termination = .imageRoot.digest | toString -}}
+{{- if $imageDict.registry }}
+    {{- printf "%s/%s%s%s" $imageDict.registry $imageDict.repository $separator $imageDict.tag -}}
+{{- else -}}
+    {{- printf "%s%s%s" $imageDict.repository $separator $imageDict.tag -}}
 {{- end -}}
-{{- printf "%s/%s%s%s" $registryName $repositoryName $separator $termination -}}
 {{- end -}}
 
 
