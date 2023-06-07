@@ -8,6 +8,11 @@ Return the proper image name
 {{- if .global }}
     {{- $imageDict := merge .imageRoot (dict "registry" .global.imageRegistry) -}}
 {{- end -}}
+{{- $termination := $imageDict.tag   | toString -}}
+{{- if $imageDict.digest }}
+    {{- $separator = "@" -}}
+    {{- $termination = $imageDict.digest | toString -}}
+{{- end -}}
 {{- if $imageDict.registry }}
     {{- printf "%s/%s%s%s" $imageDict.registry $imageDict.repository $separator $imageDict.tag -}}
 {{- else -}}
