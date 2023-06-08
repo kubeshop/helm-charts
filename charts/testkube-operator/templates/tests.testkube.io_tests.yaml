@@ -428,7 +428,12 @@ spec:
                           type: string
                       type: object
                     type:
-                      description: test type
+                      description: |
+                        type of sources a runner can get data from.
+                            string: String content (e.g. Postman JSON file).
+                            file-uri: content stored on the webserver.
+                            git-file: the file stored in the Git repo in the given path.
+                            git-dir: the entire git repo or git subdirectory (Testkube does a spatial checkout to limit traffic in the case of monorepos).
                       enum:
                       - string
                       - file-uri
