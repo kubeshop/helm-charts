@@ -197,6 +197,10 @@ spec:
             - name: TESTKUBE_CLOUD_ENV_ID
               value:  "{{ .Values.cloud.envId }}"
             {{- end}}
+            {{- if .Values.cloud.migrate }}
+            - name: TESTKUBE_CLOUD_MIGRATE
+              value:  "{{ .Values.cloud.migrate }}"
+            {{- end}}
             - name: TESTKUBE_WATCHER_NAMESPACES
               value: "{{ include "testkube-api.watcher-namespaces" . | nindent 12 | trim }}"
             {{- if .Values.extraEnvVars }}
