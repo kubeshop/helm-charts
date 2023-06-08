@@ -581,6 +581,7 @@ spec:
                               properties:
                                 duration:
                                   description: Duration in time units
+                                  format: duration
                                   type: string
                               type: object
                             test:
@@ -613,6 +614,7 @@ spec:
                               properties:
                                 duration:
                                   description: Duration in time units
+                                  format: duration
                                   type: string
                               type: object
                             test:
@@ -790,6 +792,7 @@ spec:
                               properties:
                                 duration:
                                   description: Duration in time units
+                                  format: duration
                                   type: string
                               type: object
                             test:
