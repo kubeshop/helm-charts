@@ -12,7 +12,7 @@ spec:
       clientConfig:
         service:
           name: {{ include "testkube-operator.webhookServiceName" . }}
-          namespace: {{ .Release.Namespace }}
+          namespace: {{ include "testkube-operator.namespace" . }}
           path: /convert
       conversionReviewVersions:
         - v1
@@ -293,6 +293,10 @@ spec:
                             type: boolean
                         type: object
                       type:
+                        description: TestSuiteStepType defines different type of test suite steps
+                        enum:
+                        - execute
+                        - delay
                         type: string
                     type: object
                   type: array
@@ -322,6 +326,10 @@ spec:
                             type: boolean
                         type: object
                       type:
+                        description: TestSuiteStepType defines different type of test suite steps
+                        enum:
+                        - execute
+                        - delay
                         type: string
                     type: object
                   type: array
@@ -330,6 +338,9 @@ spec:
                 executionRequest:
                   description: test suite execution request body
                   properties:
+                    cronJobTemplate:
+                      description: cron job template extensions
+                      type: string
                     executionLabels:
                       additionalProperties:
                         type: string
@@ -492,6 +503,10 @@ spec:
                             type: boolean
                         type: object
                       type:
+                        description: TestSuiteStepType defines different type of test suite steps
+                        enum:
+                        - execute
+                        - delay
                         type: string
                     type: object
                   type: array
@@ -514,6 +529,14 @@ spec:
                       format: date-time
                       type: string
                     status:
+                      enum:
+                      - queued
+                      - running
+                      - passed
+                      - failed
+                      - aborting
+                      - aborted
+                      - timeout
                       type: string
                   type: object
               type: object

@@ -25,19 +25,6 @@ serviceAccount:
 
 podAnnotations: {}
 
-podSecurityContext:
-  {}
-  # fsGroup: 2000
-
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 service:
   type: ClusterIP
   port: 80
@@ -101,6 +88,13 @@ mongodb:
     nodePort: true
     clusterIP: ""
 
+nats:
+  # NATS container settings
+  nats:
+    limits:
+      # -- Max payload
+      maxPayload: 8MB
+
 testkube-api:
   rbac:
     createRoles: true
@@ -111,7 +105,7 @@ testkube-api:
   fullnameOverride: "testkube-api-server"
   image:
     repository: kubeshop/testkube-api-server
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     # TODO we should stick to static version
     # tag: "latest"
@@ -160,6 +154,10 @@ testkube-api:
 
         if ( $request_method = POST ){
           set $methodallowed "true";
+        }
+
+        if ( $request_method = OPTIONS ){
+          set $methodallowed "true";
         } 
 
         if ( $request_method = PATCH ){
@@ -191,6 +189,10 @@ testkube-api:
         }
 
         if ( $uri ~ "^(.*)/test-suite-executions/(.*)$" ){
+          set $pathallowed "true";
+        }
+
+        if ( $uri ~ "^(.*)/repositories$" ){
           set $pathallowed "true";
         }
 
@@ -235,12 +237,14 @@ testkube-api:
     endpoint_port: "9000"
     accessKeyId: "minio"
     accessKey: "minio123"
-    location: ""
+    region: ""
     token: ""
     bucket: "testkube-artifacts"
+    # -- MinIO Expiration period in days
+    expiration: 0
     SSL: false
     scrapperEnabled: true
-      
+
   ## Logs storage for Testkube API.
   logs:
     ## where the logs should be stored there are 2 possible valuse : minio|mongo
@@ -255,11 +259,51 @@ testkube-api:
     # secretKey: mongo-dsn
     allowDiskUse: true
 
+  ## Set custom livenessProbe
+  livenessProbe:
+    ## Probe type
+    httpGet:
+      path: /health
+      port: http
+      scheme: HTTP
+    ## Amount of request failures before the container receives a terminate signal
+    failureThreshold: 3
+    ## Time to wait after the initial deployment before performing first probe
+    initialDelaySeconds: 180
+    ## How often (in seconds) to perform the probes. This value sends one probe every 30 seconds
+    periodSeconds: 30
+    ## Minimum consecutive successes for the probe to be considered successful after having failed
+    successThreshold: 1
+    ## Number of seconds after which the probe times out
+    timeoutSeconds: 10
+
+  ## Set custom readinessProbe
+  readinessProbe:
+    ## Probe type
+    httpGet:
+      path: /health
+      port: http
+      scheme: HTTP
+    ## Amount of request failures before the container receives a terminate signal
+    failureThreshold: 3
+    ## Time to wait after the initial deployment before performing first probe
+    initialDelaySeconds: 60
+    ## How often (in seconds) to perform the probes. This value sends one probe every 30 seconds
+    periodSeconds: 30
+    ## Minimum consecutive successes for the probe to be considered successful after having failed
+    successThreshold: 1
+    ## Number of seconds after which the probe times out
+    timeoutSeconds: 10
+
   analyticsEnabled: true
+  podStartTimeout: "30m"
   slackToken: ""
+  slackSecret: ""
   slackTemplate: ""
   slackConfig: ""
   executors: ""
+  cdeventsTarget: ""
+  dashboardUri: ""
 
   ##Test Connection pod
   testConnection:
@@ -271,7 +315,7 @@ testkube-dashboard:
   fullnameOverride: "testkube-dashboard"
   image:
     repository: kubeshop/testkube-dashboard
-    pullPolicy: Always
+    pullPolicy: IfNotPresent
     #tag: "main" #it will take the tag from appVersion
   service:
     type: ClusterIP
@@ -303,6 +347,7 @@ testkube-dashboard:
           - dashboard.testkube.io
         secretName: testkube-demo-cert-secret
   apiServerEndpoint: "demo.testkube.io/results" #get the address of the endpoint or set it using helm
+  disableTelemetry: true
   oauth2:
     enabled: false
     name: oauth2-proxy

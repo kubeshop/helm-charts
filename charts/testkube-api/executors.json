@@ -1,14 +1,53 @@
 [
     {
+        "name": "zap-executor",
+        "executor": {
+            "executorType": "job",
+            "image": "kubeshop/testkube-zap-executor:5e1eb25",
+            "command": [
+                "<pythonScriptPath>"
+            ],
+            "args": [
+                "<fileArgs>"
+            ],
+            "types": [
+                "zap/api",
+                "zap/baseline",
+                "zap/full"
+            ],
+            "contentTypes": [
+                "string",
+                "file-uri",
+                "git"
+            ],
+            "features": [
+                "artifacts"
+            ],
+            "meta": {
+                "iconURI": "zap",
+                "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-zap"
+            }
+        }
+    },
+    {
         "name": "playwright-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-playwright-executor:0.0.1",
+            "executorType": "job",
+            "image": "kubeshop/testkube-playwright-executor:5e1eb25",
+            "command": [
+                "<depManager>"
+            ],
+            "args": [
+                "<depCommand>",
+                "playwright",
+                "test"
+            ],
             "types": [
                 "playwright/test"
             ],
-            "content_types": [
-                "git-dir"
+            "contentTypes": [
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -22,15 +61,33 @@
     {
         "name": "jmeter-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-jmeter-executor:0.0.14",
+            "executorType": "job",
+            "image": "kubeshop/testkube-jmeter-executor:5e1eb25",
+            "command": [
+                "<entryPoint>"
+            ],
+            "args": [
+                "-n",
+                "-j",
+                "<logFile>",
+                "-t",
+                "<runPath>",
+                "-l",
+                "<jtlFile>",
+                "-e",
+                "-o",
+                "<reportFile>",
+                "<envVars>"
+            ],
             "types": [
                 "jmeter/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -44,16 +101,32 @@
     {
         "name": "ginkgo-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-ginkgo-executor:0.0.20",
+            "executorType": "job",
+            "image": "kubeshop/testkube-ginkgo-executor:5e1eb25",
+            "command": [
+                "ginkgo"
+            ],
+            "args": [
+                "-r",
+                "-p",
+                "--randomize-all",
+                "--randomize-suites",
+                "--keep-going",
+                "--trace",
+                "--junit-report",
+                "<reportFile>",
+                "<envVars>",
+                "<runPath>"
+            ],
             "types": [
                 "ginkgo/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts",
@@ -68,17 +141,30 @@
     {
         "name": "maven-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-maven-executor:0.1.15",
+            "executorType": "job",
+            "image": "kubeshop/testkube-maven-executor:5e1eb25",
+            "command": [
+                "mvn"
+            ],
+            "args": [
+                "--settings",
+                "<settingsFile>",
+                "<goalName>",
+                "-Duser.home",
+                "<mavenHome>"
+            ],
             "types": [
                 "maven/project",
                 "maven/test",
                 "maven/integration-test"
             ],
-            "content_types": [
-                "git-dir"
+            "contentTypes": [
+                "git-dir",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "maven",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-maven"
@@ -88,17 +174,29 @@
     {
         "name": "gradle-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-gradle-executor:0.1.16",
+            "executorType": "job",
+            "image": "kubeshop/testkube-gradle-executor:5e1eb25",
+            "command": [
+                "gradle"
+            ],
+            "args": [
+                "--no-daemon",
+                "<taskName>",
+                "-p",
+                "<projectDir>"
+            ],
             "types": [
                 "gradle/project",
                 "gradle/test",
                 "gradle/integrationTest"
             ],
-            "content_types": [
-                "git-dir"
+            "contentTypes": [
+                "git-dir",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "gradle",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-gradle"
@@ -108,19 +206,30 @@
     {
         "name": "kubepug-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-kubepug-executor:0.0.15",
+            "executorType": "job",
+            "image": "kubeshop/testkube-kubepug-executor:5e1eb25",
+            "command": [
+                "kubepug"
+            ],
+            "args": [
+                "--format=json",
+                "--input-file",
+                "<runPath>"
+            ],
             "types": [
                 "kubepug/yaml",
                 "kubepug/json"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "kubepug",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-kubepug"
@@ -130,15 +239,23 @@
     {
         "name": "soapui-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-soapui-executor:0.1.18",
+            "executorType": "job",
+            "image": "kubeshop/testkube-soapui-executor:5e1eb25",
+            "command": [
+                "/bin/sh",
+                "/usr/local/SmartBear/EntryPoint.sh"
+            ],
+            "args": [
+                "<runPath>"
+            ],
             "types": [
                 "soapui/xml"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
             "features": [
                 "artifacts"
@@ -152,18 +269,29 @@
     {
         "name": "k6-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-k6-executor:0.0.24",
+            "executorType": "job",
+            "image": "kubeshop/testkube-k6-executor:5e1eb25",
+            "command": [
+                "k6"
+            ],
+            "args": [
+                "<k6Command>",
+                "<envVars>",
+                "<runPath>"
+            ],
             "types": [
                 "k6/script"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "k6",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-k6"
@@ -173,13 +301,28 @@
     {
         "name": "cypress-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-cypress-executor:1.1.26",
+            "executorType": "job",
+            "image": "kubeshop/testkube-cypress-executor:5e1eb25",
+            "command": [
+                "./node_modules/cypress/bin/cypress"
+            ],
+            "args": [
+                "run",
+                "--reporter",
+                "junit",
+                "--reporter-options",
+                "mochaFile=<reportFile>,toConsole=false",
+                "--project",
+                "<projectPath>",
+                "--env",
+                "<envVars>"
+            ],
             "types": [
                 "cypress/project"
             ],
-            "content_types": [
-                "git-dir"
+            "contentTypes": [
+                "git-dir",
+                "git"
             ],
             "features": [
                 "artifacts",
@@ -194,17 +337,26 @@
     {
         "name": "curl-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-curl-executor:1.0.18",
+            "executorType": "job",
+            "image": "kubeshop/testkube-curl-executor:5e1eb25",
+            "command": [
+                "curl"
+            ],
+            "args": [
+                "-is"
+            ],
             "types": [
                 "curl/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "curl",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-curl"
@@ -214,17 +366,33 @@
     {
         "name": "postman-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-postman-executor:1.0.18",
+            "executorType": "job",
+            "image": "kubeshop/testkube-postman-executor:5e1eb25",
+            "command": [
+                "newman"
+            ],
+            "args": [
+                "run",
+                "<runPath>",
+                "-e",
+                "<envFile>",
+                "--reporters",
+                "cli,json",
+                "--reporter-json-export",
+                "<reportFile>"
+            ],
             "types": [
                 "postman/collection"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
-                "git-file"
+                "git-file",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "postman",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-postman"
@@ -234,18 +402,32 @@
     {
         "name": "artillery-executor",
         "executor": {
-            "executor_type": "job",
-            "image": "kubeshop/testkube-artillery-executor:0.0.25",
+            "executorType": "job",
+            "image": "kubeshop/testkube-artillery-executor:5e1eb25",
+            "command": [
+                "artillery"
+            ],
+            "args": [
+                "run",
+                "<runPath>",
+                "--dotenv",
+                "<envFile>",
+                "-o",
+                "<reportFile>"
+            ],
             "types": [
                 "artillery/test"
             ],
-            "content_types": [
+            "contentTypes": [
                 "string",
                 "file-uri",
                 "git-file",
-                "git-dir"
+                "git-dir",
+                "git"
             ],
-            "features": [],
+            "features": [
+                "artifacts"
+            ],
             "meta": {
                 "iconURI": "artillery",
                 "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-artillery"
@@ -253,18 +435,18 @@
         }
     },
     {
-        "name": "executor-scraper",
+        "name": "scraper-executor",
         "executor": {
-            "executor_type": "scraper",
-            "image": "kubeshop/testkube-executor-scraper:1.0.3",
+            "executorType": "scraper",
+            "image": "kubeshop/testkube-scraper-executor:5e1eb25",
             "types": []
         }
     },
     {
-        "name": "executor-init",
+        "name": "init-executor",
         "executor": {
-            "executor_type": "init",
-            "image": "kubeshop/testkube-executor-init:0.7.30",
+            "executorType": "init",
+            "image": "kubeshop/testkube-init-executor:5e1eb25",
             "types": []
         }
     }

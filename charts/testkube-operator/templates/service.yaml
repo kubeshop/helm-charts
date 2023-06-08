@@ -13,7 +13,7 @@ metadata:
     {{- if .Values.service.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.service.annotations "context" $ ) | nindent 4 }}
     {{- end }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 spec:
   ports:
   - name: https
@@ -34,11 +34,12 @@ metadata:
   annotations:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 spec:
+  type: ClusterIP
   ports:
   - port: 443
     protocol: TCP
-    targetPort: {{ .Values.containerPort }}
+    targetPort: 9443
   selector:
     control-plane: controller-manager

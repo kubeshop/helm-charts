@@ -33,26 +33,43 @@ podLabels: {}
 podSecurityContext: {}
 # fsGroup: 2000
 
+## Configure Container Security Context for Testkube Dashboard container
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
+
+
 ### @section Specific parameters
-## image.registry Testkube API image registry
-## image.repository Testkube API image name
-## image.tag Testkube API image tag
-## image.pullPolicy Testkube API Image pull policy
+## image.registry Testkube Dashboard image registry
+## image.repository Dashboard API image name
+## image.tag Testkube Dashboard image tag
+## image.pullPolicy Testkube Dashboard Image pull policy
+## image.digest Testkube Dashboard image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 image:
   registry: docker.io
   repository: kubeshop/testkube-dashboard
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.9.2"
+  digest: ""
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: dashboard
-fullnameOverride: testkube-dashboard
+nameOverride: ""
+fullnameOverride: ""
 
 ## Testkube API Server Endpoint
 apiServerEndpoint: ""
+
+## Force disabling telemetry
+disableTelemetry: false
 
 ## Array with extra environment variables
 ## e.g:
@@ -71,17 +88,6 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
-## Configure Container Security Context for Testkube Dashboard
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
 ## Service parameters
 service:
   ## Adapter service type
@@ -90,10 +96,6 @@ service:
   port: 8080
   ## Additional custom annotations for the service
   annotations: {}
-
-##Dashboard container port
-container:
-  port: 8080
 
 ##Ingress parameters
 ingress:
@@ -108,6 +110,8 @@ ingress:
   ## Hostnames must be provided if Ingress is enabled.
   hosts: []
   #  - testkube.example.com
+  ## Enable IPv6 listener
+  ipv6enabled: false
   ## Enable TLS configuration for the hostname defined at `Ingress.hosts` parameter
   tlsenabled: false
   ## placing a host in the TLS config will indicate a certificate should be created
@@ -116,7 +120,7 @@ ingress:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
-##Oauth parameters
+## Oauth parameters
 oauth2:
   ## Use oauth
   enabled: false
@@ -178,7 +182,16 @@ oauth2:
   ## Add additional Ingress labels
   ingress:
     labels: {}
-
+  ## Add volumes for Oauth2
+  volumes: []
+#  - name: test-volume
+#    gcePersistentDisk:
+#      pdName: my-data-disk
+#      fsType: ext4
+  ## Add volumeMounts for Oauth2
+  volumeMounts: []
+#  - mountPath: /mypath
+#    name: git-volume
 ## Testkube Dashboard resource requests and limits
 resources: {}
 #   limits:
@@ -201,8 +214,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  targetCPU: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
   labels: {}
   annotations: {}
 

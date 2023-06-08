@@ -2,7 +2,7 @@
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: {{ .Values.webhook.name }}
+  name: {{ .Release.Name }}-{{ .Values.webhook.name }}
   annotations:
     {{- if .Values.webhook.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.annotations "context" $ ) | nindent 4 }}
@@ -26,7 +26,7 @@ webhooks:
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
-      namespace: {{ .Release.Namespace }}
+      namespace: {{ include "testkube-operator.namespace" . }}
       path: /validate-tests-testkube-io-v1-testtrigger
   failurePolicy: Fail
   name: vtesttrigger.kb.io

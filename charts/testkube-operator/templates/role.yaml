@@ -1,4 +1,4 @@
-{{- if .Values.rbac.create -}}
+{{ if .Values.rbac.create }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -12,6 +12,7 @@ metadata:
   {{- if .Values.global.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 rules:
 - apiGroups:
   - executor.testkube.io
@@ -228,6 +229,7 @@ metadata:
   {{- if .Values.global.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -245,7 +247,7 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-operator-leader-election-role
   labels:
@@ -255,7 +257,7 @@ metadata:
   {{- if .Values.global.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 rules:
 - apiGroups:
   - ""
@@ -294,6 +296,7 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
+  name: {{ .Release.Name }}-cronjobs-role
   labels:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -301,7 +304,7 @@ metadata:
     {{- if .Values.global.annotations }}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
     {{- end }}
-  name: cronjobs-cluster-role
+  namespace: {{ include "testkube-operator.namespace" . }}
 rules:
 - apiGroups:
   - ""
@@ -324,8 +327,10 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
+  name: {{ .Release.Name }}-webhook-cert-mgr
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
+    "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
     {{- if .Values.global.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
@@ -336,8 +341,7 @@ metadata:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
-  name: testkube-operator-webhook-cert-mgr
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
 rules:
 - apiGroups:
   - ""

@@ -34,10 +34,7 @@ spec:
       annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
       - args:
         {{- if .Values.oauth2.args }}
@@ -77,6 +74,14 @@ spec:
         ports:
         - containerPort: {{ .Values.oauth2.port }}
           protocol: TCP
+        {{- with .Values.oauth2.volumeMounts }}
+        volumeMounts:
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+      {{- with .Values.oauth2.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.oauth2.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

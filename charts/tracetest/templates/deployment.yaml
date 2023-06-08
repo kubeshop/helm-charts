@@ -32,16 +32,24 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+          - name: TRACETEST_DEV
+            value: "{{ .Values.env.tracetestDev }}"
           args:
-          - -config
+          - --config
           - '/app/config/config.yaml'
+          - --provisioning-file
+          - '/app/config/provisioning.yaml'
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.server.httpPort }}
               protocol: TCP
-            - name: otlp
-              containerPort: 21321
+            - name: otlp-grpc
+              containerPort: {{ .Values.server.otlpGrpcPort }}
+              protocol: TCP
+            - name: otlp-http
+              containerPort: {{ .Values.server.otlpHttpPort }}
               protocol: TCP
           livenessProbe:
             httpGet:

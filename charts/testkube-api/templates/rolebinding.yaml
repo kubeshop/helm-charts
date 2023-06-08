@@ -1,13 +1,19 @@
 {{ if .Values.rbac.create }}
-
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: executors-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: executors-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: executors-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -16,13 +22,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: jobs-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: jobs-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: jobs-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -31,13 +44,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: scripts-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: script-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: script-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -46,13 +66,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: tests-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: test-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: test-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -61,13 +88,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: secrets-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: secrets-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: secrets-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -76,13 +110,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testsuites-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testsuite-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testsuite-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -91,13 +132,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: webhooks-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: webhook-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: webhook-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -106,13 +154,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: configmaps-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: configmaps-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: configmaps-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -121,13 +176,20 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testsources-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testsource-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testsource-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -136,43 +198,119 @@ subjects:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: testtriggers-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: testtriggers-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: testtriggers-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
 ---
+{{- if .Values.additionalNamespaces }}
+{{- range .Values.additionalNamespaces }}
+{{- $rangeItem := . -}}
+{{- with $ }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: watchers-rb-{{ $rangeItem }}
+  namespace: {{ $rangeItem }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: watchers-role-{{ $rangeItem }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
+---
+{{- end }}
+{{- end }}
 
+---
+{{- if .Values.multinamespace.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: watchers-rb-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name:  watchers-role-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
+---
+
+{{- if not .Values.multinamespace.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
-  name: watchers-crb-{{ .Release.Name }}
+  name: watchers-rb-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: watchers-cluster-role-{{ .Release.Name }}
+  name:  watchers-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-
+{{- end }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   name: persistentvolumeclaims-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: persistentvolumeclaims-cluster-role-{{ .Release.Name }}
+  kind: Role
+  name: persistentvolumeclaims-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}

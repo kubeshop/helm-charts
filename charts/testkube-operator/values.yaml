@@ -12,6 +12,7 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  ## Toggle and define pod-level security context.
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -20,26 +21,35 @@ kubeVersion: ""
 ## Should we install CRDS - when they can be installed from other Testkube instance
 installCRD: true
 
+## Additional labels for Testkube Operator pod
+podLabels: {}
+
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
+
+## Namespace to install Testkube Operator
+namespace: ""
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: "testkube-operator"
-fullnameOverride: "testkube-operator"
+nameOverride: ""
+fullnameOverride: ""
 
 ### @section Specific parameters
 ## image.registry Testkube Operator image registry
 ## image.repository Testkube Operator image name
 ## image.tag Testkube Operator image tag
 ## image.pullPolicy Testkube Operator Image pull policy
+## image.digest Testkube Operator image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+
 image:
   registry: docker.io
   repository: kubeshop/testkube-operator
   pullPolicy: ""
   # Overrides the image tag whose default is the chart appVersion.
   #tag: "1.7.1"
+  digest: ""
 
 ##Proxy Image parameters
 ## image.registry Proxy image registry
@@ -51,16 +61,16 @@ proxy:
     registry: gcr.io
     repository: kubebuilder/kube-rbac-proxy
     tag: "v0.8.0"
-    pullPolicy: Always
-  ## Proxy Container Port
-  containerPort: 8443
+    pullPolicy: IfNotPresent
   ## Resources limits and requests for kube-rbac-proxy container
   resources: {}
 
-##Testkube Operator full name
+## Testkube Operator full name
 apiFullname: "testkube-api-server"
-##Testkube Operator port
+## Testkube Operator port
 apiPort: 8088
+## Testkube Operator healthcheck port
+healthcheckPort: 8081
 
 ## Service Account parameters
 serviceAccount:
@@ -78,32 +88,15 @@ extraEnvVars: []
 #  - name: FOO
 #    value: BAR
 
-## Wait 15 seconds before performing the first probe
-initialDelaySeconds: 15
+## Liveness probe configuration
+livenessProbe:
+  initialDelaySeconds: 3
+  periodSeconds: 10
 
-## Specifies that the kubelet should perform a liveness probe every 20 seconds.
-periodSeconds: 20
-
-## Perform a liveness probe on specified port
-livenessProbePort: 8081
-
-## Manager container port
-containerPort: 9443
-
-## Perform a readiness probe on specified port
-readinessProbePort: 8081
-
-## Wait 5 seconds before performing readiness probe
-readinessProbeinitialDelaySeconds: 5
-
-## Specifies that the kubelet should perform a readiness probe every 10 seconds.
-readinessProbeperiodSeconds: 10
-
-## Configure Security Context for Manager Container
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-##
-containerSecurityContext:
-  allowPrivilegeEscalation: false
+## Readiness probe configuration
+readinessProbe:
+  initialDelaySeconds: 3
+  periodSeconds: 10
 
 ##Name of the metrics server. If not specified, default name from the template is used
 metricsServiceName: ""
@@ -111,27 +104,40 @@ metricsServiceName: ""
 ## Terminating a container that failed its liveness or startup probe after 10s
 terminationGracePeriodSeconds: 10
 
-## Testkube Operator Pod security Context
-securityContext:
-  runAsNonRoot: true
+## Testkube Operator Pod Security Context
+podSecurityContext: {}
+#  runAsUser: 1000670000
+#  runAsNonRoot: true
+
+## Configure Security Context for Manager Container
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+##
+securityContext: {}
+#  readOnlyRootFilesystem: true
+#  allowPrivilegeEscalation: false
+#  seccompProfile:
+#    type: RuntimeDefault
+#  capabilities:
+#    drop:
+#      - ALL
 
 ## Testkube Operator Pod Volume
 volumes:
   secret:
     defaultMode: 420
 
-##Webhook parameters
+## Webhook parameters
 webhook:
   ## Use webhook
   enabled: true
   ## Name of the webhook
-  name: testkube-operator-webhook-admission
+  name: webhook-admission
   ## Webhook specific labels
   labels: {}
   ## Webhook specific annotations
   annotations: {}
 
-  ##Migrate Job parameters
+  ## Migrate Job parameters
   migrate:
     ## Deploy Migrate Job
     enabled: true
@@ -143,18 +149,24 @@ webhook:
       registry: docker.io
       repository: rancher/kubectl
       tag: v1.23.7
-      pullPolicy: ""
+      pullPolicy: Always
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
-    securityContext:
-      allowPrivilegeEscalation: false
+    securityContext: {}
+#      readOnlyRootFilesystem: true
+#      allowPrivilegeEscalation: false
+#      seccompProfile:
+#        type: RuntimeDefault
+#      capabilities:
+#        drop:
+#          - ALL
     ## Number of retries before considering a Job as failed
     backoffLimit: 1
     ## Resources limits and requests
     resources: {}
 
-  ##Patch Job parameters
+  ## Patch Job parameters
   patch:
     enabled: true
     ## image.registry patch container job image registry
@@ -165,7 +177,7 @@ webhook:
       registry: docker.io
       repository: dpejcev/kube-webhook-certgen
       tag: 1.0.11
-      pullPolicy: Always
+      pullPolicy: IfNotPresent
     ## Annotations to add to the patch Job
     annotations: {}
     ## Pod annotations to add to the patch Job
@@ -175,11 +187,37 @@ webhook:
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 2000
-      fsGroup: 2000
-    ## Name of teh SA to use by patch Job
+    podSecurityContext: {}
+#      runAsUser: 1000670000
+#      runAsNonRoot: true
+
+    createSecretJob:
+      ## Create Secret job container security context
+      securityContext: {}
+#        readOnlyRootFilesystem: true
+#        allowPrivilegeEscalation: false
+#        seccompProfile:
+#          type: RuntimeDefault
+#        capabilities:
+#          drop:
+#            - ALL
+      ## Create Secret resource requests and limits
+      resources: {}
+
+    patchWebhookJob:
+      ## Patch Webhook job container security context
+      securityContext: {}
+#        readOnlyRootFilesystem: true
+#        allowPrivilegeEscalation: false
+#        seccompProfile:
+#          type: RuntimeDefault
+#        capabilities:
+#          drop:
+#            - ALL
+      ## Patch Webhook resource requests and limits
+      resources: {}
+
+    ## Name of the SA to use by patch Job
     serviceAccount:
       ## SA specific annotations
       annotations: {}
@@ -201,12 +239,6 @@ webhook:
   certificate:
     ## Webhook certificate secret name
     secretName: webhook-server-cert
-
-  createSecretJob:
-    resources: {}
-  ## Patch Webhook resource requests and limits
-  patchWebhookJob:
-    resources: {}
 
 ## Create RBAC roles for users and controller
 rbac:
@@ -249,3 +281,31 @@ affinity: {}
 ##Test Connection pod
 testConnection:
   enabled: false
+
+preUpgrade:
+  # -- Upgrade hook is enabled
+  enabled: true
+  # -- Specify image
+  image:
+    registry: k8s.gcr.io
+    repository: hyperkube
+    tag: v1.12.1
+    pullPolicy: IfNotPresent
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule

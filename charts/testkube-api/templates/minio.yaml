@@ -29,6 +29,7 @@ metadata:
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.minio.replicaCount }}
   selector:
     matchLabels:
       {{- if .Values.minio.matchLabels }}
@@ -48,10 +49,7 @@ spec:
       # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       # Volumes used by this deployment
       volumes:
         - name: data
@@ -60,7 +58,7 @@ spec:
             # Name of the PVC created earlier
             claimName: testkube-minio-pv-claim-{{ .Release.Namespace }}
       containers:
-        - name: testkube-minio-{{ .Release.Namespace }}
+        - name: testkube-minio
           # Volume mounts for this container
           volumeMounts:
             # Volume 'data' is mounted to path '/data'
@@ -68,6 +66,7 @@ spec:
               mountPath: "/data"
           # Pulls the lastest Minio image from Docker Hub
           image: {{ include "global.images.image" (dict "imageRoot" .Values.minio.image "global" .Values.global) }}
+          imagePullPolicy: {{ .Values.minio.image.pullPolicy }}
           args:
             - server
             - /data
@@ -100,8 +99,8 @@ spec:
             httpGet:
               path: /minio/health/ready
               port: 9000
-            initialDelaySeconds: {{ .Values.minio.initialDelaySeconds }}
-            periodSeconds: 20
+            initialDelaySeconds: {{ .Values.minio.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.minio.livenessProbe.periodSeconds }}
           # Liveness probe detects situations where MinIO server instance
           # is not working properly and needs restart. Kubernetes automatically
           # restarts the pods if liveness checks fail.
@@ -109,11 +108,15 @@ spec:
             httpGet:
               path: /minio/health/live
               port: 9000
-            initialDelaySeconds: {{ .Values.minio.initialDelaySeconds }}
-            periodSeconds: 20
+            initialDelaySeconds: {{ .Values.minio.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.minio.readinessProbe.periodSeconds }}
           {{- if .Values.minio.resources }}
           resources: {{ toYaml .Values.minio.resources | nindent 12 }}
           {{- end }}
+          securityContext:
+            {{- toYaml .Values.minio.securityContext | nindent 12 }}
+      securityContext:
+        {{- toYaml .Values.minio.podSecurityContext | nindent 8 }}
       {{- if  .Values.minio.serviceAccountName }}
       serviceAccountName: {{ .Values.minio.serviceAccountName }}
       {{- end }}

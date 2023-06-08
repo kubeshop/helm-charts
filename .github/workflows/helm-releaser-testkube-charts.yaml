@@ -224,6 +224,119 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_FOOTER: "Kubeshop --> TestKube"
 
+  update_release_notes:
+    needs: notify_slack_if_release_succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: |
+          latest_tag=$(git describe --abbrev=0 --tags)
+          echo "::set-output name=latest_tag::${latest_tag}"
+
+      - name: Get Previous Tag
+        id: get_previous_tag
+        run: |
+          previous_tag=$(git describe --abbrev=0 --tags ${TAG}^)
+          echo "::set-output name=previous_tag::${previous_tag}"
+        env:
+          TAG: ${{ steps.get_latest_tag.outputs.latest_tag }}
+
+      - name: Generate Changelog
+        id: generate_changelog
+        env:
+          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+        run: |
+          #!/bin/bash
+
+          PREVIOUS_TAG=${{ steps.get_previous_tag.outputs.previous_tag }}
+          CURRENT_TAG=${{ steps.get_latest_tag.outputs.latest_tag }}
+
+          echo $PREVIOUS_TAG
+          echo $CURRENT_TAG
+
+          MERGED_PRS=$(git log --merges --pretty=format:"- %h: %s (#%b) (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
+          echo $MERGED_PRS
+
+          if [ -n "$MERGED_PRS" ]; then
+            echo "# Changelog" > CHANGELOG.md
+
+            FEATURE_PRS=""
+            FIX_PRS=""
+            OTHER_PRS=""
+            DOCS_PRS=""
+
+            while IFS= read -r pr; do
+              sha=$(echo "$pr" | awk '{print $1 " " $2}')
+              pr_number=$(echo "$pr" | awk -F'#' '{print "#" $2}' | awk '{print $1}')
+              pr_title=$(echo "$pr" | awk -F'[(]|[)]' '{sub(/^#/, "", $2); print $2}')
+              author=$(echo "$pr" | awk -F'[()]' '{print "(" $4 ")"}')
+
+              if [[ "$pr_title" == *"feat"* ]]; then
+                  FEATURE_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+                  echo "New features"
+                  echo $FEATURE_PRS
+              elif [[ "$pr_title" == *"fix"* ]]; then
+                  FIX_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+                  echo "Bug fixes"
+                  echo $FIX_PRS
+              elif [[ "$pr_title" == *"docs"* ]]; then
+                  DOCS_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+                  echo "Documentation updates"
+                  echo $DOCS_PRS
+              else
+                  OTHER_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+                  echo "Other changes"
+                  echo $OTHER_PRS
+              fi
+            done < <(echo "$MERGED_PRS")
+
+            if [ -n "$FEATURE_PRS" ]; then
+              echo "## Features" >> CHANGELOG.md
+              echo -e "$FEATURE_PRS" >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+            fi
+
+            if [ -n "$FIX_PRS" ]; then
+              echo "## Bug Fixes" >> CHANGELOG.md
+              echo -e "$FIX_PRS" >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+            fi
+
+            if [ -n "$DOCS_PRS" ]; then
+              echo "## Documentation Updates" >> CHANGELOG.md
+              echo -e "$DOCS_PRS" >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+            fi
+
+            if [ -n "$OTHER_PRS" ]; then
+              echo "## Other Changes" >> CHANGELOG.md
+              echo -e "$OTHER_PRS" >> CHANGELOG.md
+              echo "" >> CHANGELOG.md
+            fi
+
+            echo "Printing changelog"
+            cat CHANGELOG.md
+            echo "Updating release"
+
+            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
+
+          else
+            echo "No merged pull requests found. Adding commits"
+            COMMIT_CHANGELOG=$(git log --pretty=format:"- %s %h (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
+            echo "# Commit Changelog" > CHANGELOG.md
+            echo "" >> CHANGELOG.md
+            echo "${COMMIT_CHANGELOG}" >> CHANGELOG.md
+
+            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
+          fi
+
+
   test_suite_run_dev:
     name: test suite for DEV GKE.
     runs-on: ubuntu-latest
@@ -248,7 +361,7 @@ jobs:
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install testkube kubectl plugin
-        run: bash < <(curl -sSLf https://kubeshop.github.io/testkube/install.sh )
+        run: bash < <(curl -sSLf https://get.testkube.io )
 
       - name: Disable telemetry (action)
         id: disable_telemetry

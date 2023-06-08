@@ -15,6 +15,7 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+## create roles and rolebindings
 rbac:
   create: true
 
@@ -29,51 +30,85 @@ podAnnotations: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-## Security Context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-podSecurityContext: {}
-# fsGroup: 2000
-
 ### @section Specific parameters
 ## image.registry Testkube API image registry
 ## image.repository Testkube API image name
 ## image.tag Testkube API image tag
+## image.digest Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## image.pullPolicy Testkube API Image pull policy
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
+  digest: ""
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name
-nameOverride: "api-server"
-fullnameOverride: "testkube-api-server"
+nameOverride: ""
+fullnameOverride: ""
 
-## TESTKUBE API Deployment parameters
+## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
   ## URL of the Cloud Saas Control Plane
   url: "agent.testkube.io:443"
   ## License Key
   key: ""
+  ## Organization ID
+  orgId: ""
+  ## Environment ID
+  envId: ""
 
+## Multinamespace feature. Disabled by default
+multinamespace:
+  enabled: false
+
+## Extra Environment Variables which will be injected into the Testkube API container
+extraEnvVars: {}
+# - name: FOO
+#   value: BAR
+## Additional namespaces for Testkube API to watch
+# Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
+additionalNamespaces: []
 ## Enable analytics for Testkube
 analyticsEnabled: true
+# -- Testkube timeout for pod start
+podStartTimeout: "30m"
 
 ## Integration with Slack.
 ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
 ## Slack token from the testkube authentication endpoint
 slackToken: ""
-## Slack template for the events sent to Slack
-slackTemplate: ""
+
+## Slack secret to store slackToken, the key name should be SLACK_TOKEN
+slackSecret: ""
+
 ## Slack config for the events, tests, testsuites and channels
+slackConfig: ""
+
+templates:
+  ## Base64 encoded Job template
+  job: ""
+  ## Base64 encoded Job Container template
+  jobContainer: ""
+  ## Base64 encoded Scraper Container template
+  scraperContainer: ""
+  ## Base64 encoded PVC Container template
+  pvcContainer: ""
+
 jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
 executors: ""
+
+## target for cdevents emission via http(s)
+cdeventsTarget: ""
+
+## dashboard uri to be used in notification events
+dashboardUri: ""
 
 ## Testkube API resource requests and limits
 resources:
@@ -104,7 +139,7 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
 ## Node labels for Testkube API pod assignment.
 nodeSelector: {}
@@ -123,9 +158,11 @@ storage:
   endpoint_port: "9000"
   accessKeyId: "minio"
   accessKey: "minio123"
-  location: ""
+  region: ""
   token: ""
   bucket: "testkube-artifacts"
+  # expiration period in days
+  expiration: 0
   SSL: false
   scrapperEnabled: true
 
@@ -146,17 +183,14 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+podSecurityContext: {}
+
 ## Configure Container Security Context for Testkube API
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ##
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-# runAsUser: 1000
+securityContext: {}
 
 ## Service parameters
 service:
@@ -177,7 +211,15 @@ mongodb:
   # secretKey: mongo-dsn
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
+  # sslCAFileKey: sslCertificateAuthorityFile
+  # sslClientFileKey: sslClientCertificateKeyFile
+  # sslClientFilePassKey: sslClientCertificateKeyFilePassword
   allowDiskUse: true
+  # to use docdb with TLS, set dbType to docdb and allowTLS to true
+  # dbType possible values: docdb|mongo; empty string defaults to mongo
+  # dbType: docdb
+  # allowTLS will be checked for docdb; on true: docdb ca certs will be downloaded and used
+  # allowTLS: true
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
@@ -190,6 +232,7 @@ nats:
 
 ## MINIO parameters
 minio:
+  replicaCount: 1
   ## Deploy Minio server to the cluster
   enabled: true
   ## Minio extra vars
@@ -210,8 +253,8 @@ minio:
   image:
     registry: docker.io
     repository: minio/minio
-    tag: latest
-
+    tag: 2023.2.27
+    pullPolicy: IfNotPresent
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Root username
@@ -224,8 +267,18 @@ minio:
   matchLabels: []
   ## Resources limits and requests
   resources: {}
-  ## Wait 120 seconds before performing the first probe
-  initialDelaySeconds: 120
+  ## MinIO Liveness probe configuration
+  livenessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
+  ## MinIO Readiness probe configuration
+  readinessProbe:
+    initialDelaySeconds: 3
+    periodSeconds: 10
+  ## MinIO Pod Security Context
+  podSecurityContext: {}
+  ## MinIO Container Security Context
+  securityContext: {}
 
 ## uiIngress parameters
 uiIngress:
@@ -274,9 +327,9 @@ cliIngress:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
-##Prometheus monitoring
+## Prometheus monitoring
 prometheus:
-  ## Deploy Prometheus to cluster
+  ## Toggle whether to install ServiceMonitor
   enabled: false
   ## Scrape interval
   interval: 15s
@@ -286,3 +339,20 @@ prometheus:
 ##Test Connection pod
 testConnection:
   enabled: false
+
+## Testkube API Liveness probe
+livenessProbe:
+  initialDelaySeconds: 30
+
+
+## Testkube API Readiness probe
+readinessProbe:
+  initialDelaySeconds: 45
+
+## Testkube API HTTP body size limit
+## httpBodyLimit: 1073741824
+
+## Testkube API HTTP Read buffer size (in bytes)
+## Might need further increase if observing "431 Request Header Fields Too Large from api server"
+##  See https://github.com/kubeshop/testkube/pull/2871#issuecomment-1341116696
+httpReadBufferSize: 8192

@@ -1,4 +1,4 @@
-{{- if .Values.preUpgradeHook.serviceAccount.create -}}
+{{- if .Values.preUpgradeHook.serviceAccount.create }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -12,7 +12,7 @@ metadata:
   {{- end }}
 
 ---
-{{- if .Values.preUpgradeHook.serviceAccount.create -}}
+{{- if .Values.preUpgradeHook.serviceAccount.create }}
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -30,7 +30,7 @@ rules:
 {{- end }}
 
 ---
-{{- if .Values.preUpgradeHook.serviceAccount.create -}}
+{{- if .Values.preUpgradeHook.serviceAccount.create }}
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

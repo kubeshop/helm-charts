@@ -1,0 +1,56 @@
+{{- if .Values.preUpgrade.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-operator-pre-upgrade
+  labels:
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}  
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    job-name: {{ .Release.Name }}-operator-pre-upgrade
+  annotations:
+    "helm.sh/hook": pre-upgrade, pre-install
+    "helm.sh/hook-weight": "4"
+    "helm.sh/hook-delete-policy": before-hook-creation, hook-succeeded
+spec:
+  {{- if .Values.preUpgrade.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ .Values.preUpgrade.ttlSecondsAfterFinished }}
+  {{- end }}
+  template:
+    metadata:
+      name: {{ .Release.Name }}-operator-pre-upgrade
+      labels:
+        app.kubernetes.io/component: testkube-operator
+        app.kubernetes.io/name: {{ .Release.Name }}-operator-pre-upgrade
+    spec:
+      serviceAccountName:  {{ .Release.Name }}-operator-pre-upgrade-sa
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      containers:
+      - name: kubectl
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.preUpgrade.image.pullPolicy }}
+        {{- if .Values.preUpgrade.resources }}
+        resources: {{- toYaml .Values.preUpgrade.resources | nindent 10 }}
+        {{- end }}
+        command:
+        - /bin/bash
+        - -c
+        - >
+            NAMESPACE={{ include "testkube-operator.namespace" . }}
+            echo "Checking if namespace ${NAMESPACE} exists"
+              if kubectl get namespaces ${NAMESPACE}
+                then echo "Namespace already exists";
+              else
+                echo "creating namespace ${NAMESPACE}"
+                kubectl create namespace ${NAMESPACE};
+              fi
+        securityContext:
+          {{- toYaml .Values.preUpgrade.securityContext | nindent 10 }}
+      securityContext:
+        {{- toYaml .Values.preUpgrade.podSecurityContext | nindent 8 }}
+      restartPolicy: Never
+      {{- if .Values.preUpgrade.tolerations }}
+      tolerations: {{ toYaml .Values.preUpgrade.tolerations | nindent 8 }}
+      {{- end }}
+{{- end }}

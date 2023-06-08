@@ -1,0 +1,48 @@
+{{- if .Values.preUpgrade.serviceAccount.create }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-operator-pre-upgrade-sa
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+{{- end }}
+
+---
+{{- if .Values.preUpgrade.serviceAccount.create }}
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ .Release.Name }}-operator-pre-upgrade-role
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+rules:
+  - apiGroups: [""]
+    resources: ["namespaces"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+{{- end }}
+
+---
+{{- if .Values.preUpgrade.serviceAccount.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Name }}-operator-pre-upgrade-rolebinding
+  namespace: {{ include "testkube-operator.namespace" . }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Name }}-operator-pre-upgrade-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Release.Name }}-operator-pre-upgrade-sa
+    namespace: {{ .Release.Namespace }}
+{{- end }}

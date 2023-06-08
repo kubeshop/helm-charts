@@ -65,23 +65,29 @@ Define API image
 {{- $registryName := .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.image.digest | toString -}}
+{{- end -}}
 {{- if .Values.global }}
     {{- if .Values.global.imageRegistry }}
-      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
     {{- else -}}
-      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
-     {{- end -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
 
 {{/*
-NATS Uri
+Define TESTKUBE_WATCHER_NAMESPACES variable
 */}}
-{{- define "testkube-api.nats.uri" -}}
-{{- if .Values.nats.uri -}}
-    {{- print .Values.nats.uri -}}
-{{- else -}}
-    "nats://{{ .Release.Name }}-nats"
-{{- end -}}
+{{- define "testkube-api.watcher-namespaces" -}}
+{{- if .Values.multinamespace.enabled }}
+{{ join "," (concat (list .Release.Namespace) .Values.additionalNamespaces) }}
+{{- else }}
+{{- printf "" }}
 {{- end }}
-
+{{- end }}

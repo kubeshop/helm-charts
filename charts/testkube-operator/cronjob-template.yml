@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ .Name }}
+  name: "{{ .Name }}"
   namespace: {{ .Namespace }}
   labels:
     testkube: {{ .Resource }}
@@ -15,7 +15,7 @@ spec:
           containers:
           - name: curlimage
             image: curlimages/curl
-            imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             command:
             - sh
             - -c

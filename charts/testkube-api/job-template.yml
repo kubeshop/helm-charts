@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Name }}
+  name: "{{ .Name }}"
   namespace: {{ .Namespace }}
 spec:
   {{- if gt .ActiveDeadlineSeconds 0 }}
@@ -11,8 +11,12 @@ spec:
     spec:
       initContainers:
       - name: {{ .Name }}-init
+        {{- if .Registry }}
+        image: {{ .Registry }}/{{ .InitImage }}
+        {{- else }}
         image: {{ .InitImage }}
-        imagePullPolicy: Always
+        {{- end }}
+        imagePullPolicy: IfNotPresent
         command: 
           - "/bin/runner"
           - '{{ .Jsn }}'
@@ -23,10 +27,26 @@ spec:
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
         {{- end }}
+        {{- range $configmap := .EnvConfigMaps }}
+        {{- if and $configmap.Mount $configmap.Reference }}
+        - name: {{ $configmap.Reference.Name }}
+          mountPath: {{ $configmap.MountPath }}
+        {{- end }}
+        {{- end }}
+        {{- range $secret := .EnvSecrets }}
+        {{- if and $secret.Mount $secret.Reference }}
+        - name: {{ $secret.Reference.Name }}
+          mountPath: {{ $secret.MountPath }}
+        {{- end }}
+        {{- end }}
       containers:
-      - name: {{ .Name }}
+      - name: "{{ .Name }}"
+        {{- if .Registry }}
+        image: {{ .Registry }}/{{ .Image }}
+        {{- else }}
         image: {{ .Image }}
-        imagePullPolicy: Always
+        {{- end }}
+        imagePullPolicy: IfNotPresent
         command: 
           - "/bin/runner"
           - '{{ .Jsn }}'
@@ -36,6 +56,18 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- range $configmap := .EnvConfigMaps }}
+        {{- if and $configmap.Mount $configmap.Reference }}
+        - name: {{ $configmap.Reference.Name }}
+          mountPath: {{ $configmap.MountPath }}
+        {{- end }}
+        {{- end }}
+        {{- range $secret := .EnvSecrets }}
+        {{- if and $secret.Mount $secret.Reference }}
+        - name: {{ $secret.Reference.Name }}
+          mountPath: {{ $secret.MountPath }}
+        {{- end }}
         {{- end }}
       volumes:
       - name: data-volume
@@ -44,6 +76,20 @@ spec:
       - name: {{ .CertificateSecret }}
         secret:
           secretName: {{ .CertificateSecret }}
+      {{- end }}
+      {{- range $configmap := .EnvConfigMaps }}
+      {{- if and $configmap.Mount $configmap.Reference }}
+      - name: {{ $configmap.Reference.Name }}
+        configmap:
+          name: {{ $configmap.Reference.Name }}
+      {{- end }}
+      {{- end }}
+      {{- range $secret := .EnvSecrets }}
+      {{- if and $secret.Mount $secret.Reference }}
+      - name: {{ $secret.Reference.Name }}
+        secret:
+          secretName: {{ $secret.Reference.Name }}
+      {{- end }}
       {{- end }}
       restartPolicy: Never
       {{ if .ServiceAccountName }}

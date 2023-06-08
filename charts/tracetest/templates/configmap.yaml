@@ -10,10 +10,16 @@ data:
       {{- toYaml .Values.poolingConfig | nindent 6 }}
     googleAnalytics:
       enabled: {{.Values.analytics.enabled}}
-    postgresConnString: "host={{ include "tracetest.postgresql.fullname" . }} user={{.Values.postgresql.auth.username}} password={{.Values.postgresql.auth.password}}  port=5432 sslmode=disable"
+    postgres:
+      host: {{ include "tracetest.postgresql.fullname" . }}
+      user: {{.Values.postgresql.auth.username}}
+      password: {{.Values.postgresql.auth.password}}
+      port: 5432
+      params: sslmode=disable
     telemetry:
       {{- toYaml .Values.telemetry | nindent 6 }}
     server:
       {{- toYaml .Values.server | nindent 6 }}
-
+  provisioning.yaml: |-
+    {{- toYaml .Values.provisioning | nindent 4 }}
 ---

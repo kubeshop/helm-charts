@@ -2,690 +2,879 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-### Global image parameters
-## global.imageRegistry Global Docker image registry
-## global.imagePullSecrets [array] Global Docker registry secret names as an array
-## global.labels Labels to add to all deployed objects
-## global.annotations Annotations to add to all deployed objects
+# -- Global image parameters
 global:
+  # -- Global Docker image registry
   imageRegistry: ""
+  # -- Global Docker registry secret names as an array
   imagePullSecrets: []
+  # -- Labels to add to all deployed objects
   labels: {}
+  # --  Annotations to add to all deployed objects
   annotations: {}
 
-### MongoDB parameters
-## For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
-mongodb:
+# -- MongoDB pre-upgrade parameters
+preUpgradeHook:
+  # -- Upgrade hook is enabled
   enabled: true
-  nameOverride: "mongodb"
+  # -- Upgrade hook name
+  name: mongodb-upgrade
+  ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+  ttlSecondsAfterFinished: 100
+  # -- Specify image
+  image:
+    registry: k8s.gcr.io
+    repository: hyperkube
+    tag: v1.12.1
+    pullPolicy: IfNotPresent
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+
+
+# MongoDB parameters
+# For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
+mongodb:
+  # -- Toggle whether to install MongoDB
+  enabled: true
+  # -- MongoDB fullname override
   fullnameOverride: "testkube-mongodb"
-  architecture: "standalone"
+  # MongoDB Auth settings
   auth:
+    # -- Toggle whether to enable MongoDB authentication
     enabled: false
     # rootPassword: "123DefaultOne321"
+  # -- MongoDB service settings
   service:
     port: "27017"
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
+  # -- MongoDB resource settings
   resources:
     requests:
       cpu: 150m
       memory: 100Mi
-  ## Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
-  ## Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
+  # Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
+  # Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
   image:
+    # -- MongoDB image registry
     registry: docker.io
+    # -- MongoDB image repository
     repository: zcube/bitnami-compat-mongodb
+    # -- MongoDB image tag
     tag: 5.0.10-debian-11-r19
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
       value: arm64
       effect: NoSchedule
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Pod Security Context
+  podSecurityContext: {}
+  # For OpenShift clusters use the following settings:
+  #  fsGroup: 1000670000
 
-  ## NATS chart parameter
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB container
+  containerSecurityContext: {}
+  # For OpenShift clusters use the following settings:
+  #  runAsGroup: 1000670000
+
+## NATS chart parameter
+## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  #fullnameOverride: testkube-nats
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
       value: arm64
       effect: NoSchedule
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- NATS Pod Security Context
+  securityContext: {}
+
+  # NATS container settings
+  nats:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS container
+    securityContext: {}
+    # -- NATS resource settings
+    resources: {}
+    limits:
+      # -- Max payload
+      maxPayload: 8MB
+
+  # Reloader container settings
+  reloader:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for Reloader container
+    securityContext: {}
+
+  # NATS Box container settings
   natsbox:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS Box container
+    securityContext: {}
+    # -- NATS Box tolerations settings
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
 
-### Testkube API parameters
-testkube-api:
-  rbac:
-    createRoles: true
-    createRoleBindings: true
+  # Exporter container settings
+  exporter:
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for Exporter container
+    securityContext: {}
+    # -- Exporter resources settings
+    resources: {}
 
-  ## Monitoring parameters
-  prometheus:
-    ## Use monitoring
+# Testkube API parameters
+testkube-api:
+  # -- Testkube API full name override
+  fullnameOverride: testkube-api-server
+  # -- Testkube API name override
+  nameOverride: api-server
+  
+  # -- Toggle whether to deploy Testkube API RBAC
+  rbac:
+    create: true
+
+  # Multinamespace feature. Disabled by default
+  multinamespace:
     enabled: false
-    ## The name of the label to use in serviceMonitor if Prometheus is enabled
+
+  # Monitoring parameters
+  prometheus:
+    # -- Use monitoring
+    enabled: false
+    # -- The name of the label to use in serviceMonitor if Prometheus is enabled
     monitoringLabels: {}
-    ## Scrape interval
+    # -- Scrape interval
     interval: 15s
 
-  ## nameOverride Overrides Chart name
-  ## fullnameOverride Full name that overrides Chart name
-  nameOverride: "api-server"
-  fullnameOverride: "testkube-api-server"
-
-  ### Global image parameters
-  ## Global Docker image registry
-  ## Global Docker registry secret names as an array
+  # Testkube API image parameters
   image:
+    # -- Testkube API image registry
     registry: docker.io
+    # -- Testkube API image name
     repository: kubeshop/testkube-api-server
-    pullPolicy: Always
-    ## Overrides the image tag whose default is the chart appVersion.
+    # Overrides the image tag whose default is the chart appVersion.
     # tag: "latest"
-  ## Extra environment variables to be set on deployment
-  ## For example:
+    # -- Testkube API image tag
+    pullPolicy: IfNotPresent
+    # -- Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+    digest: ""
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "latest"
+  # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
+  # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
+  additionalNamespaces: []
 
-  ## Running Testkube in Agent mode
+  # Testkube Agent settings
   cloud:
-    ## URL of the Cloud Saas Control Plane
+    # -- Testkube Cloud API URL
     url: "agent.testkube.io:443"
-    ## License Key
+    # -- Testkube Clouc License Key (for Environment)
     key: ""
 
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
       value: arm64
       effect: NoSchedule
 
-  ## Service parameters
+  # Service parameters
   service:
-    ## Adapter service type
+    # -- Adapter service type
     type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
-    ## HTTP Port
+    # -- HTTP Port
     port: 8088
-    ## Service Annotations
+    # -- Service Annotations
     annotations: {}
-    ## Service labels
+    # -- Service labels
     labels: {}
 
-  ## NATS parameters
-  ## ref: https://github.com/nats-io/nats-server
+  # NATS parameters
+  # ref: https://github.com/nats-io/nats-server
   nats:
-    ## Use NATS
+    # -- Use NATS
     enabled: true
-    ## NATS URI that overrides default
-    uri: "nats://testkube-nats"
+    # -- NATS URI
+    uri: "nats://testkube-nats:4222"
 
-  ## MINIO parameters
+
+  # MinIO parameters
   minio:
-    ## Use minio
+    # -- Toggle whether to install MinIO
     enabled: true
-    ## Minio extra vars
+    # -- Minio extra vars
     extraEnvVars: {}
     # - name: FOO
     #   value: BAR
-    ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
-    ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+
+    # Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
+    # -- PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
     accessModes:
       - ReadWriteOnce
-    ## Node labels for pod assignment.
+    # -- Node labels for pod assignment.
     nodeSelector: {}
-    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
-    ## Affinity for pod assignment.
-    ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-    ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+    # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+    # Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+    # -- Affinity for pod assignment.
     affinity: {}
-    ## Minio image from DockerHub
+    # -- Minio image from DockerHub
     image:
       registry: docker.io
       repository: minio/minio
       tag: latest
-    ## ServiceAccount name to use for Minio
+    # -- ServiceAccount name to use for Minio
     serviceAccountName: ""
-    ## Root username
-    ## Root password
+    # -- Root username
     minioRootUser: "minio"
+    # -- Root password
     minioRootPassword: "minio123"
-    ## PVC Storage Request for MinIO. Should be available in the cluster.
+    # -- PVC Storage Request for MinIO. Should be available in the cluster.
     storage: 10Gi
-    ## Resources limits and requests
+    # -- MinIO Resources settings
     resources: {}
-    ## Wait 60 seconds before performing the first probe
-    initialDelaySeconds: 60
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+    # -- MinIO Pod Security Context
+    podSecurityContext: {}
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for MinIO container
+    securityContext: {}
 
-  ## uiIngress parameters
+  # uiIngress parameters
   uiIngress:
-    ## Use Ingress
+    # -- Use Ingress
     enabled: false
-    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
-    ## e.g annotations for NGINX Ingress Controller:
-    ## annotations:
-    ##   kubernetes.io/ingress.class: nginx
-    ##   nginx.ingress.kubernetes.io/rewrite-target: /$1
-    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/enable-cors: "true"
-    ##   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-    ##   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-    ## github oauth annotations (empty by default)
-    ##   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
-    ##   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
-    ##   nginx.ingress.kubernetes.io/auth-url: ""
-    ##   nginx.ingress.kubernetes.io/auth-signin: ""
-    ## for websockets
-    ##  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    ##  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    path: /results/(v\d/executions.*)
-    ## Hostnames must be provided if Ingress is enabled.
+    # -- Additional annotations for the Ingress resource.
+    annotations: {}
+    # e.g. annotations for NGINX Ingress Controller:
+    #   kubernetes.io/ingress.class: nginx
+    #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+    #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/enable-cors: "true"
+    #   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+    #   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    # github oauth annotations (empty by default)
+    #   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    #   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+    #   nginx.ingress.kubernetes.io/auth-url: ""
+    #   nginx.ingress.kubernetes.io/auth-signin: ""
+    # for websockets
+    #  nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    #  nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    path: /results/(v\d/.*)
+    # -- Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
     tlsenabled: false
-    ## Placing a host in the TLS config will indicate a certificate should be created
+    # -- Placing a host in the TLS config will indicate a certificate should be created
     tls:
       []
       # - hosts:
       #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
-  ## cliIngress parameters
+  # cliIngress parameters
   cliIngress:
-    ## Use ingress
+    # -- Use ingress
     enabled: false
-    ## @param ingress.annotations [object] Additional annotations for the Ingress resource.
-    ## e.g annotations for NGINX Ingress Controller:
-    ## annotations:
-    ##   kubernetes.io/ingress.class: nginx
-    ##   nginx.ingress.kubernetes.io/rewrite-target: /$1
-    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/configuration-snippet: |
-    ##     more_set_headers "X-CLI-Ingress: true";
-    ## for websockets
-    ##   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    ##   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    # -- Additional annotations for the Ingress resource.
+    annotations: {}
+    # e.g. annotations for NGINX Ingress Controller:
+    #   kubernetes.io/ingress.class: nginx
+    #   nginx.ingress.kubernetes.io/rewrite-target: /$1
+    #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/configuration-snippet: |
+    #     more_set_headers "X-CLI-Ingress: true";
+    # for websockets
+    #   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    #   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 
-    ## parameters to check oauth token (by default github one)
+    # parameters to check oauth token (by default github one)
     oauth:
+      # -- OAuth Client ID
       clientID: ""
+      # -- OAuth Client Secret
       clientSecret: ""
+      # -- OAuth Provider
       provider: "github"
+      # -- OAuth Scopes
       scopes: ""
     path: /results/(v\d/.*)
-    ## Hostnames must be provided if Ingress is enabled.
+    # -- Hostnames must be provided if Ingress is enabled.
     hosts:
       - testkube.example.com
+    # -- Toggle whether to enable TLS on the ingress
     tlsenabled: false
-    # Placing a host in the TLS config will indicate a certificate should be created
-    tls:
-      []
-      # - hosts:
-      #     - testkube.example.com
-    #   secretName: testkube-cert-secret
-
-  ## Storage for Testkube API. Now Minio is used:
-  storage:
-    endpoint: ""
-    endpoint_port: "9000"
-    accessKeyId: "minio"
-    accessKey: "minio123"
-    location: ""
-    token: ""
-    bucket: "testkube-artifacts"
-    SSL: false
-    scrapperEnabled: true
-  
-  ## Logs storage for Testkube API.
-  logs:
-    ## where the logs should be stored there are 2 possible valuse : minio|mongo
-    storage: "minio"
-    ## if storage is set to minio then the bucket must be specified, if minio with s3 is used make sure to use a unique name
-    bucket: "testkube-logs"
-
-  ## Testkube API resource requests and limits
-  resources:
-    requests:
-      cpu: 200m
-      memory: 200Mi
-
-  ##MongoDB parametes
-  mongodb:
-    dsn: "mongodb://testkube-mongodb:27017"
-    # secretName: testkube-secrets
-    # secretKey: mongo-dsn
-    allowDiskUse: true
-
-  ## Enable analytics for Testkube
-  analyticsEnabled: true
-
-  ## Integration with Slack.
-  ##ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
-  ## Slack token from the testkube authentication endpoint
-  slackToken: ""
-  ## Slack template for the events sent to Slack
-  slackTemplate: ""
-  ## Slack config for the events, tests, testsuites and channels
-  slackConfig: ""
-  executors: ""
-  ## SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
-  jobServiceAccountName: ""
-
-  ##Test Connection pod
-  testConnection:
-    enabled: true
-    resources: {}
-    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
-
-##Testkube Dashboard parameters
-testkube-dashboard:
-  ##deploy dashboard
-  enabled: true
-  ##Overrides Chart name
-  nameOverride: "dashboard"
-  ##Full name that overrides Chart name
-  fullnameOverride: "testkube-dashboard"
-  ##Dashboard image
-  ## image.registry Dashboard image registry. Can be overridden by global parameters
-  ## image.repository Dashboard image name
-  ## image.tag Dashboard image tag
-  ## image.pullPolicy Dashboard Image pull policy
-  image:
-    registry: docker.io
-    repository: kubeshop/testkube-dashboard
-    pullPolicy: Always
-    # tag: "main" # it will take tag from appVersion.
-
-  ## Testkube Dashboard Pod annotations
-  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-  podAnnotations: {}
-
-  ## Extra labels for Testkube Dashboard pods
-  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  podLabels: {}
-
-  ## Number of Testkube Dashboard Pod replicas
-  replicaCount: 1
-
-  ## Security Context
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext: {}
-  # fsGroup: 2000
-
-  ##Service parameters
-  service:
-    ## Adapter service type
-    type: ClusterIP
-    ##Dashboard port
-    port: 8080
-    ## Additional custom annotations for the service
-    annotations: {}
-
-  ## Extra environment variables to be set on deployment
-  ## For example:
-  extraEnvVars: []
-  #  - name: FOO
-  #    value: BAR
-
-  ##Ingress parameters
-  ingress:
-    ##Use ingress
-    enabled: false
-    ## Specific Ingress labels
-    labels: {}
-    ## Specific Ingress annotations
-    annotations: {}
-    ## Additional annotations for the Ingress resource.
-    ## e.g annotations for NGINX Ingress Controller:
-    ## annotations:
-    ##   kubernetes.io/ingress.class: nginx
-    ##   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    ##   nginx.ingress.kubernetes.io/enable-cors: "true"
-    ##   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
-    ##   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-    ## github oauth annotations (empty by default)
-    ##   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
-    ##   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
-    ##   nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
-    ##   nginx.ingress.kubernetes.io/auth-url: ""
-    ##   nginx.ingress.kubernetes.io/auth-signin: ""
-    ##   nginx.ingress.kubernetes.io/access-control-allow-origin: ""
-    ##
-    ##Path to controller
-    path: /
-    ## Hostnames must be provided if Ingress is enabled.
-    hosts:
-      []
-      # - testkube.example.com
-    tlsenabled: false
-    ## Placing a host in the TLS config will indicate a certificate should be created
+    # -- Placing a host in the TLS config will indicate a certificate should be created
     tls:
       []
       # - hosts:
       #     - testkube.example.com
       #   secretName: testkube-cert-secret
-  ##Testkube API Server endpoint
+
+  # Storage for Testkube API using MinIO
+  storage:
+    # -- MinIO endpoint
+    endpoint: ""
+    # -- MinIO endpoint port
+    endpoint_port: "9000"
+    # -- MinIO Access Key ID
+    accessKeyId: "minio"
+    # -- MinIO Secret Access Key
+    accessKey: "minio123"
+    # -- MinIO Region
+    region: ""
+    # -- MinIO Token
+    token: ""
+    # -- MinIO Bucket
+    bucket: "testkube-artifacts"
+    # -- MinIO Expiration period in days
+    expiration: 0
+    # -- MinIO Use SSL
+    SSL: false
+    # -- Toggle whether to enable scraper in Testkube API
+    scrapperEnabled: true
+
+  # Logs storage for Testkube API.
+  logs:
+    # -- Log storage can either be "minio" or "mongo"
+    storage: "minio"
+    # -- Bucket should be specified if storage is "minio"
+    bucket: "testkube-logs"
+
+  # -- Testkube API resource requests and limits
+  resources:
+    requests:
+      cpu: 200m
+      memory: 200Mi
+
+  # MongoDB parameters
+  mongodb:
+    # -- MongoDB DSN
+    dsn: "mongodb://testkube-mongodb:27017"
+    # secretName: testkube-secrets
+    # secretKey: mongo-dsn
+    # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
+    allowDiskUse: true
+
+  # -- Testkube API Liveness probe parameters
+  livenessProbe:
+    # -- Initial delay for liveness probe
+    initialDelaySeconds: 15
+  # -- Testkube API Readiness probe parameters
+  readinessProbe:
+    # -- Initial delay for readiness probe
+    initialDelaySeconds: 30
+
+  # -- Enable analytics for Testkube
+  analyticsEnabled: true
+
+  # -- Testkube timeout for pod start
+  podStartTimeout: "30m"
+
+  # Integration with Slack.
+  # ref: https://kubeshop.github.io/testkube/integrations/slack-integration/
+  # -- Slack token from the testkube authentication endpoint
+  slackToken: ""
+  # -- Slack secret to store slackToken, the key name should be SLACK_TOKEN
+  slackSecret: ""
+  # -- Slack config for the events, tests, testsuites and channels
+  slackConfig:
+  # -- default executors as base64-encoded string
+  executors: ""
+  # -- SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
+  jobServiceAccountName: ""
+  ## target for cdevents emission via http(s)
+  cdeventsTarget: ""
+  ## dashboard uri to be used in notification events
+  dashboardUri: ""
+
+  # Test Connection pod
+  testConnection:
+    # -- Toggle whether to create Test Connection pod
+    enabled: true
+    # -- Test Connection resource settings
+    resources: {}
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
+
+  # -- Testkube API Pod Security Context
+  podSecurityContext: {}
+
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for testkube-api container
+  securityContext: {}
+
+# --  Testkube Dashboard parameters
+testkube-dashboard:
+  # -- Deploy dashboard
+  enabled: true
+
+  # -- Testkube Dashboard fullname override
+  fullnameOverride: testkube-dashboard
+  # -- Testkube Dashboard name override
+  nameOverride: dashboard
+
+  # Dashboard image
+  image:
+    # -- Dashboard image registry. Can be overridden by global parameters
+    registry: docker.io
+    # -- Dashboard image name
+    repository: kubeshop/testkube-dashboard
+    # -- Dashboard image tag
+    pullPolicy: IfNotPresent
+    # -- Dashboard Image pull policy
+    # tag: "main" # it will take tag from appVersion.
+    # -- Dashboard Image digest. If set, will override the tag
+    digest: ""
+
+  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- Testkube Dashboard Pod annotations
+  podAnnotations: {}
+
+  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- Extra labels for Testkube Dashboard pods
+  podLabels: {}
+
+  # -- Number of Testkube Dashboard Pod replicas
+  replicaCount: 1
+
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- Testkube Dashboard Pod Security Context
+  podSecurityContext: {}
+
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for testkube-dashboard container
+  securityContext: {}
+
+  # Service parameters
+  service:
+    # -- Adapter service type
+    type: ClusterIP
+    # -- Dashboard port
+    port: 8080
+    # -- Additional custom annotations for the service
+    annotations: {}
+
+  # -- Extra environment variables to be set on deployment
+  extraEnvVars: []
+  #  - name: FOO
+  #    value: BAR
+
+  # -- Ingress parameters
+  ingress:
+    # -- Use ingress
+    enabled: false
+    # -- Specific Ingress labels
+    labels: {}
+    # -- Additional annotations for the Ingress resource.
+    annotations: {}
+    # e.g. annotations for NGINX Ingress Controller:
+    #   kubernetes.io/ingress.class: nginx
+    #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    #   nginx.ingress.kubernetes.io/enable-cors: "true"
+    #   nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
+    #   nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+    # github oauth annotations (empty by default)
+    #   nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    #   nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+    #   nginx.ingress.kubernetes.io/access-control-allow-origin: "*"
+    #   nginx.ingress.kubernetes.io/auth-url: ""
+    #   nginx.ingress.kubernetes.io/auth-signin: ""
+    #   nginx.ingress.kubernetes.io/access-control-allow-origin: ""
+
+    # -- Path to controller
+    path: /
+    # -- Hostnames must be provided if Ingress is enabled.
+    hosts:
+      []
+    ipv6enabled: false
+      # - testkube.example.com
+    tlsenabled: false
+    # -- Placing a host in the TLS config will indicate a certificate should be created
+    tls:
+      []
+      # - hosts:
+      #     - testkube.example.com
+      #   secretName: testkube-cert-secret
+  # -- Testkube API Server endpoint
   apiServerEndpoint: "" # get the address of the endpoint or set it using helm
 
-  ##Oauth parameters
+  # -- Force disabling telemetry on the UI
+  disableTelemetry: false
+
+  # Oauth parameters
   oauth2:
-    ## Use oauth
+    # -- Use oauth
     enabled: false
-    ## Oauth Deployment name
+    # -- Oauth Deployment name
     name: oauth2-proxy
-    ## Ingress path
+    # -- Ingress path
     path: /oauth2
-    ## Oauth container port
+    # -- Oauth container port
     port: 4180
-    ## Oauth2 specific labels
+    # -- Oauth2 specific labels
     labels: {}
-    ## Oauth2 specific annotations
+    # -- Oauth2 specific annotations
     annotations: {}
-    ## Oauth2 Service annotations
+    # -- Oauth2 Service annotations
     serviceAnnotations: {}
-    ## Add additional service labels
+    # -- Add additional service labels
     serviceLabels: {}
-    ## Oauth2 Service type
+    # -- Oauth2 Service type
     serviceType: ClusterIP
-    ## Add additional labels to the pod (evaluated as a template)
-    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+    # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+    # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
-    ## Array of args for oauth2 provider or github as default
+    # -- Array of args for oauth2 provider or github as default
     args:
       []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
       #- --show-debug-on-error=true
-    ## Array with extra environment variables to add to Locator nodes
+    # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
-    ## Oauth2 pod annotations
-    ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+    # -- Oauth2 pod annotations
     podAnnotations: {}
-    ## image.registry Oauth image registry. Can be overridden by global parameters
-    ## image.repository Oauth image name
-    ## image.tag Oauth image tag
-    ## image.pullPolicy OauthI Image pull policy
     image:
+      # -- Oauth image registry. Can be overridden by global parameters
       registry: quay.io
+      # -- Oauth image name
       repository: oauth2-proxy/oauth2-proxy
+      # -- Oauth image tag
       tag: latest
+      # -- Oauth Image pull policy
       pullPolicy: Always
-    ## Pod environment variables for Teskube UI authentication
-    ## Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/
-    ##
-    ## clientId Client ID from Github OAuth application
-    ## clientSecret Client Secret from Github OAuth application
-    ## githubOrg Github organization - if you need to provide access only to members of your organization
-    ## cookieSecret cookie secret generated using OpenSSL
-    ## cookieSecure false - for http connection, true - for https connections
-    ## redirectUrl "http://demo.testkube.io/oauth2/callback"
+    # ref: https://kubeshop.github.io/testkube/authentication/oauth-ui/
+    # -- Pod environment variables for Teskube UI authentication
     env:
+      # -- Client ID from Github OAuth application
       clientId: ""
+      # -- Client Secret from Github OAuth application
       clientSecret: ""
+      # -- if you need to provide access only to members of your organization
       githubOrg: ""
+      # -- cookie secret generated using OpenSSL
       cookieSecret: ""
+      # -- false for http connection, true for https connections
       cookieSecure: "false"
+      # -- "http://demo.testkube.io/oauth2/callback"
       redirectUrl: "http://testkube.example.com/oauth2/callback"
 
-    ## Add additional Ingress labels
+    # -- Add additional Ingress labels
     ingress:
       labels: {}
+      # -- add Ingress annotations
+      annotations: {}
 
-  ## Autoscaling parameters
-  ## Enable autoscaling for Testkube dashboard deployment
-  ## Minimum number of replicas to scale back
-  ## Maximum number of replicas to scale out
-  ## Target CPU utilization percentage
-  ## Target Memory utilization percentage
-  ## Specific autoscaling labels
-  ## Specific autoscaling annotations
+    ## -- Add volumes for Oauth2
+    volumes: []
+    #  - name: test-volume
+    #    gcePersistentDisk:
+    #      pdName: my-data-disk
+    #      fsType: ext4
+
+    ## Add volumeMounts for Oauth2
+    volumeMounts: []
+    #  - mountPath: /mypath
+    #    name: git-volume
+
+  # Autoscaling parameters
   autoscaling:
+    # -- Enable autoscaling for Testkube dashboard deployment
     enabled: false
+    # -- Minimum number of replicas to scale back
     minReplicas: 1
+    # -- Maximum number of replicas to scale out
     maxReplicas: 100
+    # -- Target CPU utilization percentage
     targetCPUUtilizationPercentage: 80
-    targetCPU: 80
-    # targetMemoryUtilizationPercentage: 80
+    # -- Target Memory utilization percentage
+    targetMemoryUtilizationPercentage: 80
+    # -- Specific autoscaling labels
     labels: {}
+    # -- Specific autoscaling annotations
     annotations: {}
 
-  ## Node labels for pod assignment.
+  # -- Node labels for pod assignment.
   nodeSelector: {}
 
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
       value: arm64
       effect: NoSchedule
 
-  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  # -- Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
 
-  ## Service Account parameters
+  # -- Service Account parameters
   serviceAccount:
-    ## Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
-    ## Annotations to add to the service account
-    ## Annotations to add to the service account
+    # -- Annotations to add to the service account
+    # -- Annotations to add to the service account
     annotations: {}
-    ## The name of the service account to use.
-    ## If not set and create is true, a name is generated using the fullname template
+    # -- The name of the service account to use.
+    # -- If not set and create is true, a name is generated using the fullname template
     name: ""
 
-  ## Testkube Dashboard resource requests and limits
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # -- Testkube Dashboard resource settings
   resources: {}
 
-  ##Test Connection pod
+  # -- Test Connection pod
   testConnection:
     enabled: true
     resources: {}
-    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
 
-##Testkube Operator parameters
 testkube-operator:
+  ## deploy Operator chart
+  enabled: true
+  ## namespace to deploy Testkube Operator. Default is .Release.Namespace
+  namespace: ""
   # should roles and roles bindings be created
   rbac:
-    createRoles: true
-    createRoleBindings: true
+    create: true
+  # -- Testkube Operator fullname override
+  fullnameOverride: testkube-operator
+  # -- Testkube Operator name override
+  nameOverride: testkube-operator
 
-  # should the CRDs be installed
+  # -- should the CRDs be installed
   installCRD: true
 
-  ## Number of Testkube Operator Pod replicas
+  # -- Number of Testkube Operator Pod replicas
   replicaCount: 1
 
-  ## Chart parameters
-  ## nameOverride Overrides Chart name
-  ## fullnameOverride Full name that overrides Chart name
-  nameOverride: "testkube-operator"
-  fullnameOverride: "testkube-operator"
+  # Testkube Operator image
+  image:
+    # -- Testkube Operator registry
+    registry: docker.io
+    # -- Testkube Operator repository
+    repository: kubeshop/testkube-operator
+    # -- Testkube Operator image pull policy
+    pullPolicy: ""
+    # Overrides the image tag whose default is the chart appVersion.
+    #tag: "1.7.1"
+    # -- Testkube Operator image digest
+    digest: ""
 
-  ##Proxy Image parameters
-  ## image.registry Proxy image registry
-  ## image.repository Proxy image name
-  ## image.tag Proxy image tag
-  ## image.pullPolicy Proxy Image pull policy
+  # Testkube Operator rbac-proxy settings
   proxy:
+    # Proxy Image parameters
     image:
+      # -- Testkube Operator rbac-proxy image registry
       registry: gcr.io
+      # -- Testkube Operator rbac-proxy image repository
       repository: kubebuilder/kube-rbac-proxy
+      # -- Testkube Operator rbac-proxy image tag
       tag: "v0.8.0"
-    ## Proxy Container Port
-    containerPort: 8443
-    ## Resources limits and requests for kube-rbac-proxy container
+    # -- Testkube Operator rbac-proxy resource settings
     resources: {}
 
-  ##Testkube API full name
+  # -- Testkube API full name
   apiFullname: "testkube-api-server"
-  ##Testkube Operator port
+  # -- Testkube Operator port
   apiPort: 8088
+  # -- Testkube Operator healthcheck port
+  healthcheckPort: 8081
 
-  ## Service Account parameters
+  # Service Account parameters
   serviceAccount:
-    ## Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
-    ## Annotations to add to the service account
+    # -- Annotations to add to the service account
     annotations: {}
-    ## The name of the service account to use.
-    ## If not set and create is true, a name is generated using the fullname template
+    # -- The name of the service account to use.
+    # -- If not set and create is true, a name is generated using the fullname template
     name: ""
 
-  ## Extra environment variables to be set on deployment
-  ## For example:
+  # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
-  ## Wait 15 seconds before performing the first probe
-  initialDelaySeconds: 15
-  ## Specifies that the kubelet should perform a liveness probe every 20 seconds.
-  periodSeconds: 20
-  ## Perform a liveness probe on specified port
-  livenessProbePort: 8081
-  ## Manager container port
-  containerPort: 9443
-  ## Perform a readiness probe on specified port
-  readinessProbePort: 8081
-  ## Wait 5 seconds before performing readiness probe
-  readinessProbeinitialDelaySeconds: 5
-  ## Specifies that the kubelet should perform a readiness probe every 10 seconds.
-  readinessProbeperiodSeconds: 10
-
-  ## Configure Security Context for Manager Container
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  ##
-  containerSecurityContext:
-    allowPrivilegeEscalation: false
-  ## Name of the metrics server. If not specified, default name from the template is used
-  metricsServiceName: ""
-  ## Terminating a container that failed its liveness or startup probe after 10s
-  terminationGracePeriodSeconds: 10
-  ## Testkube Operator Pod security Context
+  livenessProbe:
+    # -- Initial delay seconds for liveness probe
+    initialDelaySeconds: 3
+  # -- Testkube Operator Readiness Probe parameters
+  readinessProbe:
+    # -- Initial delay seconds for readiness probe
+    initialDelaySeconds: 3
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- Testkube Operator Pod Security Context
+  podSecurityContext: {}
+  # -- Security Context for manager Container
   securityContext:
-    runAsNonRoot: true
-  ## Testkube Operator Pod Volume
+    # -- Make root filesystem of the container read-only
+    readOnlyRootFilesystem: true
+  # -- Name of the metrics server. If not specified, default name from the template is used
+  metricsServiceName: ""
+  # -- Terminating a container that failed its liveness or startup probe after 10s
+  terminationGracePeriodSeconds: 10
+
+  # Testkube Operator Pod Volume
   volumes:
     secret:
+      # -- Testkube Operator webhook certificate volume default mode
       defaultMode: 420
 
-  ## Webhook parameters
+  # Webhook parameters
   webhook:
-    ## Use webhook
+    # -- Use webhook
     enabled: true
-    ## Name of the webhook
+    # -- Name of the webhook
     name: testkube-operator-webhook-admission
-    ## Webhook specific labels
+    # -- Webhook specific labels
     labels: {}
-    ## Webhook specific annotations
+    # -- Webhook specific annotations
     annotations: {}
-    ##Migrate Job parameters
+    # Migrate Job parameters
     migrate:
-      ## Deploy Migrate Job
+      # -- Deploy Migrate Job
       enabled: true
-      ## image.registry Migrate container job image registry
-      ## image.repository Migrate container job image name
-      ## image.tag Migrate container job image tag
-      ## image.pullPolicy Migrate container job image pull policy
+      ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+      ttlSecondsAfterFinished: 100
       image:
+        # -- Migrate container job image registry
         registry: docker.io
+        # -- Migrate container job image name
         repository: rancher/kubectl
+        # -- Migrate container job image tag
         version: v1.23.7
-        pullPolicy: Always
-      ## Configure Security Context for Migrate Container
-      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-      ##
+        # -- Migrate container job image pull policy
+        pullPolicy: IfNotPresent
+      # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+      # -- Security Context for webhook migrate Container
       securityContext:
-        allowPrivilegeEscalation: false
-      ## Number of retries before considering a Job as failed
+        # -- Make root filesystem of the container read-only
+        readOnlyRootFilesystem: true
+
+      # -- Number of retries before considering a Job as failed
       backoffLimit: 1
-      ## Resources limits and requests
+      # -- Migrate job resources settings
       resources: {}
 
-    ##Patch Job parameters
+    # Patch Job parameters
     patch:
       enabled: true
-      ## image.registry patch container job image registry
-      ## image.repository patch container image name
-      ## image.tag pathc container image tag
-      ## image.pullPolicy patch container image pull policy
+      ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+      ttlSecondsAfterFinished: 100
       image:
+        # -- patch job image registry
         registry: docker.io
+        # -- patch job image name
         repository: dpejcev/kube-webhook-certgen
+        # -- patch job image tag
         version: 1.0.11
+        # -- patch job image pull policy
         pullPolicy: Always
-      ## Annotations to add to the patch Job
+      # -- Annotations to add to the patch Job
       annotations: {}
-      ## Pod annotations to add to the patch Job
+      # -- Pod annotations to add to the patch Job
       podAnnotations: {}
-      ## Pod specific labels
+      # -- Pod specific labels
       labels: {}
-      ## Configure Security Context for Migrate Container
-      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-      ##
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 2000
-        fsGroup: 2000
-      ## Name of teh SA to use by patch Job
+      # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+      # -- kube-webhook-certgen Job Security Context
+      podSecurityContext: {}
+
+      # Testkube Operator Service Account parameters
       serviceAccount:
-        ## SA specific annotations
+        # -- SA specific annotations
         annotations: {}
-        ## SA name
+        # -- SA name
         name: testkube-operator-webhook-cert-mgr
-      ##Node labels for pod assignment
-      ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
-      ##
+
+      # ref: https://kubernetes.io/docs/user-guide/node-selection/
+      # -- Node labels for pod assignment
       nodeSelector:
         kubernetes.io/os: linux
-      ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-      ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+      # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+      # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
       tolerations:
         - key: kubernetes.io/arch
           operator: Equal
           value: arm64
           effect: NoSchedule
+      # Create Job config
+      createSecretJob:
+        # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+        # -- Security Context for webhook create container
+        securityContext:
+          # -- Make root filesystem of the container read-only
+          readOnlyRootFilesystem: true
+        # -- kube-webhook-certgen create secret Job resource settings
+        resources: {}
 
-    ## Webhook certificate
+      # Patch Job config
+      patchWebhookJob:
+        # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+        # -- Security Context for webhook patch container
+        securityContext:
+          # -- Make root filesystem of the container read-only
+          readOnlyRootFilesystem: true
+        # -- kube-webhook-certgen patch webhook Job resource settings
+        resources: {}
+
+    # -- Webhook certificate
     certificate:
-      ## Webhook certificate secret name
+      # -- Webhook certificate secret name
       secretName: webhook-server-cert
 
     ## Create job resources
@@ -695,68 +884,76 @@ testkube-operator:
     ## Patch Webhook resource requests and limits
     patchWebhookJob:
       resources: {}
-  ## Create RBAC roles for users and controller
-  rbac:
-    create: true
 
   ## Service Parameters
   service:
-    ## Adapter service type
+    # -- Adapter service type
     type: ClusterIP
-    ## HTTP Port
+    # -- HTTP Port
     port: 80
 
-  ## Testkube Operator resource requests and limits
-  resources:
-    {}
+  # -- Testkube Operator resource settings
+  resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
 
-  ## Node labels for Testkube Operator pod assignment.
+  # -- Node labels for Testkube Operator pod assignment.
   nodeSelector: {}
 
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
       value: arm64
       effect: NoSchedule
 
-  ## Affinity for Testkube Operator pod assignment.
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  # -- Affinity for Testkube Operator pod assignment.
   affinity: {}
 
-  ##Test Connection pod
+  # -- Test Connection pod
   testConnection:
     enabled: true
+    # -- Test Connection resource settings
     resources: {}
-    ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     tolerations:
       - key: kubernetes.io/arch
         operator: Equal
         value: arm64
         effect: NoSchedule
 
-##MongoDB pre-upgrade parameters
-preUpgradeHook:
-  ## Upgrade hook is enabled
-  enabled: true
-  ## Upgrade hook name
-  name: mongodb-upgrade
-  ## Specify resource limits and requests
-  resources: {}
-  ## Create SA for upgrdae hook
-  serviceAccount:
-    create: true
-  ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  preUpgrade:
+    # -- Upgrade hook is enabled
+    enabled: true
+    ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+    ttlSecondsAfterFinished: 100
+    # -- Specify image
+    image:
+      registry: k8s.gcr.io
+      repository: hyperkube
+      tag: v1.12.1
+      pullPolicy: IfNotPresent
+    # -- Specify resource limits and requests
+    resources: { }
+    # -- Create SA for upgrade hook
+    serviceAccount:
+      create: true
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+    # -- Upgrade Pod Security Context
+    podSecurityContext: { }
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for Upgrade kubectl container
+    securityContext: { }
+    # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+    # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule

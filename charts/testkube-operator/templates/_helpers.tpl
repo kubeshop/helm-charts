@@ -101,11 +101,29 @@ Define Operator image
 {{- $registryName := .Values.image.registry -}}
 {{- $repositoryName := .Values.image.repository -}}
 {{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.image.digest | toString -}}
+{{- end -}}
 {{- if .Values.global }}
     {{- if .Values.global.imageRegistry }}
-      {{- printf "%s/%s:%s" .Values.global.imageRegistry $repositoryName $tag -}}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
     {{- else -}}
-      {{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
     {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define testkube operator namespace
+*/}}
+{{- define "testkube-operator.namespace" -}}
+{{- if .Values.namespace }}
+{{- default .Values.namespace }}
+{{- else }}
+{{- default .Release.Namespace }}
+{{- end }}
+{{- end }}

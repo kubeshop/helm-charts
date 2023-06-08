@@ -2,7 +2,7 @@ apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
   name: testkube-operator-controller-manager
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ include "testkube-operator.namespace" . }}
   labels:
     control-plane: controller-manager
     {{- if .Values.global.labels }}
@@ -24,10 +24,7 @@ spec:
         {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.global.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
       - name: kube-rbac-proxy
         args:
@@ -41,23 +38,19 @@ spec:
         resources: {{ toYaml .Values.proxy.resources | nindent 10 }}
         {{- end }}
         ports:
-        - containerPort: {{ .Values.proxy.containerPort }}
+        - containerPort: 9443
           name: https
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 10 }}
       - name: manager
         args:
-        - --health-probe-bind-address=:8081
+        - --health-probe-bind-address=:{{ .Values.healthcheckPort }}
         - --metrics-bind-address=127.0.0.1:8080
         - --leader-elect
         command:
         - /manager
         image: {{ include "testkube-operator.image" . }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: {{ .Values.livenessProbePort }}
-          initialDelaySeconds: {{ .Values.initialDelaySeconds }}
-          periodSeconds: {{ .Values.periodSeconds }}
         env:
         - name: APISERVER_FULLNAME
           value: "{{ .Values.apiFullname }}"
@@ -73,26 +66,32 @@ spec:
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
         {{- end }}
         ports:
-        - containerPort: {{ .Values.containerPort }}
+        - containerPort: 9443
           name: webhook-server
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: {{ .Values.healthcheckPort }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
         readinessProbe:
           httpGet:
             path: /readyz
-            port: {{ .Values.readinessProbePort }}
-          initialDelaySeconds: {{ .Values.readinessProbeinitialDelaySeconds }}
-          periodSeconds: {{ .Values.readinessProbeperiodSeconds }}
+            port: {{ .Values.healthcheckPort }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
         {{- if .Values.resources }}
         resources: {{ toYaml .Values.resources | nindent 10 }}
         {{- end }}
         securityContext:
-          {{- toYaml .Values.containerSecurityContext | nindent 10 }}
+          {{- toYaml .Values.securityContext | nindent 10 }}
         volumeMounts:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
       securityContext:
-        {{- toYaml .Values.securityContext | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       serviceAccountName: {{ include "testkube-operator.serviceAccountName" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:

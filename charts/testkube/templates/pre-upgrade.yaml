@@ -12,6 +12,9 @@ metadata:
     "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 spec:
+  {{- if .Values.preUpgradeHook.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{ .Values.preUpgradeHook.ttlSecondsAfterFinished }}
+  {{- end }}
   template:
     metadata:
       name: "{{ .Values.preUpgradeHook.name }}"
@@ -20,10 +23,11 @@ spec:
         app.kubernetes.io/name: "{{ .Values.preUpgradeHook.name }}"
     spec:
       serviceAccountName: "{{ .Values.preUpgradeHook.name }}"
+      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       containers:
       - name: kubectl
-        image: "k8s.gcr.io/hyperkube:v1.12.1"
-        imagePullPolicy: "IfNotPresent"
+        image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgradeHook.image "global" .Values.global) }}
+        imagePullPolicy: {{ .Values.preUpgradeHook.image.pullPolicy }}
         {{- if .Values.preUpgradeHook.resources }}
         resources: {{- toYaml .Values.preUpgradeHook.resources | nindent 10 }}
         {{- end }}
@@ -36,7 +40,10 @@ spec:
               then kubectl scale deployment {{ .Release.Name }}-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi
-
+        securityContext:
+          {{- toYaml .Values.preUpgradeHook.securityContext | nindent 10 }}
+      securityContext:
+        {{- toYaml .Values.preUpgradeHook.podSecurityContext | nindent 8 }}
       restartPolicy: Never
       {{- if .Values.preUpgradeHook.tolerations }}
       tolerations: {{ toYaml .Values.preUpgradeHook.tolerations | nindent 8 }}

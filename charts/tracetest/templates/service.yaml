@@ -11,13 +11,17 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.server.httpPort }}
       targetPort: http
       protocol: TCP
       name: http
-    - port: 21321
-      targetPort: otlp
+    - port: {{ .Values.server.otlpGrpcPort }}
+      targetPort: otlp-grpc
       protocol: TCP
-      name: otlp
+      name: otlp-grpc
+    - port: {{ .Values.server.otlpHttpPort }}
+      targetPort: otlp-http
+      protocol: TCP
+      name: otlp-http
   selector:
     {{- include "tracetest.selectorLabels" . | nindent 4 }}
