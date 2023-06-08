@@ -571,7 +571,7 @@ spec:
                   items:
                     description: set of steps run in parallel
                     properties:
-                      batch:
+                      execute:
                         items:
                           description: TestSuiteStepSpec for particular type will have
                             config for possible step types
@@ -580,16 +580,13 @@ spec:
                               description: TestSuiteStepDelay contains step delay parameters
                               properties:
                                 duration:
-                                  description: Duration in ms
-                                  format: int32
-                                  type: integer
+                                  description: Duration in time units
+                                  type: string
                               type: object
-                            execute:
-                              description: TestSuiteStepExecute defines step to be executed
+                            test:
+                              description: TestSuiteStepTest defines test to be executed
                               properties:
                                 name:
-                                  type: string
-                                namespace:
                                   type: string
                               type: object
                           type: object
@@ -606,7 +603,7 @@ spec:
                   items:
                     description: set of steps run in parallel
                     properties:
-                      batch:
+                      execute:
                         items:
                           description: TestSuiteStepSpec for particular type will have
                             config for possible step types
@@ -615,16 +612,13 @@ spec:
                               description: TestSuiteStepDelay contains step delay parameters
                               properties:
                                 duration:
-                                  description: Duration in ms
-                                  format: int32
-                                  type: integer
+                                  description: Duration in time units
+                                  type: string
                               type: object
-                            execute:
-                              description: TestSuiteStepExecute defines step to be executed
+                            test:
+                              description: TestSuiteStepTest defines test to be executed
                               properties:
                                 name:
-                                  type: string
-                                namespace:
                                   type: string
                               type: object
                           type: object
@@ -640,6 +634,9 @@ spec:
                 executionRequest:
                   description: test suite execution request body
                   properties:
+                    cronJobTemplate:
+                      description: cron job template extensions
+                      type: string
                     executionLabels:
                       additionalProperties:
                         type: string
@@ -783,7 +780,7 @@ spec:
                   items:
                     description: set of steps run in parallel
                     properties:
-                      batch:
+                      execute:
                         items:
                           description: TestSuiteStepSpec for particular type will have
                             config for possible step types
@@ -792,16 +789,13 @@ spec:
                               description: TestSuiteStepDelay contains step delay parameters
                               properties:
                                 duration:
-                                  description: Duration in ms
-                                  format: int32
-                                  type: integer
+                                  description: Duration in time units
+                                  type: string
                               type: object
-                            execute:
-                              description: TestSuiteStepExecute defines step to be executed
+                            test:
+                              description: TestSuiteStepTest defines test to be executed
                               properties:
                                 name:
-                                  type: string
-                                namespace:
                                   type: string
                               type: object
                           type: object
