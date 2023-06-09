@@ -4201,6 +4201,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2023-06-09T08:33:05.719077944Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.12.1
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.31
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.19.1
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.12.4
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.12.2
+    - name: global
+      repository: file://../global
+      version: 0.1.1
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: a902a31ec6153c47751b75c3ecb86303c892345bc12bb2cedaf7646d58af468f
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.12.12/testkube-1.12.12.tgz
+    version: 1.12.12
+  - apiVersion: v2
     created: "2023-06-07T15:05:10.141437601Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -41424,6 +41457,20 @@ entries:
     version: 0.11.16
   testkube-dashboard:
   - apiVersion: v2
+    appVersion: 1.12.2
+    created: "2023-06-09T08:33:05.862726444Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.1
+    description: A Helm chart for Kubernetes
+    digest: ce9cdf0f92acab0222661cc1b01e74af0dc6b84c27460538c7c55518a31049a9
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.12.2/testkube-dashboard-1.12.2.tgz
+    version: 1.12.2
+  - apiVersion: v2
     appVersion: 1.12.1
     created: "2023-06-02T12:08:05.410776874Z"
     dependencies:
@@ -41613,13 +41660,13 @@ entries:
     version: 1.9.2
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-03-06T11:15:31.474941056Z"
+    created: "2023-03-03T07:48:52.204309663Z"
     dependencies:
     - name: global
       repository: file://../global
       version: 0.1.1
     description: A Helm chart for Kubernetes
-    digest: d541c0ce312b9dec4748967fbeded63f08f8d1980e15972ae9f61166ef9f8447
+    digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
     name: testkube-dashboard
     type: application
     urls:
@@ -41647,13 +41694,13 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-03-03T07:48:52.204309663Z"
+    created: "2023-03-06T11:15:31.474941056Z"
     dependencies:
     - name: global
       repository: file://../global
       version: 0.1.1
     description: A Helm chart for Kubernetes
-    digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
+    digest: d541c0ce312b9dec4748967fbeded63f08f8d1980e15972ae9f61166ef9f8447
     name: testkube-dashboard
     type: application
     urls:
@@ -45714,4 +45761,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-06-07T15:05:10.336917089Z"
+generated: "2023-06-09T08:33:05.900487246Z"
