@@ -428,7 +428,13 @@ spec:
                           type: string
                       type: object
                     type:
-                      description: test type
+                      description: |
+                        type of sources a runner can get data from.
+                            string: String content (e.g. Postman JSON file).
+                            file-uri: content stored on the webserver.
+                            git-file: the file stored in the Git repo in the given repository.path field.
+                            git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos)
+                            git: automatically provisions either a file, directory or whole git repository depending on the repository.path field
                       enum:
                       - string
                       - file-uri
@@ -591,7 +597,7 @@ spec:
                       format: int32
                       type: integer
                     preRunScript:
-                      description: script to run before test execution
+                      description: script to run before test execution (not supported for container executors)
                       type: string 
                     scraperTemplate:
                       description: scraper template extensions
