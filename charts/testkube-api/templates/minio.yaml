@@ -138,6 +138,10 @@ kind: Service
 metadata:
   # This name uniquely identifies the service
   name: testkube-minio-service-{{ .Release.Namespace }}
+  labels:
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}  
 spec:
   type: ClusterIP
   ports:
