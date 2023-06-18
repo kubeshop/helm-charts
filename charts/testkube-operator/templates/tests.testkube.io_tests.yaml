@@ -388,9 +388,6 @@ spec:
                             name:
                               description: object name
                               type: string
-                            namespace:
-                              description: object kubernetes namespace
-                              type: string
                           required:
                             - key
                             - name
@@ -414,9 +411,6 @@ spec:
                               type: string
                             name:
                               description: object name
-                              type: string
-                            namespace:
-                              description: object kubernetes namespace
                               type: string
                           required:
                             - key
