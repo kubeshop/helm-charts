@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 ### @section  Global image parameters
+## Important! Please, note that this will override sub-chart image parameters.
 ## Global Docker image registry
 ## Global Docker registry secret names as an array
 ## Labels to add to all deployed objects
