@@ -70,7 +70,7 @@ spec:
             {{- end }}
             {{- if .Values.mongodb.allowTLS }}
             - name: API_MONGO_ALLOW_TLS
-              value: {{ .Values.mongodb.allowTLS }}
+              value: "{{ .Values.mongodb.allowTLS }}"
             {{- end }}
             - name: API_MONGO_ALLOW_DISK_USE
               value: "{{ .Values.mongodb.allowDiskUse }}"
