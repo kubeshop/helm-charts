@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 # -- Global image parameters
+# -- Important! Please, note that this will override sub-chart image parameters.
 global:
   # -- Global Docker image registry
   imageRegistry: ""
