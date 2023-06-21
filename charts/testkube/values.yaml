@@ -173,14 +173,14 @@ testkube-api:
 #      name: "{{ .Name }}"
 #      namespace: {{ .Namespace }}
 #      labels:
-#        label1: 1
+#        key: value
 #    spec:
 #      template:
 #        metadata:
 #          labels:
-#            label1: 1
+#            key: value
 #          annotations:
-#            annotation1: 1
+#            key: value
 #        spec:
 #          initContainers:
 #            - name: {{ .Name }}-init
