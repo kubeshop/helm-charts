@@ -170,29 +170,23 @@ testkube-api:
 #    apiVersion: batch/v1
 #    kind: Job
 #    metadata:
-#      name: "{{ .Name }}"
-#      namespace: {{ .Namespace }}
 #      labels:
-#        key: value
+#        key1: value1
+#        key2: value2
 #    spec:
 #      template:
 #        metadata:
 #          labels:
-#            key: value
+#            key1: value1
+#            key2: value2
 #          annotations:
-#            key: value
+#            key1: value1
+#            key2: value2
 #        spec:
-#          initContainers:
-#            - name: {{ .Name }}-init
-#              image: {{ .InitImage }}
-#              imagePullPolicy: IfNotPresent
-#              command:
-#                - "/bin/runner"
-#                - '{{ .Jsn }}'
 #          containers:
 #            - name: "{{ .Name }}"
 #              image: {{ .Image }}
-#              imagePullPolicy: IfNotPresent
+#              imagePullPolicy: Always
 #              command:
 #                - "/bin/runner"
 #                - '{{ .Jsn }}'
