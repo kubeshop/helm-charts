@@ -165,6 +165,38 @@ testkube-api:
   multinamespace:
     enabled: false
 
+  # -- Custom job-template.yml that will passed to Testkube API. Example:
+#  configValues: |
+#    apiVersion: batch/v1
+#    kind: Job
+#    metadata:
+#      name: "{{ .Name }}"
+#      namespace: {{ .Namespace }}
+#      labels:
+#        label1: 1
+#    spec:
+#      template:
+#        metadata:
+#          labels:
+#            label1: 1
+#          annotations:
+#            annotation1: 1
+#        spec:
+#          initContainers:
+#            - name: {{ .Name }}-init
+#              image: {{ .InitImage }}
+#              imagePullPolicy: IfNotPresent
+#              command:
+#                - "/bin/runner"
+#                - '{{ .Jsn }}'
+#          containers:
+#            - name: "{{ .Name }}"
+#              image: {{ .Image }}
+#              imagePullPolicy: IfNotPresent
+#              command:
+#                - "/bin/runner"
+#                - '{{ .Jsn }}'
+
   # Monitoring parameters
   prometheus:
     # -- Use monitoring
