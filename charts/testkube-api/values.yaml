@@ -50,6 +50,9 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
+## Custom job-template.yml that will passed to Testkube API
+configValues: ""
+
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:

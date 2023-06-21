@@ -17,7 +17,11 @@ data:
   job-scraper-template.yml: |
 {{ .Files.Get "job-scraper-template.yml" | indent 4 }}
   job-template.yml: |
+{{- if .Values.configValues }}
+  {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
+{{- else }}
 {{ .Files.Get "job-template.yml" | indent 4 }}
+{{- end }}
   pvc-container-template.yml: |
 {{ .Files.Get "pvc-container-template.yml" | indent 4 }}
   slack-config.json: |

@@ -14,6 +14,9 @@ imagePullSecrets: []
 nameOverride: "testkube"
 fullnameOverride: "testkube"
 
+## Custom job-template.yml that will passed to Testkube API
+configValues: ""
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
