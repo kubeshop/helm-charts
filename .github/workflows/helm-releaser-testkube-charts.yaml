@@ -375,6 +375,7 @@ jobs:
         with:
           repository: kubeshop/testkube
           path: testkube-repo
+          ref: main
 
       - name: Executor tests - create/update and schedule all executor tests (with CLI)
         working-directory: ./testkube-repo
