@@ -597,6 +597,7 @@ spec:
                   preRunScript:
                     description: script to run before test execution (not supported
                       for container executors)
+                    type: string
                     scraperTemplate:
                       description: scraper template extensions
                       type: string
