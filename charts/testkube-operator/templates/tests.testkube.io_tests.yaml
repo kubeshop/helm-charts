@@ -590,9 +590,13 @@ spec:
                       description: test execution number
                       format: int32
                       type: integer
-                    preRunScript:
-                      description: script to run before test execution (not supported for container executors)
-                      type: string 
+                  postRunScript:
+                    description: script to run after test execution (not supported
+                      for container executors)
+                    type: string
+                  preRunScript:
+                    description: script to run before test execution (not supported
+                      for container executors)
                     scraperTemplate:
                       description: scraper template extensions
                       type: string
