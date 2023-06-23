@@ -57,6 +57,9 @@ spec:
           persistentVolumeClaim:
             # Name of the PVC created earlier
             claimName: testkube-minio-pv-claim-{{ .Release.Namespace }}
+        {{- if .Values.minio.extraVolumes }}
+        {{- include "global.tplvalues.render" (dict "value" .Values.minio.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
       containers:
         - name: testkube-minio
           # Volume mounts for this container
@@ -64,6 +67,9 @@ spec:
             # Volume 'data' is mounted to path '/data'
             - name: data
               mountPath: "/data"
+            {{- if .Values.minio.extraVolumeMounts }}
+            {{- include "global.tplvalues.render" (dict "value" .Values.minio.extraVolumeMounts "context" $) | nindent 12 }}
+            {{- end }}
           # Pulls the lastest Minio image from Docker Hub
           image: {{ include "global.images.image" (dict "imageRoot" .Values.minio.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.minio.image.pullPolicy }}
@@ -75,9 +81,23 @@ spec:
           env:
             # MinIO access key and secret key
             - name: MINIO_ROOT_USER
+              {{- if .Values.minio.minioRootUser }}
               value: {{ .Values.minio.minioRootUser }}
+            {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.minio.secretUserName }}
+                  key: {{ .Values.minio.secretUserKey }}
+            {{- end }}
             - name: MINIO_ROOT_PASSWORD
+              {{- if .Values.minio.minioRootPassword }}
               value: {{ .Values.minio.minioRootPassword }}
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.minio.secretPasswordName }}
+                  key: {{ .Values.minio.secretPasswordKey }}
+            {{- end }}
             - name: CONSOLE_PORT
               value: "9090"
             - name: CONSOLE_TLS_PORT
@@ -141,7 +161,7 @@ metadata:
   labels:
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
-    {{- end }}  
+    {{- end }}
 spec:
   type: ClusterIP
   ports:

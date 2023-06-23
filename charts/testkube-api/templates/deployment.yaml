@@ -51,18 +51,50 @@ spec:
             {{- if .Values.mongodb.sslCertSecret }}
             - name: API_MONGO_SSL_CERT
               value: {{ .Values.mongodb.sslCertSecret }}
+              {{- else }}
+              {{- if .Values.mongodb.sslCertSecretSecretName }}
+            - name: API_MONGO_SSL_CERT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongodb.sslCertSecretSecretName }}
+                  key: {{ .Values.mongodb.sslCertSecretSecretKey }}
+            {{- end }}
             {{- end }}
             {{- if .Values.mongodb.sslCAFileKey }}
             - name: API_MONGO_SSL_CA_FILE_KEY
               value: {{ .Values.mongodb.sslCAFileKey }}
+              {{- else }}
+              {{- if .Values.mongodb.sslCAFileKeySecretName }}
+            - name: API_MONGO_SSL_CA_FILE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongodb.sslCAFileKeySecretName }}
+                  key: {{ .Values.mongodb.sslCAFileKeySecretKey }}
+              {{- end }}
             {{- end }}
             {{- if .Values.mongodb.sslClientFileKey }}
             - name: API_MONGO_SSL_CLIENT_FILE_KEY
               value: {{ .Values.mongodb.sslClientFileKey }}
+              {{- else }}
+            {{- if .Values.mongodb.sslClientFileKeySecretName }}
+            - name: API_MONGO_SSL_CLIENT_FILE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongodb.sslClientFileKeySecretName }}
+                  key: {{ .Values.mongodb.sslClientFileKeySecretKey }}
+            {{- end }}
             {{- end }}
             {{- if .Values.mongodb.sslClientFilePassKey }}
             - name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
               value: {{ .Values.mongodb.sslClientFilePassKey }}
+              {{- else }}
+            {{- if .Values.mongodb.sslClientFilePassSecretName }}
+            - name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongodb.sslClientFilePassSecretName }}
+                  key: {{ .Values.mongodb.sslClientFilePassSecretKey }}
+              {{- end }}
             {{- end }}
             {{- if .Values.mongodb.dbType }}
             - name: API_MONGO_DB_TYPE
@@ -118,9 +150,23 @@ spec:
             - name: "STORAGE_EXPIRATION"
               value:  "{{ .Values.storage.expiration }}"
             - name: "STORAGE_ACCESSKEYID"
+              {{- if .Values.storage.accessKeyId }}
               value:  "{{ .Values.storage.accessKeyId }}"
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.storage.secretNameAccessKeyId }}
+                  key: {{ .Values.storage.secretKeyAccessKeyId }}
+            {{- end }}
             - name: "STORAGE_SECRETACCESSKEY"
+              {{- if .Values.storage.accessKey }}
               value: "{{ .Values.storage.accessKey }}"
+              {{- else }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.storage.secretNameAccessKey }}
+                  key: {{ .Values.storage.secretKeyAccessKey }}
+            {{- end }}
             - name: "STORAGE_REGION"
               value: "{{ .Values.storage.region }}"
             - name: "STORAGE_TOKEN"
