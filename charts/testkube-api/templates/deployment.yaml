@@ -88,12 +88,12 @@ spec:
             - name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
               value: {{ .Values.mongodb.sslClientFilePassKey }}
               {{- else }}
-            {{- if .Values.mongodb.sslClientFilePassSecretName }}
+            {{- if .Values.mongodb.sslClientFilePassKeySecretName }}
             - name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.mongodb.sslClientFilePassSecretName }}
-                  key: {{ .Values.mongodb.sslClientFilePassSecretKey }}
+                  name: {{ .Values.mongodb.sslClientFilePassKeySecretName }}
+                  key: {{ .Values.mongodb.sslClientFilePassKeySecretKey }}
               {{- end }}
             {{- end }}
             {{- if .Values.mongodb.dbType }}
@@ -164,8 +164,8 @@ spec:
               {{- else }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.storage.secretNameAccessKey }}
-                  key: {{ .Values.storage.secretKeyAccessKey }}
+                  name: {{ .Values.storage.secretNameSecretAccessKey }}
+                  key: {{ .Values.storage.secretKeySecretAccessKey }}
             {{- end }}
             - name: "STORAGE_REGION"
               value: "{{ .Values.storage.region }}"

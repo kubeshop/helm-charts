@@ -288,7 +288,7 @@ testkube-api:
       repository: minio/minio
       tag: latest
     # -- ServiceAccount name to use for Minio
-    serviceAccountName: "minio-service-account"
+    serviceAccountName: ""
     extraVolumeMounts: []
     extraVolumes: []
     ## k8s Secret name for Minio root username
@@ -398,6 +398,14 @@ testkube-api:
     accessKeyId: "minio"
     # -- MinIO Secret Access Key
     accessKey: "minio123"
+    ## k8s Secret name for storage accessKeyId
+    secretNameAccessKeyId: ""
+    ## Key for storage accessKeyId taken from k8s secret
+    secretKeyAccessKeyId: ""
+    ## K8s Secret Name for storage secretAccessKeyId
+    secretNameSecretAccessKey: ""
+    ## Key for storage secretAccessKeyId taken from k8s secret
+    secretKeySecretAccessKey: ""
     # -- MinIO Region
     region: ""
     # -- MinIO Token
@@ -435,10 +443,10 @@ testkube-api:
 
     ## -- SSL certificate secret reference
     # -- k8s Secret Name for SSL Client Certificate Key File Password
-    # sslClientFilePassSecretName: sslClientFilePassSecretName
+    # sslClientFilePassKeySecretName: sslClientFilePassKeySecretName
 
     # -- Key for SSL Client Certificate Key File Password k8s Secret
-    # sslClientFilePassSecretKey: sslClientFilePassSecretKey
+    # sslClientFilePassKeySecretKey: sslClientFilePassKeySecretKey
 
     # -- k8s Secret Name for SSL Client Certificate Key File
     # sslClientFileKeySecretName: sslClientFileKeySecretName

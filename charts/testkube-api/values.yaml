@@ -162,12 +162,16 @@ affinity: {}
 storage:
   endpoint: ""
   endpoint_port: "9000"
-  accessKeyId: "minio"
-  accessKey: "minio123"
+  accessKeyId: ""
+  accessKey: ""
   ## k8s Secret name for storage accessKeyId
   secretNameAccessKeyId: ""
   ## Key for storage accessKeyId taken from k8s secret
   secretKeyAccessKeyId: ""
+  ## K8s Secret Name for storage secretAccessKeyId
+  secretNameSecretAccessKey: ""
+  ## Key for storage secretAccessKeyId taken from k8s secret
+  secretKeySecretAccessKey: ""
   region: ""
   token: ""
   bucket: "testkube-artifacts"
@@ -219,11 +223,13 @@ mongodb:
   ## or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
+
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
   # sslCAFileKey: sslCertificateAuthorityFile
   # sslClientFileKey: sslClientCertificateKeyFile
   # sslClientFilePassKey: sslClientCertificateKeyFilePassword
+
   ## k8s Secret Name for SSL Client Certificate Key File Password
   ## Key for SSL Client Certificate Key File Password k8s Secret
   ## k8s Secret Name for SSL Client Certificate Key File
@@ -232,14 +238,15 @@ mongodb:
   ## Key for SSL CA File Key k8s Secret
   ## k8s Secret Name for SSL Cert Secret
   ## Key for SSL Cert Secret k8s Secret
-  # sslClientFilePassSecretName: sslClientFilePassSecretName
-  # sslClientFilePassSecretKey: sslClientFilePassSecretKey
+  # sslClientFilePassKeySecretName: sslClientFilePassKeySecretName
+  # sslClientFilePassKeySecretKey: sslClientFilePassKeySecretKey
   # sslClientFileKeySecretName: sslClientFileKeySecretName
   # sslClientFileKeySecretKey: sslClientFileKeySecretKey
   # sslCAFileKeySecretName: sslCAFileKeySecretName
   # sslCAFileKeySecretKey: sslCAFileKeySecretKey
   # sslCertSecretSecretName: sslCertSecretSecretName
   # sslCertSecretSecretKey: sslCertSecretSecretKey
+
   allowDiskUse: true
   # to use docdb with TLS, set dbType to docdb and allowTLS to true
   # dbType possible values: docdb|mongo; empty string defaults to mongo
