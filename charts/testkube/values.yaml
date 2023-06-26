@@ -289,6 +289,16 @@ testkube-api:
       tag: latest
     # -- ServiceAccount name to use for Minio
     serviceAccountName: ""
+    extraVolumeMounts: []
+    extraVolumes: []
+    ## k8s Secret name for Minio root username
+    secretUserName: ""
+    ## Secret key for Minio root username taken from k8s secret
+    secretUserKey: ""
+    ## k8s Secret name for Minio root password
+    secretPasswordName: ""
+    ## Secret key for Minio root username taken from k8s secret
+    secretPasswordKey: ""
     # -- Root username
     minioRootUser: "minio"
     # -- Root password
@@ -388,6 +398,14 @@ testkube-api:
     accessKeyId: "minio"
     # -- MinIO Secret Access Key
     accessKey: "minio123"
+    ## k8s Secret name for storage accessKeyId
+    secretNameAccessKeyId: ""
+    ## Key for storage accessKeyId taken from k8s secret
+    secretKeyAccessKeyId: ""
+    ## K8s Secret Name for storage secretAccessKeyId
+    secretNameSecretAccessKey: ""
+    ## Key for storage secretAccessKeyId taken from k8s secret
+    secretKeySecretAccessKey: ""
     # -- MinIO Region
     region: ""
     # -- MinIO Token
@@ -422,6 +440,32 @@ testkube-api:
     # secretKey: mongo-dsn
     # -- Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit.
     allowDiskUse: true
+
+    ## -- SSL certificate secret reference
+    # -- k8s Secret Name for SSL Client Certificate Key File Password
+    # sslClientFilePassKeySecretName: sslClientFilePassKeySecretName
+
+    # -- Key for SSL Client Certificate Key File Password k8s Secret
+    # sslClientFilePassKeySecretKey: sslClientFilePassKeySecretKey
+
+    # -- k8s Secret Name for SSL Client Certificate Key File
+    # sslClientFileKeySecretName: sslClientFileKeySecretName
+
+    # -- Key for SSL Client Certificate Key File k8s Secret
+    # sslClientFileKeySecretKey: sslClientFileKeySecretKey
+
+    # -- k8s Secret Name for SSL CA File Key
+    # sslCAFileKeySecretName: sslCAFileKeySecretName
+
+    # -- Key for SSL CA File Key k8s Secret
+    # sslCAFileKeySecretKey: sslCAFileKeySecretKey
+
+
+    # -- k8s Secret Name for SSL Cert Secret
+    # sslCertSecretSecretName: sslCertSecretSecretName
+
+    # -- Key for SSL Cert Secret k8s Secret
+    # sslCertSecretSecretKey: sslCertSecretSecretKey
 
   # -- Testkube API Liveness probe parameters
   livenessProbe:

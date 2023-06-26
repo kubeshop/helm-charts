@@ -162,8 +162,16 @@ affinity: {}
 storage:
   endpoint: ""
   endpoint_port: "9000"
-  accessKeyId: "minio"
-  accessKey: "minio123"
+  accessKeyId: ""
+  accessKey: ""
+  ## k8s Secret name for storage accessKeyId
+  secretNameAccessKeyId: ""
+  ## Key for storage accessKeyId taken from k8s secret
+  secretKeyAccessKeyId: ""
+  ## K8s Secret Name for storage secretAccessKeyId
+  secretNameSecretAccessKey: ""
+  ## Key for storage secretAccessKeyId taken from k8s secret
+  secretKeySecretAccessKey: ""
   region: ""
   token: ""
   bucket: "testkube-artifacts"
@@ -215,11 +223,30 @@ mongodb:
   ## or use dsn in secrets
   # secretName: testkube-secrets
   # secretKey: mongo-dsn
+
   ## SSL certificate secret reference
   # sslCertSecret: mongo-ssl-certs
   # sslCAFileKey: sslCertificateAuthorityFile
   # sslClientFileKey: sslClientCertificateKeyFile
   # sslClientFilePassKey: sslClientCertificateKeyFilePassword
+
+  ## k8s Secret Name for SSL Client Certificate Key File Password
+  ## Key for SSL Client Certificate Key File Password k8s Secret
+  ## k8s Secret Name for SSL Client Certificate Key File
+  ## Key for SSL Client Certificate Key File k8s Secret
+  ## k8s Secret Name for SSL CA File Key
+  ## Key for SSL CA File Key k8s Secret
+  ## k8s Secret Name for SSL Cert Secret
+  ## Key for SSL Cert Secret k8s Secret
+  # sslClientFilePassKeySecretName: sslClientFilePassKeySecretName
+  # sslClientFilePassKeySecretKey: sslClientFilePassKeySecretKey
+  # sslClientFileKeySecretName: sslClientFileKeySecretName
+  # sslClientFileKeySecretKey: sslClientFileKeySecretKey
+  # sslCAFileKeySecretName: sslCAFileKeySecretName
+  # sslCAFileKeySecretKey: sslCAFileKeySecretKey
+  # sslCertSecretSecretName: sslCertSecretSecretName
+  # sslCertSecretSecretKey: sslCertSecretSecretKey
+
   allowDiskUse: true
   # to use docdb with TLS, set dbType to docdb and allowTLS to true
   # dbType possible values: docdb|mongo; empty string defaults to mongo
@@ -263,8 +290,20 @@ minio:
     pullPolicy: IfNotPresent
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
-  ## Root username
-  ## Root password
+  ## Optionally specify extra list of additional volumeMounts for Minio
+  extraVolumeMounts: []
+  ## Optionally specify extra list of additional volumes for Minio
+  extraVolumes: []
+  ## k8s Secret name for Minio root username
+  secretUserName: ""
+  ## Secret key for Minio root username taken from k8s secret
+  secretUserKey: ""
+  ## k8s Secret name for Minio root password
+  secretPasswordName: ""
+  ## Secret key for Minio root username taken from k8s secret
+  secretPasswordKey: ""
+  ## Plain text Minio root username
+  ## Plain text Minio root password
   minioRootUser: ""
   minioRootPassword: ""
   ## PVC Storage Request for MinIO. Should be available in the cluster.
