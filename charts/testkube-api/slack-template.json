@@ -122,6 +122,15 @@
 		{
 			"type": "divider"
 		},
+		{{ if .ClusterName }}
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Cluster Name: {{ .ClusterName }}"
+			}
+		},
+		{{ end }}
 		{
 			"type": "section",
 			"text": {

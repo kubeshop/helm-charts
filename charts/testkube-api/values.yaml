@@ -116,6 +116,9 @@ cdeventsTarget: ""
 ## dashboard uri to be used in notification events
 dashboardUri: ""
 
+## cluster name to be used in events
+clusterName: ""
+
 ## Testkube API resource requests and limits
 resources:
   {}

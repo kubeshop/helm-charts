@@ -498,6 +498,8 @@ testkube-api:
   cdeventsTarget: ""
   ## dashboard uri to be used in notification events
   dashboardUri: ""
+  ## cluster name to be used in events
+  clusterName: ""
 
   # Test Connection pod
   testConnection:
