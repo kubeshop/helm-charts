@@ -6,7 +6,6 @@ while [[ "$#" -gt 0 ]]; do
     case $1 in
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
         -e|--testkube-executor) testkube_executor="$2"; shift ;;
-        -b|--branch) branch="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -105,13 +104,4 @@ grep -iE "^version" ../charts/testkube/Chart.yaml
 # Commiting and pushing changes:
 git add -A
 git commit -m "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
-
-if [[ $branch == "true" ]]
-then
-    # git push -u origin release-branch
-    git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts "release/$SERVICE/$RELEASE_VERSION"
-    gh pr create --base main --head "release/$SERVICE/$RELEASE_VERSION" --title "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions." --body "Updated $target_folder to $VERSION_FULL"
-else
-    # git push origin main
-    git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts main
-fi
+git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts main
