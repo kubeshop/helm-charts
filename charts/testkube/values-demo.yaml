@@ -307,6 +307,7 @@ testkube-api:
   executors: ""
   cdeventsTarget: ""
   dashboardUri: ""
+  clusterName: ""
 
   ##Test Connection pod
   testConnection:

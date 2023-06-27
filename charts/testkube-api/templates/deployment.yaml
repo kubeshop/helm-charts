@@ -263,7 +263,9 @@ spec:
             - name: CDEVENTS_TARGET
               value: "{{ .Values.cdeventsTarget }}"
             - name: TESTKUBE_DASHBOARD_URI
-              value: "{{ .Values.dashboardUri }}"    
+              value: "{{ .Values.dashboardUri }}"
+            - name: TESTKUBE_CLUSTER_NAME
+              value: "{{ .Values.clusterName }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
