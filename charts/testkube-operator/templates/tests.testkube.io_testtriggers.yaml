@@ -116,6 +116,33 @@ spec:
                   - test
                   - testsuite
                   type: string
+                probeSpec:
+                  description: What resource probes should be matched
+                  properties:
+                    probes:
+                      description: list of test trigger probes
+                      items:
+                        description: TestTriggerProbe is used for definition of the
+                          probe for test triggers
+                        properties:
+                          headers:
+                            additionalProperties:
+                              type: string
+                            description: probe headers
+                            type: object
+                          uri:
+                            description: test trigger condition probe uri
+                            type: string
+                        required:
+                        - uri
+                        type: object
+                      type: array
+                    timeout:
+                      description: duration in seconds the test trigger waits for probes,
+                        until its stopped
+                      format: int32
+                      type: integer
+                  type: object                  
                 resource:
                   description: For which Resource do we monitor Event which triggers
                     an Action on certain conditions
