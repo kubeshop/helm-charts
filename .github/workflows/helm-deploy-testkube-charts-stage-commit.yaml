@@ -63,7 +63,7 @@ jobs:
       - name: Deploy helm chart to Integration Cluster
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set mongodb.livenessProbe.enabled=false --set mongodb.reasdinessProbe.enabled=false
+          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }}
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest
