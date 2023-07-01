@@ -91,9 +91,8 @@ subjects:
   name: {{ include "testkube-operator.serviceAccountName" . }}
   namespace: {{ include "testkube-operator.namespace" . }}
 
----
-
 {{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
+---
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
@@ -121,5 +120,5 @@ subjects:
     name: {{ include "testkube-operator.webhook.serviceAccountName" . }}
     namespace: {{ include "testkube-operator.namespace" . }}
 {{- end }}
-  {{- end -}}
 
+{{- end -}}
