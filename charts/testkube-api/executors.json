@@ -3,7 +3,7 @@
         "name": "tracetest-executor",
         "executor": {
             "executorType": "job",
-            "image": "kubeshop/testkube-tracetest-executor:latest",
+            "image": "kubeshop/testkube-tracetest-executor:5e2d1e1",
             "command": [
                 "tracetest"
             ],
