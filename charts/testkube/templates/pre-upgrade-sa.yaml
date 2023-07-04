@@ -9,10 +9,10 @@ metadata:
     "helm.sh/hook": pre-upgrade,post-upgrade
     "helm.sh/hook-weight": "4"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
-  {{- end }}
+{{- end }}
 
----
 {{- if .Values.preUpgradeHook.serviceAccount.create }}
+---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -29,8 +29,8 @@ rules:
     verbs: ["create","delete","get","list","patch","update","watch"]
 {{- end }}
 
----
 {{- if .Values.preUpgradeHook.serviceAccount.create }}
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:

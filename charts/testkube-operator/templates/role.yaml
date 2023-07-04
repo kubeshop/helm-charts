@@ -321,9 +321,8 @@ rules:
   - watch
   - deletecollection
 
----
-
 {{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
+---
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
