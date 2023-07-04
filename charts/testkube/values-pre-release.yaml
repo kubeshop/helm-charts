@@ -153,39 +153,6 @@ testkube-api:
         set $methodallowed "";
         set $pathallowed "";
 
-        if ( $request_method = GET ){
-          set $methodallowed "true";
-          set $pathallowed "true";
-        }
-
-        if ( $request_method = POST ){
-          set $methodallowed "true";
-        }
-
-        if ( $request_method = OPTIONS ){
-          set $methodallowed "true";
-        } 
-
-        if ( $uri ~ "^(.*)/tests/(.*)/executions$" ){
-          set $pathallowed "true";
-        }  
-
-        if ( $uri ~ "^(.*)/test-suites/(.*)/executions$" ){
-          set $pathallowed "true";
-        }
-
-        if ( $uri ~ "^(.*)/tests$" ){
-          set $pathallowed "true";
-        }
-
-        if ( $uri ~ "^(.*)/repositories$" ){
-          set $pathallowed "true";
-        }
-
-        set $condition "$methodallowed+$pathallowed";
-        if ( $condition != "true+true" ) {
-          return 401;
-        }
     path: /results/(v\d/.*)
     hosts:
       - beta.testkube.io
@@ -315,6 +282,9 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-prerelease
       # add an annotation indicating the issuer to use.
