@@ -87,11 +87,6 @@ spec:
                           - type
                         type: object
                       type: array
-                    delay:
-                      description: duration in seconds the test trigger waits between
-                        condition check
-                      format: int32
-                      type: integer
                     timeout:
                       description: duration in seconds the test trigger waits for conditions,
                         until its stopped
@@ -121,49 +116,6 @@ spec:
                   - test
                   - testsuite
                   type: string
-                probeSpec:
-                  description: What resource probes should be matched
-                  properties:
-                    delay:
-                      description: duration in seconds the test trigger waits between
-                        probes
-                      format: int32
-                      type: integer
-                    probes:
-                      description: list of test trigger probes
-                      items:
-                        description: TestTriggerProbe is used for definition of the
-                          probe for test triggers
-                        properties:
-                          headers:
-                            additionalProperties:
-                              type: string
-                            description: test trigger condition probe headers to submit
-                            type: object
-                          host:
-                            description: test trigger condition probe host, default
-                              is pod ip or service name
-                            type: string
-                          path:
-                            description: test trigger condition probe path to check,
-                              default is /
-                            type: string
-                          port:
-                            description: test trigger condition probe port to connect
-                            format: int32
-                            type: integer
-                          scheme:
-                            description: test trigger condition probe scheme to connect
-                              to host, default is http
-                            type: string
-                        type: object
-                      type: array
-                    timeout:
-                      description: duration in seconds the test trigger waits for probes,
-                        until its stopped
-                      format: int32
-                      type: integer
-                  type: object                  
                 resource:
                   description: For which Resource do we monitor Event which triggers
                     an Action on certain conditions
