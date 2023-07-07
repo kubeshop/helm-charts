@@ -388,9 +388,6 @@ spec:
                             name:
                               description: object name
                               type: string
-                            namespace:
-                              description: object kubernetes namespace
-                              type: string
                           required:
                             - key
                             - name
@@ -415,9 +412,6 @@ spec:
                             name:
                               description: object name
                               type: string
-                            namespace:
-                              description: object kubernetes namespace
-                              type: string
                           required:
                             - key
                             - name
@@ -428,7 +422,13 @@ spec:
                           type: string
                       type: object
                     type:
-                      description: test type
+                      description: |
+                        type of sources a runner can get data from.
+                            string: String content (e.g. Postman JSON file).
+                            file-uri: content stored on the webserver.
+                            git-file: the file stored in the Git repo in the given repository.path field.
+                            git-dir: the entire git repo or git subdirectory depending on the  repository.path field (Testkube does a shadow clone and sparse checkout to limit IOs in the case of monorepos)
+                            git: automatically provisions either a file, directory or whole git repository depending on the repository.path field
                       enum:
                       - string
                       - file-uri
@@ -590,9 +590,14 @@ spec:
                       description: test execution number
                       format: int32
                       type: integer
+                    postRunScript:
+                      description: script to run after test execution (not supported
+                        for container executors)
+                      type: string
                     preRunScript:
-                      description: script to run before test execution
-                      type: string 
+                      description: script to run before test execution (not supported
+                        for container executors)
+                      type: string
                     scraperTemplate:
                       description: scraper template extensions
                       type: string
