@@ -4201,6 +4201,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2023-07-07T09:45:47.107425816Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.13.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.31
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.19.1
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.12.13
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.12.2
+    - name: global
+      repository: file://../global
+      version: 0.1.1
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 4219d91a2d269524749d3f06405376d76c5180298d0230f401f7a7ed7a1920d6
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.13.0/testkube-1.13.0.tgz
+    version: 1.13.0
+  - apiVersion: v2
     created: "2023-07-05T07:35:03.421461775Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -43359,6 +43392,21 @@ entries:
     version: 0.5.0-testing
   testkube-operator:
   - apiVersion: v2
+    appVersion: 1.13.0
+    created: "2023-07-07T09:45:47.242471721Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.1
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 2130c6a69072572b1b5567cc67cf8592aae89f29bb6ba652b0478275e8ca0f60
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-1.13.0/testkube-operator-1.13.0.tgz
+    version: 1.13.0
+  - apiVersion: v2
     appVersion: 1.12.3
     created: "2023-06-27T11:10:05.137276591Z"
     dependencies:
@@ -43495,21 +43543,6 @@ entries:
     version: 1.10.5
   - apiVersion: v2
     appVersion: 1.10.5-beta002
-    created: "2023-04-24T14:00:34.980572993Z"
-    dependencies:
-    - name: global
-      repository: file://../global
-      version: 0.1.1
-    description: A Helm chart for the testkube-operator (installs needed CRDs only
-      for now)
-    digest: 7aeb9c111fe9ac7403c13831aa2e2e753dea9389ba244c565a427e56b0c8506a
-    name: testkube-operator
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-1.10.5-beta002/testkube-operator-1.10.5-beta002.tgz
-    version: 1.10.5-beta002
-  - apiVersion: v2
-    appVersion: 1.10.5-beta002
     created: "2023-04-21T11:22:22.708378172Z"
     dependencies:
     - name: global
@@ -43533,6 +43566,21 @@ entries:
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
     digest: dd02c613d611fc423acc9d5b431638e374c1b69abfeb4bfe2690f2b895c17cf6
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-1.10.5-beta002/testkube-operator-1.10.5-beta002.tgz
+    version: 1.10.5-beta002
+  - apiVersion: v2
+    appVersion: 1.10.5-beta002
+    created: "2023-04-24T14:00:34.980572993Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.1
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: 7aeb9c111fe9ac7403c13831aa2e2e753dea9389ba244c565a427e56b0c8506a
     name: testkube-operator
     type: application
     urls:
@@ -46531,4 +46579,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-06T22:33:56.606253953Z"
+generated: "2023-07-07T09:45:47.274520731Z"
