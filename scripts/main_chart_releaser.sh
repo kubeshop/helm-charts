@@ -48,3 +48,10 @@ git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart versi
 
 # git push origin main
 git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+
+# Update Chart.yaml file in develop branch
+git checkout develop
+git checkout main --  charts/testkube/Chart.yaml
+git add charts/testkube/Chart.yaml
+git commit -m "Update Chart.yaml from main"
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
