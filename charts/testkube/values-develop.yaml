@@ -303,6 +303,8 @@ testkube-dashboard:
         secretName: testkube-prod-cert-secret
   apiServerEndpoint: "dev.testkube.io/results" #get the address of the endpoint or set it using helm
   disableTelemetry: true
+  # use the latest CRDs from testkube-operator for the UI validation
+  crdRevision: develop
   oauth2:
     enabled: false
     name: oauth2-proxy

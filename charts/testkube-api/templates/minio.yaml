@@ -81,23 +81,23 @@ spec:
           env:
             # MinIO access key and secret key
             - name: MINIO_ROOT_USER
-              {{- if .Values.minio.minioRootUser }}
-              value: {{ .Values.minio.minioRootUser }}
-            {{- else }}
+              {{- if .Values.minio.secretUserName }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.minio.secretUserName }}
                   key: {{ .Values.minio.secretUserKey }}
-            {{- end }}
-            - name: MINIO_ROOT_PASSWORD
-              {{- if .Values.minio.minioRootPassword }}
-              value: {{ .Values.minio.minioRootPassword }}
               {{- else }}
+              value: {{ .Values.minio.minioRootUser }}
+              {{- end }}
+            - name: MINIO_ROOT_PASSWORD
+              {{- if .Values.minio.secretPasswordName }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.minio.secretPasswordName }}
                   key: {{ .Values.minio.secretPasswordKey }}
-            {{- end }}
+              {{- else }}
+              value: {{ .Values.minio.minioRootPassword }}
+              {{- end }}
             - name: CONSOLE_PORT
               value: "9090"
             - name: CONSOLE_TLS_PORT
