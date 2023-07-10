@@ -485,6 +485,9 @@ spec:
                       items:
                         type: string
                       type: array
+                    containerEntrypoint:
+                      description: script to run as an entry point for container executors
+                      type: string
                     cronJobTemplate:
                       description: cron job template extensions
                       type: string
