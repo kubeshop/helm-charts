@@ -90,3 +90,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define a valid pathPrefix
+*/}}
+{{- define "tracetest.pathPrefix" -}}
+    {{- if .Values.server.pathPrefix }}
+        {{- .Values.server.pathPrefix }}
+    {{- else }}
+        {{- "/" }}
+    {{- end }}
+{{- end }}

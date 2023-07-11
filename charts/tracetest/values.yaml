@@ -111,6 +111,7 @@ server:
   httpPort: 11633
   otlpGrpcPort: 4317
   otlpHttpPort: 4318
+
   # Indicates which telemetry components will be used by Tracetest
   telemetry:
     # The exporter that tracetest will use to send telemetry
