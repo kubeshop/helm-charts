@@ -406,7 +406,7 @@ jobs:
         run: |-
           # enabling debug mode
           set -x
-          kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml
+          kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml -ntestkube
 
       - name: (Re)create demo testsuite
         working-directory: ./testkube-repo

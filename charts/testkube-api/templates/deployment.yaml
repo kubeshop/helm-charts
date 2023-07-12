@@ -150,22 +150,22 @@ spec:
             - name: "STORAGE_EXPIRATION"
               value:  "{{ .Values.storage.expiration }}"
             - name: "STORAGE_ACCESSKEYID"
-              {{- if .Values.storage.accessKeyId }}
-              value:  "{{ .Values.storage.accessKeyId }}"
-              {{- else }}
+              {{- if .Values.storage.secretNameAccessKeyId }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.storage.secretNameAccessKeyId }}
                   key: {{ .Values.storage.secretKeyAccessKeyId }}
+              {{- else }}
+              value: "{{ .Values.storage.accessKeyId }}"
             {{- end }}
             - name: "STORAGE_SECRETACCESSKEY"
-              {{- if .Values.storage.accessKey }}
-              value: "{{ .Values.storage.accessKey }}"
-              {{- else }}
+              {{- if .Values.storage.secretNameSecretAccessKey }}
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.storage.secretNameSecretAccessKey }}
                   key: {{ .Values.storage.secretKeySecretAccessKey }}
+              {{- else }}
+              value: "{{ .Values.storage.accessKey }}"
             {{- end }}
             - name: "STORAGE_REGION"
               value: "{{ .Values.storage.region }}"

@@ -41,6 +41,8 @@ spec:
             value: "{{ .Values.ingress.path }}"
           - name: REACT_APP_DISABLE_TELEMETRY
             value: "{{ .Values.disableTelemetry }}"
+          - name: REACT_APP_CRD_OPERATOR_REVISION
+            value: "{{ .Values.crdRevision }}"
           - name: ENABLE_IPV6
             value: "{{ .Values.ingress.ipv6enabled }}"
           {{- if .Values.extraEnvVars }}

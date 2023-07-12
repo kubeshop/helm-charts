@@ -72,6 +72,9 @@ apiServerEndpoint: ""
 ## Force disabling telemetry
 disableTelemetry: false
 
+# testkube-operator revision to get the CRDs for the UI validation
+crdRevision: main
+
 ## Array with extra environment variables
 ## e.g:
 ## extraEnvVars:
