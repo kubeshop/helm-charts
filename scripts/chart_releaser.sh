@@ -101,7 +101,16 @@ sed -i "s/^version:.*/version: $NEW_VERSION/" ../charts/testkube/Chart.yaml
 echo -e "\nChecking if testkube's main Chart.yaml version has been updated:\n"
 grep -iE "^version" ../charts/testkube/Chart.yaml
 
-# Commiting and pushing changes:
+# Commiting and pushing changes to main
 git add -A
 git commit -m "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts main
+
+# Update Chart.yaml file in develop branch
+git fetch origin develop
+git checkout develop
+git checkout main --  ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
+git add ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
+git commit -m "Update Chart.yaml files"
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
+
