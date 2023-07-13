@@ -133,7 +133,7 @@ jobs:
 
       - name: Executor tests - delete/create/schedule all executor tests
         working-directory: ./testkube-repo
-        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -s --namespace ${{ env.DEPLOYMENT_NAME }} # (delete, create, schedule) - don't execute
+        run: chmod +x ./test/scripts/executor-tests/run.sh && ./test/scripts/executor-tests/run.sh -d -c -s -n ${{ env.DEPLOYMENT_NAME }} # (delete, create, schedule) - don't execute
 
       - name: (Re)create Postman Sanity test (with CLI)
         working-directory: ./testkube-repo
