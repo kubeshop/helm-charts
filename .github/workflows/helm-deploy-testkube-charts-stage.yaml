@@ -106,7 +106,7 @@ jobs:
         if: ${{ github.event.client_payload.image_tag_operator }}
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s ${{ env.DEPLOYMENT_NAME }} ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ github.event.client_payload.image_tag_operator }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false
+          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ github.event.client_payload.image_tag_operator }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest
