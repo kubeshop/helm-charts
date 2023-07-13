@@ -8,6 +8,7 @@ on:
       - "charts/testkube/values-stage.yaml"
     branches:
       - develop
+      - deploy_stage-TK-to-dev-cluster
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
