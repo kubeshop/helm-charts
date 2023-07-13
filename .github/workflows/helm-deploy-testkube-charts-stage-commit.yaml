@@ -4,8 +4,8 @@ concurrency: develop_cluster
 
 on:
   push:
-    paths:
-      - "charts/testkube/values-stage.yaml"
+#    paths:
+#      - "charts/testkube/values-stage.yaml"
     branches:
       - develop
       - deploy_stage-TK-to-dev-cluster
