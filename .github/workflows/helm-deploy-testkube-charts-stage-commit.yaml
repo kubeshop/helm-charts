@@ -154,7 +154,7 @@ jobs:
           kubectl delete test dashboard-e2e-tests --ignore-not-found=true --namespace ${{ env.DEPLOYMENT_NAME }}
           kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml --namespace ${{ env.DEPLOYMENT_NAME }}
 
-      - name: (Re)create staging testsuite
+      - name: (Re)create staging testsuite (executor tests)
         working-directory: ./testkube-repo
         run: |-
           # enabling debug mode
@@ -162,8 +162,11 @@ jobs:
           kubectl delete testsuite staging-testsuite --ignore-not-found=true --namespace ${{ env.DEPLOYMENT_NAME }}
           kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite --namespace ${{ env.DEPLOYMENT_NAME }}
 
-      - name: Run staging testsuite
+      - name: Run Executor tests
         run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop --namespace ${{ env.DEPLOYMENT_NAME }}
+      
+      - name: Run Dashboard E2E tests
+        run: kubectl testkube run test dashboard-e2e-tests -f --variable TESTKUBE_NAMESPACE=${{ env.DEPLOYMENT_NAME }} --namespace ${{ env.DEPLOYMENT_NAME }}
 
   notify_slack_if_test_suite_stage_succeeds:
     runs-on: ubuntu-latest
