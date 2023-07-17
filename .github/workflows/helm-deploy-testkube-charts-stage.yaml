@@ -195,7 +195,7 @@ jobs:
           # enabling debug mode
           set -x
           kubectl delete test dashboard-e2e-tests --ignore-not-found=true --namespace ${{ env.DEPLOYMENT_NAME }}
-          kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml --namespace ${{ env.DEPLOYMENT_NAME }}
+          kubectl apply -f ./test/dashboard-e2e/crd/crd-integration.yaml --namespace ${{ env.DEPLOYMENT_NAME }}
 
       - name: (Re)create staging testsuite
         working-directory: ./testkube-repo
