@@ -112,5 +112,5 @@ git checkout develop
 git checkout main --  ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
 git add ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
 git commit -m "Update Chart.yaml files"
-git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
+git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts develop
 
