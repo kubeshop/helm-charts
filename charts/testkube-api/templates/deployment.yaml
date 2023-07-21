@@ -175,6 +175,8 @@ spec:
               value:  "{{ .Values.storage.SSL }}"
             - name: "SCRAPPERENABLED"
               value:  "{{ .Values.storage.scrapperEnabled }}"
+            - name: "COMPRESSARTIFACTS"
+              value:  "{{ .Values.storage.compressArtifacts }}"
             - name: "LOGS_BUCKET"
               value:  "{{ .Values.logs.bucket }}"
             - name: "LOGS_STORAGE"
