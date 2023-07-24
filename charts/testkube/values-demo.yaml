@@ -247,6 +247,7 @@ testkube-api:
     expiration: 0
     SSL: false
     scrapperEnabled: true
+    compressArtifacts: true
 
   ## Logs storage for Testkube API.
   logs:

@@ -418,6 +418,8 @@ testkube-api:
     SSL: false
     # -- Toggle whether to enable scraper in Testkube API
     scrapperEnabled: true
+    # -- Toggle whether to compress artifacts in Testkube API
+    compressArtifacts: true
 
   # Logs storage for Testkube API.
   logs:
