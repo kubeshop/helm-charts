@@ -183,6 +183,28 @@ oauth2:
     cookieSecret: ""
     cookieSecure: "false"
     redirectUrl: "http://testkube.example.com/oauth2/callback"
+
+    ## values that are taken from k8s secrets
+    # k8s Secret Name for clientId
+    # k8s Secret Name key for clientId
+    secretClientIdName: ""
+    secretClientIdKey: ""
+
+    # k8s Secret Name for clientSecret
+    # k8s Secret Key for clientSecret
+    secretClientSecretName: ""
+    secretClientSecretKey: ""
+
+    # k8s Secret Name for CookieSecret
+    # k8s Secret Key for CookieSecret
+    secretCookieSecretName: ""
+    secretCookieSecretKey: ""
+
+    # k8s Secret Name for GithubOrg
+    # k8s Secret Key for GithubOrg
+    secretGithubOrgName: ""
+    secretGithubOrgKey: ""
+
   ## Add additional Ingress labels
   ingress:
     labels: {}
