@@ -44,7 +44,10 @@ spec:
     metadata:
       labels:
       {{- if .Values.minio.matchLabels }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.global.labels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
       {{- end }}
       # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
@@ -178,6 +181,6 @@ spec:
     # Looks for labels `app:minio` in the namespace and applies the spec
     app: testkube-minio-{{ .Release.Namespace }}
     {{- if .Values.minio.matchLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 4 }}
     {{- end }}
   {{- end }}

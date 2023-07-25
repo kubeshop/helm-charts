@@ -30,6 +30,9 @@ spec:
         {{- if .Values.oauth2.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
       {{- if .Values.oauth2.podAnnotations }}
       annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
