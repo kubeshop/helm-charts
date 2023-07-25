@@ -25,11 +25,13 @@ spec:
         {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}
         {{- end }}
-
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
           {{- if .Values.podLabels }}
           {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
+          {{- end }}
+          {{- if .Values.global.labels }}
+          {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
           {{- end }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}

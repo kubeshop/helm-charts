@@ -25,6 +25,9 @@ installCRD: true
 ## Additional labels for Testkube Operator pod
 podLabels: {}
 
+## Additional pod annotations to Testkube Operator pod
+podAnnotations: {}
+
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 

@@ -10,7 +10,8 @@ global:
   # -- Global Docker registry secret names as an array
   imagePullSecrets: []
   # -- Labels to add to all deployed objects
-  labels: {}
+  labels:
+    cost: center
   # --  Annotations to add to all deployed objects
   annotations: {}
 
@@ -794,6 +795,12 @@ testkube-operator:
 
   # -- Number of Testkube Operator Pod replicas
   replicaCount: 1
+
+  ## Additional labels for Testkube Operator pod
+  podLabels: {}
+
+  ## Additional pod annotations to Testkube Operator pod
+  podAnnotations: {}
 
   # Testkube Operator image
   image:
