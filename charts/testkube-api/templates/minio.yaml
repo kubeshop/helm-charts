@@ -181,6 +181,6 @@ spec:
     # Looks for labels `app:minio` in the namespace and applies the spec
     app: testkube-minio-{{ .Release.Namespace }}
     {{- if .Values.minio.matchLabels }}
-    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 4 }}
     {{- end }}
   {{- end }}
