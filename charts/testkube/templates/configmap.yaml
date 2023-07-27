@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testkube-global-config
+  {{- if .Values.global.labels }}  
+  labels: 
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: 
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  helmchartVersion: {{ .Chart.Version }}

@@ -270,6 +270,11 @@ spec:
               value: "{{ .Values.dashboardUri }}"
             - name: TESTKUBE_CLUSTER_NAME
               value: "{{ .Values.clusterName }}"
+            - name: TESTKUBE_HELMCHART_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: testkube-global-config
+                  key: helmchartVersion
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
