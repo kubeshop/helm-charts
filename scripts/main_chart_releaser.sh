@@ -70,7 +70,7 @@ git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/
 # Update Chart.yaml file in develop branch
 git fetch origin develop
 git checkout develop
-git checkout main --  ../charts/testkube/Chart.yaml
-git add ../charts/testkube/Chart.yaml
-git commit -m "Update Chart.yaml file"
+git checkout main --  ../charts/testkube/Chart.yaml ../charts/testkube-api/Chart.yaml ../charts/testkube-dashboard/Chart.yaml ../charts/testkube-operator/Chart.yaml
+git add ../charts/testkube/Chart.yaml ../charts/testkube-api/Chart.yaml ../charts/testkube-dashboard/Chart.yaml ../charts/testkube-operator/Chart.yaml
+git commit -m "Update Chart.yaml files"
 git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
