@@ -221,7 +221,9 @@ jobs:
           version: v3.10.0
 
       - uses: azure/setup-kubectl@v3
-        id: install
+
+      - name: Install jq
+        run: brew install jq
 
       - name: Install testkube kubectl plugin
         run: bash <(curl -sSLf https://get.testkube.io) beta && kubectl testkube disable telemetry
