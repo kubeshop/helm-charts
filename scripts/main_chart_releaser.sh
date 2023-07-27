@@ -23,9 +23,9 @@ function update_sub_chart_version {
     tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
 
     # Update the Chart.yaml file with the new version:
-    gsed -i "s/^version: $tk_version_full/version: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
-    gsed -i "s/^appVersion: $tk_version_full/appVersion: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
-    gsed -i "/name: $folder_name/{n;s/^.*version.*/    version: $tk_version_full_bumped/}" "../charts/testkube/Chart.yaml"
+    sed -i "s/^version: $tk_version_full/version: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
+    sed -i "s/^appVersion: $tk_version_full/appVersion: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
+    sed -i "/name: $folder_name/{n;s/^.*version.*/    version: $tk_version_full_bumped/}" "../charts/testkube/Chart.yaml"
 
     echo "Bumped $folder_name version to $tk_version_full_bumped"
 }
@@ -53,7 +53,7 @@ function update_chart_version {
     tk_version_full_bumped=$tk_version_major.$tk_version_minor.$tk_version_patch
 
     # Update the Chart.yaml file with the new version:
-    gsed -i "s/^version: $tk_version_full/version: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
+    sed -i "s/^version: $tk_version_full/version: $tk_version_full_bumped/" "../charts/$folder_name/Chart.yaml"
 
     echo "Bumped $folder_name version to $tk_version_full_bumped"
 }
@@ -61,16 +61,16 @@ function update_chart_version {
 update_chart_version
 
 # Commiting and pushing changes:
-#git add -A
-#git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart version."
-#
-## git push origin main
-#git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
-#
-## Update Chart.yaml file in develop branch
-#git fetch origin develop
-#git checkout develop
-#git checkout main --  ../charts/testkube/Chart.yaml
-#git add ../charts/testkube/Chart.yaml
-#git commit -m "Update Chart.yaml file"
-#git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
+git add -A
+git commit -m "Tag: $tk_version_full_bumped; CI/CD. Bumped main helm chart version."
+
+# git push origin main
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts main
+
+# Update Chart.yaml file in develop branch
+git fetch origin develop
+git checkout develop
+git checkout main --  ../charts/testkube/Chart.yaml
+git add ../charts/testkube/Chart.yaml
+git commit -m "Update Chart.yaml file"
+git push --set-upstream https://kubeshop-bot:$GH_PUSH_TOKEN@github.com/kubeshop/helm-charts develop
