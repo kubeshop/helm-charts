@@ -4201,7 +4201,7 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
-    created: "2023-07-27T09:20:58.722529618Z"
+    created: "2023-07-27T09:21:28.908600875Z"
     dependencies:
     - condition: testkube-operator.enabled
       name: testkube-operator
@@ -4227,12 +4227,12 @@ entries:
       version: 0.1.1
     description: Testkube is an open-source platform that simplifies the deployment
       and management of automated testing infrastructure.
-    digest: 6bcc49e9745545addacb298a2328fb94242bd1a4af7aaf654d8161a62578b3ef
+    digest: 2f4023339afbb9bf1ea5f5cb2d14a36d0886f353fc7e85e0c380cd4351ec9752
     name: testkube
     type: application
     urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.13.23/testkube-1.13.23.tgz
-    version: 1.13.23
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.13.24/testkube-1.13.24.tgz
+    version: 1.13.24
   - apiVersion: v2
     created: "2023-07-27T09:16:39.541937246Z"
     dependencies:
@@ -37602,20 +37602,6 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
-    appVersion: 1.13.7
-    created: "2023-07-27T09:20:58.800648433Z"
-    dependencies:
-    - name: global
-      repository: file://../global
-      version: 0.1.1
-    description: A Helm chart for Testkube api
-    digest: a70f3ab3c68156cc0fb3e2900c3e9a51c4cdcc1a91f48221a183074657c68767
-    name: testkube-api
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.13.7/testkube-api-1.13.7.tgz
-    version: 1.13.7
-  - apiVersion: v2
     appVersion: 1.13.6
     created: "2023-07-27T08:58:26.695201826Z"
     dependencies:
@@ -47614,4 +47600,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-07-27T09:20:58.832093718Z"
+generated: "2023-07-27T09:21:28.940053118Z"
