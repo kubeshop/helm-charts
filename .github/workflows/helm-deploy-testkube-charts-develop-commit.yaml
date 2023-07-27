@@ -17,7 +17,7 @@ env:
 
 
 jobs:
-  release_charts:
+  deploy_charts:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -67,13 +67,13 @@ jobs:
 
   notify_slack_if_deploy_succeeds:
     runs-on: ubuntu-latest
-    needs: release_charts
+    needs: deploy_charts
     steps:
       - name: Slack Notification if the helm release deployment to ${{ env.ENV }} GKS succeeded.
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: ${{ needs.deploy_charts.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_TITLE: Helm chart release successfully deployed into ${{ secrets.GKE_CLUSTER_NAME }} GKE :party_blob:!
           SLACK_USERNAME: GitHub
@@ -83,14 +83,14 @@ jobs:
 
   notify_slack_if_deploy_failed:
     runs-on: ubuntu-latest
-    needs: release_charts
-    if: always() && (needs.release_charts.result == 'failure')
+    needs: deploy_charts
+    if: always() && (needs.deploy_charts.result == 'failure')
     steps:
       - name: Slack Notification if the helm release deployment to ${{ env.ENV }} GKS failed.
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
+          SLACK_COLOR: ${{ needs.deploy_charts.result }} # or a specific color like 'good' or '#ff00ff'
           SLACK_ICON: https://github.com/rtCamp.png?size=48
           SLACK_TITLE: Helm chart release failed to deploy into ${{ secrets.GKE_CLUSTER_NAME }} GKE! :boom:!
           SLACK_USERNAME: GitHub
@@ -101,7 +101,7 @@ jobs:
   test_suite_run:
     name: test suite for GKE cluster
     runs-on: ubuntu-latest
-    needs: release_charts
+    needs: deploy_charts
     steps:
       # Setup gcloud CLI
       - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -167,7 +167,7 @@ jobs:
 
   install_cli_on_darwin:
     runs-on: macos-latest
-    needs: release_charts
+    needs: deploy_charts
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -181,7 +181,7 @@ jobs:
         id: install
 
       - name: Install testkube kubectl plugin
-        run: bash < <(curl -sSLf https://get.testkube.io ) beta && kubectl testkube disable telemetry
+        run: bash < <(curl -sSLf https://get.testkube.io ) && kubectl testkube disable telemetry
 
   notify_slack_if_test_suite_succeeds:
     runs-on: ubuntu-latest

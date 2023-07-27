@@ -208,9 +208,27 @@ jobs:
       - name: Run staging testsuite
         run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop
 
+  install_cli_on_darwin:
+    runs-on: macos-latest
+    needs: release_charts_if_image_updated
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - uses: azure/setup-kubectl@v3
+        id: install
+
+      - name: Install testkube kubectl plugin
+        run: bash <(curl -sSLf https://get.testkube.io) beta && kubectl testkube disable telemetry
+
   notify_slack_if_test_suite_succeeds:
     runs-on: ubuntu-latest
-    needs: test_suite_run
+    needs: [test_suite_run, install_cli_on_darwin]
     steps:
       - name: Slack Notification if the test suite run on ${{ env.ENV }} GKE succeeded.
         uses: rtCamp/action-slack-notify@v2
@@ -226,8 +244,8 @@ jobs:
 
   notify_slack_if_test_suite_failed:
     runs-on: ubuntu-latest
-    needs: test_suite_run
-    if: always() && (needs.test_suite_run.result == 'failure')
+    needs: [test_suite_run, install_cli_on_darwin]
+    if: ${{ always() && (needs.test_suite_run.result == 'failure' || needs.install_cli_on_darwin.result == 'failure') }}
     steps:
       - name: Slack Notification if the test suite run on ${{ env.ENV }} GKE failed.
         uses: rtCamp/action-slack-notify@v2
