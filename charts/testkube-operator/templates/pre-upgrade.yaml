@@ -4,6 +4,9 @@ kind: Job
 metadata:
   name: {{ .Release.Name }}-operator-pre-upgrade
   labels:
+    {{- if .Values.preUpgrade.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgrade.labels "context" $ ) | nindent 4 }}
+    {{- end }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -21,6 +24,9 @@ spec:
     metadata:
       name: {{ .Release.Name }}-operator-pre-upgrade
       labels:
+        {{- if .Values.preUpgrade.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgrade.labels "context" $ ) | nindent 8 }}
+        {{- end }}
         {{- if .Values.global.labels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
         {{- end }}
