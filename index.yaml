@@ -43410,13 +43410,9 @@ entries:
     version: 1.9.2
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-03-06T11:15:31.474941056Z"
-    dependencies:
-    - name: global
-      repository: file://../global
-      version: 0.1.1
+    created: "2023-02-21T16:52:39.420120847Z"
     description: A Helm chart for Kubernetes
-    digest: d541c0ce312b9dec4748967fbeded63f08f8d1980e15972ae9f61166ef9f8447
+    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
     name: testkube-dashboard
     type: application
     urls:
@@ -43424,9 +43420,9 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-21T16:52:39.420120847Z"
+    created: "2023-02-23T10:49:27.352033737Z"
     description: A Helm chart for Kubernetes
-    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
+    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
     name: testkube-dashboard
     type: application
     urls:
@@ -43448,9 +43444,13 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-23T10:49:27.352033737Z"
+    created: "2023-03-06T11:15:31.474941056Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.1
     description: A Helm chart for Kubernetes
-    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
+    digest: d541c0ce312b9dec4748967fbeded63f08f8d1980e15972ae9f61166ef9f8447
     name: testkube-dashboard
     type: application
     urls:
@@ -46004,6 +46004,23 @@ entries:
     version: 0.5.8-testing
   tracetest:
   - apiVersion: v2
+    appVersion: v0.13.1
+    created: "2023-08-01T19:24:17.688165543Z"
+    dependencies:
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.6
+    description: A Helm chart for Trace Test
+    digest: 4804c5e228023b194301785c84659cb86ab31102dca484d0cc1d4fbf071c6b0d
+    home: https://github.com/kubeshop/helm-charts
+    name: tracetest
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.2.70/tracetest-0.2.70.tgz
+    version: 0.2.70
+  - apiVersion: v2
     appVersion: v0.13.0
     created: "2023-07-18T22:27:49.730187681Z"
     dependencies:
@@ -47788,4 +47805,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-01T14:01:45.971051414Z"
+generated: "2023-08-01T19:24:17.737725231Z"
