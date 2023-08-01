@@ -503,14 +503,6 @@ spec:
                         description: error message when status is error, separate
                           to output as output can be partial in case of error
                         type: string
-                      output:
-                        description: RAW Test execution output, depends of reporter
-                          used in particular tool
-                        type: string
-                      outputType:
-                        description: output type depends of reporter used in particular
-                          tool
-                        type: string
                       reports:
                         properties:
                           junit:
