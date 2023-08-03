@@ -222,6 +222,33 @@ rules:
   - get
   - patch
   - update
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsuiteexecutions
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsuiteexecutions/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tests.testkube.io
+  resources:
+  - testsuiteexecutions/status
+  verbs:
+  - get
+  - patch
+  - update
+
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
