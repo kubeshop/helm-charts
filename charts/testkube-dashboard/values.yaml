@@ -218,6 +218,8 @@ oauth2:
   volumeMounts: []
 #  - mountPath: /mypath
 #    name: git-volume
+  ## Specify priorityClassName for OAuth2 Deployment
+  priorityClassName: ""
 ## Testkube Dashboard resource requests and limits
 resources: {}
 #   limits:
@@ -254,6 +256,9 @@ tolerations: []
 ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
 ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
 affinity: {}
+
+## Specify priorityClassName for Testkube Dashboard Deployment
+priorityClassName: ""
 
 ##Test Connection pod
 testConnection:

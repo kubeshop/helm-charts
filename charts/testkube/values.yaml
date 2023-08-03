@@ -313,6 +313,8 @@ testkube-api:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for MinIO container
     securityContext: {}
+    ## Specify priorityClassName for Minio
+    priorityClassName: ""
 
   # uiIngress parameters
   uiIngress:
@@ -523,6 +525,8 @@ testkube-api:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for testkube-api container
   securityContext: {}
+  ## Specify priorityClassName for Testkube API
+  priorityClassName: ""
 
 # --  Testkube Dashboard parameters
 testkube-dashboard:
@@ -622,6 +626,8 @@ testkube-dashboard:
 
   # -- Force disabling telemetry on the UI
   disableTelemetry: false
+  ## Specify priorityClassName for Testkube Dashboard
+  priorityClassName: ""
 
   # Oauth parameters
   oauth2:
@@ -718,6 +724,9 @@ testkube-dashboard:
     volumeMounts: []
     #  - mountPath: /mypath
     #    name: git-volume
+
+    ## Specify priorityClassName for OAuth2
+    priorityClassName: ""
 
   # Autoscaling parameters
   autoscaling:
@@ -1013,6 +1022,9 @@ testkube-operator:
   # note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   # -- Affinity for Testkube Operator pod assignment.
   affinity: {}
+
+  ## Specify priorityClassName for Minio
+  priorityClassName: ""
 
   # -- Test Connection pod
   testConnection:
