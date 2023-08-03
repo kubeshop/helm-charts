@@ -50,6 +50,9 @@ spec:
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- if .Values.minio.priorityClassName }}
+      priorityClassName: {{ .Values.minio.priorityClassName }}
+      {{- end }}
       # Volumes used by this deployment
       volumes:
         - name: data
