@@ -90,7 +90,7 @@ mongodb:
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
-  priorityClassName: "high-priority"
+  priorityClassName: "highest-priority"
 
 nats:
   # NATS container settings
@@ -121,7 +121,7 @@ testkube-api:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-    priorityClassName: "high-priority"
+    priorityClassName: "highest-priority"
     image:
       registry: docker.io
       repository: minio/minio
@@ -312,7 +312,7 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
 
-  priorityClassName: "high-priority"
+  priorityClassName: "highest-priority"
 
   ##Test Connection pod
   testConnection:
@@ -363,7 +363,7 @@ testkube-dashboard:
     path: /oauth2
     port: 4180
     selector: k8s-app
-    priorityClassName: "high-priority"
+    priorityClassName: "highest-priority"
     image:
       repository: quay.io/oauth2-proxy/oauth2-proxy
       tag: latest
@@ -375,7 +375,7 @@ testkube-dashboard:
       cookieSecret: ""
       cookieSecure: "false"
       redirectUrl: "http://demo.testkube.io/oauth2/callback"
-  priorityClassName: "high-priority"
+  priorityClassName: "highest-priority"
 
   ##Test Connection pod
   testConnection:
@@ -389,7 +389,7 @@ testkube-operator:
 
   # should the CRDs be installed
   installCRD: true
-  priorityClassName: "high-priority"
+  priorityClassName: "highest-priority"
 
   ##Proxy Image parameters
   ## image.registry Proxy image registry
