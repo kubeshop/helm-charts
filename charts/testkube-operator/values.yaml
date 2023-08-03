@@ -279,6 +279,9 @@ tolerations: []
 ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
 affinity: {}
 
+## Specify priorityClassName for Minio
+priorityClassName: ""
+
 ##Test Connection pod
 testConnection:
   enabled: false
