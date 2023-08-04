@@ -7,6 +7,10 @@ on:
     branches:
       - develop
 
+  repository_dispatch:
+    types:
+      [trigger-helm-chart-deployment-to-develop-cluster]
+
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_DEVELOP }}
