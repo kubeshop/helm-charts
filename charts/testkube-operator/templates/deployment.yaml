@@ -75,6 +75,10 @@ spec:
         {{- if .Values.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
         {{- end }}
+        {{- if .Values.global }}
+        - name: APISERVER_REGISTRY
+          value:  {{ .Values.global.imageRegistry }}
+        {{- end }}
         ports:
         - containerPort: 9443
           name: webhook-server
