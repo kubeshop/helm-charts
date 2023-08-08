@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - develop
-      - extend-tests
+      - add-tests-macos
 
   repository_dispatch:
     types:
