@@ -422,6 +422,7 @@ jobs:
 
       - name: Run demo testsuite (CLI)
         run: kubectl testkube run testsuite demo-testsuite -f
+
   install_cli_on_darwin:
     runs-on: macos-latest
     needs: deploy_charts

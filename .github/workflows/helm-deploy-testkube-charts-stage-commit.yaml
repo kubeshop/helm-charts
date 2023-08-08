@@ -8,6 +8,7 @@ on:
       - "charts/testkube/values-stage.yaml"
     branches:
       - develop
+      - add-tests-macos
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -167,6 +168,7 @@ jobs:
       
       - name: Run Dashboard E2E tests
         run: kubectl testkube run test dashboard-e2e-tests -f --variable TESTKUBE_NAMESPACE=${{ env.DEPLOYMENT_NAME }} --namespace ${{ env.DEPLOYMENT_NAME }}
+
   install_cli_on_darwin:
     runs-on: macos-latest
     needs: deploy_charts
