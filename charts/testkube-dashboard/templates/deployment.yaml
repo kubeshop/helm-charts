@@ -27,9 +27,15 @@ spec:
         {{- if .Values.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
       serviceAccountName: {{ include "testkube-dashboard.serviceAccountName" . }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,6 +47,8 @@ spec:
             value: "{{ .Values.ingress.path }}"
           - name: REACT_APP_DISABLE_TELEMETRY
             value: "{{ .Values.disableTelemetry }}"
+          - name: REACT_APP_CRD_OPERATOR_REVISION
+            value: "{{ .Values.crdRevision }}"
           - name: ENABLE_IPV6
             value: "{{ .Values.ingress.ipv6enabled }}"
           {{- if .Values.extraEnvVars }}

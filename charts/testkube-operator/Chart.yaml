@@ -2,8 +2,13 @@ apiVersion: v2
 name: testkube-operator
 description: A Helm chart for the testkube-operator (installs needed CRDs only for now)
 type: application
+<<<<<<< HEAD
 version: 1.13.4
 appVersion: 1.13.4
+=======
+version: 1.13.5
+appVersion: 1.13.5
+>>>>>>> 49babd84375de7d18bf5ff9e568ad956ebbfb5ae
 dependencies:
   - name: global
     version: 0.1.1

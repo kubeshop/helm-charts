@@ -591,12 +591,19 @@ spec:
                       format: int32
                       type: integer
                     postRunScript:
+<<<<<<< HEAD
                       description: script to run after test execution (not supported
                         for container executors)
                       type: string
                     preRunScript:
                       description: script to run before test execution (not supported
                         for container executors)
+=======
+                      description: script to run after test execution
+                      type: string
+                    preRunScript:
+                      description: script to run before test execution
+>>>>>>> 49babd84375de7d18bf5ff9e568ad956ebbfb5ae
                       type: string
                     scraperTemplate:
                       description: scraper template extensions

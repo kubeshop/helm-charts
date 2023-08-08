@@ -30,11 +30,17 @@ spec:
         {{- if .Values.oauth2.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
       {{- if .Values.oauth2.podAnnotations }}
       annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- if .Values.oauth2.priorityClassName }}
+      priorityClassName: {{ .Values.oauth2.priorityClassName }}
+      {{- end }}
       containers:
       - args:
         {{- if .Values.oauth2.args }}
@@ -51,14 +57,42 @@ spec:
         # https://github.com/settings/applications/new
         env:
         - name: OAUTH2_PROXY_CLIENT_ID
+          {{- if .Values.oauth2.env.secretClientIdName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.oauth2.env.secretClientIdName }}
+              key: {{ .Values.oauth2.env.secretClientIdKey }}
+          {{- else }}
           value: "{{ .Values.oauth2.env.clientId }}"
+          {{- end }}
         - name: OAUTH2_PROXY_CLIENT_SECRET
+          {{- if .Values.oauth2.env.secretClientSecretName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.oauth2.env.secretClientSecretName }}
+              key: {{ .Values.oauth2.env.secretClientSecretKey }}
+          {{- else }}
           value: "{{ .Values.oauth2.env.clientSecret }}"
+          {{- end }}
         - name: OAUTH2_PROXY_GITHUB_ORG
+          {{- if .Values.oauth2.env.secretGithubOrgName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.oauth2.env.secretGithubOrgName }}
+              key: {{ .Values.oauth2.env.secretGithubOrgKey }}
+          {{- else }}
           value: "{{ .Values.oauth2.env.githubOrg }}"
+          {{- end }}
         # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
         - name: OAUTH2_PROXY_COOKIE_SECRET
+          {{- if .Values.oauth2.env.secretCookieSecretName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.oauth2.env.secretCookieSecretName }}
+              key: {{ .Values.oauth2.env.secretCookieSecretKey }}
+          {{- else }}
           value: "{{ .Values.oauth2.env.cookieSecret }}"
+          {{- end }}
         - name: OAUTH2_PROXY_HTTP_ADDRESS
           value: "0.0.0.0:{{ .Values.oauth2.port }}"
         - name: OAUTH2_PROXY_COOKIE_SECURE

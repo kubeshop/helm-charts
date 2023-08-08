@@ -2,8 +2,13 @@ apiVersion: v2
 name: testkube-dashboard
 description: A Helm chart for Kubernetes
 type: application
+<<<<<<< HEAD
 version: 1.13.7
 appVersion: 1.13.7
+=======
+version: 1.13.5
+appVersion: 1.13.5
+>>>>>>> 49babd84375de7d18bf5ff9e568ad956ebbfb5ae
 dependencies:
   - name: global
     version: 0.1.1

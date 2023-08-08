@@ -14,7 +14,11 @@ spec:
         spec:
           containers:
           - name: curlimage
+            {{- if .Registry }}
+            image: {{ .Registry }}/curlimages/curl
+            {{- else }}
             image: curlimages/curl
+            {{- end }}
             imagePullPolicy: IfNotPresent
             command:
             - sh

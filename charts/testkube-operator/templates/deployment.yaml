@@ -23,8 +23,18 @@ spec:
         {{- if .Values.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
+      {{- end }}
       containers:
       - name: kube-rbac-proxy
         args:
@@ -64,6 +74,10 @@ spec:
         {{- end }}
         {{- if .Values.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
+        {{- end }}
+        {{- if .Values.global }}
+        - name: APISERVER_REGISTRY
+          value:  {{ .Values.global.imageRegistry }}
         {{- end }}
         ports:
         - containerPort: 9443
