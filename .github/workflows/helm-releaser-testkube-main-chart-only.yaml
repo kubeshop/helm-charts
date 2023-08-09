@@ -357,7 +357,12 @@ jobs:
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install testkube kubectl plugin
-        run: bash < <(curl -sSLf https://get.testkube.io )
+        run: |
+          export GH_TOKEN
+          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" )
+        env:
+          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 
       - name: Disable telemetry (action)
         id: disable_telemetry
@@ -437,7 +442,12 @@ jobs:
         run: brew install jq
 
       - name: Install testkube kubectl plugin
-        run: bash <(curl -sSLf https://get.testkube.io ) && kubectl testkube disable telemetry
+        run: |
+          export GH_TOKEN
+          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) && kubectl testkube disable telemetry
+        env:
+          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 
   notify_slack_if_test_suite_dev_succeeds:
     runs-on: ubuntu-latest

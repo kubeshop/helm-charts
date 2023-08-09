@@ -8,7 +8,7 @@ on:
       - "charts/testkube/values-stage.yaml"
     branches:
       - develop
-#      - add-tests-macos
+      - add-tests-macos
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -124,7 +124,11 @@ jobs:
 
       - name: Install testkube kubectl plugin and disable telemetry
         run: |
-          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer ${{ secrets.CI_BOT_TOKEN }}" ) beta && kubectl testkube disable telemetry --namespace ${{ env.DEPLOYMENT_NAME }}
+          export GH_TOKEN
+          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry --namespace ${{ env.DEPLOYMENT_NAME }}
+        env:
+          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 
       - name: Checkout tests from main Testkube repo
         uses: actions/checkout@v3
@@ -189,7 +193,11 @@ jobs:
 
       - name: Install testkube kubectl plugin
         run: |
-          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer ${{ secrets.CI_BOT_TOKEN }}" ) beta && kubectl testkube disable telemetry --namespace ${{ env.DEPLOYMENT_NAME }}
+          export GH_TOKEN
+          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry --namespace ${{ env.DEPLOYMENT_NAME }}
+        env:
+          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 
   notify_slack_if_test_suite_stage_succeeds:
     runs-on: ubuntu-latest
