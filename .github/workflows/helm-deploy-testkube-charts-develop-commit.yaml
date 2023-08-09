@@ -195,6 +195,7 @@ jobs:
         run: |
           export GH_TOKEN
           curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          curl  -H "Accept: application/vnd.github+json"  -H "Authorization: token $GH_TOKEN"  https://api.github.com/rate_limit
           bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
         env:
           GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
