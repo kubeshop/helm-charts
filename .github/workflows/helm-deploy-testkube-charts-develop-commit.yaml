@@ -125,12 +125,12 @@ jobs:
           location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
-      - name: Install testkube kubectl plugin and disable telemetry
+      - name: Install testkube kubectl plugin
         run: |
-           export GH_TOKEN
-           bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
+          export GH_TOKEN
+          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
         env:
-          # This is the important line to add
           GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 #
 #      - name: Checkout tests from main Testkube repo
@@ -191,17 +191,12 @@ jobs:
       - name: Install jq
         run: brew install jq
 
-#      - name: Check rate limiting
-#        run: |
-#          curl -i https://api.github.com/repos/testkube
-
       - name: Install testkube kubectl plugin
         run: |
           export GH_TOKEN
           curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
           bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
         env:
-          # This is the important line to add
           GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 
 
