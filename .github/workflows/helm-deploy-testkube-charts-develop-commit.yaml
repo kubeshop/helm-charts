@@ -193,7 +193,7 @@ jobs:
 
       - name: Install testkube kubectl plugin
         run: |
-          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer ${{ secrets.CI_BOT_TOKEN }}" ) beta && kubectl testkube disable telemetry
+          bash <(curl -sSLf https://get.testkube.io ) beta && kubectl testkube disable telemetry
 
 
 #  notify_slack_if_test_suite_succeeds:
