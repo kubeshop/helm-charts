@@ -176,7 +176,7 @@ jobs:
 
   install_cli_on_darwin:
     runs-on: macos-latest
-    needs: deploy_charts
+    needs: release_charts_if_image_updated
     steps:
       - name: Checkout
         uses: actions/checkout@v2

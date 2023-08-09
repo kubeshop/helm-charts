@@ -426,7 +426,7 @@ jobs:
 
   install_cli_on_darwin:
     runs-on: macos-latest
-    needs: deploy_charts
+    needs: deploy-to-testkube-dev-gke
     steps:
       - name: Checkout
         uses: actions/checkout@v2
