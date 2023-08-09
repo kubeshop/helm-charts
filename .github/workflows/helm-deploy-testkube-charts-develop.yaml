@@ -165,11 +165,7 @@ jobs:
 
       - name: Install testkube kubectl plugin and disable telemetry
         run: |
-          export GH_TOKEN
-          curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
-          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
-        env:
-          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+          bash <(curl -sSLf https://get.testkube.io ) beta && kubectl testkube disable telemetry
 
       - name: Checkout tests from main Testkube repo
         uses: actions/checkout@v3
