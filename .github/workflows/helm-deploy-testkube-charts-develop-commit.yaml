@@ -187,9 +187,10 @@ jobs:
       - name: Install jq
         run: brew install jq
 
-      - name: Check token
+      - name: Check rate limiting
         run: |
-          curl -H "Authorization: token ${{ secrets.CI_BOT_TOKEN }}" https://api.github.com/users/codertocat -I
+          set -x
+          curl -i https://api.github.com/repos/testkube
 
       - name: Install testkube kubectl plugin
         run: |
