@@ -187,6 +187,10 @@ jobs:
       - name: Install jq
         run: brew install jq
 
+      - name: Check token
+        run: |
+          curl -H "Authorization: token ${{ secrets.CI_BOT_TOKEN }}" https://api.github.com/users/codertocat -I
+
       - name: Install testkube kubectl plugin
         run: |
           bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer ${{ secrets.CI_BOT_TOKEN }}" ) beta && kubectl testkube disable telemetry
