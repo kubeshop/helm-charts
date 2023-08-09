@@ -4,8 +4,8 @@ concurrency: develop_cluster
 
 on:
   push:
-    paths:
-      - "charts/testkube/values-stage.yaml"
+#    paths:
+#      - "charts/testkube/values-stage.yaml"
     branches:
       - develop
       - add-tests-macos
