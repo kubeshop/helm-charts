@@ -195,6 +195,7 @@ jobs:
         run: |
           bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer ${{ secrets.CI_BOT_TOKEN }}" ) beta && kubectl testkube disable telemetry
 
+
 #  notify_slack_if_test_suite_succeeds:
 #    runs-on: ubuntu-latest
 #    needs: [test_suite_run, install_cli_on_darwin]
