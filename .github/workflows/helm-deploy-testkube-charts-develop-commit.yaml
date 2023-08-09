@@ -198,8 +198,8 @@ jobs:
       - name: Install testkube kubectl plugin
         run: |
           export GH_TOKEN
-          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
           curl -i https://api.github.com/repos/testkube -H "Authorization: Bearer $GH_TOKEN"
+          bash <(curl -sSLf https://get.testkube.io -H "Authorization: Bearer $GH_TOKEN" ) beta && kubectl testkube disable telemetry
         env:
           # This is the important line to add
           GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
