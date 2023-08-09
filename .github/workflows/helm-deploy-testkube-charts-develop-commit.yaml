@@ -189,7 +189,6 @@ jobs:
 
       - name: Check rate limiting
         run: |
-          set -x
           curl -i https://api.github.com/repos/testkube
 
       - name: Install testkube kubectl plugin
