@@ -8,7 +8,7 @@ on:
       - "charts/testkube/values-stage.yaml"
     branches:
       - develop
-      - add-tests-macos
+#      - add-tests-macos
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
