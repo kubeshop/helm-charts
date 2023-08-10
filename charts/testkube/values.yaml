@@ -33,6 +33,8 @@ preUpgradeHook:
   # -- Create SA for upgrade hook
   serviceAccount:
     create: true
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Upgrade Pod Security Context
   podSecurityContext: {}
