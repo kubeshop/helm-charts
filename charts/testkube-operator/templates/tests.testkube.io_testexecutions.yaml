@@ -375,6 +375,9 @@ spec:
                     type: array
                   args_mode:
                     description: usage mode for arguments
+                    enum:
+                    - append
+                    - override
                     type: string
                   artifactRequest:
                     description: artifact request body with test artifacts
