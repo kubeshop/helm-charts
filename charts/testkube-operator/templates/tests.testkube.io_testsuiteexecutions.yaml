@@ -1,4 +1,4 @@
----
+{{ if .Values.installCRD }}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -103,6 +103,14 @@ spec:
                         type: string
                       type:
                         description: One of possible context types
+                        enum:
+                        - user-cli
+                        - user-ui
+                        - testsuite
+                        - testtrigger
+                        - scheduler
+                        - testexecution
+                        - testsuiteexecution
                         type: string
                     required:
                     - type
@@ -238,6 +246,10 @@ spec:
           status:
             description: TestSuiteExecutionStatus defines the observed state of TestSuiteExecution
             properties:
+              generation:
+                description: test status execution generation
+                format: int64
+                type: integer
               latestExecution:
                 description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
                   of cluster Important: Run "make" to regenerate code after modifying
@@ -511,6 +523,14 @@ spec:
                                         type: string
                                       type:
                                         description: One of possible context types
+                                        enum:
+                                        - user-cli
+                                        - user-ui
+                                        - testsuite
+                                        - testtrigger
+                                        - scheduler
+                                        - testexecution
+                                        - testsuiteexecution
                                         type: string
                                     required:
                                     - type
@@ -724,6 +744,14 @@ spec:
                         type: string
                       type:
                         description: One of possible context types
+                        enum:
+                        - user-cli
+                        - user-ui
+                        - testsuite
+                        - testtrigger
+                        - scheduler
+                        - testexecution
+                        - testsuiteexecution
                         type: string
                     required:
                     - type
@@ -736,6 +764,14 @@ spec:
                     format: date-time
                     type: string
                   status:
+                    enum:
+                    - queued
+                    - running
+                    - passed
+                    - failed
+                    - aborting
+                    - aborted
+                    - timeout
                     type: string
                   stepResults:
                     description: steps execution results
@@ -979,6 +1015,14 @@ spec:
                                   type: string
                                 type:
                                   description: One of possible context types
+                                  enum:
+                                  - user-cli
+                                  - user-ui
+                                  - testsuite
+                                  - testtrigger
+                                  - scheduler
+                                  - testexecution
+                                  - testsuiteexecution
                                   type: string
                               required:
                               - type
@@ -1296,3 +1340,4 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
+{{ end }}

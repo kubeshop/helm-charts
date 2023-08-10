@@ -204,6 +204,14 @@ spec:
                         type: string
                       type:
                         description: One of possible context types
+                        enum:
+                        - user-cli
+                        - user-ui
+                        - testsuite
+                        - testtrigger
+                        - scheduler
+                        - testexecution
+                        - testsuiteexecution
                         type: string
                     required:
                     - type
@@ -351,6 +359,10 @@ spec:
           status:
             description: TestExecutionStatus defines the observed state of TestExecution
             properties:
+              generation:
+                description: test execution generation
+                format: int64
+                type: integer
               latestExecution:
                 description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
                   of cluster Important: Run "make" to regenerate code after modifying
@@ -583,6 +595,14 @@ spec:
                         type: string
                       type:
                         description: One of possible context types
+                        enum:
+                        - user-cli
+                        - user-ui
+                        - testsuite
+                        - testtrigger
+                        - scheduler
+                        - testexecution
+                        - testsuiteexecution
                         type: string
                     required:
                     - type
