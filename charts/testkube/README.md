@@ -17,7 +17,8 @@ For those who are still using the affected versions, there are two ways to addre
 OR 
 
 2. Upgrade to the latest version setting empty values for the following parameters in `values.yaml`:
-```aidl
+
+```sh
 testkube-api:
   fullnameOverride: ""
   nameOverride: ""
