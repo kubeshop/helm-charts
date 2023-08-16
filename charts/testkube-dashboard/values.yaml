@@ -124,6 +124,11 @@ ingress:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
+## Proxy prefix to use when deploying
+## to a subpath and ingress.path contains a regex
+## Sets the env variable REACT_APP_ROOT_ROUTE
+proxyPrefix: ""
+
 ## Oauth parameters
 oauth2:
   ## Use oauth
