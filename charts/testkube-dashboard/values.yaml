@@ -151,6 +151,13 @@ oauth2:
     #- --show-debug-on-error=true
   ## Array with extra environment variables
   extraEnvVars: []
+  ## Array with extra sources for environment variables
+  extraEnvFrom: []
+    #- configMapRef:
+    #    name: my-configmap-name
+    #- secretRef:
+    #    name: my-secret-name
+
   ## Oauth2 pod annotations
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
