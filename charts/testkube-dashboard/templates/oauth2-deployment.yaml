@@ -73,8 +73,8 @@ spec:
           {{- if .secretClientSecretName }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.oauth2.env.secretClientSecretName }}
-              key: {{ .Values.oauth2.env.secretClientSecretKey }}
+              name: {{ .secretClientSecretName }}
+              key: {{ .secretClientSecretKey }}
           {{- else }}
           value: "{{ .clientSecret }}"
           {{- end }}
