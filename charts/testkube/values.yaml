@@ -663,6 +663,8 @@ testkube-dashboard:
       #- --show-debug-on-error=true
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
+    ## Array with extra sources for environment variables
+    extraEnvFrom: []
     # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
     # -- Oauth2 pod annotations
     podAnnotations: {}
