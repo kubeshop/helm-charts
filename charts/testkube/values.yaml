@@ -660,14 +660,19 @@ testkube-dashboard:
     # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
     # -- Array of args for oauth2 provider or github as default
-    args:
-      []
+    args: []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
       #- --show-debug-on-error=true
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
+    # -- Array with extra sources for environment variables
+    extraEnvFrom: []
+      #- configMapRef:
+      #    name: my-configmap-name
+      #- secretRef:
+      #    name: my-secret-name
     # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
     # -- Oauth2 pod annotations
     podAnnotations: {}
