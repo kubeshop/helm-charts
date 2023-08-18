@@ -44,7 +44,11 @@ spec:
           - name: REACT_APP_API_SERVER_ENDPOINT
             value: "{{ .Values.apiServerEndpoint }}"
           - name: REACT_APP_ROOT_ROUTE
+            {{- if .Values.proxyPrefix }}
+            value: "{{ .Values.proxyPrefix }}"
+            {{- else }}
             value: "{{ .Values.ingress.path }}"
+            {{- end }}
           - name: REACT_APP_DISABLE_TELEMETRY
             value: "{{ .Values.disableTelemetry }}"
           - name: REACT_APP_CRD_OPERATOR_REVISION

@@ -561,6 +561,11 @@ testkube-dashboard:
   # -- Extra labels for Testkube Dashboard pods
   podLabels: {}
 
+  ## Proxy prefix to use when deploying
+  ## to a subpath and ingress.path contains a regex
+  ## Sets the env variable REACT_APP_ROOT_ROUTE
+  proxyPrefix: ""
+
   # -- Number of Testkube Dashboard Pod replicas
   replicaCount: 1
 
