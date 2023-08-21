@@ -46,7 +46,7 @@ spec:
         {{- if .Values.oauth2.args }}
         {{- range .Values.oauth2.args }}
         - {{ . }}
-        {{- end }}  
+        {{- end }}
         {{- else }}
         - --provider=github
         - --email-domain=*
@@ -56,51 +56,69 @@ spec:
         # Register a new application
         # https://github.com/settings/applications/new
         env:
+        {{- with .Values.oauth2.env }}
+        {{- if or .clientId .secretClientIdName }}
         - name: OAUTH2_PROXY_CLIENT_ID
-          {{- if .Values.oauth2.env.secretClientIdName }}
+          {{- if .secretClientIdName }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.oauth2.env.secretClientIdName }}
-              key: {{ .Values.oauth2.env.secretClientIdKey }}
+              name: {{ .secretClientIdName }}
+              key: {{ .secretClientIdKey }}
           {{- else }}
-          value: "{{ .Values.oauth2.env.clientId }}"
+          value: "{{ .clientId }}"
           {{- end }}
+        {{- end }}
+        {{- if or .clientSecret .secretClientSecretName }}
         - name: OAUTH2_PROXY_CLIENT_SECRET
-          {{- if .Values.oauth2.env.secretClientSecretName }}
+          {{- if .secretClientSecretName }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.oauth2.env.secretClientSecretName }}
-              key: {{ .Values.oauth2.env.secretClientSecretKey }}
+              name: {{ .secretClientSecretName }}
+              key: {{ .secretClientSecretKey }}
           {{- else }}
-          value: "{{ .Values.oauth2.env.clientSecret }}"
+          value: "{{ .clientSecret }}"
           {{- end }}
+        {{- end }}
+        {{- if or .githubOrg .secretGithubOrgName }}
         - name: OAUTH2_PROXY_GITHUB_ORG
-          {{- if .Values.oauth2.env.secretGithubOrgName }}
+          {{- if .secretGithubOrgName }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.oauth2.env.secretGithubOrgName }}
-              key: {{ .Values.oauth2.env.secretGithubOrgKey }}
+              name: {{ .secretGithubOrgName }}
+              key: {{ .secretGithubOrgKey }}
           {{- else }}
-          value: "{{ .Values.oauth2.env.githubOrg }}"
+          value: "{{ .githubOrg }}"
           {{- end }}
+        {{- end }}
+        {{- if or .cookieSecret .secretCookieSecretName }}
         # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
         - name: OAUTH2_PROXY_COOKIE_SECRET
-          {{- if .Values.oauth2.env.secretCookieSecretName }}
+          {{- if .secretCookieSecretName }}
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.oauth2.env.secretCookieSecretName }}
-              key: {{ .Values.oauth2.env.secretCookieSecretKey }}
+              name: {{ .secretCookieSecretName }}
+              key: {{ .secretCookieSecretKey }}
           {{- else }}
-          value: "{{ .Values.oauth2.env.cookieSecret }}"
+          value: "{{ .cookieSecret }}"
           {{- end }}
+        {{- end }}
+        {{- with .cookieSecure }}
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "{{ . }}"
+        {{- end }}
+        {{- with .redirectUrl }}
+        - name: OAUTH2_PROXY_REDIRECT_URL
+          value: "{{ . }}"
+        {{- end }}
+        {{- end }}{{/* with .Values.oauth2.env */}}
         - name: OAUTH2_PROXY_HTTP_ADDRESS
           value: "0.0.0.0:{{ .Values.oauth2.port }}"
-        - name: OAUTH2_PROXY_COOKIE_SECURE
-          value: "{{ .Values.oauth2.env.cookieSecure }}"
-        - name: OAUTH2_PROXY_REDIRECT_URL  
-          value: "{{ .Values.oauth2.env.redirectUrl }}"
         {{- if .Values.oauth2.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvVars "context" $) | nindent 8 | trim }}
+        {{- end }}
+        {{- if .Values.oauth2.extraEnvFrom }}
+        envFrom:
+        {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvFrom "context" $) | nindent 8 | trim }}
         {{- end }}
         image: {{ include "global.images.image" (dict "imageRoot" .Values.oauth2.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}
