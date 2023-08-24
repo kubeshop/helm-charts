@@ -304,6 +304,13 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                      omitFolderPerExecution:
+                                        description: don't use a separate folder for execution
+                                          artifacts
+                                        type: boolean
+                                      storageBucket:
+                                        description: artifact bucket storage
+                                        type: string
                                       storageClassName:
                                         description: artifact storage class name for
                                           container executor
@@ -804,6 +811,13 @@ spec:
                                   items:
                                     type: string
                                   type: array
+                                omitFolderPerExecution:
+                                  description: don't use a separate folder for execution
+                                    artifacts
+                                  type: boolean
+                                storageBucket:
+                                  description: artifact bucket storage
+                                  type: string
                                 storageClassName:
                                   description: artifact storage class name for container
                                     executor
