@@ -30,6 +30,9 @@ spec:
         {{- if .Values.oauth2.podLabels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podLabels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.global.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
       {{- if .Values.oauth2.podAnnotations }}
       annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
@@ -43,7 +46,7 @@ spec:
         {{- if .Values.oauth2.args }}
         {{- range .Values.oauth2.args }}
         - {{ . }}
-        {{- end }}  
+        {{- end }}
         {{- else }}
         - --provider=github
         - --email-domain=*
@@ -53,23 +56,69 @@ spec:
         # Register a new application
         # https://github.com/settings/applications/new
         env:
+        {{- with .Values.oauth2.env }}
+        {{- if or .clientId .secretClientIdName }}
         - name: OAUTH2_PROXY_CLIENT_ID
-          value: "{{ .Values.oauth2.env.clientId }}"
+          {{- if .secretClientIdName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretClientIdName }}
+              key: {{ .secretClientIdKey }}
+          {{- else }}
+          value: "{{ .clientId }}"
+          {{- end }}
+        {{- end }}
+        {{- if or .clientSecret .secretClientSecretName }}
         - name: OAUTH2_PROXY_CLIENT_SECRET
-          value: "{{ .Values.oauth2.env.clientSecret }}"
+          {{- if .secretClientSecretName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretClientSecretName }}
+              key: {{ .secretClientSecretKey }}
+          {{- else }}
+          value: "{{ .clientSecret }}"
+          {{- end }}
+        {{- end }}
+        {{- if or .githubOrg .secretGithubOrgName }}
         - name: OAUTH2_PROXY_GITHUB_ORG
-          value: "{{ .Values.oauth2.env.githubOrg }}"
+          {{- if .secretGithubOrgName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretGithubOrgName }}
+              key: {{ .secretGithubOrgKey }}
+          {{- else }}
+          value: "{{ .githubOrg }}"
+          {{- end }}
+        {{- end }}
+        {{- if or .cookieSecret .secretCookieSecretName }}
         # docker run -ti --rm python:3-alpine python -c 'import secrets,base64; print(base64.b64encode(base64.b64encode(secrets.token_bytes(16))));'
         - name: OAUTH2_PROXY_COOKIE_SECRET
-          value: "{{ .Values.oauth2.env.cookieSecret }}"
+          {{- if .secretCookieSecretName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .secretCookieSecretName }}
+              key: {{ .secretCookieSecretKey }}
+          {{- else }}
+          value: "{{ .cookieSecret }}"
+          {{- end }}
+        {{- end }}
+        {{- with .cookieSecure }}
+        - name: OAUTH2_PROXY_COOKIE_SECURE
+          value: "{{ . }}"
+        {{- end }}
+        {{- with .redirectUrl }}
+        - name: OAUTH2_PROXY_REDIRECT_URL
+          value: "{{ . }}"
+        {{- end }}
+        {{- end }}{{/* with .Values.oauth2.env */}}
         - name: OAUTH2_PROXY_HTTP_ADDRESS
           value: "0.0.0.0:{{ .Values.oauth2.port }}"
-        - name: OAUTH2_PROXY_COOKIE_SECURE
-          value: "{{ .Values.oauth2.env.cookieSecure }}"
-        - name: OAUTH2_PROXY_REDIRECT_URL  
-          value: "{{ .Values.oauth2.env.redirectUrl }}"
         {{- if .Values.oauth2.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvVars "context" $) | nindent 8 | trim }}
+        {{- end }}
+        {{- if .Values.oauth2.extraEnvFrom }}
+        envFrom:
+        {{ include "global.tplvalues.render" (dict "value" .Values.oauth2.extraEnvFrom "context" $) | nindent 8 | trim }}
         {{- end }}
         image: {{ include "global.images.image" (dict "imageRoot" .Values.oauth2.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.oauth2.image.pullPolicy }}

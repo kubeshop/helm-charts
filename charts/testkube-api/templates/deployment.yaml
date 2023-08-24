@@ -25,11 +25,13 @@ spec:
         {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}
         {{- end }}
-
       labels:
         {{- include "testkube-api.selectorLabels" . | nindent 8 }}
           {{- if .Values.podLabels }}
           {{- include "global.tplvalues.render" ( dict "value" .Values.podLabels "context" $ ) | nindent 8 }}
+          {{- end }}
+          {{- if .Values.global.labels }}
+          {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
           {{- end }}
     spec:
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
@@ -178,6 +180,8 @@ spec:
               value:  "{{ .Values.storage.SSL }}"
             - name: "SCRAPPERENABLED"
               value:  "{{ .Values.storage.scrapperEnabled }}"
+            - name: "COMPRESSARTIFACTS"
+              value:  "{{ .Values.storage.compressArtifacts }}"
             - name: "LOGS_BUCKET"
               value:  "{{ .Values.logs.bucket }}"
             - name: "LOGS_STORAGE"
@@ -269,6 +273,11 @@ spec:
               value: "{{ .Values.dashboardUri }}"
             - name: TESTKUBE_CLUSTER_NAME
               value: "{{ .Values.clusterName }}"
+            - name: TESTKUBE_HELMCHART_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: testkube-global-config
+                  key: helmchartVersion
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

@@ -33,6 +33,8 @@ preUpgradeHook:
   # -- Create SA for upgrade hook
   serviceAccount:
     create: true
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Upgrade Pod Security Context
   podSecurityContext: {}
@@ -156,7 +158,7 @@ testkube-api:
   fullnameOverride: testkube-api-server
   # -- Testkube API name override
   nameOverride: api-server
-  
+
   # -- Toggle whether to deploy Testkube API RBAC
   rbac:
     create: true
@@ -165,31 +167,31 @@ testkube-api:
   multinamespace:
     enabled: false
 
- # -- Custom job-template.yml that will passed to Testkube API. Example:
- #configValues: |
- #  apiVersion: batch/v1
- #  kind: Job
- #  metadata:
- #    labels:
- #      key1: value1
- #      key2: value2
- #  spec:
- #    template:
- #      metadata:
- #        labels:
- #          key1: value1
- #          key2: value2
- #        annotations:
- #          key1: value1
- #          key2: value2
- #      spec:
- #        containers:
- #          - name: "{{ .Name }}"
- #            image: {{ .Image }}
- #            imagePullPolicy: Always
- #            command:
- #              - "/bin/runner"
-  #              - '{{ .Jsn }}'
+  # -- Custom job-template.yml that will passed to Testkube API. Example:
+#  configValues: |
+#    apiVersion: batch/v1
+#    kind: Job
+#    metadata:
+#      labels:
+#        key1: value1
+#        key2: value2
+#    spec:
+#      template:
+#        metadata:
+#          labels:
+#            key1: value1
+#            key2: value2
+#          annotations:
+#            key1: value1
+#            key2: value2
+#        spec:
+#          containers:
+#            - name: "{{ .Name }}"
+#              image: {{ .Image }}
+#              imagePullPolicy: Always
+#              command:
+#                - "/bin/runner"
+#                - '{{ .Jsn }}'
 
   # Monitoring parameters
   prometheus:
@@ -420,6 +422,8 @@ testkube-api:
     SSL: false
     # -- Toggle whether to enable scraper in Testkube API
     scrapperEnabled: true
+    # -- Toggle whether to compress artifacts in Testkube API
+    compressArtifacts: true
 
   # Logs storage for Testkube API.
   logs:
@@ -557,6 +561,11 @@ testkube-dashboard:
   # -- Extra labels for Testkube Dashboard pods
   podLabels: {}
 
+  ## Proxy prefix to use when deploying
+  ## to a subpath and ingress.path contains a regex
+  ## Sets the env variable REACT_APP_ROOT_ROUTE
+  proxyPrefix: ""
+
   # -- Number of Testkube Dashboard Pod replicas
   replicaCount: 1
 
@@ -651,14 +660,19 @@ testkube-dashboard:
     # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
     # -- Array of args for oauth2 provider or github as default
-    args:
-      []
+    args: []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
       #- --show-debug-on-error=true
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
+    # -- Array with extra sources for environment variables
+    extraEnvFrom: []
+      #- configMapRef:
+      #    name: my-configmap-name
+      #- secretRef:
+      #    name: my-secret-name
     # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
     # -- Oauth2 pod annotations
     podAnnotations: {}
@@ -686,6 +700,24 @@ testkube-dashboard:
       cookieSecure: "false"
       # -- "http://demo.testkube.io/oauth2/callback"
       redirectUrl: "http://testkube.example.com/oauth2/callback"
+
+      ## values that are taken from k8s secrets
+      # -- k8s Secret Name for clientId
+      secretClientIdName: ""
+      # -- k8s Secret Name key for clientId
+      secretClientIdKey: ""
+      # -- k8s Secret Name for clientSecret
+      secretClientSecretName: ""
+      # -- k8s Secret Key for clientSecret
+      secretClientSecretKey: ""
+      # -- k8s Secret Name for CookieSecret
+      secretCookieSecretName: ""
+      # -- k8s Secret Key for CookieSecret
+      secretCookieSecretKey: ""
+      # -- k8s Secret Name for GithubOrg
+      secretGithubOrgName: ""
+      # -- k8s Secret Key for GithubOrg
+      secretGithubOrgKey: ""
 
     # -- Add additional Ingress labels
     ingress:
@@ -783,6 +815,12 @@ testkube-operator:
 
   # -- Number of Testkube Operator Pod replicas
   replicaCount: 1
+
+  ## Additional labels for Testkube Operator pod
+  podLabels: {}
+
+  ## Additional pod annotations to Testkube Operator pod
+  podAnnotations: {}
 
   # Testkube Operator image
   image:
@@ -1035,6 +1073,12 @@ testkube-operator:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Upgrade kubectl container
     securityContext: { }
+    ## -- Specific labels
+    labels: {}
+    ## -- Annotations to add to the upgrade Job
+    annotations: {}
+    ## -- Annotations to add to the upgrade Job's Pod
+    podAnnotations: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
     tolerations:

@@ -25,6 +25,9 @@ installCRD: true
 ## Additional labels for Testkube Operator pod
 podLabels: {}
 
+## Additional pod annotations to Testkube Operator pod
+podAnnotations: {}
+
 ## Number of Testkube Operator Pod replicas
 replicaCount: 1
 
@@ -306,6 +309,12 @@ preUpgrade:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for Upgrade kubectl container
   securityContext: {}
+  ## -- Specific labels
+  labels: {}
+  ## -- Annotations to add to the upgrade Job
+  annotations: {}
+  ## -- Annotations to add to the upgrade Job's Pod
+  podAnnotations: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:

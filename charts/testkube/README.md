@@ -190,6 +190,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.storage.endpoint_port | string | `"9000"` | MinIO endpoint port |
 | testkube-api.storage.region | string | `""` | MinIO Region |
 | testkube-api.storage.scrapperEnabled | bool | `true` | Toggle whether to enable scraper in Testkube API |
+| testkube-api.storage.compressArtifacts | bool | `true` | Toggle whether to compress artifacts in Testkube API |
 | testkube-api.storage.token | string | `""` | MinIO Token |
 | testkube-api.testConnection.enabled | bool | `true` | Toggle whether to create Test Connection pod |
 | testkube-api.testConnection.resources | object | `{}` | Test Connection resource settings |
@@ -212,6 +213,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard.autoscaling.minReplicas | int | `1` | Minimum number of replicas to scale back |
 | testkube-dashboard.autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization percentage |
 | testkube-dashboard.autoscaling.targetMemoryUtilizationPercentage | int | `80` | Target Memory utilization percentage |
+| testkube-dashboard.crdRevision | string | `"main"` | `testkube-operator` revision to take CRDs for UI validation |
 | testkube-dashboard.enabled | bool | `true` | Deploy dashboard |
 | testkube-dashboard.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-dashboard.fullnameOverride | string | `"testkube-dashboard"` | Full name that overrides Chart name |

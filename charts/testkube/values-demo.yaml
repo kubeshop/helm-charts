@@ -91,6 +91,10 @@ mongodb:
     nodePort: true
     clusterIP: ""
   priorityClassName: "highest-priority"
+  resources:
+    requests:
+      memory: "1500Mi"
+      cpu: "200m"
 
 nats:
   # NATS container settings
@@ -126,6 +130,11 @@ testkube-api:
       registry: docker.io
       repository: minio/minio
       tag: latest
+    resources:
+      requests:
+        memory: "1000Mi"
+        cpu: "200m"
+
   uiIngress:
     enabled: true
     annotations:
@@ -249,6 +258,7 @@ testkube-api:
     expiration: 0
     SSL: false
     scrapperEnabled: true
+    compressArtifacts: true
 
   ## Logs storage for Testkube API.
   logs:
@@ -299,6 +309,11 @@ testkube-api:
     successThreshold: 1
     ## Number of seconds after which the probe times out
     timeoutSeconds: 10
+
+  resources:
+    requests:
+      memory: "200Mi"
+      cpu: "200m"
 
   analyticsEnabled: true
   podStartTimeout: "30m"
@@ -380,6 +395,11 @@ testkube-dashboard:
   testConnection:
     enabled: true
 
+  resources:
+    requests:
+      memory: "100Mi"
+      cpu: "100m"
+
 testkube-operator:
   # should roles and roles bindings be created
   rbac:
@@ -402,6 +422,11 @@ testkube-operator:
       tag: "v0.8.0"
     ## Proxy Container Port
     containerPort: 8443
+
+  resources:
+    requests:
+      memory: "200Mi"
+      cpu: "100m"
 
   ##Test Connection pod
   testConnection:

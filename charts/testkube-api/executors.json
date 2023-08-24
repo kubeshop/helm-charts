@@ -1,5 +1,41 @@
 [
     {
+        "name": "tracetest-executor",
+        "executor": {
+            "executorType": "job",
+            "image": "kubeshop/testkube-tracetest-executor:0.0.1",
+            "command": [
+                "tracetest"
+            ],
+            "args": [
+                "test",
+                "run",
+                "--server-url",
+                "<tracetestServer>",
+                "--definition",
+                "<filePath>",
+                "--wait-for-result",
+                "--output",
+                "pretty"
+            ],
+            "types": [
+                "tracetest/test"
+            ],
+            "contentTypes": [
+                "string",
+                "file-uri",
+                "git"
+            ],
+            "features": [
+                "artifacts"
+            ],
+            "meta": {
+                "iconURI": "tracetest",
+                "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-tracetest"
+            }
+        }
+    },
+    {
         "name": "zap-executor",
         "executor": {
             "executorType": "job",

@@ -72,6 +72,9 @@ apiServerEndpoint: ""
 ## Force disabling telemetry
 disableTelemetry: false
 
+# testkube-operator revision to get the CRDs for the UI validation
+crdRevision: main
+
 ## Array with extra environment variables
 ## e.g:
 ## extraEnvVars:
@@ -121,6 +124,11 @@ ingress:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
+## Proxy prefix to use when deploying
+## to a subpath and ingress.path contains a regex
+## Sets the env variable REACT_APP_ROOT_ROUTE
+proxyPrefix: ""
+
 ## Oauth parameters
 oauth2:
   ## Use oauth
@@ -148,6 +156,13 @@ oauth2:
     #- --show-debug-on-error=true
   ## Array with extra environment variables
   extraEnvVars: []
+  ## Array with extra sources for environment variables
+  extraEnvFrom: []
+    #- configMapRef:
+    #    name: my-configmap-name
+    #- secretRef:
+    #    name: my-secret-name
+
   ## Oauth2 pod annotations
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   podAnnotations: {}
@@ -180,6 +195,28 @@ oauth2:
     cookieSecret: ""
     cookieSecure: "false"
     redirectUrl: "http://testkube.example.com/oauth2/callback"
+
+    ## values that are taken from k8s secrets
+    # k8s Secret Name for clientId
+    # k8s Secret Name key for clientId
+    secretClientIdName: ""
+    secretClientIdKey: ""
+
+    # k8s Secret Name for clientSecret
+    # k8s Secret Key for clientSecret
+    secretClientSecretName: ""
+    secretClientSecretKey: ""
+
+    # k8s Secret Name for CookieSecret
+    # k8s Secret Key for CookieSecret
+    secretCookieSecretName: ""
+    secretCookieSecretKey: ""
+
+    # k8s Secret Name for GithubOrg
+    # k8s Secret Key for GithubOrg
+    secretGithubOrgName: ""
+    secretGithubOrgKey: ""
+
   ## Add additional Ingress labels
   ingress:
     labels: {}
