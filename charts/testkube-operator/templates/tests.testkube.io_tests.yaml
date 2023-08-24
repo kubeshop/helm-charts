@@ -440,6 +440,9 @@ spec:
                       description: uri of test content
                       type: string
                   type: object
+                description:
+                  description: test description
+                  type: string
                 executionRequest:
                   description: test execution request body
                   properties:
