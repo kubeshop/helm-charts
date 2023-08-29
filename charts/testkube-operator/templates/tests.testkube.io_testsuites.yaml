@@ -625,6 +625,9 @@ spec:
                     cronJobTemplate:
                       description: cron job template extensions
                       type: string
+                    cronJobTemplateReference:
+                      description: name of the template resource
+                      type: string
                     executionLabels:
                       additionalProperties:
                         type: string
@@ -635,6 +638,12 @@ spec:
                       type: string
                     httpsProxy:
                       description: https proxy for executor containers
+                      type: string
+                    jobTemplate:
+                      description: job template extensions
+                      type: string
+                    jobTemplateReference:
+                      description: name of the template resource
                       type: string
                     labels:
                       additionalProperties:
@@ -647,6 +656,18 @@ spec:
                     namespace:
                       description: test kubernetes namespace (\"testkube\" when not
                         set)
+                      type: string
+                    pvcTemplate:
+                      description: pvc template extensions
+                      type: string
+                    pvcTemplateReference:
+                      description: name of the template resource
+                      type: string
+                    scraperTemplate:
+                      description: scraper template extensions
+                      type: string
+                    scraperTemplateReference:
+                      description: name of the template resource
                       type: string
                     secretUUID:
                       description: secret uuid
