@@ -497,6 +497,9 @@ spec:
                     cronJobTemplate:
                       description: cron job template extensions
                       type: string
+                    cronJobTemplateReference:
+                      description: name of the template resource
+                      type: string
                     envConfigMaps:
                       description: config map references
                       items:
@@ -588,6 +591,9 @@ spec:
                     jobTemplate:
                       description: job template extensions
                       type: string
+                    jobTemplateReference:
+                      description: name of the template resource
+                      type: string
                     name:
                       description: test execution custom name
                       type: string
@@ -605,8 +611,17 @@ spec:
                     preRunScript:
                       description: script to run before test execution
                       type: string
+                    pvcTemplate:
+                      description: pvc template extensions
+                      type: string
+                    pvcTemplateReference:
+                      description: name of the template resource
+                      type: string
                     scraperTemplate:
                       description: scraper template extensions
+                      type: string
+                    scraperTemplateReference:
+                      description: name of the template resource
                       type: string
                     secretEnvs:
                       additionalProperties:

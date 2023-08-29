@@ -63,6 +63,9 @@ spec:
               payloadTemplate:
                 description: golang based template for notification payload
                 type: string
+              payloadTemplateReference:
+                description: name of the template resource
+                type: string
               selector:
                 description: Labels to filter for tests and test suites
                 type: string

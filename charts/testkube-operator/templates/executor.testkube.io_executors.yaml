@@ -91,6 +91,9 @@ spec:
                 job_template:
                   description: Job template to launch executor
                   type: string
+                jobTemplateReference:
+                  description: name of the template resource
+                  type: string
                 meta:
                   description: Meta data about executor
                   properties:
