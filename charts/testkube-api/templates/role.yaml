@@ -65,6 +65,7 @@ rules:
       - watch
       - list
       - create
+      - delete
 
 ---
 
