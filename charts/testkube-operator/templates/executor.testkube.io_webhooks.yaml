@@ -54,7 +54,7 @@ spec:
               headers:
                 additionalProperties:
                   type: string
-                description: webhook headers
+                description: webhook headers (golang template supported)
                 type: object
               payloadObjectField:
                 description: will load the generated payload for notification inside
