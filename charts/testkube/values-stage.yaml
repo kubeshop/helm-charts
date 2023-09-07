@@ -100,6 +100,8 @@ mongodb:
     requests:
       memory: "1500Mi"
       cpu: "200m"
+  nodeSelector:
+    nodepool: main-mongo
 
 nats:
   # NATS container settings
@@ -107,6 +109,11 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
+    nodeSelector:
+      nodepool: main
+  natsbox:
+    nodeSelector:
+      nodepool: main
 
 testkube-api:
   prometheus:
@@ -124,7 +131,6 @@ testkube-api:
     port: 8088
   minio:
     enabled: true
-    nodeSelector: {}
     tolerations: []
     affinity: {}
     image:
@@ -135,6 +141,8 @@ testkube-api:
       requests:
         memory: "1000Mi"
         cpu: "200m"
+    nodeSelector:
+      nodepool: main
 
   uiIngress:
     enabled: true
@@ -279,6 +287,9 @@ testkube-api:
   testConnection:
     enabled: true
 
+  nodeSelector:
+    nodepool: main
+
 testkube-dashboard:
   enabled: true
   nameOverride: "dashboard"
@@ -345,6 +356,8 @@ testkube-dashboard:
     requests:
       memory: "100Mi"
       cpu: "100m"
+  nodeSelector:
+    nodepool: main
 
 testkube-operator:
   ##Proxy Image parameters
@@ -368,3 +381,6 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
+
+  nodeSelector:
+    nodepool: main
