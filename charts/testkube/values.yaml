@@ -23,11 +23,9 @@ preUpgradeHook:
   ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
   ttlSecondsAfterFinished: 100
   ## -- Specific labels
-  labels:
-    pre-upgarde: ggg
+  labels: {}
   ## -- Annotations to add to the upgrade Job
-  annotations:
-    annotations: lll
+  annotations: {}
   # -- Specify image
   image:
     registry: k8s.gcr.io
