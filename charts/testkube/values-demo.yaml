@@ -95,6 +95,8 @@ mongodb:
     requests:
       memory: "1500Mi"
       cpu: "200m"
+  nodeSelector:
+    nodepool: main-mongo
 
 nats:
   # NATS container settings
@@ -102,6 +104,12 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
+    nodeSelector:
+      nodepool: main
+  natsbox:
+    nodeSelector:
+      nodepool: main
+
 
 testkube-api:
   rbac:
@@ -332,6 +340,9 @@ testkube-api:
   testConnection:
     enabled: true
 
+  nodeSelector:
+    nodepool: main
+
 testkube-dashboard:
   enabled: true
   nameOverride: "dashboard"
@@ -400,6 +411,9 @@ testkube-dashboard:
       memory: "100Mi"
       cpu: "100m"
 
+  nodeSelector:
+    nodepool: main
+
 testkube-operator:
   # should roles and roles bindings be created
   rbac:
@@ -431,3 +445,7 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
+
+  nodeSelector:
+    nodepool: main
+
