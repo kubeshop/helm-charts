@@ -14,6 +14,12 @@ metadata:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+    {{- if .Values.global.annotations}}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.preUpgradeHook.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   {{- if .Values.preUpgradeHook.ttlSecondsAfterFinished }}
   ttlSecondsAfterFinished: {{ .Values.preUpgradeHook.ttlSecondsAfterFinished }}
@@ -26,6 +32,9 @@ spec:
         app.kubernetes.io/name: "{{ .Values.preUpgradeHook.name }}"
         {{- if .Values.global.labels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.preUpgradeHook.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.labels "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
       serviceAccountName: "{{ .Values.preUpgradeHook.name }}"
