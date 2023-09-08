@@ -22,6 +22,12 @@ preUpgradeHook:
   name: mongodb-upgrade
   ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
   ttlSecondsAfterFinished: 100
+  ## -- Specific labels
+  labels:
+    pre-upgarde: ggg
+  ## -- Annotations to add to the upgrade Job
+  annotations:
+    annotations: lll
   # -- Specify image
   image:
     registry: k8s.gcr.io
@@ -775,7 +781,6 @@ testkube-dashboard:
   serviceAccount:
     # -- Specifies whether a service account should be created
     create: true
-    # -- Annotations to add to the service account
     # -- Annotations to add to the service account
     annotations: {}
     # -- The name of the service account to use.
