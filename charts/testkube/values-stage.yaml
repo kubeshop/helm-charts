@@ -90,6 +90,7 @@ mongodb:
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
+  priorityClassName: "highest-priority"
   ## Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
   ## Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
   image:
@@ -101,7 +102,7 @@ mongodb:
       memory: "1500Mi"
       cpu: "200m"
   nodeSelector:
-    nodepool: main-mongo
+    cloud.google.com/gke-provisioning: standard
 
 nats:
   # NATS container settings
@@ -110,10 +111,10 @@ nats:
       # -- Max payload
       maxPayload: 8MB
     nodeSelector:
-      nodepool: main
+      cloud.google.com/gke-provisioning: standard
   natsbox:
     nodeSelector:
-      nodepool: main
+      cloud.google.com/gke-provisioning: standard
 
 testkube-api:
   prometheus:
@@ -133,6 +134,7 @@ testkube-api:
     enabled: true
     tolerations: []
     affinity: {}
+    priorityClassName: "highest-priority"
     image:
       registry: docker.io
       repository: minio/minio
@@ -142,7 +144,7 @@ testkube-api:
         memory: "1000Mi"
         cpu: "200m"
     nodeSelector:
-      nodepool: main
+      cloud.google.com/gke-provisioning: standard
 
   uiIngress:
     enabled: true
@@ -283,12 +285,14 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
 
+  priorityClassName: "highest-priority"
+
   ##Test Connection pod
   testConnection:
     enabled: true
 
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
 
 testkube-dashboard:
   enabled: true
@@ -336,6 +340,7 @@ testkube-dashboard:
     path: /oauth2
     port: 4180
     selector: k8s-app
+    priorityClassName: "highest-priority"
     image:
       repository: quay.io/oauth2-proxy/oauth2-proxy
       tag: latest
@@ -347,6 +352,7 @@ testkube-dashboard:
       cookieSecret: ""
       cookieSecure: "false"
       redirectUrl: "http://integration.testkube.io/oauth2/callback"
+  priorityClassName: "highest-priority"
 
   ##Test Connection pod
   testConnection:
@@ -357,9 +363,10 @@ testkube-dashboard:
       memory: "100Mi"
       cpu: "100m"
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
 
 testkube-operator:
+  priorityClassName: "highest-priority"
   ##Proxy Image parameters
   ## image.registry Proxy image registry
   ## image.repository Proxy image name
@@ -383,4 +390,4 @@ testkube-operator:
     enabled: true
 
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
