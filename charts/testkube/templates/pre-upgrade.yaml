@@ -36,13 +36,15 @@ spec:
         {{- if .Values.preUpgradeHook.labels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.labels "context" $ ) | nindent 8 }}
         {{- end }}
+      {{- if or .Values.global.annotations .Values.preUpgradeHook.podAnnotations }}
       annotations:
         {{- if .Values.global.annotations}}
-        {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 8 }}
         {{- end }}
         {{- if .Values.preUpgradeHook.podAnnotations }}
-        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.podAnnotations "context" $ ) | nindent 4 }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.podAnnotations "context" $ ) | nindent 8 }}
         {{- end }}
+      {{- end }}
     spec:
       serviceAccountName: "{{ .Values.preUpgradeHook.name }}"
       {{- include "global.images.renderPullSecrets" . | nindent 6 }}
