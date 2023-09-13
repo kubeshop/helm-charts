@@ -26,6 +26,8 @@ preUpgradeHook:
   labels: {}
   ## -- Annotations to add to the upgrade Job
   annotations: {}
+  ## -- Annotations to add to the upgrade Job's pod
+  podAnnotations: { }
   # -- Specify image
   image:
     registry: k8s.gcr.io
