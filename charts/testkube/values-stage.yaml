@@ -97,10 +97,10 @@ mongodb:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 5.0.10-debian-11-r19
-  resources:
-    requests:
-      memory: "1000Mi"
-      cpu: "200m"
+  resources: {}
+#    requests:
+#      memory: "1000Mi"
+#      cpu: "200m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
 
@@ -139,10 +139,10 @@ testkube-api:
       registry: docker.io
       repository: minio/minio
       tag: latest
-    resources:
-      requests:
-        memory: "1000Mi"
-        cpu: "200m"
+    resources: {}
+#      requests:
+#        memory: "1000Mi"
+#        cpu: "200m"
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
 
@@ -267,10 +267,10 @@ testkube-api:
     ## Number of seconds after which the probe times out
     timeoutSeconds: 10
 
-  resources:
-    requests:
-      memory: "200Mi"
-      cpu: "200m"
+  resources: {}
+#    requests:
+#      memory: "200Mi"
+#      cpu: "200m"
 
   analyticsEnabled: true
   podStartTimeout: "30m"
@@ -358,10 +358,10 @@ testkube-dashboard:
   testConnection:
     enabled: true
 
-  resources:
-    requests:
-      memory: "100Mi"
-      cpu: "100m"
+  resources: {}
+#    requests:
+#      memory: "100Mi"
+#      cpu: "100m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
 
@@ -380,10 +380,10 @@ testkube-operator:
     ## Proxy Container Port
     containerPort: 8443
 
-  resources:
-    requests:
-      memory: "200Mi"
-      cpu: "100m"
+  resources: {}
+#    requests:
+#      memory: "200Mi"
+#      cpu: "100m"
 
   ##Test Connection pod
   testConnection:
