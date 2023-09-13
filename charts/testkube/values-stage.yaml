@@ -99,7 +99,7 @@ mongodb:
     tag: 5.0.10-debian-11-r19
   resources:
     requests:
-      memory: "1500Mi"
+      memory: "1000Mi"
       cpu: "200m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
