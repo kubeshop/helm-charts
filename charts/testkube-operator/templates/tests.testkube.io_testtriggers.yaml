@@ -54,6 +54,14 @@ spec:
                   enum:
                   - run
                   type: string
+                concurrencyPolicy:
+                  description: ConcurrencyPolicy defines concurrency policy for selected
+                    Execution
+                  enum:
+                  - allow
+                  - forbid
+                  - replace
+                  type: string
                 conditionSpec:
                   description: What resource conditions should be matched
                   properties:
