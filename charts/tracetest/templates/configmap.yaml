@@ -6,10 +6,6 @@ metadata:
     {{- include "tracetest.labels" . | nindent 4 }}
 data:
   config.yaml: |-
-    poolingConfig:
-      {{- toYaml .Values.poolingConfig | nindent 6 }}
-    googleAnalytics:
-      enabled: {{.Values.analytics.enabled}}
     postgres:
       host: {{ include "tracetest.postgresql.fullname" . }}
       user: {{.Values.postgresql.auth.username}}
