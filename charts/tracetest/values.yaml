@@ -66,24 +66,6 @@ provisioning: |
       cartEndpoint: http://otel-cartservice.otel-demo:7070
       checkoutEndpoint: http://otel-checkoutservice.otel-demo:5050
 
-
-# This section configures the strategy for pooling traces from the trace backend
-poolingConfig:
-  # How long tracetest will wait for a complete trace before timing out
-  # If you have long-running operations that will generate part of your trace, you have
-  # to change this attribute to be greater than the execution time of your operation.
-  maxWaitTimeForTrace: 30s
-
-  # How long tracetest will wait to retry fetching the trace. If you define it as 5s it means that
-  # tracetest will retrieve the operation trace every 5 seconds and check if it's complete. It will
-  # do that until the operation times out.
-  retryDelay: 5s
-
-# Section for anonymous analytics. If it's enabled, tracetest will collect anonymous analytics data
-# to help us improving our project. If you don't want to send analytics data, set enabled as false.
-analytics:
-  enabled: true
-
 # Section to configure how telemetry works in Tracetest.
 telemetry:
   # exporters are opentelemetry exporters. It configures how tracetest generates and send telemetry to
@@ -131,8 +113,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-env:
-  tracetestDev: ""
+environmentVars:
+  - name: TRACETEST_DEV
+    value: "false"
 
 imagePullSecrets: []
 nameOverride: ""

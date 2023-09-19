@@ -33,8 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           env:
-          - name: TRACETEST_DEV
-            value: "{{ .Values.env.tracetestDev }}"
+          {{- toYaml .Values.environmentVars | nindent 10 }}
           args:
           - --config
           - '/app/config/config.yaml'
