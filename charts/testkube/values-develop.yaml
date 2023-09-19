@@ -177,7 +177,7 @@ testkube-api:
 
     path: /results/(v\d/.*)
     hosts:
-      - oss.testkube.dev
+      - demo.testkube.dev
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
