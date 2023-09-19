@@ -177,11 +177,11 @@ testkube-api:
 
     path: /results/(v\d/.*)
     hosts:
-      - dev.testkube.io
+      - oss.testkube.dev
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - oss.testkube.dev
         secretName: testkube-prod-cert-secret
   cliIngress:
     enabled: false
@@ -200,11 +200,11 @@ testkube-api:
       scopes: ""
       path: /results/(v\d/.*)
     hosts:
-      - dev.testkube.io
+      - oss.testkube.dev
     tlsenabled: "false"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - oss.testkube.dev
         secretName: testkube-prod-cert-secret
   storage:
     endpoint: ""
@@ -327,13 +327,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - dev.testkube.io
+      - oss.testkube.dev
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - oss.testkube.dev
         secretName: testkube-prod-cert-secret
-  apiServerEndpoint: "dev.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "oss.testkube.dev/results" #get the address of the endpoint or set it using helm
   disableTelemetry: true
   # use the latest CRDs from testkube-operator for the UI validation
   crdRevision: develop
@@ -354,7 +354,7 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://develop.testkube.io/oauth2/callback"
+      redirectUrl: "http://oss.testkube.dev/oauth2/callback"
   priorityClassName: "highest-priority"
 
   ##Test Connection pod
