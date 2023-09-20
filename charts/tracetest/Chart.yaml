@@ -10,7 +10,7 @@ sources:
 dependencies:
   - name: postgresql
     version: 12.1.6
-    # condition: postgresql.enabled
+    condition: postgresql.enabled
     repository: "https://charts.bitnami.com/bitnami"
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -26,7 +26,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.2.78
+version: 0.2.79
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
