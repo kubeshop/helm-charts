@@ -156,6 +156,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
@@ -174,11 +177,11 @@ testkube-api:
 
     path: /results/(v\d/.*)
     hosts:
-      - integration.testkube.io
+      - demo.testkube.xyz
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - integration.testkube.io
+          - demo.testkube.xyz
         secretName: testkube-demo-cert-secret
   cliIngress:
     enabled: false
@@ -326,13 +329,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - integration.testkube.io
+      - demo.testkube.xyz
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - integration.testkube.io
+          - demo.testkube.xyz
         secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "integration.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "demo.testkube.xyz/results" #get the address of the endpoint or set it using helm
   disableTelemetry: true
   oauth2:
     enabled: false
@@ -351,7 +354,7 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://integration.testkube.io/oauth2/callback"
+      redirectUrl: "http://demo.testkube.xyz/oauth2/callback"
   priorityClassName: "highest-priority"
 
   ##Test Connection pod

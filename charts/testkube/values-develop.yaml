@@ -156,6 +156,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-develop
       # add an annotation indicating the issuer to use.
@@ -174,11 +177,11 @@ testkube-api:
 
     path: /results/(v\d/.*)
     hosts:
-      - dev.testkube.io
+      - demo.testkube.dev
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - demo.testkube.dev
         secretName: testkube-prod-cert-secret
   cliIngress:
     enabled: false
@@ -197,11 +200,11 @@ testkube-api:
       scopes: ""
       path: /results/(v\d/.*)
     hosts:
-      - dev.testkube.io
+      - demo.testkube.dev
     tlsenabled: "false"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - demo.testkube.dev
         secretName: testkube-prod-cert-secret
   storage:
     endpoint: ""
@@ -324,13 +327,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - dev.testkube.io
+      - demo.testkube.dev
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - dev.testkube.io
+          - demo.testkube.dev
         secretName: testkube-prod-cert-secret
-  apiServerEndpoint: "dev.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "demo.testkube.dev/results" #get the address of the endpoint or set it using helm
   disableTelemetry: true
   # use the latest CRDs from testkube-operator for the UI validation
   crdRevision: develop
@@ -351,7 +354,7 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://develop.testkube.io/oauth2/callback"
+      redirectUrl: "http://demo.testkube.dev/oauth2/callback"
   priorityClassName: "highest-priority"
 
   ##Test Connection pod
