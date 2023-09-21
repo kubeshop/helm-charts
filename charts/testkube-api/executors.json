@@ -139,6 +139,9 @@
         "executor": {
             "executorType": "job",
             "image": "kubeshop/testkube-jmeterd-executor:0e55125",
+            "slaves": {
+                "image": "kubeshop/testkube-jmeterd-slave:be3eb0c"
+            },
             "command": [
                 "<entryPoint>"
             ],
