@@ -211,7 +211,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: tests-job-{{ .Release.Name }}
+  name: tests-job-role-{{ .Release.Name }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.testServiceAccountName" . }}
