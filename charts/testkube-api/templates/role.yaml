@@ -46,6 +46,16 @@ metadata:
   {{- end }}
 rules:
   - apiGroups:
+    - batch
+    resources:
+      - jobs
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+  - apiGroups:
       - ""
     resources:
       - pods
