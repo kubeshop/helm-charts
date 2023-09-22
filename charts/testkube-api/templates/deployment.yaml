@@ -213,7 +213,7 @@ spec:
             - name: TESTKUBE_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: JOB_SERVICE_ACCOUNT_NAME
-              value: "{{ .Values.jobServiceAccountName }}"
+              value: {{ if .Values.jobServiceAccountName }}"{{ .Values.jobServiceAccountName }}"{{ else if .Values.testServiceAccount.create }}{{ include "testkube-api.testServiceAccountName" . }}{{ else }}""{{ end }}
             - name: APISERVER_FULLNAME
               value: "{{ include "testkube-api.fullname" . }}"
             - name: APISERVER_CONFIG

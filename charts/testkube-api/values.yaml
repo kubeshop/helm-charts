@@ -105,8 +105,6 @@ templates:
   ## Base64 encoded PVC Container template
   pvcContainer: ""
 
-jobServiceAccountName: ""
-
 ## base64 encoded executors.json alike data
 executors: ""
 
@@ -203,6 +201,16 @@ serviceAccount:
   ## The name of the service account to use.
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
+
+## Test Job ServiceAccount parameters
+testServiceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+
+## Test Job ServiceAccount name
+jobServiceAccountName: ""
 
 ## Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod

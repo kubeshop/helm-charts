@@ -229,6 +229,22 @@ testkube-api:
   # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
   additionalNamespaces: []
 
+  ## Service Account parameters
+  serviceAccount:
+    #-- Specifies whether a service account should be created
+    create: true
+    #-- Annotations to add to the service account
+    annotations: {}
+    #-- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+    name: ""
+
+  # -- Service Account parameters
+  testServiceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # -- Annotations to add to the service account
+    annotations: {}
+
   # Testkube Agent settings
   cloud:
     # -- Testkube Cloud API URL
