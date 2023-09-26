@@ -200,6 +200,28 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
+  name: tests-job-crb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tests-job-role-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.testServiceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
   name: testtriggers-crb-{{ .Release.Name }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
