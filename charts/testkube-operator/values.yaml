@@ -294,9 +294,9 @@ preUpgrade:
   enabled: true
   # -- Specify image
   image:
-    registry: registry.k8s.io
-    repository: hyperkube
-    tag: v1.12.1
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
     pullPolicy: IfNotPresent
   # -- Specify resource limits and requests
   resources: {}
