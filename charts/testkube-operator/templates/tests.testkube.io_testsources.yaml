@@ -1,4 +1,4 @@
-{{ if .Values.installCRD }}
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -50,16 +50,19 @@ spec:
                   branch:
                     description: branch/tag name for checkout
                     type: string
+                  certificateSecret:
+                    description: git auth certificate secret for private repositories
+                    type: string
                   commit:
                     description: commit id (sha) for checkout
                     type: string
                   path:
-                    description: if needed we can checkout particular path (dir or
-                      file) in case of BIG/mono repositories
+                    description: If specified, does a sparse checkout of the repository
+                      at the given path
                     type: string
                   tokenSecret:
-                    description: Testkube internal reference for secret storage in
-                      Kubernetes secrets
+                    description: SecretRef is the Testkube internal reference for
+                      secret storage in Kubernetes secrets
                     properties:
                       key:
                         description: object key
@@ -71,10 +74,6 @@ spec:
                     - key
                     - name
                     type: object
-                  certificateSecret:
-                    description: certificateSecret is a reference to a secret
-                      containing a certificate to use for git authentication
-                    type: string
                   type:
                     description: VCS repository type
                     type: string
@@ -82,8 +81,8 @@ spec:
                     description: uri of content file or git directory
                     type: string
                   usernameSecret:
-                    description: Testkube internal reference for secret storage in
-                      Kubernetes secrets
+                    description: SecretRef is the Testkube internal reference for
+                      secret storage in Kubernetes secrets
                     properties:
                       key:
                         description: object key
@@ -96,8 +95,8 @@ spec:
                     - name
                     type: object
                   workingDir:
-                    description: if provided we checkout the whole repository
-                      and run test from this directory
+                    description: if provided we checkout the whole repository and
+                      run test from this directory
                     type: string
                 required:
                 - type
@@ -129,4 +128,3 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
-{{ end }}
