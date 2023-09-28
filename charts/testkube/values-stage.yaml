@@ -156,9 +156,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+#      nginx.ingress.kubernetes.io/auth-type: basic
+#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
@@ -317,9 +317,9 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+#      nginx.ingress.kubernetes.io/auth-type: basic
+#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
