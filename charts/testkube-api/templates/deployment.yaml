@@ -234,7 +234,7 @@ spec:
               value:  "{{ .Values.cliIngress.oauth.provider }}"
             - name: TESTKUBE_OAUTH_SCOPES
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
-            {{- if .Values.cloud.key and not .Values.cloud.existingSecret.key }}
+            {{- if .Values.cloud.key }}
             - name: TESTKUBE_CLOUD_API_KEY
               value:  "{{ .Values.cloud.key }}"
             {{- end}}
@@ -249,7 +249,7 @@ spec:
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
             {{- end}}
-            {{- if .Values.cloud.orgId and not .Values.cloud.existingSecret.orgId }}
+            {{- if .Values.cloud.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
             {{- end}}
@@ -260,7 +260,7 @@ spec:
                   key: {{ .Values.cloud.existingSecret.orgId }}
                   name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
-            {{- if .Values.cloud.envId and not .Values.cloud.existingSecret.envId }}
+            {{- if .Values.cloud.envId }}
             - name: TESTKUBE_CLOUD_ENV_ID
               value:  "{{ .Values.cloud.envId }}"
             {{- end}}
