@@ -143,7 +143,7 @@
                 "<entryPoint>"
             ],
             "slaves": {
-                "image": "kubeshop/testkube-jmeterd-slave:34b80b1",
+                "image": "kubeshop/testkube-jmeterd-slave:34b80b1"
             },
             "args": [
                 "-n",
