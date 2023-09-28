@@ -234,21 +234,42 @@ spec:
               value:  "{{ .Values.cliIngress.oauth.provider }}"
             - name: TESTKUBE_OAUTH_SCOPES
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
-            {{- if .Values.cloud.key }}
+            {{- if .Values.cloud.key and not .Values.cloud.existingSecret.key }}
             - name: TESTKUBE_CLOUD_API_KEY
               value:  "{{ .Values.cloud.key }}"
+            {{- end}}
+            {{- if .Values.cloud.existingSecret.key }}
+            - name: TESTKUBE_CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.key }}
+                  name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
             {{- end}}
-            {{- if .Values.cloud.orgId }}
+            {{- if .Values.cloud.orgId and not .Values.cloud.existingSecret.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
             {{- end}}
-            {{- if .Values.cloud.envId }}
+            {{- if .Values.cloud.existingSecret.orgId }}
+            - name: TESTKUBE_CLOUD_ORG_ID
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.orgId }}
+                  name: {{ .Values.cloud.existingSecret.name }}
+            {{- end}}
+            {{- if .Values.cloud.envId and not .Values.cloud.existingSecret.envId }}
             - name: TESTKUBE_CLOUD_ENV_ID
               value:  "{{ .Values.cloud.envId }}"
+            {{- end}}
+            {{- if .Values.cloud.existingSecret.envId }}
+            - name: TESTKUBE_CLOUD_ENV_ID
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.envId }}
+                  name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
             {{- if .Values.cloud.migrate }}
             - name: TESTKUBE_CLOUD_MIGRATE
