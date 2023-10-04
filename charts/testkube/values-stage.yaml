@@ -138,7 +138,7 @@ testkube-api:
     image:
       registry: docker.io
       repository: minio/minio
-      tag: latest
+      tag: RELEASE.2023-09-16T01-01-47Z
     resources: {}
 #      requests:
 #        memory: "1000Mi"
