@@ -97,6 +97,10 @@ mongodb:
       cpu: "200m"
   nodeSelector:
     nodepool: main-mongo
+  image:
+    registry: docker.io
+    repository: zcube/bitnami-compat-mongodb
+    tag: 6.0.5-debian-11-r64
 
 nats:
   # NATS container settings
