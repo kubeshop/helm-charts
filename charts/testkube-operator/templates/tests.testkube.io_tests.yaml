@@ -548,6 +548,10 @@ spec:
                     description: 'Environment variables passed to executor. Deprecated:
                       use Basic Variables instead'
                     type: object
+                  executePostRunScriptBeforeScraping:
+                    description: execute post run script before scraping (prebuilt
+                      executor only)
+                    type: boolean
                   executionLabels:
                     additionalProperties:
                       type: string
