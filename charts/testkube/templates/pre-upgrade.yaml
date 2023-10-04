@@ -60,7 +60,7 @@ spec:
         - -c
         - >
             export current_mongodb_version=$(kubectl get deployment {{ .Release.Name }}-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n {{ .Release.Namespace }} | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
-            if [ "$current_mongodb_version" -eq "11" ];
+            if [ "$current_mongodb_version" -eq "12" ];
               then kubectl scale deployment {{ .Release.Name }}-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi

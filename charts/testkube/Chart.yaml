@@ -11,7 +11,7 @@ dependencies:
     condition: testkube-operator.enabled
   - name: mongodb
     condition: mongodb.enabled
-    version: 12.1.31
+    version: 13.10.1
     repository: https://charts.bitnami.com/bitnami
   - name: nats
     condition: testkube-api.nats.enabled
