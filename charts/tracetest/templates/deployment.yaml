@@ -33,8 +33,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           env:
-          - name: TRACETEST_DEV
-            value: "{{ .Values.env.tracetestDev }}"
+          {{- toYaml .Values.environmentVars | nindent 10 }}
           args:
           - --config
           - '/app/config/config.yaml'
@@ -53,11 +52,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ include "tracetest.pathPrefix" . }}
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ include "tracetest.pathPrefix" . }}
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
