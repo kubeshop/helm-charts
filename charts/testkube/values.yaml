@@ -8,8 +8,7 @@ global:
   # -- Global Docker image registry
   imageRegistry: ""
   # -- Global Docker registry secret names as an array
-  imagePullSecrets:
-    - tttt
+  imagePullSecrets: []
   # -- Labels to add to all deployed objects
   labels: {}
   # --  Annotations to add to all deployed objects

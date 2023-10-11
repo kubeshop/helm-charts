@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 1.14.7](https://img.shields.io/badge/Version-1.14.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.14.10](https://img.shields.io/badge/Version-1.14.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -49,11 +49,11 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../global | global | 0.1.1 |
-| file://../testkube-api | testkube-api | 1.14.4 |
-| file://../testkube-dashboard | testkube-dashboard | 1.14.1 |
+| file://../global | global | 0.1.2 |
+| file://../testkube-api | testkube-api | 1.14.6 |
+| file://../testkube-dashboard | testkube-dashboard | 1.14.2 |
 | file://../testkube-operator | testkube-operator | 1.14.0 |
-| https://charts.bitnami.com/bitnami | mongodb | 12.1.31 |
+| https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 0.19.1 |
 
 ## Values
@@ -69,15 +69,17 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | mongodb.containerSecurityContext | object | `{}` | Security Context for MongoDB container |
 | mongodb.enabled | bool | `true` | Toggle whether to install MongoDB |
 | mongodb.fullnameOverride | string | `"testkube-mongodb"` | MongoDB fullname override |
+| mongodb.image.pullSecrets | list | `[]` | MongoDB image pull Secret |
 | mongodb.image.registry | string | `"docker.io"` | MongoDB image registry |
 | mongodb.image.repository | string | `"zcube/bitnami-compat-mongodb"` | MongoDB image repository |
-| mongodb.image.tag | string | `"5.0.10-debian-11-r19"` | MongoDB image tag |
+| mongodb.image.tag | string | `"6.0.5-debian-11-r64"` | MongoDB image tag |
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
 | mongodb.resources | object | `{"requests":{"cpu":"150m","memory":"100Mi"}}` | MongoDB resource settings |
 | mongodb.service | object | `{"clusterIP":"","nodePort":true,"port":"27017","portName":"mongodb"}` | MongoDB service settings |
 | mongodb.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | nats.exporter.resources | object | `{}` | Exporter resources settings |
 | nats.exporter.securityContext | object | `{}` | Security Context for Exporter container |
+| nats.imagePullSecrets | list | `[]` |  |
 | nats.nats.limits.maxPayload | string | `"8MB"` | Max payload |
 | nats.nats.resources | object | `{}` | NATS resource settings |
 | nats.nats.securityContext | object | `{}` | Security Context for NATS container |
@@ -89,9 +91,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | nats.tolerations[0].key | string | `"kubernetes.io/arch"` |  |
 | nats.tolerations[0].operator | string | `"Equal"` |  |
 | nats.tolerations[0].value | string | `"arm64"` |  |
-| preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","registry":"k8s.gcr.io","repository":"hyperkube","tag":"v1.12.1"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
+| preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
 | preUpgradeHook.enabled | bool | `true` | Upgrade hook is enabled |
-| preUpgradeHook.image | object | `{"pullPolicy":"IfNotPresent","registry":"k8s.gcr.io","repository":"hyperkube","tag":"v1.12.1"}` | Specify image |
+| preUpgradeHook.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
 | preUpgradeHook.name | string | `"mongodb-upgrade"` | Upgrade hook name |
 | preUpgradeHook.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | preUpgradeHook.podSecurityContext | object | `{}` | MongoDB Upgrade Pod Security Context |
@@ -121,6 +123,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
 | testkube-api.image.digest | string | `""` | Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.image.pullPolicy | string | `"IfNotPresent"` | Testkube API image tag |
+| testkube-api.image.pullSecrets | list | `["ghghghg"]` | Testkube API k8s secret for private registries |
 | testkube-api.image.registry | string | `"docker.io"` | Testkube API image registry |
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
 | testkube-api.jobServiceAccountName | string | `""` | SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud. |
@@ -134,7 +137,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.minio.extraEnvVars | object | `{}` | Minio extra vars |
 | testkube-api.minio.extraVolumeMounts | list | `[]` |  |
 | testkube-api.minio.extraVolumes | list | `[]` |  |
-| testkube-api.minio.image | object | `{"registry":"docker.io","repository":"minio/minio","tag":"latest"}` | Minio image from DockerHub |
+| testkube-api.minio.image | object | `{"pullSecrets":[],"registry":"docker.io","repository":"minio/minio","tag":"RELEASE.2023-09-16T01-01-47Z"}` | Minio image from DockerHub |
 | testkube-api.minio.minioRootPassword | string | `"minio123"` | Root password |
 | testkube-api.minio.minioRootUser | string | `"minio"` | Root username |
 | testkube-api.minio.nodeSelector | object | `{}` | Node labels for pod assignment. |
@@ -204,7 +207,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.uiIngress.path | string | `"/results/(v\\d/.*)"` |  |
 | testkube-api.uiIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-api.uiIngress.tlsenabled | bool | `false` |  |
-| testkube-dashboard | object | `{"affinity":{},"apiServerEndpoint":"","autoscaling":{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80},"disableTelemetry":false,"enabled":true,"extraEnvVars":[],"fullnameOverride":"testkube-dashboard","image":{"digest":"","pullPolicy":"IfNotPresent","registry":"docker.io","repository":"kubeshop/testkube-dashboard"},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ipv6enabled":false,"labels":{},"path":"/","tls":[],"tlsenabled":false},"nameOverride":"dashboard","nodeSelector":{},"oauth2":{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback","secretClientIdKey":"","secretClientIdName":"","secretClientSecretKey":"","secretClientSecretName":"","secretCookieSecretKey":"","secretCookieSecretName":"","secretGithubOrgKey":"","secretGithubOrgName":""},"extraEnvFrom":[],"extraEnvVars":[],"image":{"pullPolicy":"Always","registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"annotations":{},"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"priorityClassName":"","serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP","volumeMounts":[],"volumes":[]},"podAnnotations":{},"podLabels":{},"podSecurityContext":{},"priorityClassName":"","proxyPrefix":"","replicaCount":1,"resources":{},"securityContext":{},"service":{"annotations":{},"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Testkube Dashboard parameters |
+| testkube-dashboard | object | `{"affinity":{},"apiServerEndpoint":"","autoscaling":{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80},"disableTelemetry":false,"enabled":true,"extraEnvVars":[],"fullnameOverride":"testkube-dashboard","image":{"digest":"","pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"kubeshop/testkube-dashboard"},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ipv6enabled":false,"labels":{},"path":"/","tls":[],"tlsenabled":false},"nameOverride":"dashboard","nodeSelector":{},"oauth2":{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback","secretClientIdKey":"","secretClientIdName":"","secretClientSecretKey":"","secretClientSecretName":"","secretCookieSecretKey":"","secretCookieSecretName":"","secretGithubOrgKey":"","secretGithubOrgName":""},"extraEnvFrom":[],"extraEnvVars":[],"image":{"pullPolicy":"Always","pullSecrets":[],"registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"annotations":{},"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"priorityClassName":"","serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP","volumeMounts":[],"volumes":[]},"podAnnotations":{},"podLabels":{},"podSecurityContext":{},"priorityClassName":"","proxyPrefix":"","replicaCount":1,"resources":{},"securityContext":{},"service":{"annotations":{},"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Testkube Dashboard parameters |
 | testkube-dashboard.affinity | object | `{}` | Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set |
 | testkube-dashboard.apiServerEndpoint | string | `""` | Testkube API Server endpoint |
 | testkube-dashboard.autoscaling.annotations | object | `{}` | Specific autoscaling annotations |
@@ -220,6 +223,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard.fullnameOverride | string | `"testkube-dashboard"` | Testkube Dashboard fullname override |
 | testkube-dashboard.image.digest | string | `""` | Dashboard Image digest. If set, will override the tag |
 | testkube-dashboard.image.pullPolicy | string | `"IfNotPresent"` | Dashboard image tag |
+| testkube-dashboard.image.pullSecrets | list | `[]` | Dashboard k8s secret for private registries |
 | testkube-dashboard.image.registry | string | `"docker.io"` | Dashboard image registry. Can be overridden by global parameters |
 | testkube-dashboard.image.repository | string | `"kubeshop/testkube-dashboard"` | Dashboard image name |
 | testkube-dashboard.ingress | object | `{"annotations":{},"enabled":false,"hosts":[],"ipv6enabled":false,"labels":{},"path":"/","tls":[],"tlsenabled":false}` | Ingress parameters |
@@ -252,6 +256,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard.oauth2.extraEnvFrom | list | `[]` | Array with extra sources for environment variables |
 | testkube-dashboard.oauth2.extraEnvVars | list | `[]` | Array with extra environment variables to add to Locator nodes |
 | testkube-dashboard.oauth2.image.pullPolicy | string | `"Always"` | Oauth Image pull policy |
+| testkube-dashboard.oauth2.image.pullSecrets | list | `[]` | Oauth k8s secret for private registries |
 | testkube-dashboard.oauth2.image.registry | string | `"quay.io"` | Oauth image registry. Can be overridden by global parameters |
 | testkube-dashboard.oauth2.image.repository | string | `"oauth2-proxy/oauth2-proxy"` | Oauth image name |
 | testkube-dashboard.oauth2.image.tag | string | `"latest"` | Oauth image tag |
@@ -291,6 +296,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.healthcheckPort | int | `8081` | Testkube Operator healthcheck port |
 | testkube-operator.image.digest | string | `""` | Testkube Operator image digest |
 | testkube-operator.image.pullPolicy | string | `""` | Testkube Operator image pull policy |
+| testkube-operator.image.pullSecrets | list | `[]` | Operator k8s secret for private registries |
 | testkube-operator.image.registry | string | `"docker.io"` | Testkube Operator registry |
 | testkube-operator.image.repository | string | `"kubeshop/testkube-operator"` | Testkube Operator repository |
 | testkube-operator.installCRD | bool | `true` | should the CRDs be installed |
@@ -304,7 +310,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.podSecurityContext | object | `{}` | Testkube Operator Pod Security Context |
 | testkube-operator.preUpgrade.annotations | object | `{}` |  |
 | testkube-operator.preUpgrade.enabled | bool | `true` | Upgrade hook is enabled |
-| testkube-operator.preUpgrade.image | object | `{"pullPolicy":"IfNotPresent","registry":"registry.k8s.io","repository":"hyperkube","tag":"v1.12.1"}` | Specify image |
+| testkube-operator.preUpgrade.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
 | testkube-operator.preUpgrade.labels | object | `{}` |  |
 | testkube-operator.preUpgrade.podAnnotations | object | `{}` |  |
 | testkube-operator.preUpgrade.podSecurityContext | object | `{}` | Upgrade Pod Security Context |
@@ -314,6 +320,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.preUpgrade.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.preUpgrade.ttlSecondsAfterFinished | int | `100` |  |
 | testkube-operator.priorityClassName | string | `""` |  |
+| testkube-operator.proxy.image.pullSecrets | list | `[]` | Testkube Operator rbac-proxy k8s secret for private registries |
 | testkube-operator.proxy.image.registry | string | `"gcr.io"` | Testkube Operator rbac-proxy image registry |
 | testkube-operator.proxy.image.repository | string | `"kubebuilder/kube-rbac-proxy"` | Testkube Operator rbac-proxy image repository |
 | testkube-operator.proxy.image.tag | string | `"v0.8.0"` | Testkube Operator rbac-proxy image tag |
@@ -345,6 +352,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.migrate.backoffLimit | int | `1` | Number of retries before considering a Job as failed |
 | testkube-operator.webhook.migrate.enabled | bool | `true` | Deploy Migrate Job |
 | testkube-operator.webhook.migrate.image.pullPolicy | string | `"IfNotPresent"` | Migrate container job image pull policy |
+| testkube-operator.webhook.migrate.image.pullSecrets | list | `[]` | Migrate container job k8s secret for private registries |
 | testkube-operator.webhook.migrate.image.registry | string | `"docker.io"` | Migrate container job image registry |
 | testkube-operator.webhook.migrate.image.repository | string | `"rancher/kubectl"` | Migrate container job image name |
 | testkube-operator.webhook.migrate.image.version | string | `"v1.23.7"` | Migrate container job image tag |
@@ -359,6 +367,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.createSecretJob.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
 | testkube-operator.webhook.patch.enabled | bool | `true` |  |
 | testkube-operator.webhook.patch.image.pullPolicy | string | `"Always"` | patch job image pull policy |
+| testkube-operator.webhook.patch.image.pullSecrets | list | `[]` | patch job k8s secret for private registries |
 | testkube-operator.webhook.patch.image.registry | string | `"docker.io"` | patch job image registry |
 | testkube-operator.webhook.patch.image.repository | string | `"dpejcev/kube-webhook-certgen"` | patch job image name |
 | testkube-operator.webhook.patch.image.version | string | `"1.0.11"` | patch job image tag |
@@ -376,4 +385,4 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patchWebhookJob.resources | object | `{}` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.11.2](https://github.com/norwoodj/helm-docs/releases/v1.11.2)
