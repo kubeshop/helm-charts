@@ -47,7 +47,7 @@ spec:
         {{- end }}
     spec:
       {{- if .Values.webhook.migrate.enabled }}
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.webhook.migrate.image.pullSecrets) | nindent 6 }}
       initContainers:
         - name: migrate
           image: {{ include "global.images.image" (dict "imageRoot" .Values.webhook.migrate.image "global" .Values.global) }}

@@ -37,6 +37,7 @@ podLabels: {}
 ## image.tag Testkube API image tag
 ## image.digest Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## image.pullPolicy Testkube API Image pull policy
+## image.secret k8s secret for private registries
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
@@ -44,6 +45,7 @@ image:
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
   digest: ""
+  pullSecret: []
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -315,6 +317,7 @@ minio:
     repository: minio/minio
     tag: 2023.2.27
     pullPolicy: IfNotPresent
+    pullSecrets: []
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Optionally specify extra list of additional volumeMounts for Minio
