@@ -229,8 +229,7 @@ testkube-api:
     # Overrides the image tag whose default is the chart appVersion.
     # tag: "latest"
     # -- Testkube API k8s secret for private registries
-    pullSecrets:
-      - ghghghg
+    pullSecrets: []
   # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
