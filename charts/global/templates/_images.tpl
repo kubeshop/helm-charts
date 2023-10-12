@@ -25,12 +25,20 @@ Return the proper Docker Image Registry Secret Names evaluating values as templa
 {{ include "global.images.renderPullSecrets" . }}
 */}}
 {{- define "global.images.renderPullSecrets" -}}
-{{- $global := .Values.global }}
-
+{{- $context := . }}
+{{- $global := index $context "global" }}
+{{- $path := index $context "secretPath" }}
 {{- if $global.imagePullSecrets }}
 imagePullSecrets:
-    {{- range $global.imagePullSecrets }}
+{{- range $global.imagePullSecrets }}
+  - name: {{ . }}
+{{- end }}
+{{- else -}}
+{{- if $path }}
+imagePullSecrets:
+{{- range $path }}
   - name: {{ . }}
 {{- end }}
 {{- end }}
-{{- end -}}
+{{- end }}
+{{- end }}

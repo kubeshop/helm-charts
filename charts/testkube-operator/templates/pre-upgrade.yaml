@@ -47,7 +47,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName:  {{ .Release.Name }}-operator-pre-upgrade-sa
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.preUpgrade.image.pullSecrets) | nindent 6 }}
       containers:
       - name: kubectl
         image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgrade.image "global" .Values.global) }}

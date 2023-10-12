@@ -37,7 +37,7 @@ spec:
       annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.oauth2.podAnnotations "context" $ ) | nindent 8 }}
       {{- end }}
     spec:
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.oauth2.image.pullSecret) | nindent 6 }}
       {{- if .Values.oauth2.priorityClassName }}
       priorityClassName: {{ .Values.oauth2.priorityClassName }}
       {{- end }}
