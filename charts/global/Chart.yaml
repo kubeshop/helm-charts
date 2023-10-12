@@ -1,5 +1,5 @@
 apiVersion: v2
-version: 0.1.1
+version: 0.1.2
 name: global
 description: A Library Helm Chart for definitions that can be shared by Helm templates in other charts.
 home: https://github.com/kubeshop/helm-charts/tree/main/charts/global
@@ -20,4 +20,4 @@ sources:
   - https://github.com/kubeshop/helm-charts
   - https://testkube.io/
 
-appVersion: "0.1.1"
+appVersion: "0.1.2"

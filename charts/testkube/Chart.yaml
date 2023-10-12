@@ -27,6 +27,6 @@ dependencies:
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
   - name: global
-    version: 0.1.1
+    version: 0.1.2
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../global"
