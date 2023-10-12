@@ -8,7 +8,7 @@ A Helm chart for Testkube api
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../global | global | 0.1.1 |
+| file://../global | global | 0.1.2 |
 
 ## Values
 

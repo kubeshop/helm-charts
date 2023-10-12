@@ -123,7 +123,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
 | testkube-api.image.digest | string | `""` | Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.image.pullPolicy | string | `"IfNotPresent"` | Testkube API image tag |
-| testkube-api.image.pullSecrets | list | `["ghghghg"]` | Testkube API k8s secret for private registries |
+| testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
 | testkube-api.image.registry | string | `"docker.io"` | Testkube API image registry |
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
 | testkube-api.jobServiceAccountName | string | `""` | SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud. |
