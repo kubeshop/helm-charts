@@ -1,4 +1,4 @@
-{{ if .Values.installCRD }}
+{{- if .Values.installCRD }}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -304,6 +304,13 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                      omitFolderPerExecution:
+                                        description: don't use a separate folder for
+                                          execution artifacts
+                                        type: boolean
+                                      storageBucket:
+                                        description: artifact bucket storage
+                                        type: string
                                       storageClassName:
                                         description: artifact storage class name for
                                           container executor
@@ -435,6 +442,10 @@ spec:
                                     description: 'Environment variables passed to
                                       executor. Deprecated: use Basic Variables instead'
                                     type: object
+                                  executePostRunScriptBeforeScraping:
+                                    description: execute post run script before scraping
+                                      (prebuilt executor only)
+                                    type: boolean
                                   executionResult:
                                     description: execution result returned from executor
                                     properties:
@@ -804,6 +815,13 @@ spec:
                                   items:
                                     type: string
                                   type: array
+                                omitFolderPerExecution:
+                                  description: don't use a separate folder for execution
+                                    artifacts
+                                  type: boolean
+                                storageBucket:
+                                  description: artifact bucket storage
+                                  type: string
                                 storageClassName:
                                   description: artifact storage class name for container
                                     executor
@@ -931,6 +949,10 @@ spec:
                               description: 'Environment variables passed to executor.
                                 Deprecated: use Basic Variables instead'
                               type: object
+                            executePostRunScriptBeforeScraping:
+                              description: execute post run script before scraping
+                                (prebuilt executor only)
+                              type: boolean
                             executionResult:
                               description: execution result returned from executor
                               properties:
@@ -1346,4 +1368,4 @@ status:
     plural: ""
   conditions: []
   storedVersions: []
-{{ end }}
+{{- end }}

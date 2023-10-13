@@ -135,6 +135,49 @@
         }
     },
     {
+        "name": "jmeterd-executor",
+        "executor": {
+            "executorType": "job",
+            "image": "kubeshop/testkube-jmeterd-executor:05d9c3d",
+            "command": [
+                "<entryPoint>"
+            ],
+            "slaves": {
+                "image": "kubeshop/testkube-jmeterd-slave:05d9c3d"
+            },
+            "args": [
+                "-n",
+                "-j",
+                "<logFile>",
+                "-t",
+                "<runPath>",
+                "-l",
+                "<jtlFile>",
+                "-e",
+                "-o",
+                "<reportFile>",
+                "<envVars>"
+            ],
+            "types": [
+                "jmeterd/test"
+            ],
+            "contentTypes": [
+                "string",
+                "file-uri",
+                "git-file",
+                "git-dir",
+                "git"
+            ],
+            "features": [
+                "artifacts"
+            ],
+            "meta": {
+                "iconURI": "jmeter",
+                "docsURI": "https://kubeshop.github.io/testkube/test-types/executor-jmeter"
+            }
+        }
+    },
+    {
         "name": "ginkgo-executor",
         "executor": {
             "executorType": "job",

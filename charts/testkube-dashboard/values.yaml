@@ -52,6 +52,7 @@ securityContext:
 ## image.tag Testkube Dashboard image tag
 ## image.pullPolicy Testkube Dashboard Image pull policy
 ## image.digest Testkube Dashboard image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## image.pullSecret Testkube Dashboard Image pull k8s secret name for private registries
 image:
   registry: docker.io
   repository: kubeshop/testkube-dashboard
@@ -59,6 +60,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   # tag: "1.9.2"
   digest: ""
+  pullSecrets: []
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -174,11 +176,13 @@ oauth2:
   ## image.repository Oauth image name
   ## image.tag Oauth image tag
   ## image.pullPolicy OauthI Image pull policy
+  ## image.pullSecret Oauth Image pull k8s secret name for private registries
   image:
     registry: quay.io
     repository: oauth2-proxy/oauth2-proxy
     tag: latest
     pullPolicy: Always
+    pullSecrets: []
   ## Pod environment variables for Teskube UI authentication
   ## Reference: https://kubeshop.github.io/testkube/authentication/oauth-ui/
   ##

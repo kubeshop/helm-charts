@@ -11,7 +11,7 @@ dependencies:
     condition: testkube-operator.enabled
   - name: mongodb
     condition: mongodb.enabled
-    version: 12.1.31
+    version: 13.10.1
     repository: https://charts.bitnami.com/bitnami
   - name: nats
     condition: testkube-api.nats.enabled
@@ -27,6 +27,6 @@ dependencies:
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
   - name: global
-    version: 0.1.1
+    version: 0.1.2
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../global"

@@ -90,16 +90,19 @@ mongodb:
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
+  priorityClassName: "highest-priority-mongodb"
   ## Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
   ## Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
   image:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
-    tag: 5.0.10-debian-11-r19
-  resources:
-    requests:
-      memory: "1500Mi"
-      cpu: "200m"
+    tag: 6.0.5-debian-11-r64
+  resources: {}
+#    requests:
+#      memory: "1000Mi"
+#      cpu: "200m"
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
 
 nats:
   # NATS container settings
@@ -107,6 +110,11 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
+  natsbox:
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
 
 testkube-api:
   prometheus:
@@ -124,17 +132,19 @@ testkube-api:
     port: 8088
   minio:
     enabled: true
-    nodeSelector: {}
     tolerations: []
     affinity: {}
+    priorityClassName: "highest-priority"
     image:
       registry: docker.io
       repository: minio/minio
-      tag: latest
-    resources:
-      requests:
-        memory: "1000Mi"
-        cpu: "200m"
+      tag: RELEASE.2023-09-16T01-01-47Z
+    resources: {}
+#      requests:
+#        memory: "1000Mi"
+#        cpu: "200m"
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
 
   uiIngress:
     enabled: true
@@ -146,6 +156,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
+#      nginx.ingress.kubernetes.io/auth-type: basic
+#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
@@ -164,11 +177,11 @@ testkube-api:
 
     path: /results/(v\d/.*)
     hosts:
-      - integration.testkube.io
+      - demo.testkube.xyz
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - integration.testkube.io
+          - demo.testkube.xyz
         secretName: testkube-demo-cert-secret
   cliIngress:
     enabled: false
@@ -257,10 +270,10 @@ testkube-api:
     ## Number of seconds after which the probe times out
     timeoutSeconds: 10
 
-  resources:
-    requests:
-      memory: "200Mi"
-      cpu: "200m"
+  resources: {}
+#    requests:
+#      memory: "200Mi"
+#      cpu: "200m"
 
   analyticsEnabled: true
   podStartTimeout: "30m"
@@ -275,9 +288,14 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
 
+  priorityClassName: "highest-priority"
+
   ##Test Connection pod
   testConnection:
     enabled: true
+
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
 
 testkube-dashboard:
   enabled: true
@@ -299,9 +317,9 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      nginx.ingress.kubernetes.io/auth-type: basic
-      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+#      nginx.ingress.kubernetes.io/auth-type: basic
+#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-integration
       # add an annotation indicating the issuer to use.
@@ -311,13 +329,13 @@ testkube-dashboard:
       acme.cert-manager.io/http01-edit-in-place: "true"
     path: /
     hosts:
-      - integration.testkube.io
+      - demo.testkube.xyz
     tlsenabled: "true"
     tls: # < placing a host in the TLS config will indicate a certificate should be created
       - hosts:
-          - integration.testkube.io
+          - demo.testkube.xyz
         secretName: testkube-demo-cert-secret
-  apiServerEndpoint: "integration.testkube.io/results" #get the address of the endpoint or set it using helm
+  apiServerEndpoint: "demo.testkube.xyz/results" #get the address of the endpoint or set it using helm
   disableTelemetry: true
   oauth2:
     enabled: false
@@ -325,6 +343,7 @@ testkube-dashboard:
     path: /oauth2
     port: 4180
     selector: k8s-app
+    priorityClassName: "highest-priority"
     image:
       repository: quay.io/oauth2-proxy/oauth2-proxy
       tag: latest
@@ -335,18 +354,22 @@ testkube-dashboard:
       githubOrg: ""
       cookieSecret: ""
       cookieSecure: "false"
-      redirectUrl: "http://integration.testkube.io/oauth2/callback"
+      redirectUrl: "http://demo.testkube.xyz/oauth2/callback"
+  priorityClassName: "highest-priority"
 
   ##Test Connection pod
   testConnection:
     enabled: true
 
-  resources:
-    requests:
-      memory: "100Mi"
-      cpu: "100m"
+  resources: {}
+#    requests:
+#      memory: "100Mi"
+#      cpu: "100m"
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
 
 testkube-operator:
+  priorityClassName: "highest-priority"
   ##Proxy Image parameters
   ## image.registry Proxy image registry
   ## image.repository Proxy image name
@@ -360,11 +383,14 @@ testkube-operator:
     ## Proxy Container Port
     containerPort: 8443
 
-  resources:
-    requests:
-      memory: "200Mi"
-      cpu: "100m"
+  resources: {}
+#    requests:
+#      memory: "200Mi"
+#      cpu: "100m"
 
   ##Test Connection pod
   testConnection:
     enabled: true
+
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard

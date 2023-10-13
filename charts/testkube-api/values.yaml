@@ -37,6 +37,7 @@ podLabels: {}
 ## image.tag Testkube API image tag
 ## image.digest Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
 ## image.pullPolicy Testkube API Image pull policy
+## image.secret k8s secret for private registries
 image:
   registry: docker.io
   repository: kubeshop/testkube-api-server
@@ -44,6 +45,7 @@ image:
   ## Overrides the image tag whose default is the chart appVersion.
   # tag: "1.7.24"
   digest: ""
+  pullSecret: []
 
 ## Chart parameters
 ## nameOverride Overrides Chart name
@@ -67,6 +69,16 @@ cloud:
   envId: ""
   ## true if migration from OSS
   migrate: ""
+  ## Retrieve cloud information from existing secret
+  existingSecret:
+    ## Name of the secret. If set, this will be used instead of the above values
+    name: ""
+    ## Key for the License Key
+    key: ""
+    ## Key for the Organization ID
+    orgId: ""
+    ## Key for the Environment ID
+    envId: ""
 
 ## Multinamespace feature. Disabled by default
 multinamespace:
@@ -104,8 +116,6 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
-
-jobServiceAccountName: ""
 
 ## base64 encoded executors.json alike data
 executors: ""
@@ -204,6 +214,16 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Test Job ServiceAccount parameters
+testServiceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+
+## Test Job ServiceAccount name
+jobServiceAccountName: ""
+
 ## Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 podSecurityContext: {}
@@ -297,6 +317,7 @@ minio:
     repository: minio/minio
     tag: 2023.2.27
     pullPolicy: IfNotPresent
+    pullSecrets: []
   ## ServiceAccount name to use for Minio
   serviceAccountName: ""
   ## Optionally specify extra list of additional volumeMounts for Minio

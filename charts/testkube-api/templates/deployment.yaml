@@ -34,7 +34,7 @@ spec:
           {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
           {{- end }}
     spec:
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.image.pullSecrets) | nindent 6 }}
       serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
@@ -213,7 +213,7 @@ spec:
             - name: TESTKUBE_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: JOB_SERVICE_ACCOUNT_NAME
-              value: "{{ .Values.jobServiceAccountName }}"
+              value: {{ if .Values.jobServiceAccountName }}"{{ .Values.jobServiceAccountName }}"{{ else if .Values.testServiceAccount.create }}{{ include "testkube-api.testServiceAccountName" . }}{{ else }}""{{ end }}
             - name: APISERVER_FULLNAME
               value: "{{ include "testkube-api.fullname" . }}"
             - name: APISERVER_CONFIG
@@ -238,6 +238,13 @@ spec:
             - name: TESTKUBE_CLOUD_API_KEY
               value:  "{{ .Values.cloud.key }}"
             {{- end}}
+            {{- if .Values.cloud.existingSecret.key }}
+            - name: TESTKUBE_CLOUD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.key }}
+                  name: {{ .Values.cloud.existingSecret.name }}
+            {{- end}}
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
@@ -246,9 +253,23 @@ spec:
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
             {{- end}}
+            {{- if .Values.cloud.existingSecret.orgId }}
+            - name: TESTKUBE_CLOUD_ORG_ID
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.orgId }}
+                  name: {{ .Values.cloud.existingSecret.name }}
+            {{- end}}
             {{- if .Values.cloud.envId }}
             - name: TESTKUBE_CLOUD_ENV_ID
               value:  "{{ .Values.cloud.envId }}"
+            {{- end}}
+            {{- if .Values.cloud.existingSecret.envId }}
+            - name: TESTKUBE_CLOUD_ENV_ID
+              valueFrom:
+                secretKeyRef:
+                  key: {{ .Values.cloud.existingSecret.envId }}
+                  name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
             {{- if .Values.cloud.migrate }}
             - name: TESTKUBE_CLOUD_MIGRATE

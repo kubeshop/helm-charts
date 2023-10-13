@@ -14,6 +14,12 @@ metadata:
     "helm.sh/hook": pre-upgrade
     "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
+    {{- if .Values.global.annotations}}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.preUpgradeHook.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   {{- if .Values.preUpgradeHook.ttlSecondsAfterFinished }}
   ttlSecondsAfterFinished: {{ .Values.preUpgradeHook.ttlSecondsAfterFinished }}
@@ -27,9 +33,21 @@ spec:
         {{- if .Values.global.labels }}
         {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 8 }}
         {{- end }}
+        {{- if .Values.preUpgradeHook.labels }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.labels "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- if or .Values.global.annotations .Values.preUpgradeHook.podAnnotations }}
+      annotations:
+        {{- if .Values.global.annotations}}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.preUpgradeHook.podAnnotations }}
+        {{- include "global.tplvalues.render" ( dict "value" .Values.preUpgradeHook.podAnnotations "context" $ ) | nindent 8 }}
+        {{- end }}
+      {{- end }}
     spec:
       serviceAccountName: "{{ .Values.preUpgradeHook.name }}"
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.preUpgradeHook.image.pullSecrets) | nindent 6 }}
       containers:
       - name: kubectl
         image: {{ include "global.images.image" (dict "imageRoot" .Values.preUpgradeHook.image "global" .Values.global) }}
@@ -42,7 +60,7 @@ spec:
         - -c
         - >
             export current_mongodb_version=$(kubectl get deployment {{ .Release.Name }}-mongodb -o=jsonpath='{$.spec.template.metadata.labels}' -n {{ .Release.Namespace }} | awk -F'helm.sh/chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2 }');
-            if [ "$current_mongodb_version" -eq "11" ];
+            if [ "$current_mongodb_version" -eq "12" ];
               then kubectl scale deployment {{ .Release.Name }}-mongodb --replicas=0 -n {{ .Release.Namespace }};
               else echo "MongoDB is up-to-date";
             fi

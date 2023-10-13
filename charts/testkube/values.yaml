@@ -22,12 +22,19 @@ preUpgradeHook:
   name: mongodb-upgrade
   ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
   ttlSecondsAfterFinished: 100
+  ## -- Specific labels
+  labels: {}
+  ## -- Annotations to add to the upgrade Job
+  annotations: {}
+  ## -- Annotations to add to the upgrade Job's pod
+  podAnnotations: { }
   # -- Specify image
   image:
-    registry: k8s.gcr.io
-    repository: hyperkube
-    tag: v1.12.1
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
     pullPolicy: IfNotPresent
+    pullSecrets: []
   # -- Specify resource limits and requests
   resources: {}
   # -- Create SA for upgrade hook
@@ -81,7 +88,9 @@ mongodb:
     # -- MongoDB image repository
     repository: zcube/bitnami-compat-mongodb
     # -- MongoDB image tag
-    tag: 5.0.10-debian-11-r19
+    tag: 6.0.5-debian-11-r64
+    # -- MongoDB image pull Secret
+    pullSecrets: []
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
@@ -111,6 +120,10 @@ nats:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  # An array of imagePullSecrets, and they have to be created manually in the same namespace
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  imagePullSecrets: []
+  #  - name: dockersecret
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- NATS Pod Security Context
   securityContext: {}
@@ -216,12 +229,30 @@ testkube-api:
     digest: ""
     # Overrides the image tag whose default is the chart appVersion.
     # tag: "latest"
+    # -- Testkube API k8s secret for private registries
+    pullSecrets: []
   # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
   # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
   additionalNamespaces: []
+
+  ## Service Account parameters
+  serviceAccount:
+    #-- Specifies whether a service account should be created
+    create: true
+    #-- Annotations to add to the service account
+    annotations: {}
+    #-- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+    name: ""
+
+  # -- Service Account parameters
+  testServiceAccount:
+    # -- Specifies whether a service account should be created
+    create: true
+    # -- Annotations to add to the service account
+    annotations: {}
 
   # Testkube Agent settings
   cloud:
@@ -288,7 +319,8 @@ testkube-api:
     image:
       registry: docker.io
       repository: minio/minio
-      tag: latest
+      tag: RELEASE.2023-09-16T01-01-47Z
+      pullSecrets: []
     # -- ServiceAccount name to use for Minio
     serviceAccountName: ""
     extraVolumeMounts: []
@@ -552,6 +584,8 @@ testkube-dashboard:
     # tag: "main" # it will take tag from appVersion.
     # -- Dashboard Image digest. If set, will override the tag
     digest: ""
+    # -- Dashboard k8s secret for private registries
+    pullSecrets: []
 
   # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   # -- Testkube Dashboard Pod annotations
@@ -685,6 +719,8 @@ testkube-dashboard:
       tag: latest
       # -- Oauth Image pull policy
       pullPolicy: Always
+      # -- Oauth k8s secret for private registries
+      pullSecrets: []
     # ref: https://kubeshop.github.io/testkube/authentication/oauth-ui/
     # -- Pod environment variables for Teskube UI authentication
     env:
@@ -776,7 +812,6 @@ testkube-dashboard:
     # -- Specifies whether a service account should be created
     create: true
     # -- Annotations to add to the service account
-    # -- Annotations to add to the service account
     annotations: {}
     # -- The name of the service account to use.
     # -- If not set and create is true, a name is generated using the fullname template
@@ -834,6 +869,8 @@ testkube-operator:
     #tag: "1.7.1"
     # -- Testkube Operator image digest
     digest: ""
+    # -- Operator k8s secret for private registries
+    pullSecrets: []
 
   # Testkube Operator rbac-proxy settings
   proxy:
@@ -845,6 +882,8 @@ testkube-operator:
       repository: kubebuilder/kube-rbac-proxy
       # -- Testkube Operator rbac-proxy image tag
       tag: "v0.8.0"
+      # -- Testkube Operator rbac-proxy k8s secret for private registries
+      pullSecrets: []
     # -- Testkube Operator rbac-proxy resource settings
     resources: {}
 
@@ -919,6 +958,8 @@ testkube-operator:
         version: v1.23.7
         # -- Migrate container job image pull policy
         pullPolicy: IfNotPresent
+        # -- Migrate container job k8s secret for private registries
+        pullSecrets: []
       # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
       # -- Security Context for webhook migrate Container
       securityContext:
@@ -944,6 +985,8 @@ testkube-operator:
         version: 1.0.11
         # -- patch job image pull policy
         pullPolicy: Always
+        # -- patch job k8s secret for private registries
+        pullSecrets: []
       # -- Annotations to add to the patch Job
       annotations: {}
       # -- Pod annotations to add to the patch Job
@@ -1058,10 +1101,11 @@ testkube-operator:
     ttlSecondsAfterFinished: 100
     # -- Specify image
     image:
-      registry: registry.k8s.io
-      repository: hyperkube
-      tag: v1.12.1
+      registry: docker.io
+      repository: bitnami/kubectl
+      tag: 1.28.2
       pullPolicy: IfNotPresent
+      pullSecrets: []
     # -- Specify resource limits and requests
     resources: { }
     # -- Create SA for upgrade hook

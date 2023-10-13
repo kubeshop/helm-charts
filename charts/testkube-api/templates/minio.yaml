@@ -52,8 +52,8 @@ spec:
       # This label is used as a selector in Service definition
         app: testkube-minio-{{ .Release.Namespace }}
     spec:
-      {{- include "global.images.renderPullSecrets" . | nindent 6 }}
-      {{- if .Values.minio.priorityClassName }}
+      {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.minio.image.pullSecrets) | nindent 6 }}
+        {{- if .Values.minio.priorityClassName }}
       priorityClassName: {{ .Values.minio.priorityClassName }}
       {{- end }}
       # Volumes used by this deployment

@@ -59,6 +59,18 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the test service account to use
+*/}}
+{{- define "testkube-api.testServiceAccountName" -}}
+{{- if .Values.testServiceAccount.create }}
+{{- $prefix := default (include "testkube-api.fullname" .) .Values.jobServiceAccountName }}
+{{- printf "%s-%s" $prefix "tests-job" }}
+{{- else }}
+{{- default "default" .Values.jobServiceAccountName }}
+{{- end }}
+{{- end }}
+
+{{/*
 Define API image
 */}}
 {{- define "testkube-api.image" -}}

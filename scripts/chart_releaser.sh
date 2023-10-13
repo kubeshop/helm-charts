@@ -70,14 +70,14 @@ then
 
     # Editing TestKube's dependency Chart.yaml for $target_folder:
     sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
-    echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
+    echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
     grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 
 else
     echo "Executors will be updated"
-    executor_name="artillery curl cypress ginkgo gradle init jmeter k6 kubepug maven playwright postman scraper soapui tracetest zap"
+    executor_name="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap"
     for executor in $executor_name; do
-      sed -i "s/\(.*\"image\":.*$executor.*\:\).*$/\1$VERSION_FULL\",/g" ../charts/testkube-api/executors.json
+      sed -i "s/\(\"image\":.*$executor.*:\)[^\"]*\(\"\)/\1$VERSION_FULL\2/" ../charts/testkube-api/executors.json
       echo -e "\nChecking if TestKube's executors.json $executor executor has been updated:\n"
       grep -iE image ../charts/testkube-api/executors.json | grep $executor
     done
@@ -92,7 +92,7 @@ else
 
     # Editing TestKube's dependency Chart.yaml for $target_folder:
     sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
-    echo -e "\nChecking if TestKube's Chart.yaml dependencie has been updated:\n"
+    echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
     grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 fi
 
