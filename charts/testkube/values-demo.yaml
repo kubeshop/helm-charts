@@ -96,7 +96,7 @@ mongodb:
       memory: "1500Mi"
       cpu: "200m"
   nodeSelector:
-    nodepool: main-mongo
+    cloud.google.com/gke-provisioning: standard
   image:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
@@ -109,10 +109,10 @@ nats:
       # -- Max payload
       maxPayload: 8MB
     nodeSelector:
-      nodepool: main
+      cloud.google.com/gke-provisioning: standard
   natsbox:
     nodeSelector:
-      nodepool: main
+      cloud.google.com/gke-provisioning: standard
 
 
 testkube-api:
@@ -134,7 +134,8 @@ testkube-api:
     port: 8088
   minio:
     enabled: true
-    nodeSelector: {}
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
@@ -345,7 +346,7 @@ testkube-api:
     enabled: true
 
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
 
 testkube-dashboard:
   enabled: true
@@ -416,7 +417,7 @@ testkube-dashboard:
       cpu: "100m"
 
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
 
 testkube-operator:
   # should roles and roles bindings be created
@@ -451,5 +452,5 @@ testkube-operator:
     enabled: true
 
   nodeSelector:
-    nodepool: main
+    cloud.google.com/gke-provisioning: standard
 
