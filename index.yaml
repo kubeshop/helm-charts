@@ -2132,6 +2132,32 @@ entries:
   - annotations:
       category: Infrastructure
     apiVersion: v2
+    appVersion: 0.1.2
+    created: "2023-10-13T12:57:52.10052098Z"
+    description: A Library Helm Chart for definitions that can be shared by Helm templates
+      in other charts.
+    digest: 7b00be615f4eb3b64c4d9ba8399c3b3e449541b4476379b1eeee43beb5451292
+    home: https://github.com/kubeshop/helm-charts/tree/main/charts/global
+    keywords:
+    - global
+    - helper
+    - template
+    - function
+    - testkube
+    maintainers:
+    - name: Testkube
+      url: https://github.com/kubeshop/testkube
+    name: global
+    sources:
+    - https://github.com/kubeshop/helm-charts
+    - https://testkube.io/
+    type: library
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/global-0.1.2/global-0.1.2.tgz
+    version: 0.1.2
+  - annotations:
+      category: Infrastructure
+    apiVersion: v2
     appVersion: 0.1.1
     created: "2023-03-03T07:48:51.828920164Z"
     description: A Library Helm Chart for definitions that can be shared by Helm templates
@@ -4200,6 +4226,39 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/kusk-gateway-envoyfleet-0.0.1/kusk-gateway-envoyfleet-0.0.1.tgz
     version: 0.0.1
   testkube:
+  - apiVersion: v2
+    created: "2023-10-13T12:57:52.27378443Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.14.0
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.19.1
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.15.0
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.14.2
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 2d2f501913994cac4db00437640ebf95447e4fc30fd16a891841b8a1ca983b26
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.15.1/testkube-1.15.1.tgz
+    version: 1.15.1
   - apiVersion: v2
     created: "2023-10-13T12:53:19.369590176Z"
     dependencies:
@@ -48949,4 +49008,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-10-13T12:53:19.539193161Z"
+generated: "2023-10-13T12:57:52.737474767Z"
