@@ -90,7 +90,7 @@ mongodb:
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
-  priorityClassName: "highest-priority"
+  priorityClassName: "highest-priority-mongodb"
   resources:
     requests:
       memory: "1500Mi"
