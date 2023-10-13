@@ -90,7 +90,7 @@ mongodb:
     portName: "mongodb"
     nodePort: true
     clusterIP: ""
-  priorityClassName: "highest-priority"
+  priorityClassName: "highest-priority-mongodb"
   ## Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
   ## Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
   image:
