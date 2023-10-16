@@ -129,7 +129,7 @@ dashboardUri: ""
 ## cluster name to be used in events
 clusterName: ""
 
-## enable enpoint to list testkube namespace secrets
+## enable endpoint to list testkube namespace secrets
 enableSecretsEndpoint: false
 
 ## Testkube API resource requests and limits
