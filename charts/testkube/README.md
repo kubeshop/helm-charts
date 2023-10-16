@@ -118,6 +118,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` |  |
 | testkube-api.dashboardUri | string | `""` |  |
+| testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |

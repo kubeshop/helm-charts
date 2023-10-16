@@ -538,6 +538,8 @@ testkube-api:
   dashboardUri: ""
   ## cluster name to be used in events
   clusterName: ""
+  ## enable enpoint to list testkube namespace secrets
+  enableSecretsEndpoint: false
 
   # Test Connection pod
   testConnection:

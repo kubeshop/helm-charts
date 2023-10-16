@@ -48,6 +48,7 @@ A Helm chart for Testkube api
 | clusterName | string | `""` |  |
 | configValues | string | `""` |  |
 | dashboardUri | string | `""` |  |
+| enableSecretsEndpoint | bool | `false` |  |
 | executors | string | `""` |  |
 | extraEnvVars | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
