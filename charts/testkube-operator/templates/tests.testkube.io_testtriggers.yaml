@@ -238,6 +238,9 @@ spec:
                     description: Name selector is used to identify a Kubernetes Object
                       based on the metadata name
                     type: string
+                  nameRegex:
+                    description: kubernetes resource name regex
+                    type: string
                   namespace:
                     description: Namespace of the Kubernetes object
                     type: string
@@ -294,6 +297,9 @@ spec:
                   name:
                     description: Name selector is used to identify a Kubernetes Object
                       based on the metadata name
+                    type: string
+                  nameRegex:
+                    description: kubernetes resource name regex
                     type: string
                   namespace:
                     description: Namespace of the Kubernetes object
