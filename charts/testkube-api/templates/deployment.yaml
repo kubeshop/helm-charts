@@ -299,6 +299,8 @@ spec:
                 configMapKeyRef:
                   name: testkube-global-config
                   key: helmchartVersion
+            - name: ENABLE_SECRETS_ENDPOINT
+              value: "{{ .Values.enableSecretsEndpoint }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

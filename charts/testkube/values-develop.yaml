@@ -285,6 +285,7 @@ testkube-api:
   cdeventsTarget: ""
   dashboardUri: ""
   clusterName: ""
+  enableSecretsEndpoint: false
 
   priorityClassName: "highest-priority"
 
