@@ -10,7 +10,6 @@ A Helm chart for Kubernetes
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
 
-
 ## Values
 
 | Key | Type | Default | Description |
