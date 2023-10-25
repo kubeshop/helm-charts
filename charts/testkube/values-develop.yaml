@@ -289,8 +289,6 @@ testkube-api:
 
   priorityClassName: "highest-priority"
 
-  priorityClassName: "highest-priority"
-
   ##Test Connection pod
   testConnection:
     enabled: true
