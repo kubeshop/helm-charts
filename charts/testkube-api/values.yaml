@@ -129,6 +129,9 @@ dashboardUri: ""
 ## cluster name to be used in events
 clusterName: ""
 
+## enable endpoint to list testkube namespace secrets
+enableSecretsEndpoint: false
+
 ## Testkube API resource requests and limits
 resources:
   {}

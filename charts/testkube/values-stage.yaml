@@ -287,6 +287,9 @@ testkube-api:
   cdeventsTarget: "https://webhook.site/f99d020e-8815-4bed-963c-1ed7c54a0d0c"
   dashboardUri: ""
   clusterName: ""
+  enableSecretsEndpoint: false
+
+  priorityClassName: "highest-priority"
 
   priorityClassName: "highest-priority"
 
