@@ -538,7 +538,7 @@ testkube-api:
   dashboardUri: ""
   ## cluster name to be used in events
   clusterName: ""
-  ## enable endpoint to list testkube namespace secrets
+  # -- enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
 
   # Test Connection pod
@@ -563,6 +563,12 @@ testkube-api:
   securityContext: {}
   ## Specify priorityClassName for Testkube API
   priorityClassName: ""
+
+  # -- Specify hostNetwork for Testkube API Deployment
+  hostNetwork: ""
+
+  # -- Specify dnsPolicy for Testkube API Deployment
+  dnsPolicy: ""
 
 # --  Testkube Dashboard parameters
 testkube-dashboard:

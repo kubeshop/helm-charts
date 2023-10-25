@@ -177,6 +177,12 @@ affinity: {}
 ## Specify priorityClassName for Testkube API Deployment
 priorityClassName: ""
 
+## Specify hostNetwork for Testkube API Deployment
+hostNetwork: ""
+
+## Specify dnsPolicy for Testkube API Deployment
+dnsPolicy: ""
+
 ## Storage for Testkube API. Now Minio is used:
 storage:
   endpoint: ""
