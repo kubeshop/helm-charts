@@ -334,6 +334,7 @@
         "string",
         "file-uri",
         "git-file",
+        "git-dir",
         "git"
       ],
       "features": [
@@ -431,6 +432,7 @@
         "string",
         "file-uri",
         "git-file",
+        "git-dir",
         "git"
       ],
       "features": [
@@ -467,6 +469,7 @@
         "string",
         "file-uri",
         "git-file",
+        "git-dir",
         "git"
       ],
       "features": [
