@@ -130,6 +130,9 @@ nats:
 
   # NATS container settings
   nats:
+    jetstream:
+      # -- Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features)
+      enabled: true
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS container
     securityContext: {}
