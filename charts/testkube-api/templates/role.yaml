@@ -577,11 +577,10 @@ rules:
 
 --- 
 
-
+kind: ClusterRole
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
 metadata:
-  name: logssidecar-role-{{ .Release.Name }}
+  name: logs-sidecar-{{ .Release.Name }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -589,26 +588,6 @@ metadata:
   {{- if .Values.global.annotations}}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - pods
-      - pods/log
-    verbs:
-      - get
-      - watch
-      - list
-      - create
-
-
-
---- 
-
-kind: ClusterRole
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: logs-pod-reader-{{ .Release.Name }}
 rules:
 - apiGroups: 
   - ""

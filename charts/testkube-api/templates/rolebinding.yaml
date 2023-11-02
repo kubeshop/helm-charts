@@ -385,6 +385,6 @@ subjects:
   namespace: testkube
 roleRef:
   kind: ClusterRole
-  name: logs-pod-reader-{{ .Release.Name }}
+  name: logs-sidecar-{{ .Release.Name }}
   apiGroup: rbac.authorization.k8s.io
 
