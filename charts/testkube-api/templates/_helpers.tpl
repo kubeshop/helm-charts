@@ -59,6 +59,14 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+Create the name of the service account to use for logs services
+*/}}
+{{- define "testkube-api.logsServiceAccountName" -}}
+{{- default "testkube-logs" .Values.logsServiceAccount.name }}
+{{- end }}
+
+
+{{/*
 Define API image
 */}}
 {{- define "testkube-api.image" -}}
