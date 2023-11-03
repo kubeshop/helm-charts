@@ -48,6 +48,21 @@ spec:
         {{- end }}
       {{- end }}
       containers:
+      - name: "{{ .Name }}-logs"
+        image: {{ .Registry }}/{{ .LogSidecarImage }} 
+        env:
+        - name: DEBUG
+          value: {{ .Debug }}
+        - name: NAMESPACE
+          value: {{ .Namespace }}
+        - name: NATS_URI
+          value: {{ .NatsUri }}
+        - name: ID
+          value: {{ .Name }}
+        - name: GROUP
+          value: test
+        - name: SOURCE
+          value: "test:{{ .Name }}"
       - name: "{{ .Name }}"
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .Image }}

@@ -10,6 +10,21 @@ spec:
   template:
     spec:
       containers:
+      - name: "{{ .Name }}-logs"
+        image: {{ .Registry }}/{{ .LogSidecarImage }}
+        env:
+        - name: DEBUG
+          value: {{ .Debug }}
+        - name: NAMESPACE
+          value: {{ .Namespace }}
+        - name: NATS_URI
+          value: {{ .NatsUri }}
+        - name: ID
+          value: {{ .Name }}
+        - name: GROUP
+          value: scraper
+        - name: SOURCE
+          value: "scraper:{{ .Name }}"
       - name: {{ .Name }}-scraper
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .ScraperImage }}
