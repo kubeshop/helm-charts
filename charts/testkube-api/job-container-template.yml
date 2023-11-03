@@ -51,6 +51,10 @@ spec:
       - name: "{{ .Name }}-logs"
         image: {{ .Registry }}/{{ .LogSidecarImage }} 
         env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: DEBUG
           value: {{ .Debug }}
         - name: NAMESPACE
