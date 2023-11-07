@@ -73,9 +73,9 @@ proxy:
   ## Resources limits and requests for kube-rbac-proxy container
   resources: {}
 
-## Testkube Operator full name
+## Testkube API full name
 apiFullname: "testkube-api-server"
-## Testkube Operator port
+## Testkube API port
 apiPort: 8088
 ## Testkube Operator healthcheck port
 healthcheckPort: 8081
