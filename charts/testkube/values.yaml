@@ -891,7 +891,7 @@ testkube-operator:
 
   # -- Testkube API full name
   apiFullname: "testkube-api-server"
-  # -- Testkube Operator port
+  # -- Testkube API port
   apiPort: 8088
   # -- Testkube Operator healthcheck port
   healthcheckPort: 8081

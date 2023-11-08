@@ -290,7 +290,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-dashboard.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.affinity | object | `{}` | Affinity for Testkube Operator pod assignment. |
 | testkube-operator.apiFullname | string | `"testkube-api-server"` | Testkube API full name |
-| testkube-operator.apiPort | int | `8088` | Testkube Operator port |
+| testkube-operator.apiPort | int | `8088` | Testkube API port |
 | testkube-operator.enabled | bool | `true` |  |
 | testkube-operator.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-operator.fullnameOverride | string | `"testkube-operator"` | Testkube Operator fullname override |
