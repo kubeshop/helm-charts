@@ -895,6 +895,8 @@ testkube-operator:
   apiPort: 8088
   # -- Testkube Operator healthcheck port
   healthcheckPort: 8081
+  # -- Use ArgoCD sync owner references
+  useArgoCDSync: false
 
   # Service Account parameters
   serviceAccount:
