@@ -79,6 +79,8 @@ apiFullname: "testkube-api-server"
 apiPort: 8088
 ## Testkube Operator healthcheck port
 healthcheckPort: 8081
+# use ArgoCD sync owner references
+useArgoCDSync: false
 
 ## Service Account parameters
 serviceAccount:

@@ -71,6 +71,10 @@ spec:
         {{- if not .Values.webhook.enabled }}
         - name: ENABLE_WEBHOOKS
           value: "false"
+        {{- end }} 
+        {{- if .Values.useArgoCDSync }}
+        - name: APISERVER_USE_ARGOCD_SYNC
+          value: "true"
         {{- end }}
         {{- if .Values.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
