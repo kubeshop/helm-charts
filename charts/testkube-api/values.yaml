@@ -132,6 +132,9 @@ clusterName: ""
 ## enable endpoint to list testkube namespace secrets
 enableSecretsEndpoint: false
 
+## disable running MongoDB migrations on API start
+disableMongoMigrations: false
+
 ## Testkube API resource requests and limits
 resources:
   {}

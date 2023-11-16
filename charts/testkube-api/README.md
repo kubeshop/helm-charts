@@ -49,6 +49,7 @@ A Helm chart for Testkube api
 | configValues | string | `""` |  |
 | dashboardUri | string | `""` |  |
 | dnsPolicy | string | `""` |  |
+| disableMongoMigrations | bool | `false` |  |
 | enableSecretsEndpoint | bool | `false` |  |
 | executors | string | `""` |  |
 | extraEnvVars | object | `{}` |  |

@@ -285,7 +285,7 @@ testkube-api:
   cdeventsTarget: ""
   dashboardUri: ""
   clusterName: ""
-  enableSecretsEndpoint: false
+  enableSecretsEndpoint: true
 
   priorityClassName: "highest-priority"
 
@@ -384,6 +384,8 @@ testkube-operator:
       tag: "v0.8.0"
     ## Proxy Container Port
     containerPort: 8443
+
+  useArgoCDSync: true
 
   resources: {}
 #    requests:
