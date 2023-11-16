@@ -385,6 +385,8 @@ testkube-operator:
     ## Proxy Container Port
     containerPort: 8443
 
+  useArgoCDSync: true
+
   resources: {}
 #    requests:
 #      memory: "200Mi"
