@@ -116,6 +116,8 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
+   ## Base64 encoded Slave Pod template
+  slavePod: "" 
 
 ## base64 encoded executors.json alike data
 executors: ""
