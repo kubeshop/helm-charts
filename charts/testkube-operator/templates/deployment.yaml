@@ -71,6 +71,10 @@ spec:
         {{- if not .Values.webhook.enabled }}
         - name: ENABLE_WEBHOOKS
           value: "false"
+        {{- end }} 
+        {{- if .Values.useArgoCDSync }}
+        - name: APISERVER_USE_ARGOCD_SYNC
+          value: "true"
         {{- end }}
         {{- if .Values.extraEnvVars }}
         {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 8 | trim }}
@@ -78,6 +82,17 @@ spec:
         {{- if .Values.global }}
         - name: APISERVER_REGISTRY
           value:  {{ .Values.global.imageRegistry }}
+        {{- end }}
+        {{- if .Values.nats.enabled }}
+        - name: NATS_URI
+          {{- if .Values.nats.secretName }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.nats.secretName }}
+              key: {{ .Values.nats.secretKey }}
+          {{- else }}
+          value: "nats://{{ .Release.Name }}-nats"
+          {{- end }}
         {{- end }}
         ports:
         - containerPort: 9443

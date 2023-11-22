@@ -79,6 +79,8 @@ apiFullname: "testkube-api-server"
 apiPort: 8088
 ## Testkube Operator healthcheck port
 healthcheckPort: 8081
+# use ArgoCD sync owner references
+useArgoCDSync: false
 
 ## Service Account parameters
 serviceAccount:
@@ -331,3 +333,12 @@ preUpgrade:
       operator: Equal
       value: arm64
       effect: NoSchedule
+
+## NATS parameters
+## ref: https://github.com/nats-io/nats-server
+nats:
+  ## Deploy NATS server to the cluster
+  enabled: true
+  ## load URI from secrets
+  # secretName: XXX
+  # secretKey: XXX
