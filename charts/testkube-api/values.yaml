@@ -180,6 +180,13 @@ affinity: {}
 ## Specify priorityClassName for Testkube API Deployment
 priorityClassName: ""
 
+## Additional volumes to be added
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalVolumes: []
+## Additional volume mounts to be added
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalVolumeMounts: []
+
 ## Storage for Testkube API. Now Minio is used:
 storage:
   endpoint: ""
@@ -197,9 +204,13 @@ storage:
   region: ""
   token: ""
   bucket: "testkube-artifacts"
-  # expiration period in days
+  ## expiration period in days
   expiration: 0
   SSL: false
+  ## Skip Verify is used to configure storage client not to verify SSL certificates
+  skipVerify: false
+  ## Path to CA cert used by storage client to verify S3 storages with self-signed certificates
+  sslCertFile: ""
   scrapperEnabled: true
   compressArtifacts: true
 
