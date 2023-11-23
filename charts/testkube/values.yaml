@@ -180,7 +180,7 @@ testkube-api:
   multinamespace:
     enabled: false
 
-  # -- Custom job-template.yml that will passed to Testkube API. Example:
+# Custom job-template.yml that will be passed to Testkube API. Example:
 #  configValues: |
 #    apiVersion: batch/v1
 #    kind: Job
