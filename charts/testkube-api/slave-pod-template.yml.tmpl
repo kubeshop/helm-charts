@@ -60,17 +60,17 @@ spec:
     livenessProbe:
       tcpSocket:
         port: {{ $port.ContainerPort }}
-    	failureThreshold: 3
-		  periodSeconds: 5
-		  successThreshold: 1
-		  timeoutSeconds: 1
+      failureThreshold: 3
+      periodSeconds: 5
+      successThreshold: 1
+      timeoutSeconds: 1
     readinessProbe:
       tcpSocket:
         port: {{ $port.ContainerPort }}
-		  failureThreshold: 3
-		  initialDelaySeconds: 10
-		  periodSeconds: 5
-		  timeoutSeconds: 1
+      failureThreshold: 3
+      initialDelaySeconds: 10
+      periodSeconds: 5
+     timeoutSeconds: 1
     {{- end }}
     {{- end }}
     {{- if .Resources }}
