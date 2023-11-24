@@ -180,7 +180,7 @@ testkube-api:
   multinamespace:
     enabled: false
 
-  # -- Custom job-template.yml that will passed to Testkube API. Example:
+# Custom job-template.yml that will be passed to Testkube API. Example:
 #  configValues: |
 #    apiVersion: batch/v1
 #    kind: Job
@@ -235,8 +235,14 @@ testkube-api:
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
-  # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
+  # -- Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
   additionalNamespaces: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volumes to be added
+  additionalVolumes: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volume mounts to be added
+  additionalVolumeMounts: []
 
   ## Service Account parameters
   serviceAccount:
@@ -452,6 +458,10 @@ testkube-api:
     expiration: 0
     # -- MinIO Use SSL
     SSL: false
+    # -- Skip Verify is used to configure storage client not to verify SSL certificates
+    skipVerify: false
+    # -- Path to CA cert used by storage client to verify S3 storages with self-signed certificates
+    sslCertFile: ""
     # -- Toggle whether to enable scraper in Testkube API
     scrapperEnabled: true
     # -- Toggle whether to compress artifacts in Testkube API
