@@ -121,6 +121,18 @@ spec:
               {{- else }}
               value: "nats://{{ .Release.Name }}-nats"
               {{- end }}
+            - name: "NATS_SECURE"
+              value: "{{ .Values.nats.tls.enabled }}"
+            {{- if .Values.nats.tls.certSecret.enabled }}
+            - name: "NATS_CERT_FILE"
+              value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
+            - name: "NATS_KEY_FILE"
+              value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.keyFile }}"
+            {{- if .Values.nats.tls.mountCACertificate }}
+            - name: "NATS_CA_FILE"
+              value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.caFile }}"
+            {{- end }}
+            {{- end }}
             {{- end }}
             - name: POSTMANEXECUTOR_URI
               value: "{{ .Values.postmanExecutorURI }}"
@@ -180,9 +192,15 @@ spec:
               value:  "{{ .Values.storage.SSL }}"
             - name: "STORAGE_SKIP_VERIFY"
               value:  "{{ .Values.storage.skipVerify }}"
-            {{- if .Values.storage.sslCertFile }}
-            - name: "SSL_CERT_FILE"
-              value:  "{{ .Values.storage.sslCertFile }}"
+            {{- if .Values.storage.certSecret.enabled }}
+            - name: "STORAGE_CERT_FILE"
+              value:  "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.certFile }}"
+            - name: "STORAGE_KEY_FILE"
+              value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.keyFile }}"
+            {{- if .Values.storage.mountCACertificate }}
+            - name: "STORAGE_CA_FILE"
+              value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.caFile }}"
+            {{- end }}
             {{- end }}
             - name: "SCRAPPERENABLED"
               value:  "{{ .Values.storage.scrapperEnabled }}"
@@ -332,6 +350,16 @@ spec:
           volumeMounts:
             - mountPath: /app/config
               name: testkube-config
+            {{- if .Values.storage.certSecret.enabled }}
+            - mountPath: /etc/client-certs/storage
+              name: {{ .Values.storage.certSecret.name }}
+              readOnly: true
+            {{- end }}
+            {{- if .Values.nats.tls.certSecret.enabled }}
+            - mountPath: /etc/client-certs/nats
+              name: {{ .Values.nats.tls.certSecret.name }}
+              readOnly: true
+            {{- end }}
             {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}
             {{- end }}
@@ -347,6 +375,16 @@ spec:
         - name: testkube-config
           configMap:
             name: {{ include "testkube-api.fullname" . }}
+        {{- if .Values.storage.certSecret.enabled }}
+        - name: {{ .Values.storage.certSecret.name }}
+          secret:
+            secretName: {{ .Values.storage.certSecret.name }}
+        {{- end }}
+        {{- if .Values.nats.tls.certSecret.enabled }}
+        - name: {{ .Values.nats.tls.certSecret.name }}
+          secret:
+            secretName: {{ .Values.nats.tls.certSecret.name }}
+        {{- end }}
         {{- with .Values.additionalVolumes }}
         {{- toYaml . | nindent 8 -}}
         {{- end }}

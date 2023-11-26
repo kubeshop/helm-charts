@@ -206,12 +206,28 @@ storage:
   bucket: "testkube-artifacts"
   ## expiration period in days
   expiration: 0
+  ## Toggle whether to enable TLS in the storage client
   SSL: false
   ## Skip Verify is used to configure storage client not to verify SSL certificates
   skipVerify: false
-  ## Path to CA cert used by storage client to verify S3 storages with self-signed certificates
-  sslCertFile: ""
+  ## If enabled, will also require a CA certificate to be provided
+  mountCACertificate: false
+  certSecret:
+    ## Toggle whether to mount k8s secret which contains storage client certificate (defaults are: cert.crt, cert.key, ca.crt, can be edited using the below keys
+    enabled: false
+    ## Name of the storage client certificate secret
+    name: "nats-client-cert"
+    ## Base path to mount the client certificate secret
+    baseMountPath: /etc/client-certs/storage
+    ## Path to client certificate file
+    certFile: "cert.crt"
+    ## Path to client certificate key file
+    keyFile: "cert.key"
+    ## Path to ca file (used for self-signed certificates)
+    caFile: "ca.crt"
+  ## Toggle whether to enable artifact scrapping
   scrapperEnabled: true
+  ## Toggle whether to compress artifacts into tarballs
   compressArtifacts: true
 
 ## Logs storage for Testkube API.
@@ -303,6 +319,27 @@ mongodb:
 nats:
   ## Deploy NATS server to the cluster
   enabled: true
+  tls:
+    ## Toggle whether to enable TLS in NATS client
+    enabled: false
+    ## Toggle whether to verify certificates
+    skipVerify: false
+    ## If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      ## Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      ## Name of the storage client certificate secret
+      name: "nats-client-cert"
+      ## Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/nats
+      ## Path to client certificate file
+      certFile: "cert.crt"
+      ## Path to client certificate key file
+      keyFile: "cert.key"
+      ## Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
+
   ## load URI from secrets
   # secretName: XXX
   # secretKey: XXX
@@ -435,7 +472,6 @@ testConnection:
 ## Testkube API Liveness probe
 livenessProbe:
   initialDelaySeconds: 30
-
 
 ## Testkube API Readiness probe
 readinessProbe:
