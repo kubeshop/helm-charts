@@ -47,6 +47,7 @@ spec:
                 - scraper
                 - pvc
                 - webhook
+                - pod
                 type: string
             required:
             - body

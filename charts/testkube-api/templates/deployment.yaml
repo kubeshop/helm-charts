@@ -216,6 +216,10 @@ spec:
             - name: TESTKUBE_CONTAINER_TEMPLATE_PVC
               value: "{{ .Values.templates.pvcContainer }}"
             {{- end }}
+            {{- if .Values.templates.slavePod }}
+            - name: TESTKUBE_TEMPLATE_SLAVE_POD
+              value: "{{ .Values.templates.slavePod }}"
+            {{- end }}
             - name: TESTKUBE_NAMESPACE
               value: "{{ .Release.Namespace }}"
             - name: JOB_SERVICE_ACCOUNT_NAME

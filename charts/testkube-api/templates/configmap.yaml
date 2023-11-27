@@ -32,3 +32,5 @@ data:
 {{- end }}
   slack-template.json: |-
 {{ .Files.Get "slack-template.json.tmpl" | indent 4 }}
+  slave-pod-template.yml: |-
+{{ .Files.Get "slave-pod-template.yml.tmpl" | indent 4 }}
