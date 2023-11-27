@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 1.16.5](https://img.shields.io/badge/Version-1.16.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.16.7](https://img.shields.io/badge/Version-1.16.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -11,6 +11,73 @@ Add `kubeshop` Helm repository and fetch latest charts info:
 ```sh
 helm repo add kubeshop https://kubeshop.github.io/helm-charts
 helm repo update
+```
+
+### TLS
+
+Testkube API needs to have additional configuration if NATS or MinIO (or any S3-compatible storage) is used.
+THe following sections describe how to configure TLS for NATS and MinIO.
+
+#### NATS
+
+If you want to provision NATS server with TLS, first you will need to create a Kubernetes secret which contains the
+server certificate, certificate key and CA certificate, and then you can use the following configuration
+
+```yaml
+nats:
+  nats:
+    tls:
+      allowNonTLS: false
+      secret:
+        name: nats-server-cert
+      ca: "ca.crt"
+      cert: "cert.crt"
+      key: "cert.key"
+```
+
+If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so it uses a secure protocol when connecting to NATS.
+
+```yaml
+testkube-api:
+  nats:
+    tls:
+      enabled: true
+```
+
+Additionally, if NATS is configured to use a self-signed certificate, Testkube API needs to have the CA & client certificate in order to verify the NATS server certificate.
+You will need to create a Kubernetes secret which contains the client certificate, certificate key and CA certificate.
+
+```yaml
+testkube-api:
+  nats:
+    tls:
+      enabled: true
+      mountCACertificate: true
+      certSecret:
+        enabled: true
+```
+
+#### MinIO/S3
+
+Currently, Testkube doesn't support provisioning MinIO with TLS. However, if you use an external MinIO (or any S3-compatible storage)
+you can configure Testkube API to use TLS when connecting to it.
+
+```yaml
+testkube-api:
+  storage:
+    SSL: true
+```
+
+Additionally, if S3 server is configured to use a self-signed certificate, Testkube API needs to have the CA & client certificate in order to verify the S3 server certificate.
+You will need to create a Kubernetes secret which contains the client certificate, certificate key and CA certificate.
+
+```yaml
+testkube-api:
+  storage:
+    SSL: true
+    mountCACertificate: true
+    certSecret:
+      enabled: true
 ```
 
 NOTE:
@@ -50,7 +117,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 1.16.6 |
+| file://../testkube-api | testkube-api | 1.16.8 |
 | file://../testkube-dashboard | testkube-dashboard | 1.15.0 |
 | file://../testkube-operator | testkube-operator | 1.16.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
@@ -101,7 +168,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHook.securityContext | object | `{}` | Security Context for MongoDB Upgrade kubectl container |
 | preUpgradeHook.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
 | preUpgradeHook.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-api.additionalNamespaces | list | `[]` |  |
+| testkube-api.additionalNamespaces | list | `[]` | Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace. |
+| testkube-api.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added |
+| testkube-api.additionalVolumes | list | `[]` | Additional volumes to be added |
 | testkube-api.analyticsEnabled | bool | `true` | Enable analytics for Testkube |
 | testkube-api.cdeventsTarget | string | `""` |  |
 | testkube-api.cliIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
@@ -158,6 +227,15 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.multinamespace.enabled | bool | `false` |  |
 | testkube-api.nameOverride | string | `"api-server"` | Testkube API name override |
 | testkube-api.nats.enabled | bool | `true` | Use NATS |
+| testkube-api.nats.tls.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
+| testkube-api.nats.tls.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
+| testkube-api.nats.tls.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
+| testkube-api.nats.tls.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
+| testkube-api.nats.tls.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
+| testkube-api.nats.tls.certSecret.name | string | `"nats-client-cert"` | Name of the storage client certificate secret |
+| testkube-api.nats.tls.enabled | bool | `false` | Toggle whether to enable TLS in NATS client |
+| testkube-api.nats.tls.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
+| testkube-api.nats.tls.skipVerify | bool | `false` | Toggle whether to verify certificates |
 | testkube-api.nats.uri | string | `"nats://testkube-nats:4222"` | NATS URI |
 | testkube-api.podSecurityContext | object | `{}` | Testkube API Pod Security Context |
 | testkube-api.podStartTimeout | string | `"30m"` | Testkube timeout for pod start |
@@ -184,18 +262,24 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.storage.accessKey | string | `"minio123"` | MinIO Secret Access Key |
 | testkube-api.storage.accessKeyId | string | `"minio"` | MinIO Access Key ID |
 | testkube-api.storage.bucket | string | `"testkube-artifacts"` | MinIO Bucket |
+| testkube-api.storage.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
+| testkube-api.storage.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
+| testkube-api.storage.certSecret.certFile | string | `"cert.crt"` | Path to client certificate file |
+| testkube-api.storage.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt) |
+| testkube-api.storage.certSecret.keyFile | string | `"cert.key"` | Path to client certificate key file |
+| testkube-api.storage.certSecret.name | string | `"storage-client-cert"` | Name of the storage client certificate secret |
 | testkube-api.storage.compressArtifacts | bool | `true` | Toggle whether to compress artifacts in Testkube API |
 | testkube-api.storage.endpoint | string | `""` | MinIO endpoint |
 | testkube-api.storage.endpoint_port | string | `"9000"` | MinIO endpoint port |
 | testkube-api.storage.expiration | int | `0` | MinIO Expiration period in days |
+| testkube-api.storage.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
 | testkube-api.storage.region | string | `""` | MinIO Region |
 | testkube-api.storage.scrapperEnabled | bool | `true` | Toggle whether to enable scraper in Testkube API |
-| testkube-api.storage.secretKeyAccessKeyId | string | `""` |  |
-| testkube-api.storage.secretKeySecretAccessKey | string | `""` |  |
-| testkube-api.storage.secretNameAccessKeyId | string | `""` |  |
-| testkube-api.storage.secretNameSecretAccessKey | string | `""` |  |
-| testkube-api.storage.skipVerify | bool | `false` | Skip Verify is used to configure storage client not to verify SSL certificates |
-| testkube-api.storage.sslCertFile | string | `""` | Path to CA cert used by storage client to verify S3 storages with self-signed certificates |
+| testkube-api.storage.secretKeyAccessKeyId | string | `""` | Key for storage accessKeyId taken from k8s secret |
+| testkube-api.storage.secretKeySecretAccessKey | string | `""` | Key for storage secretAccessKeyId taken from k8s secret |
+| testkube-api.storage.secretNameAccessKeyId | string | `""` | k8s Secret name for storage accessKeyId |
+| testkube-api.storage.secretNameSecretAccessKey | string | `""` | K8s Secret Name for storage secretAccessKeyId |
+| testkube-api.storage.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | testkube-api.storage.token | string | `""` | MinIO Token |
 | testkube-api.testConnection.enabled | bool | `true` | Toggle whether to create Test Connection pod |
 | testkube-api.testConnection.resources | object | `{}` | Test Connection resource settings |

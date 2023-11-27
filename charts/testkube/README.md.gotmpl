@@ -12,6 +12,74 @@ helm repo add kubeshop https://kubeshop.github.io/helm-charts
 helm repo update
 ```
 
+### TLS
+
+Testkube API needs to have additional configuration if NATS or MinIO (or any S3-compatible storage) is used.
+THe following sections describe how to configure TLS for NATS and MinIO.
+
+#### NATS
+
+If you want to provision NATS server with TLS, first you will need to create a Kubernetes secret which contains the
+server certificate, certificate key and CA certificate, and then you can use the following configuration
+
+```yaml
+nats:
+  nats:
+    tls:
+      allowNonTLS: false
+      secret:
+        name: nats-server-cert
+      ca: "ca.crt"
+      cert: "cert.crt"
+      key: "cert.key"
+```
+
+If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so it uses a secure protocol when connecting to NATS.
+
+```yaml
+testkube-api:
+  nats:
+    tls:
+      enabled: true
+```
+
+Additionally, if NATS is configured to use a self-signed certificate, Testkube API needs to have the CA & client certificate in order to verify the NATS server certificate.
+You will need to create a Kubernetes secret which contains the client certificate, certificate key and CA certificate.
+
+```yaml
+testkube-api:
+  nats:
+    tls:
+      enabled: true
+      mountCACertificate: true
+      certSecret:
+        enabled: true
+```
+
+#### MinIO/S3
+
+Currently, Testkube doesn't support provisioning MinIO with TLS. However, if you use an external MinIO (or any S3-compatible storage)
+you can configure Testkube API to use TLS when connecting to it.
+
+```yaml
+testkube-api:
+  storage:
+    SSL: true
+```
+
+Additionally, if S3 server is configured to use a self-signed certificate, Testkube API needs to have the CA & client certificate in order to verify the S3 server certificate.
+You will need to create a Kubernetes secret which contains the client certificate, certificate key and CA certificate.
+
+```yaml
+testkube-api:
+  storage:
+    SSL: true
+    mountCACertificate: true
+    certSecret:
+      enabled: true
+```
+
+
 NOTE:
 This will add CustomResourceDefinitions and RBAC roles and RoleBindings to the cluster.
 This installation requires having cluster administrative rights.

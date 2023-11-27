@@ -27,7 +27,7 @@ preUpgradeHook:
   ## -- Annotations to add to the upgrade Job
   annotations: {}
   ## -- Annotations to add to the upgrade Job's pod
-  podAnnotations: { }
+  podAnnotations: {}
   # -- Specify image
   image:
     registry: docker.io
@@ -138,6 +138,16 @@ nats:
     limits:
       # -- Max payload
       maxPayload: 8MB
+
+    # Uncomment the following block to enable TLS for NATS
+    # You will need to create a secret with the TLS certificates and provide the name of the secret in the tls.secret.name field
+    #tls:
+    #  allowNonTLS: false
+    #  secret:
+    #    name: nats-server-cert
+    #  ca: "ca.crt"
+    #  cert: "tls.crt"
+    #  key: "tls.key"
 
   # Reloader container settings
   reloader:
@@ -293,7 +303,26 @@ testkube-api:
     enabled: true
     # -- NATS URI
     uri: "nats://testkube-nats:4222"
-
+    tls:
+      # -- Toggle whether to enable TLS in NATS client
+      enabled: false
+      # -- Toggle whether to verify certificates
+      skipVerify: false
+      # -- If enabled, will also require a CA certificate to be provided
+      mountCACertificate: false
+      certSecret:
+        # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+        enabled: false
+        # -- Name of the storage client certificate secret
+        name: "nats-client-cert"
+        # -- Base path to mount the client certificate secret
+        baseMountPath: /etc/client-certs/storage
+        # -- Path to client certificate file
+        certFile: "cert.crt"
+        # -- Path to client certificate key file
+        keyFile: "cert.key"
+        # -- Path to ca file (used for self-signed certificates)
+        caFile: "ca.crt"
 
   # MinIO parameters
   minio:
@@ -440,13 +469,13 @@ testkube-api:
     accessKeyId: "minio"
     # -- MinIO Secret Access Key
     accessKey: "minio123"
-    ## k8s Secret name for storage accessKeyId
+    # -- k8s Secret name for storage accessKeyId
     secretNameAccessKeyId: ""
-    ## Key for storage accessKeyId taken from k8s secret
+    # -- Key for storage accessKeyId taken from k8s secret
     secretKeyAccessKeyId: ""
-    ## K8s Secret Name for storage secretAccessKeyId
+    # -- K8s Secret Name for storage secretAccessKeyId
     secretNameSecretAccessKey: ""
-    ## Key for storage secretAccessKeyId taken from k8s secret
+    # -- Key for storage secretAccessKeyId taken from k8s secret
     secretKeySecretAccessKey: ""
     # -- MinIO Region
     region: ""
@@ -458,10 +487,23 @@ testkube-api:
     expiration: 0
     # -- MinIO Use SSL
     SSL: false
-    # -- Skip Verify is used to configure storage client not to verify SSL certificates
+    # -- Toggle whether to verify TLS certificates
     skipVerify: false
-    # -- Path to CA cert used by storage client to verify S3 storages with self-signed certificates
-    sslCertFile: ""
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
     # -- Toggle whether to enable scraper in Testkube API
     scrapperEnabled: true
     # -- Toggle whether to compress artifacts in Testkube API
@@ -1121,16 +1163,16 @@ testkube-operator:
       pullPolicy: IfNotPresent
       pullSecrets: []
     # -- Specify resource limits and requests
-    resources: { }
+    resources: {}
     # -- Create SA for upgrade hook
     serviceAccount:
       create: true
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     # -- Upgrade Pod Security Context
-    podSecurityContext: { }
+    podSecurityContext: {}
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Upgrade kubectl container
-    securityContext: { }
+    securityContext: {}
     ## -- Specific labels
     labels: {}
     ## -- Annotations to add to the upgrade Job
