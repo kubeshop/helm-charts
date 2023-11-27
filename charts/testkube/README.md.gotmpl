@@ -56,6 +56,16 @@ testkube-api:
         enabled: true
 ```
 
+It is also possible to skip the verification of the NATS server certificate by setting the `skipVerify` flag to `true`.
+
+```yaml
+testkube-api:
+  nats:
+    tls:
+      enabled: true
+      skipVerify: true
+```
+
 #### MinIO/S3
 
 Currently, Testkube doesn't support provisioning MinIO with TLS. However, if you use an external MinIO (or any S3-compatible storage)
@@ -79,6 +89,14 @@ testkube-api:
       enabled: true
 ```
 
+It is also possible to skip the verification of the S3 server certificate by setting the `skipVerify` flag to `true`.
+
+```yaml
+testkube-api:
+  storage:
+    SSL: true
+    skipVerify: true
+```
 
 NOTE:
 This will add CustomResourceDefinitions and RBAC roles and RoleBindings to the cluster.
