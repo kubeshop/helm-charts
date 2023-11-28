@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 1.16.7](https://img.shields.io/badge/Version-1.16.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.16.10](https://img.shields.io/badge/Version-1.16.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -136,8 +136,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 1.16.8 |
-| file://../testkube-dashboard | testkube-dashboard | 1.15.0 |
+| file://../testkube-api | testkube-api | 1.16.9 |
+| file://../testkube-dashboard | testkube-dashboard | 1.16.1 |
 | file://../testkube-operator | testkube-operator | 1.16.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 0.19.1 |
@@ -187,9 +187,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHook.securityContext | object | `{}` | Security Context for MongoDB Upgrade kubectl container |
 | preUpgradeHook.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
 | preUpgradeHook.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-api.additionalNamespaces | list | `[]` | Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace. |
-| testkube-api.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added |
-| testkube-api.additionalVolumes | list | `[]` | Additional volumes to be added |
+| testkube-api.additionalNamespaces | list | `[]` |  |
 | testkube-api.analyticsEnabled | bool | `true` | Enable analytics for Testkube |
 | testkube-api.cdeventsTarget | string | `""` |  |
 | testkube-api.cliIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
