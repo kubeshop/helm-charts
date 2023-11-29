@@ -7,14 +7,12 @@ metadata:
     {{- include "tracetest.labels" . | nindent 4 }}
 data:
   config.yaml: |-
-    {{- if .Values.postgresql.enabled }}
     postgres:
       host: {{ include "tracetest.postgresql.fullname" . }}
       user: {{.Values.postgresql.auth.username}}
       password: {{.Values.postgresql.auth.password}}
-      port: 5432
-      params: sslmode=disable
-    {{- end }}
+      port: {{.Values.postgresql.auth.port}}
+      params: {{.Values.postgresql.auth.params}}
     telemetry:
       {{- toYaml .Values.telemetry | nindent 6 }}
     server:
