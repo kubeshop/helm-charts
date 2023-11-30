@@ -4,12 +4,24 @@ metadata:
   name: {{ include "testkube-logs.fullname" . }}
   labels:
     {{- include "testkube-logs.labels" . | nindent 4 }}
+    {{- if .Values.service.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.service.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- with .Values.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.service.port }}
       protocol: TCP
       name: http
-  selector:
-    {{- include "testkube-logs.selectorLabels" . | nindent 4 }}
+  selector: {{- include "testkube-logs.selectorLabels" . | nindent 4 }}

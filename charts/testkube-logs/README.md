@@ -4,31 +4,58 @@
 
 A Helm chart for Kubernetes
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| file://../global | global | 0.1.2 |
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
+| autoscaling.annotations | object | `{}` |  |
+| autoscaling.enabled | bool | `true` |  |
+| autoscaling.labels | object | `{}` |  |
+| autoscaling.maxReplicas | int | `10` |  |
+| autoscaling.minReplicas | int | `3` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
+| extraEnvVars | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.annotations | object | `{}` | Annotations to add to all deployed objects |
+| global.imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
+| global.imageRegistry | string | `""` | Global Docker image registry |
+| global.labels | object | `{}` | Labels to add to all deployed objects |
+| image.digest | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.pullSecret | list | `[]` |  |
+| image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-logs-server"` |  |
 | image.tag | string | `"latest"` |  |
-| imagePullSecrets | list | `[]` |  |
+| jobServiceAccountName | string | `""` |  |
+| kubeVersion | string | `""` |  |
 | nameOverride | string | `""` |  |
 | nats.uri | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| replicaCount | int | `1` |  |
+| priorityClassName | string | `""` |  |
+| replicaCount | int | `3` |  |
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
+| service.annotations | object | `{}` |  |
+| service.labels | object | `{}` |  |
 | service.port | int | `8080` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| testConnection.enabled | bool | `false` |  |
+| testServiceAccount.annotations | object | `{}` |  |
+| testServiceAccount.create | bool | `true` |  |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

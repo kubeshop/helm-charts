@@ -60,3 +60,38 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the test service account to use
+*/}}
+{{- define "testkube-logs.testServiceAccountName" -}}
+{{- if .Values.testServiceAccount.create }}
+{{- $prefix := default (include "testkube-logs.fullname" .) .Values.jobServiceAccountName }}
+{{- printf "%s-%s" $prefix "tests-job" }}
+{{- else }}
+{{- default "default" .Values.jobServiceAccountName }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define Testkube Logs image
+*/}}
+{{- define "testkube-logs.image" -}}
+{{- $registryName := .Values.image.registry -}}
+{{- $repositoryName := .Values.image.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.image.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.image.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}
