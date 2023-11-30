@@ -2,39 +2,110 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+### @section  Global image parameters
+## Important! Please, note that this will override sub-chart image parameters.
+## Global Docker image registry
+## Global Docker registry secret names as an array
+global:
+  # -- Global Docker image registry
+  imageRegistry: ""
+  # -- Global Docker registry secret names as an array
+  imagePullSecrets: []
+  # -- Labels to add to all deployed objects
+  labels: {}
+  # --  Annotations to add to all deployed objects
+  annotations: {}
+
+### @section Common parameters
+## Kubernetes version (using Helm capabilities if not set)
+kubeVersion: ""
+
+## Number of Testkube Logs Pod replicas
 replicaCount: 3
 
+## Testkube Pod annotations
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+
+## Extra labels for Testkube API pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels: {}
+
+### @section Specific parameters
+## image.registry Testkube Logs image registry
+## image.repository Testkube Logs image name
+## image.tag Testkube Logs image tag
+## image.digest Testkube Logs image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## image.pullPolicy Testkube Logs Image pull policy
+## image.secret k8s secret for private registries
 image:
+  registry: docker.io
   repository: kubeshop/testkube-logs-server
   pullPolicy: IfNotPresent
   tag: "latest"
+  digest: ""
+  pullSecret: []
 
-imagePullSecrets: []
+## Chart parameters
+## nameOverride Overrides Chart name
+## fullnameOverride Full name that overrides Chart name
 nameOverride: ""
 fullnameOverride: ""
 
-podAnnotations: {}
-podLabels: {}
+## Service Account parameters
+serviceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  name: ""
 
+## Test Job ServiceAccount parameters
+testServiceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+
+## Test Job ServiceAccount name
+jobServiceAccountName: ""
+
+## Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 podSecurityContext: {}
-  # fsGroup: 2000
 
+## Configure Container Security Context for Testkube Logs 
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+##
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
+## Service parameters
 service:
+  ## Adapter service type
   type: ClusterIP
+  ## HTTP Port
   port: 8080
+  ## Annotations
+  annotations: {}
+  ## Service labels
+  labels: {}
 
+## Testkube Logs Deployment parameters
+## Dependecy to NATS
 nats:
+  ## URI that testkube logs uses to connect to NATS
   uri: ""
 
-resources: {}
+## Extra Environment Variables which will be injected into the Testkube Logs container
+extraEnvVars: {}
+# - name: FOO
+#   value: BAR
+
+## Testkube Logs resource requests and limits
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -46,15 +117,37 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+## Autoscaling parameters
+## Enable autoscaling for Testkube API deployment
+## Add custom labels to autoscaling
+## Add custom annotations to autoscaling
+## Minimum number of replicas to scale back
+## Maximum number of replicas to scale out
+## Target CPU utilization percentage
+## Target Memory utilization percentage
 autoscaling:
   enabled: true
+  labels: {}
+  annotations: {}
   minReplicas: 3
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
 
+## Node labels for Testkube Logs pod assignment.
 nodeSelector: {}
 
+## Tolerations for Testkube Logs  assignment.
 tolerations: []
 
+## Affinity for Testkube API Logs assignment.
+## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
 affinity: {}
+
+## Specify priorityClassName for Testkube Logs Deployment
+priorityClassName: ""
+
+##Test Connection pod
+testConnection:
+  enabled: false
