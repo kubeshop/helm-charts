@@ -147,6 +147,7 @@ A Helm chart for Testkube api
 | templates.jobContainer | string | `""` |  |
 | templates.pvcContainer | string | `""` |  |
 | templates.scraperContainer | string | `""` |  |
+| templates.slavePod | string | `""` |  |
 | testConnection.enabled | bool | `false` |  |
 | testServiceAccount.annotations | object | `{}` |  |
 | testServiceAccount.create | bool | `true` |  |

@@ -116,6 +116,8 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
+   ## Base64 encoded Slave Pod template
+  slavePod: "" 
 
 ## base64 encoded executors.json alike data
 executors: ""
@@ -180,6 +182,13 @@ affinity: {}
 ## Specify priorityClassName for Testkube API Deployment
 priorityClassName: ""
 
+## Additional volumes to be added
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalVolumes: []
+## Additional volume mounts to be added
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalVolumeMounts: []
+
 ## Storage for Testkube API. Now Minio is used:
 storage:
   endpoint: ""
@@ -197,7 +206,7 @@ storage:
   region: ""
   token: ""
   bucket: "testkube-artifacts"
-  # expiration period in days
+  ## expiration period in days
   expiration: 0
   ## Toggle whether to enable TLS in the storage client
   SSL: false

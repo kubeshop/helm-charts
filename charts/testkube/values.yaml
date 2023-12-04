@@ -190,7 +190,7 @@ testkube-api:
   multinamespace:
     enabled: false
 
-  # -- Custom job-template.yml that will passed to Testkube API. Example:
+# Custom job-template.yml that will be passed to Testkube API. Example:
 #  configValues: |
 #    apiVersion: batch/v1
 #    kind: Job
@@ -245,8 +245,14 @@ testkube-api:
   extraEnvVars: []
   #  - name: FOO
   #    value: BAR
-  # Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
+  # -- Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
   additionalNamespaces: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volumes to be added
+  additionalVolumes: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volume mounts to be added
+  additionalVolumeMounts: []
 
   ## Service Account parameters
   serviceAccount:
