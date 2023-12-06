@@ -83,17 +83,6 @@ spec:
         - name: APISERVER_REGISTRY
           value:  {{ .Values.global.imageRegistry }}
         {{- end }}
-        {{- if .Values.nats.enabled }}
-        - name: NATS_URI
-          {{- if .Values.nats.secretName }}
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.nats.secretName }}
-              key: {{ .Values.nats.secretKey }}
-          {{- else }}
-          value: "nats://{{ .Release.Name }}-nats"
-          {{- end }}
-        {{- end }}
         ports:
         - containerPort: 9443
           name: webhook-server
