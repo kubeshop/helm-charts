@@ -4227,6 +4227,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2023-12-07T21:24:52.317088548Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 1.16.11
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 0.19.1
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 1.16.13
+    - condition: testkube-dashboard.enabled
+      name: testkube-dashboard
+      repository: file://../testkube-dashboard
+      version: 1.16.2
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 04830b371e5bbd4cc60cd9de1edb26c89730d9abd12cbac23cf968281666418e
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-1.16.18/testkube-1.16.18.tgz
+    version: 1.16.18
+  - apiVersion: v2
     created: "2023-12-04T17:04:07.09902874Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -39905,6 +39938,20 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 1.16.13
+    created: "2023-12-07T21:24:52.490358352Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: A Helm chart for Testkube api
+    digest: 4a17ae38124311ed436a855f2a8137f6ddf5d8369d35812c0c7c612fbcdef0f3
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-1.16.13/testkube-api-1.16.13.tgz
+    version: 1.16.13
+  - apiVersion: v2
     appVersion: 1.16.12
     created: "2023-12-04T17:04:07.224833743Z"
     dependencies:
@@ -51141,4 +51188,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-04T17:04:07.402349741Z"
+generated: "2023-12-07T21:24:52.519374084Z"
