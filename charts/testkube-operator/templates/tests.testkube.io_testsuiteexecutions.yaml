@@ -277,6 +277,13 @@ spec:
                     items:
                       description: execution result returned from executor
                       properties:
+                        duration:
+                          description: step duration
+                          type: string
+                        endTime:
+                          description: step end time
+                          format: date-time
+                          type: string
                         execute:
                           items:
                             description: execution result returned from executor
@@ -752,6 +759,10 @@ spec:
                                 type: object
                             type: object
                           type: array
+                        startTime:
+                          description: step start time
+                          format: date-time
+                          type: string
                         step:
                           description: set of steps run in parallel
                           properties:
