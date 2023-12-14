@@ -331,6 +331,14 @@ spec:
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
               value: "{{ .Values.disableMongoMigrations }}"
+            {{- $executors := "" }}
+            {{- range $k, $v := .Values.installOnlySpecifiedExecutors }}
+              {{- if $v.enabled }}
+                {{- $executors = print $executors "," $k }}
+              {{- end }}
+            {{- end }}
+            - name: TESTKUBE_SPECIFIED_EXECUTORS
+              value: "{{ $executors }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
