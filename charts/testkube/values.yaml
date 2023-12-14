@@ -592,6 +592,12 @@ testkube-api:
   clusterName: ""
   ## enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
+  ## install only specified executors with enabled flag
+  installOnlySpecifiedExecutors:
+  #  postman-executor:
+  #    enabled: true
+  #  cypress-executor:
+  #    enabled: true
 
   # Test Connection pod
   testConnection:
