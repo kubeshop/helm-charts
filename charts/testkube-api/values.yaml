@@ -138,7 +138,7 @@ enableSecretsEndpoint: false
 disableMongoMigrations: false
 
 ## install only specified executors with enabled flag
-installOnlySpecifiedExecutors:
+enabledExecutors:
 
 ## Testkube API resource requests and limits
 resources:
