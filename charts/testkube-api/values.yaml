@@ -137,7 +137,7 @@ enableSecretsEndpoint: false
 ## disable running MongoDB migrations on API start
 disableMongoMigrations: false
 
-## install only specified executors with enabled flag
+## enable only specified executors with enabled flag
 enabledExecutors:
 
 ## Testkube API resource requests and limits
