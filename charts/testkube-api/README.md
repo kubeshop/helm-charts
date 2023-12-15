@@ -45,6 +45,7 @@ A Helm chart for Testkube api
 | cloud.migrate | string | `""` |  |
 | cloud.orgId | string | `""` |  |
 | cloud.url | string | `"agent.testkube.io:443"` |  |
+| cloud.uiUrl | string | `""` |  |
 | clusterName | string | `""` |  |
 | configValues | string | `""` |  |
 | dashboardUri | string | `""` |  |

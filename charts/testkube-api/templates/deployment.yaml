@@ -277,6 +277,10 @@ spec:
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
             {{- end}}
+            {{- if .Values.cloud.uiUrl}}
+            - name: TESTKUBE_CLOUD_UI_URL
+              value:  "{{ .Values.cloud.uiUrl }}"
+            {{- end}}
             {{- if .Values.cloud.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
