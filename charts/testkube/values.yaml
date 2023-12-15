@@ -592,7 +592,7 @@ testkube-api:
   clusterName: ""
   ## enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
-  ## install only specified executors with enabled flag
+  ## enable only specified executors with enabled flag
   enabledExecutors:
   #  postman-executor:
   #    enabled: true
