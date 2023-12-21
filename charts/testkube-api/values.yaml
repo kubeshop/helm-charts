@@ -116,8 +116,12 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
-   ## Base64 encoded Slave Pod template
-  slavePod: "" 
+  ## Base64 encoded Slave Pod template
+  slavePod: ""
+  ## Map of labels to apply to the default Job template
+  labels: {}
+  ## Map of annotations to apply to the default Job template
+  annotations: {}
 
 ## base64 encoded executors.json alike data
 executors: ""

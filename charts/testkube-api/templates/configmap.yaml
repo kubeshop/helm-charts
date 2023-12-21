@@ -20,7 +20,20 @@ data:
 {{- if .Values.configValues }}
   {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
 {{- else }}
-{{ .Files.Get "job-template.yml.tmpl" | indent 4 }}
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: {{ printf "\"{{ .Name }}\"" }}
+      namespace: {{ printf "{{ .Namespace }}" }}
+      {{- if .Values.templates.labels }}
+      labels:
+      {{- include "global.tplvalues.render" ( dict "value" .Values.templates.labels "context" $ ) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.templates.annotations }}
+      annotations:
+      {{- include "global.tplvalues.render" ( dict "value" .Values.templates.annotations "context" $ ) | nindent 8 }}
+      {{- end }}
+{{ .Files.Get "job-template-spec.yml.tmpl" | indent 4 }}
 {{- end }}
   pvc-template.yml: |-
 {{ .Files.Get "pvc-template.yml.tmpl" | indent 4 }}
