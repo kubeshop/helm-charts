@@ -64,6 +64,8 @@ A Helm chart for Testkube api
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-api-server"` |  |
 | enabledExecutors | object | `{}` |  |
+| jobContainerTemplate | string | `""` |  |
+| jobScraperTemplate | string | `""` |  |
 | jobServiceAccountName | string | `""` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
