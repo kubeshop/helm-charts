@@ -24,7 +24,7 @@ data:
 {{- else }}
 {{ .Files.Get "job-scraper-template.yml.tmpl" | indent 4 }}
 {{- end }}
-  job-template.yml: |
+  job-template.yml: |-
 {{- if .Values.configValues }}
   {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
 {{- else }}
