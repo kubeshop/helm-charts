@@ -57,6 +57,10 @@ image:
   digest: ""
   pullSecrets: []
 
+# Arguments to be passed to the Testkube Operator container
+args:
+  - --logtostderr=true
+
 ##Proxy Image parameters
 ## image.registry Proxy image registry
 ## image.repository Proxy image name
