@@ -67,7 +67,7 @@ proxy:
   image:
     registry: gcr.io
     repository: kubebuilder/kube-rbac-proxy
-    tag: "v0.8.0"
+    tag: "v0.15.0"
     pullPolicy: IfNotPresent
     pullSecrets: []
   ## Resources limits and requests for kube-rbac-proxy container
