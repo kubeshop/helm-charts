@@ -139,6 +139,7 @@ testkube-api:
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
+    storage: 50Gi
     image:
       registry: docker.io
       repository: minio/minio
@@ -267,8 +268,7 @@ testkube-api:
     region: ""
     token: ""
     bucket: "testkube-artifacts"
-    # -- MinIO Expiration period in days
-    expiration: 0
+    expiration: 90
     SSL: false
     scrapperEnabled: true
     compressArtifacts: true
