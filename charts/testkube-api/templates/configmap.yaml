@@ -10,25 +10,34 @@ metadata:
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  executors.json: |
+  executors.json: |-
 {{ .Files.Get "executors.json" | indent 4 }}
-  job-container-template.yml: |
-{{ .Files.Get "job-container-template.yml" | indent 4 }}
-  job-scraper-template.yml: |
-{{ .Files.Get "job-scraper-template.yml" | indent 4 }}
-  job-template.yml: |
+  job-container-template.yml: |-
+{{ .Files.Get "job-container-template.yml.tmpl" | indent 4 }}
+  job-scraper-template.yml: |-
+{{ .Files.Get "job-scraper-template.yml.tmpl" | indent 4 }}
+  job-template.yml: |-
 {{- if .Values.configValues }}
   {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
 {{- else }}
-{{ .Files.Get "job-template.yml" | indent 4 }}
+{{ .Files.Get "job-template.yml.tmpl" | indent 4 }}
 {{- end }}
-  pvc-container-template.yml: |
-{{ .Files.Get "pvc-container-template.yml" | indent 4 }}
-  slack-config.json: |
+  pvc-template.yml: |-
+{{ .Files.Get "pvc-template.yml.tmpl" | indent 4 }}
+  slack-config.json: |-
 {{- if .Values.slackConfig }}
   {{ toJson .Values.slackConfig | indent 4 }}
 {{- else }}
-  {{ .Files.Get "slack-config.json" | indent 4 }}
+{{ .Files.Get "slack-config.json" | indent 4 }}
 {{- end }}
-  slack-template.json: |
-{{ .Files.Get "slack-template.json" | indent 4 }}
+  slack-template.json: |-
+{{ .Files.Get "slack-template.json.tmpl" | indent 4 }}
+  slave-pod-template.yml: |-
+{{ .Files.Get "slave-pod-template.yml.tmpl" | indent 4 }}
+{{- $executors := "" }}
+{{- range $k, $v := .Values.enabledExecutors }}
+  {{- if $v.enabled }}
+    {{- $executors = print $executors "," $k }}
+  {{- end }}
+{{- end }}
+  enabledExecutors: "{{ $executors }}"

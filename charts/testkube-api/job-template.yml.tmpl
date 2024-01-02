@@ -17,7 +17,7 @@ spec:
         image: {{ .InitImage }}
         {{- end }}
         imagePullPolicy: IfNotPresent
-        command: 
+        command:
           - "/bin/runner"
           - '{{ .Jsn }}'
         volumeMounts:
@@ -26,6 +26,12 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .ArtifactRequest }}
+          {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+        - name: artifact-volume
+          mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+          {{- end }}
         {{- end }}
         {{- range $configmap := .EnvConfigMaps }}
         {{- if and $configmap.Mount $configmap.Reference }}
@@ -47,7 +53,7 @@ spec:
         image: {{ .Image }}
         {{- end }}
         imagePullPolicy: IfNotPresent
-        command: 
+        command:
           - "/bin/runner"
           - '{{ .Jsn }}'
         volumeMounts:
@@ -56,6 +62,12 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .ArtifactRequest }}
+          {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+        - name: artifact-volume
+          mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+          {{- end }}
         {{- end }}
         {{- range $configmap := .EnvConfigMaps }}
         {{- if and $configmap.Mount $configmap.Reference }}
@@ -77,6 +89,13 @@ spec:
         secret:
           secretName: {{ .CertificateSecret }}
       {{- end }}
+      {{- if .ArtifactRequest }}
+        {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+      - name: artifact-volume
+        persistentVolumeClaim:
+          claimName: {{ .Name }}-pvc
+        {{- end }}
+      {{- end }}
       {{- range $configmap := .EnvConfigMaps }}
       {{- if and $configmap.Mount $configmap.Reference }}
       - name: {{ $configmap.Reference.Name }}
@@ -92,9 +111,9 @@ spec:
       {{- end }}
       {{- end }}
       restartPolicy: Never
-      {{ if .ServiceAccountName }}
+      {{- if .ServiceAccountName }}
       serviceAccountName: {{ .ServiceAccountName }}
-      {{ end }}
+      {{- end }}
       {{- if gt (len .ImagePullSecrets) 0 }}
       imagePullSecrets:
       {{- range $secret := .ImagePullSecrets }}

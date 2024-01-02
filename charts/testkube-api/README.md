@@ -65,6 +65,7 @@ A Helm chart for Testkube api
 | image.pullSecret | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-api-server"` |  |
+| enabledExecutors | object | `{}` |  |
 | jobServiceAccountName | string | `""` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
@@ -149,6 +150,7 @@ A Helm chart for Testkube api
 | templates.jobContainer | string | `""` |  |
 | templates.pvcContainer | string | `""` |  |
 | templates.scraperContainer | string | `""` |  |
+| templates.slavePod | string | `""` |  |
 | testConnection.enabled | bool | `false` |  |
 | testServiceAccount.annotations | object | `{}` |  |
 | testServiceAccount.create | bool | `true` |  |

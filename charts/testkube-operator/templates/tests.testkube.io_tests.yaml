@@ -462,8 +462,17 @@ spec:
                         items:
                           type: string
                         type: array
+                      masks:
+                        description: regexp to filter scraped artifacts, single or
+                          comma separated
+                        items:
+                          type: string
+                        type: array
                       omitFolderPerExecution:
                         description: don't use a separate folder for execution artifacts
+                        type: boolean
+                      sharedBetweenPods:
+                        description: whether to share volume between pods
                         type: boolean
                       storageBucket:
                         description: artifact bucket storage
@@ -624,6 +633,40 @@ spec:
                       type: string
                     description: 'Execution variables passed to executor from secrets.
                       Deprecated: use Secret Variables instead'
+                    type: object
+                  slavePodRequest:
+                    description: pod request body
+                    properties:
+                      podTemplate:
+                        description: pod template extensions
+                        type: string
+                      podTemplateReference:
+                        description: name of the template resource
+                        type: string
+                      resources:
+                        description: pod resources request specification
+                        properties:
+                          limits:
+                            description: resource request specification
+                            properties:
+                              cpu:
+                                description: requested cpu units
+                                type: string
+                              memory:
+                                description: requested memory units
+                                type: string
+                            type: object
+                          requests:
+                            description: resource request specification
+                            properties:
+                              cpu:
+                                description: requested cpu units
+                                type: string
+                              memory:
+                                description: requested memory units
+                                type: string
+                            type: object
+                        type: object
                     type: object
                   sync:
                     description: whether to start execution sync or async
