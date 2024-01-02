@@ -348,6 +348,8 @@ nats:
   ## load URI from secrets
   # secretName: XXX
   # secretKey: XXX
+  ## load URI from plain-text
+  # uri: "nats://testkube-nats:4222"
 
 ## MINIO parameters
 minio:
