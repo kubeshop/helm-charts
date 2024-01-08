@@ -576,6 +576,11 @@ spec:
                             format: int32
                             type: integer
                           type: array
+                        previousTestNames:
+                          description: previous test names
+                          items:
+                            type: string
+                          type: array
                       type: object
                     execute:
                       items:
@@ -613,6 +618,11 @@ spec:
                           items:
                             format: int32
                             type: integer
+                          type: array
+                        previousTestNames:
+                          description: previous test names
+                          items:
+                            type: string
                           type: array
                       type: object
                     execute:
@@ -817,6 +827,11 @@ spec:
                           items:
                             format: int32
                             type: integer
+                          type: array
+                        previousTestNames:
+                          description: previous test names
+                          items:
+                            type: string
                           type: array
                       type: object
                     execute:
