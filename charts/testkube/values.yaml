@@ -274,6 +274,8 @@ testkube-api:
   cloud:
     # -- Testkube Cloud API URL
     url: "agent.testkube.io:443"
+    ## URL of the Cloud UI
+    uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
 
