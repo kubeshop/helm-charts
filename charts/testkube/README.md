@@ -207,10 +207,12 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.uiUrl | string | `""` | Testkube Cloud UI URL |
 | testkube-api.clusterName | string | `""` |  |
 | testkube-api.dashboardUri | string | `""` |  |
-| testkube-api.enableSecretsEndpoint | bool | `false` |  |
+| testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
+| testkube-api.hostNetwork | string | `""` | Specify hostNetwork for Testkube API Deployment |
 | testkube-api.image.digest | string | `""` | Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.image.pullPolicy | string | `"IfNotPresent"` | Testkube API image tag |
 | testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
