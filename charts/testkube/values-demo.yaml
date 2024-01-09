@@ -139,7 +139,7 @@ testkube-api:
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
-    storage: 50Gi
+    storage: 80Gi
     image:
       registry: docker.io
       repository: minio/minio
