@@ -11,6 +11,8 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  features:
+    logsV2: true
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -118,8 +120,8 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
-   ## Base64 encoded Slave Pod template
-  slavePod: "" 
+  ## Base64 encoded Slave Pod template
+  slavePod: ""
 
 ## base64 encoded executors.json alike data
 executors: ""

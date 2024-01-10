@@ -48,6 +48,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.global.features.logsV2 }}
+            - name: FF_LOGS_V2
+              value:  "{{ .Values.global.features.logsV2 }}"
+            {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: API_MONGO_DSN
