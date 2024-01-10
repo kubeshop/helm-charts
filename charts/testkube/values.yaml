@@ -59,7 +59,6 @@ preUpgradeHook:
       value: arm64
       effect: NoSchedule
 
-
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -117,6 +116,9 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  natsbox:
+    enabled: false
+
   #fullnameOverride: testkube-nats
   tolerations:
     - key: kubernetes.io/arch
@@ -161,18 +163,6 @@ nats:
     # -- Security Context for Reloader container
     securityContext: {}
 
-  # NATS Box container settings
-  natsbox:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
-
   # Exporter container settings
   exporter:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -196,31 +186,31 @@ testkube-api:
   multinamespace:
     enabled: false
 
-# Custom job-template.yml that will be passed to Testkube API. Example:
-#  configValues: |
-#    apiVersion: batch/v1
-#    kind: Job
-#    metadata:
-#      labels:
-#        key1: value1
-#        key2: value2
-#    spec:
-#      template:
-#        metadata:
-#          labels:
-#            key1: value1
-#            key2: value2
-#          annotations:
-#            key1: value1
-#            key2: value2
-#        spec:
-#          containers:
-#            - name: "{{ .Name }}"
-#              image: {{ .Image }}
-#              imagePullPolicy: Always
-#              command:
-#                - "/bin/runner"
-#                - '{{ .Jsn }}'
+  # Custom job-template.yml that will be passed to Testkube API. Example:
+  #  configValues: |
+  #    apiVersion: batch/v1
+  #    kind: Job
+  #    metadata:
+  #      labels:
+  #        key1: value1
+  #        key2: value2
+  #    spec:
+  #      template:
+  #        metadata:
+  #          labels:
+  #            key1: value1
+  #            key2: value2
+  #          annotations:
+  #            key1: value1
+  #            key2: value2
+  #        spec:
+  #          containers:
+  #            - name: "{{ .Name }}"
+  #              image: {{ .Image }}
+  #              imagePullPolicy: Always
+  #              command:
+  #                - "/bin/runner"
+  #                - '{{ .Jsn }}'
 
   # Monitoring parameters
   prometheus:
@@ -558,7 +548,6 @@ testkube-api:
     # -- Key for SSL CA File Key k8s Secret
     # sslCAFileKeySecretKey: sslCAFileKeySecretKey
 
-
     # -- k8s Secret Name for SSL Cert Secret
     # sslCertSecretSecretName: sslCertSecretSecretName
 
@@ -725,9 +714,9 @@ testkube-dashboard:
     # -- Path to controller
     path: /
     # -- Hostnames must be provided if Ingress is enabled.
-    hosts:
-      []
-    ipv6enabled: false
+    hosts: []
+    ipv6enabled:
+      false
       # - testkube.example.com
     tlsenabled: false
     # -- Placing a host in the TLS config will indicate a certificate should be created
@@ -768,7 +757,8 @@ testkube-dashboard:
     # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
     # -- Array of args for oauth2 provider or github as default
-    args: []
+    args:
+      []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
@@ -776,7 +766,8 @@ testkube-dashboard:
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
     # -- Array with extra sources for environment variables
-    extraEnvFrom: []
+    extraEnvFrom:
+      []
       #- configMapRef:
       #    name: my-configmap-name
       #- secretRef:
@@ -1132,7 +1123,8 @@ testkube-operator:
     port: 80
 
   # -- Testkube Operator resource settings
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
