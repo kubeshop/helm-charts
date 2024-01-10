@@ -531,5 +531,13 @@
       "image": "kubeshop/testkube-init-executor:6d1729c",
       "types": []
     }
+  },
+  {
+    "name": "logs-sidecar",
+    "executor": {
+      "executorType": "sidecar",
+      "image": "kubeshop/testkube-logs-sidecar:6d1729c",
+      "types": []
+    }
   }
 ]
