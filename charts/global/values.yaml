@@ -3,6 +3,3 @@
 # Declare variables to be passed into your templates.
 
 exampleValue: global-chart
-
-features:
-  logsV2: false
