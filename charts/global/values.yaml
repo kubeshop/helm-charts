@@ -5,4 +5,4 @@
 exampleValue: global-chart
 
 features:
-  logsV2: true
+  logsV2: false
