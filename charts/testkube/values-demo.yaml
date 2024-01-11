@@ -115,15 +115,6 @@ nats:
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   natsbox:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
 

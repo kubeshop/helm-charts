@@ -646,3 +646,32 @@ rules:
       - create
       - delete
 {{- end }}
+
+--- 
+
+kind: ClusterRole
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+metadata:
+  name: logs-sidecar-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+- apiGroups: 
+  - ""
+  resources: 
+  - "pods"
+  verbs: 
+  - "list" 
+  - "get"
+- apiGroups: 
+  - ""
+  resources: 
+  - "pods/log"
+  verbs: 
+  - "watch"
+  - "get"

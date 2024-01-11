@@ -54,14 +54,22 @@ spec:
         image: {{ .LogSidecarImage }}
         {{- end }}
         env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: DEBUG
-          value: "true"
+          value: {{ .Debug }}
         - name: NAMESPACE
           value: {{ .Namespace }}
         - name: NATS_URI
-          value: "{{ .NatsUri }}"
+          value: {{ .NatsUri }}
         - name: ID
-          value: "{{ .Name }}"
+          value: {{ .Name }}
+        - name: GROUP
+          value: test
+        - name: SOURCE
+          value: "test:{{ .Name }}"
       {{- end }}
       - name: "{{ .Name }}"
         {{- if .Registry }}

@@ -52,12 +52,20 @@ spec:
       - name: "{{ .Name }}-logs"
         image: {{ .Registry }}/{{ .LogSidecarImage }}
         env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: DEBUG
-          value: "true"
+          value: {{ .Debug }}
         - name: NAMESPACE
           value: {{ .Namespace }}
         - name: NATS_URI
-          value: "{{ .NatsUri }}"
+          value: {{ .NatsUri }}
+        - name: GROUP
+          value: test
+        - name: SOURCE
+          value: "test:{{ .Name }}"
         - name: ID
           value: "{{ .Name }}"
       {{- end }}

@@ -262,6 +262,16 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the fullname template
   name: ""
 
+## Logs service and sidecar service account parameters
+logsServiceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  name: ""
+
 ## Test Job ServiceAccount parameters
 testServiceAccount:
   ## Specifies whether a service account should be created
