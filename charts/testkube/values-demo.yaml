@@ -110,10 +110,13 @@ nats:
       maxPayload: 8MB
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
+
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   natsbox:
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
-
 
 testkube-api:
   rbac:
@@ -454,4 +457,3 @@ testkube-operator:
 
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
-
