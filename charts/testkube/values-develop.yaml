@@ -98,9 +98,9 @@ mongodb:
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5-debian-11-r64
   resources: {}
-#    requests:
-#      memory: "1500Mi"
-#      cpu: "200m"
+  #    requests:
+  #      memory: "1500Mi"
+  #      cpu: "200m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
 
@@ -113,9 +113,7 @@ nats:
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
   natsbox:
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
-
+    enabled: false
 
 testkube-api:
   prometheus:
@@ -144,9 +142,9 @@ testkube-api:
       repository: minio/minio
       tag: RELEASE.2023-09-16T01-01-47Z
     resources: {}
-#      requests:
-#        memory: "1000Mi"
-#        cpu: "200m"
+  #      requests:
+  #        memory: "1000Mi"
+  #        cpu: "200m"
 
   uiIngress:
     enabled: true
@@ -157,9 +155,9 @@ testkube-api:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-#      nginx.ingress.kubernetes.io/auth-type: basic
-#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+      #      nginx.ingress.kubernetes.io/auth-type: basic
+      #      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      #      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-develop
       # add an annotation indicating the issuer to use.
@@ -271,9 +269,9 @@ testkube-api:
     timeoutSeconds: 10
 
   resources: {}
-#    requests:
-#      memory: "200Mi"
-#      cpu: "200m"
+  #    requests:
+  #      memory: "200Mi"
+  #      cpu: "200m"
 
   analyticsEnabled: true
   podStartTimeout: "30m"
@@ -315,9 +313,9 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-#      nginx.ingress.kubernetes.io/auth-type: basic
-#      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-#      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+      #      nginx.ingress.kubernetes.io/auth-type: basic
+      #      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      #      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-develop
       cert-manager.io/issue-temporary-certificate: "true"
@@ -363,9 +361,9 @@ testkube-dashboard:
     enabled: true
 
   resources: {}
-#    requests:
-#      memory: "100Mi"
-#      cpu: "100m"
+  #    requests:
+  #      memory: "100Mi"
+  #      cpu: "100m"
 
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
@@ -388,9 +386,9 @@ testkube-operator:
   useArgoCDSync: true
 
   resources: {}
-#    requests:
-#      memory: "200Mi"
-#      cpu: "100m"
+  #    requests:
+  #      memory: "200Mi"
+  #      cpu: "100m"
 
   ##Test Connection pod
   testConnection:
@@ -398,4 +396,3 @@ testkube-operator:
 
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
-
