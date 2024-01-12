@@ -146,8 +146,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"annotations":{},"imagePullSecrets":[],"imageRegistry":"","labels":{}}` | Important! Please, note that this will override sub-chart image parameters. |
+| global | object | `{"annotations":{},"features":{"logsV2":false},"imagePullSecrets":[],"imageRegistry":"","labels":{}}` | Important! Please, note that this will override sub-chart image parameters. |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
+| global.features | object | `{"logsV2":false}` | Features map for the whole chart |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | global.imageRegistry | string | `""` | Global Docker image registry |
 | global.labels | object | `{}` | Labels to add to all deployed objects |
@@ -170,6 +171,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | nats.nats.limits.maxPayload | string | `"8MB"` | Max payload |
 | nats.nats.resources | object | `{}` | NATS resource settings |
 | nats.nats.securityContext | object | `{}` | Security Context for NATS container |
+| nats.natsbox.enabled | bool | `true` |  |
+| nats.natsbox.nodeSelector."cloud.google.com/gke-provisioning" | string | `"standard"` |  |
 | nats.natsbox.securityContext | object | `{}` | Security Context for NATS Box container |
 | nats.natsbox.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | NATS Box tolerations settings |
 | nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
@@ -204,6 +207,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cliIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-api.cliIngress.tlsenabled | bool | `false` | Toggle whether to enable TLS on the ingress |
 | testkube-api.cloud.key | string | `""` | Testkube Clouc License Key (for Environment) |
+| testkube-api.cloud.tls.enabled | bool | `true` | Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC) |
+| testkube-api.cloud.tls.skipVerify | bool | `false` | Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise |
 | testkube-api.cloud.uiUrl | string | `""` |  |
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` |  |
@@ -452,7 +457,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
 | testkube-operator.testConnection.resources | object | `{}` | Test Connection resource settings |
 | testkube-operator.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-operator.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-operator.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes |
 | testkube-operator.useArgoCDSync | bool | `false` | Use ArgoCD sync owner references |
 | testkube-operator.volumes.secret.defaultMode | int | `420` | Testkube Operator webhook certificate volume default mode |
 | testkube-operator.webhook.annotations | object | `{}` | Webhook specific annotations |
