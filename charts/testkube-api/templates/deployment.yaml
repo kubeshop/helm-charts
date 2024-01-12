@@ -286,11 +286,19 @@ spec:
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
-            {{- end}}
+            {{- end }}
             {{- if .Values.cloud.uiUrl}}
             - name: TESTKUBE_CLOUD_UI_URL
-              value:  "{{ .Values.cloud.uiUrl }}"
+              value: "{{ .Values.cloud.uiUrl }}"
             {{- end}}
+            {{- if not .Values.cloud.tls.enabled }}
+            - name: TESTKUBE_PRO_TLS_INSECURE
+              value:  "true"
+            {{- end }}
+            {{- if .Values.cloud.tls.skipVerify }}
+            - name: TESTKUBE_PRO_SKIP_VERIFY
+              value:  "true"
+            {{- end }}
             {{- if .Values.cloud.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"

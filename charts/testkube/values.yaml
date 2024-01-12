@@ -291,6 +291,11 @@ testkube-api:
     uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
+    tls:
+      # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+      enabled: true
+      # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+      skipVerify: false
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
