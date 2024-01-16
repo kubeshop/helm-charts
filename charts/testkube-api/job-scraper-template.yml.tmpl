@@ -10,6 +10,7 @@ spec:
   template:
     spec:
       containers:
+      {{ if .Features.LogsV2 -}}
       - name: "{{ .Name }}-logs"
         image: {{ .Registry }}/{{ .LogSidecarImage }}
         env:
@@ -29,6 +30,7 @@ spec:
           value: scraper
         - name: SOURCE
           value: "scraper:{{ .Name }}"
+      {{- end }}
       - name: {{ .Name }}-scraper
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .ScraperImage }}
