@@ -43,7 +43,7 @@ spec:
       http:
         paths:
           - path: {{ $.Values.uiIngress.path }}
-            pathType: Prefix
+            pathType: {{ default Prefix $.Values.uiIngress.pathType }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.Version }}
               service:
