@@ -76,7 +76,7 @@ jobServiceAccountName: ""
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 podSecurityContext: {}
 
-## Configure Container Security Context for Testkube Logs 
+## Configure Container Security Context for Testkube Logs
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ##
 securityContext: {}
@@ -96,7 +96,7 @@ service:
 ## Dependecy to NATS
 nats:
   ## URI that testkube logs uses to connect to NATS
-  uri: ""
+  uri: "nats://testkube-nats"
 
 ## Extra Environment Variables which will be injected into the Testkube Logs container
 extraEnvVars: {}
