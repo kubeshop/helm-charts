@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 1.16.7](https://img.shields.io/badge/Version-1.16.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.16.28](https://img.shields.io/badge/Version-1.16.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -136,9 +136,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 1.16.8 |
-| file://../testkube-dashboard | testkube-dashboard | 1.15.0 |
-| file://../testkube-operator | testkube-operator | 1.16.0 |
+| file://../testkube-api | testkube-api | 1.16.22 |
+| file://../testkube-dashboard | testkube-dashboard | 1.16.2 |
+| file://../testkube-operator | testkube-operator | 1.16.21 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 0.19.1 |
 
@@ -146,8 +146,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"annotations":{},"imagePullSecrets":[],"imageRegistry":"","labels":{}}` | Important! Please, note that this will override sub-chart image parameters. |
+| global | object | `{"annotations":{},"features":{"logsV2":false},"imagePullSecrets":[],"imageRegistry":"","labels":{}}` | Important! Please, note that this will override sub-chart image parameters. |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
+| global.features | object | `{"logsV2":false}` | Features map for the whole chart |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | global.imageRegistry | string | `""` | Global Docker image registry |
 | global.labels | object | `{}` | Labels to add to all deployed objects |
@@ -166,9 +167,12 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | nats.exporter.resources | object | `{}` | Exporter resources settings |
 | nats.exporter.securityContext | object | `{}` | Security Context for Exporter container |
 | nats.imagePullSecrets | list | `[]` |  |
+| nats.nats.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features) |
 | nats.nats.limits.maxPayload | string | `"8MB"` | Max payload |
 | nats.nats.resources | object | `{}` | NATS resource settings |
 | nats.nats.securityContext | object | `{}` | Security Context for NATS container |
+| nats.natsbox.enabled | bool | `true` |  |
+| nats.natsbox.nodeSelector."cloud.google.com/gke-provisioning" | string | `"standard"` |  |
 | nats.natsbox.securityContext | object | `{}` | Security Context for NATS Box container |
 | nats.natsbox.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | NATS Box tolerations settings |
 | nats.reloader.securityContext | object | `{}` | Security Context for Reloader container |
@@ -203,13 +207,19 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cliIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-api.cliIngress.tlsenabled | bool | `false` | Toggle whether to enable TLS on the ingress |
 | testkube-api.cloud.key | string | `""` | Testkube Clouc License Key (for Environment) |
+| testkube-api.cloud.tls.enabled | bool | `true` | Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC) |
+| testkube-api.cloud.tls.skipVerify | bool | `false` | Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise |
+| testkube-api.cloud.uiUrl | string | `""` |  |
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` |  |
 | testkube-api.dashboardUri | string | `""` |  |
-| testkube-api.enableSecretsEndpoint | bool | `false` |  |
+| testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
+| testkube-api.enabledExecutors | string | `nil` |  |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
+| testkube-api.hostNetwork | string | `""` | Specify hostNetwork for Testkube API Deployment |
 | testkube-api.image.digest | string | `""` | Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.image.pullPolicy | string | `"IfNotPresent"` | Testkube API image tag |
 | testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
@@ -447,7 +457,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
 | testkube-operator.testConnection.resources | object | `{}` | Test Connection resource settings |
 | testkube-operator.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-operator.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-operator.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes |
 | testkube-operator.useArgoCDSync | bool | `false` | Use ArgoCD sync owner references |
 | testkube-operator.volumes.secret.defaultMode | int | `420` | Testkube Operator webhook certificate volume default mode |
 | testkube-operator.webhook.annotations | object | `{}` | Webhook specific annotations |

@@ -1,6 +1,6 @@
 # testkube-api
 
-![Version: 1.14.6](https://img.shields.io/badge/Version-1.14.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.14.6](https://img.shields.io/badge/AppVersion-1.14.6-informational?style=flat-square)
+![Version: 1.15.2](https://img.shields.io/badge/Version-1.15.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.15.2](https://img.shields.io/badge/AppVersion-1.15.2-informational?style=flat-square)
 
 A Helm chart for Testkube api
 
@@ -45,9 +45,11 @@ A Helm chart for Testkube api
 | cloud.migrate | string | `""` |  |
 | cloud.orgId | string | `""` |  |
 | cloud.url | string | `"agent.testkube.io:443"` |  |
+| cloud.uiUrl | string | `""` |  |
 | clusterName | string | `""` |  |
 | configValues | string | `""` |  |
 | dashboardUri | string | `""` |  |
+| dnsPolicy | string | `""` |  |
 | disableMongoMigrations | bool | `false` |  |
 | enableSecretsEndpoint | bool | `false` |  |
 | executors | string | `""` |  |
@@ -57,12 +59,14 @@ A Helm chart for Testkube api
 | global.imagePullSecrets | list | `[]` |  |
 | global.imageRegistry | string | `""` |  |
 | global.labels | object | `{}` |  |
+| hostNetwork | string | `""` |  |
 | httpReadBufferSize | int | `8192` |  |
 | image.digest | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.pullSecret | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-api-server"` |  |
+| enabledExecutors | object | `{}` |  |
 | jobServiceAccountName | string | `""` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |

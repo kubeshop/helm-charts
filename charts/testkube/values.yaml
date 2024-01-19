@@ -13,6 +13,9 @@ global:
   labels: {}
   # --  Annotations to add to all deployed objects
   annotations: {}
+  # -- Features map for the whole chart
+  features:
+    logsV2: false
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -113,6 +116,26 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
+  # change it to
+  # natsbox:
+  #   enabled: false
+  natsbox:
+    enabled: true
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS Box container
+    securityContext: {}
+    # -- NATS Box tolerations settings
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
+
   #fullnameOverride: testkube-nats
   tolerations:
     - key: kubernetes.io/arch
@@ -129,6 +152,9 @@ nats:
 
   # NATS container settings
   nats:
+    jetstream:
+      # -- Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features)
+      enabled: false
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS container
     securityContext: {}
@@ -153,18 +179,6 @@ nats:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for Reloader container
     securityContext: {}
-
-  # NATS Box container settings
-  natsbox:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
 
   # Exporter container settings
   exporter:
@@ -277,8 +291,15 @@ testkube-api:
   cloud:
     # -- Testkube Cloud API URL
     url: "agent.testkube.io:443"
+    ## URL of the Cloud UI
+    uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
+    tls:
+      # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+      enabled: true
+      # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+      skipVerify: false
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -592,8 +613,14 @@ testkube-api:
   dashboardUri: ""
   ## cluster name to be used in events
   clusterName: ""
-  ## enable endpoint to list testkube namespace secrets
+  # -- enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
+  ## enable only specified executors with enabled flag
+  enabledExecutors:
+  #  postman-executor:
+  #    enabled: true
+  #  cypress-executor:
+  #    enabled: true
 
   # Test Connection pod
   testConnection:
@@ -617,6 +644,12 @@ testkube-api:
   securityContext: {}
   ## Specify priorityClassName for Testkube API
   priorityClassName: ""
+
+  # -- Specify hostNetwork for Testkube API Deployment
+  hostNetwork: ""
+
+  # -- Specify dnsPolicy for Testkube API Deployment
+  dnsPolicy: ""
 
 # --  Testkube Dashboard parameters
 testkube-dashboard:
@@ -1128,11 +1161,8 @@ testkube-operator:
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  # note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes
+  tolerations: []
 
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   # note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set

@@ -22,8 +22,8 @@ data:
 {{- else }}
 {{ .Files.Get "job-template.yml.tmpl" | indent 4 }}
 {{- end }}
-  pvc-container-template.yml: |-
-{{ .Files.Get "pvc-container-template.yml.tmpl" | indent 4 }}
+  pvc-template.yml: |-
+{{ .Files.Get "pvc-template.yml.tmpl" | indent 4 }}
   slack-config.json: |-
 {{- if .Values.slackConfig }}
   {{ toJson .Values.slackConfig | indent 4 }}
@@ -34,3 +34,10 @@ data:
 {{ .Files.Get "slack-template.json.tmpl" | indent 4 }}
   slave-pod-template.yml: |-
 {{ .Files.Get "slave-pod-template.yml.tmpl" | indent 4 }}
+{{- $executors := "" }}
+{{- range $k, $v := .Values.enabledExecutors }}
+  {{- if $v.enabled }}
+    {{- $executors = print $executors "," $k }}
+  {{- end }}
+{{- end }}
+  enabledExecutors: "{{ $executors }}"

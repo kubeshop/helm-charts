@@ -75,7 +75,7 @@ then
 
 else
     echo "Executors will be updated"
-    executor_name="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap"
+    executor_name="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap logs-sidecar"
     for executor in $executor_name; do
       sed -i "s/\(\"image\":.*$executor.*:\)[^\"]*\(\"\)/\1$VERSION_FULL\2/" ../charts/testkube-api/executors.json
       echo -e "\nChecking if TestKube's executors.json $executor executor has been updated:\n"
