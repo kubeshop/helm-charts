@@ -188,9 +188,11 @@ nats:
     # -- Exporter resources settings
     resources: {}
 
-# Testkube Logs service parameters
 testkube-logs:
-  enabled: false
+  # -- Testkube API full name override
+  fullnameOverride: testkube-logs
+  # -- Testkube API name override
+  nameOverride: logs
 
 # Testkube API parameters
 testkube-api:
