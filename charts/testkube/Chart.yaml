@@ -26,6 +26,11 @@ dependencies:
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-dashboard"
     condition: testkube-dashboard.enabled
+  - name: testkube-logs
+    version: 1.15.0
+    #repository: https://kubeshop.github.io/helm-charts
+    repository: "file://../testkube-logs"
+    condition: testkube-logs.enabled
   - name: global
     version: 0.1.2
     #repository: https://kubeshop.github.io/helm-charts
