@@ -4,7 +4,7 @@
 
 global:
   features:
-    logsV2: true
+    logsV2: false
 
 replicaCount: 1
 
