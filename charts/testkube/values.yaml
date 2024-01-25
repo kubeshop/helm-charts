@@ -193,6 +193,55 @@ testkube-logs:
   fullnameOverride: testkube-logs
   # -- Testkube API name override
   nameOverride: logs
+  replicaCount: 1
+  storage:
+     # -- MinIO endpoint
+    endpoint: ""
+    # -- MinIO endpoint port
+    endpoint_port: "9000"
+    # -- MinIO Access Key ID
+    accessKeyId: "minio"
+    # -- MinIO Secret Access Key
+    accessKey: "minio123"
+    # -- k8s Secret name for storage accessKeyId
+    secretNameAccessKeyId: ""
+    # -- Key for storage accessKeyId taken from k8s secret
+    secretKeyAccessKeyId: ""
+    # -- K8s Secret Name for storage secretAccessKeyId
+    secretNameSecretAccessKey: ""
+    # -- Key for storage secretAccessKeyId taken from k8s secret
+    secretKeySecretAccessKey: ""
+    # -- MinIO Region
+    region: ""
+    # -- MinIO Token
+    token: ""
+    # -- MinIO Bucket
+    bucket: "testkube-new-logs"
+    # -- MinIO Expiration period in days
+    expiration: 0
+    # -- MinIO Use SSL
+    SSL: false
+    # -- Toggle whether to verify TLS certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
+    # -- Toggle whether to enable scraper in Testkube API
+    scrapperEnabled: true
+    # -- Toggle whether to compress artifacts in Testkube API
+    compressArtifacts: true
 
 # Testkube API parameters
 testkube-api:
