@@ -110,10 +110,13 @@ nats:
       maxPayload: 8MB
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
+
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   natsbox:
     nodeSelector:
       cloud.google.com/gke-provisioning: standard
-
 
 testkube-api:
   rbac:
@@ -139,6 +142,7 @@ testkube-api:
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
+    storage: 80Gi
     image:
       registry: docker.io
       repository: minio/minio
@@ -267,8 +271,7 @@ testkube-api:
     region: ""
     token: ""
     bucket: "testkube-artifacts"
-    # -- MinIO Expiration period in days
-    expiration: 0
+    expiration: 90
     SSL: false
     scrapperEnabled: true
     compressArtifacts: true
@@ -454,4 +457,3 @@ testkube-operator:
 
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
-

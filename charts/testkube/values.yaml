@@ -13,6 +13,9 @@ global:
   labels: {}
   # --  Annotations to add to all deployed objects
   annotations: {}
+  # -- Features map for the whole chart
+  features:
+    logsV2: false
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -55,7 +58,6 @@ preUpgradeHook:
       operator: Equal
       value: arm64
       effect: NoSchedule
-
 
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -114,6 +116,26 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
+  # change it to
+  # natsbox:
+  #   enabled: false
+  natsbox:
+    enabled: true
+    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- Security Context for NATS Box container
+    securityContext: {}
+    # -- NATS Box tolerations settings
+    tolerations:
+      - key: kubernetes.io/arch
+        operator: Equal
+        value: arm64
+        effect: NoSchedule
+    nodeSelector:
+      cloud.google.com/gke-provisioning: standard
+
   #fullnameOverride: testkube-nats
   tolerations:
     - key: kubernetes.io/arch
@@ -130,6 +152,9 @@ nats:
 
   # NATS container settings
   nats:
+    jetstream:
+      # -- Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features)
+      enabled: false
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for NATS container
     securityContext: {}
@@ -155,18 +180,6 @@ nats:
     # -- Security Context for Reloader container
     securityContext: {}
 
-  # NATS Box container settings
-  natsbox:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
-
   # Exporter container settings
   exporter:
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -174,6 +187,12 @@ nats:
     securityContext: {}
     # -- Exporter resources settings
     resources: {}
+
+testkube-logs:
+  # -- Testkube API full name override
+  fullnameOverride: testkube-logs
+  # -- Testkube API name override
+  nameOverride: logs
 
 # Testkube API parameters
 testkube-api:
@@ -190,31 +209,31 @@ testkube-api:
   multinamespace:
     enabled: false
 
-# Custom job-template.yml that will be passed to Testkube API. Example:
-#  configValues: |
-#    apiVersion: batch/v1
-#    kind: Job
-#    metadata:
-#      labels:
-#        key1: value1
-#        key2: value2
-#    spec:
-#      template:
-#        metadata:
-#          labels:
-#            key1: value1
-#            key2: value2
-#          annotations:
-#            key1: value1
-#            key2: value2
-#        spec:
-#          containers:
-#            - name: "{{ .Name }}"
-#              image: {{ .Image }}
-#              imagePullPolicy: Always
-#              command:
-#                - "/bin/runner"
-#                - '{{ .Jsn }}'
+  # Custom job-template.yml that will be passed to Testkube API. Example:
+  #  configValues: |
+  #    apiVersion: batch/v1
+  #    kind: Job
+  #    metadata:
+  #      labels:
+  #        key1: value1
+  #        key2: value2
+  #    spec:
+  #      template:
+  #        metadata:
+  #          labels:
+  #            key1: value1
+  #            key2: value2
+  #          annotations:
+  #            key1: value1
+  #            key2: value2
+  #        spec:
+  #          containers:
+  #            - name: "{{ .Name }}"
+  #              image: {{ .Image }}
+  #              imagePullPolicy: Always
+  #              command:
+  #                - "/bin/runner"
+  #                - '{{ .Jsn }}'
 
   # Monitoring parameters
   prometheus:
@@ -274,8 +293,15 @@ testkube-api:
   cloud:
     # -- Testkube Cloud API URL
     url: "agent.testkube.io:443"
+    ## URL of the Cloud UI
+    uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
+    tls:
+      # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+      enabled: true
+      # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+      skipVerify: false
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -550,7 +576,6 @@ testkube-api:
     # -- Key for SSL CA File Key k8s Secret
     # sslCAFileKeySecretKey: sslCAFileKeySecretKey
 
-
     # -- k8s Secret Name for SSL Cert Secret
     # sslCertSecretSecretName: sslCertSecretSecretName
 
@@ -590,7 +615,7 @@ testkube-api:
   dashboardUri: ""
   ## cluster name to be used in events
   clusterName: ""
-  ## enable endpoint to list testkube namespace secrets
+  # -- enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
   ## enable only specified executors with enabled flag
   enabledExecutors:
@@ -621,6 +646,12 @@ testkube-api:
   securityContext: {}
   ## Specify priorityClassName for Testkube API
   priorityClassName: ""
+
+  # -- Specify hostNetwork for Testkube API Deployment
+  hostNetwork: ""
+
+  # -- Specify dnsPolicy for Testkube API Deployment
+  dnsPolicy: ""
 
 # --  Testkube Dashboard parameters
 testkube-dashboard:
@@ -711,9 +742,9 @@ testkube-dashboard:
     # -- Path to controller
     path: /
     # -- Hostnames must be provided if Ingress is enabled.
-    hosts:
-      []
-    ipv6enabled: false
+    hosts: []
+    ipv6enabled:
+      false
       # - testkube.example.com
     tlsenabled: false
     # -- Placing a host in the TLS config will indicate a certificate should be created
@@ -754,7 +785,8 @@ testkube-dashboard:
     # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
     # -- Array of args for oauth2 provider or github as default
-    args: []
+    args:
+      []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
@@ -762,7 +794,8 @@ testkube-dashboard:
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
     # -- Array with extra sources for environment variables
-    extraEnvFrom: []
+    extraEnvFrom:
+      []
       #- configMapRef:
       #    name: my-configmap-name
       #- secretRef:
@@ -1118,7 +1151,8 @@ testkube-operator:
     port: 80
 
   # -- Testkube Operator resource settings
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -1129,11 +1163,8 @@ testkube-operator:
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  # note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes
+  tolerations: []
 
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   # note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set

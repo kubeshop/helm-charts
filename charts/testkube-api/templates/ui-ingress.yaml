@@ -12,8 +12,8 @@ metadata:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
   annotations:
-    {{- if and .Values.cliIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version)) }}
-    kubernetes.io/ingress.class: {{ .Values.cliIngress.className }}
+    {{- if and .Values.uiIngress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.Version)) }}
+    kubernetes.io/ingress.class: {{ .Values.uiIngress.className }}
     {{- end }}
     {{- if .Values.uiIngress.annotations }}
     {{- include "global.tplvalues.render" (dict "value" .Values.uiIngress.annotations "context" $) | nindent 4 }}
@@ -43,7 +43,7 @@ spec:
       http:
         paths:
           - path: {{ $.Values.uiIngress.path }}
-            pathType: Prefix
+            pathType: {{ default "Prefix" $.Values.uiIngress.pathType }}
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.Version }}
               service:

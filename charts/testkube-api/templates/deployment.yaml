@@ -39,9 +39,19 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      {{- end }}
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.global.features.logsV2 }}
+            - name: FF_LOGS_V2
+              value:  "{{ .Values.global.features.logsV2 }}"
+            {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: API_MONGO_DSN
@@ -276,7 +286,19 @@ spec:
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
+            {{- end }}
+            {{- if .Values.cloud.uiUrl}}
+            - name: TESTKUBE_CLOUD_UI_URL
+              value: "{{ .Values.cloud.uiUrl }}"
             {{- end}}
+            {{- if not .Values.cloud.tls.enabled }}
+            - name: TESTKUBE_PRO_TLS_INSECURE
+              value:  "true"
+            {{- end }}
+            {{- if .Values.cloud.tls.skipVerify }}
+            - name: TESTKUBE_PRO_SKIP_VERIFY
+              value:  "true"
+            {{- end }}
             {{- if .Values.cloud.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"

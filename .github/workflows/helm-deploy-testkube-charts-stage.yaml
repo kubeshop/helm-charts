@@ -6,9 +6,9 @@ on:
   repository_dispatch:
     types:
       [
-          trigger-workflow-api-release,
-          trigger-workflow-dashboard-release,
-          trigger-workflow-operator-release,
+        trigger-workflow-api-release,
+        trigger-workflow-dashboard-release,
+        trigger-workflow-operator-release,
       ]
 
 env:
@@ -17,7 +17,6 @@ env:
   GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }} # Add your cluster zone here.
   DEPLOYMENT_NAME: testkube-integration # Add your deployment name here.
   ENV: stage
-
 
 jobs:
   release_charts_if_image_updated:
@@ -58,7 +57,7 @@ jobs:
           git pull origin develop
 
           export image_tag=${{ github.event.client_payload.image_tag_api }}
-          export executor_names="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap"
+          export executor_names="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap logs-sidecar"
           for executor_name in $executor_names; do
             sed -i "s/\(\"image\":.*$executor_name.*:\)[^\"]*\(\"\)/\1$image_tag\2/" ./charts/testkube-api/executors.json
           done
@@ -207,10 +206,10 @@ jobs:
 
       - name: Run Executor tests
         run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop --namespace ${{ env.DEPLOYMENT_NAME }}
-      
+
       - name: Run Dashboard E2E tests
         run: kubectl testkube run test dashboard-e2e-tests -f --variable TESTKUBE_NAMESPACE=${{ env.DEPLOYMENT_NAME }} --namespace ${{ env.DEPLOYMENT_NAME }}
-      
+
   notify_slack_if_test_suite_stage_succeeds:
     runs-on: ubuntu-latest
     needs: test_suite_run
