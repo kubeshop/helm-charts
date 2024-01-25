@@ -43,6 +43,52 @@ spec:
           env:
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
+          - name: "STORAGE_ENDPOINT"
+            {{- if .Values.storage.endpoint }}
+            value:  "{{ .Values.storage.endpoint }}"
+            {{- else }}
+            value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
+            {{- end }}
+          - name: "STORAGE_LOGS_BUCKET"
+            value:  "{{ .Values.storage.logBucket }}"
+          - name: "STORAGE_EXPIRATION"
+            value:  "{{ .Values.storage.expiration }}"
+          - name: "STORAGE_ACCESSKEYID"
+            {{- if .Values.storage.secretNameAccessKeyId }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.storage.secretNameAccessKeyId }}
+                key: {{ .Values.storage.secretKeyAccessKeyId }}
+            {{- else }}
+            value: "{{ .Values.storage.accessKeyId }}"
+          {{- end }}
+          - name: "STORAGE_SECRETACCESSKEY"
+            {{- if .Values.storage.secretNameSecretAccessKey }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.storage.secretNameSecretAccessKey }}
+                key: {{ .Values.storage.secretKeySecretAccessKey }}
+            {{- else }}
+            value: "{{ .Values.storage.accessKey }}"
+          {{- end }}
+          - name: "STORAGE_REGION"
+            value: "{{ .Values.storage.region }}"
+          - name: "STORAGE_TOKEN"
+            value: "{{ .Values.storage.token }}"
+          - name: "STORAGE_SSL"
+            value:  "{{ .Values.storage.SSL }}"
+          - name: "STORAGE_SKIP_VERIFY"
+            value:  "{{ .Values.storage.skipVerify }}"
+          {{- if .Values.storage.certSecret.enabled }}
+          - name: "STORAGE_CERT_FILE"
+            value:  "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.certFile }}"
+          - name: "STORAGE_KEY_FILE"
+            value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.keyFile }}"
+          {{- if .Values.storage.mountCACertificate }}
+          - name: "STORAGE_CA_FILE"
+            value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.caFile }}"
+          {{- end }}
+          {{- end }}
           {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
           {{- end }}
