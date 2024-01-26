@@ -50,7 +50,7 @@ spec:
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
             {{- end }}
           - name: "STORAGE_LOGS_BUCKET"
-            value:  "{{ .Values.storage.logBucket }}"
+            value:  "{{ .Values.storage.bucket }}"
           - name: "STORAGE_EXPIRATION"
             value:  "{{ .Values.storage.expiration }}"
           - name: "STORAGE_ACCESSKEYID"
