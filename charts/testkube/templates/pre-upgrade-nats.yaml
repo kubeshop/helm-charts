@@ -60,7 +60,7 @@ spec:
         - >
             export deployment_name=$(kubectl get deployments -n {{ .Release.Namespace }} -o custom-columns=NAME:.metadata.name | grep 'box');
             export sts_name=$(kubectl get statefulset -n {{ .Release.Namespace }} -o custom-columns=NAME:.metadata.name | grep 'nats');
-            export current_nats_version=$(kubectl get deployment testkube-nats-box -o=jsonpath='{$.metadata.labels}' -n testkube | awk -F'chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2"."$3"."$4 }');
+            export current_nats_version=$(kubectl get deployment $deployment_name -o=jsonpath='{$.metadata.labels}' -n testkube | awk -F'chart' '{print $2}' | awk -F'[^0-9]+' '{ print $2"."$3"."$4 }');
             if [ "$current_nats_version" = "0.19.1" ];
               then kubectl delete deployment $deployment_name -n testkube;
                    kubectl delete statefulset $sts_name -n testkube;

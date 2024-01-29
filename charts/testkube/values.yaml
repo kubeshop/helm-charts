@@ -166,17 +166,12 @@ nats:
   #   enabled: false
   natsbox:
     enabled: true
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
     # -- NATS Box tolerations settings
     podTemplate:
       merge:
         spec:
           template:
             spec:
-              nodeSelector:
-                cloud.google.com/gke-provisioning: standard
               tolerations:
                 - key: kubernetes.io/arch
                   operator: Equal
