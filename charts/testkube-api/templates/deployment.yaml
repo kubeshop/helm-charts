@@ -356,7 +356,7 @@ spec:
             - name: ENABLE_SECRETS_ENDPOINT
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
-              value: "{{ .Values.disableMongoMigrations }}"            
+              value: "{{ .Values.disableMongoMigrations }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
