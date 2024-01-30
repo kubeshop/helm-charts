@@ -51,6 +51,10 @@ spec:
             {{- if .Values.global.features.logsV2 }}
             - name: FF_LOGS_V2
               value:  "{{ .Values.global.features.logsV2 }}"
+              {{- if .Values.testkubeLogs.grpcAddress }}            
+            - name: LOG_SERVER_GRPC_ADDRESS
+              value:  "{{ .Values.testkubeLogs.grpcAddress }}"
+              {{- end }}
             {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"
@@ -352,13 +356,7 @@ spec:
             - name: ENABLE_SECRETS_ENDPOINT
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
-              value: "{{ .Values.disableMongoMigrations }}"
-            {{- if .Values.global.features.logsV2 }}
-            - name: LOG_SERVER_GRPC_ADDRESS
-              {{- if .Values.testkubeLogs.grpcAddress }}
-              value:  "{{ .Values.testkubeLogs.grpcAddress }}"
-              {{- end }}
-            {{- end }}              
+              value: "{{ .Values.disableMongoMigrations }}"            
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
