@@ -4,6 +4,9 @@ Testkube is an open-source platform that simplifies the deployment and managemen
 
 ![Version: 1.16.28](https://img.shields.io/badge/Version-1.16.28-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
+## Upgrade Nodes
+Please note that starting from version 1.16.34 of Helm chart we have introduced an upgrade of [NATS](https://github.com/nats-io/k8s/tree/main/helm/charts/nats). The `values.yaml` schema changed significantly from `0.19.1` to `1.1.7`. As of now everything in the NATS Config or Kubernetes Resources can be overridden by `merge` and `patch`. Consult with the official documentation to check the examples. 
+
 ## Install
 
 Add `kubeshop` Helm repository and fetch latest charts info:
