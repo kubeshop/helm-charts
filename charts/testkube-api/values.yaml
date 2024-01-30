@@ -149,6 +149,11 @@ disableMongoMigrations: false
 ## enable only specified executors with enabled flag
 enabledExecutors:
 
+# Testkube log server parameters
+testkubeLogs:
+  # -- GRPC address
+  grpcAddress: "testkube-logs:9090"
+
 ## Testkube API resource requests and limits
 resources:
   {}

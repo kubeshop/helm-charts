@@ -189,11 +189,12 @@ nats:
     enabled: true
 
 testkube-logs:
-  # -- Testkube API full name override
+  # -- Testkube logs full name override
   fullnameOverride: testkube-logs
-  # -- Testkube API name override
+  # -- Testkube logs name override
   nameOverride: logs
   replicaCount: 1
+
   storage:
      # -- MinIO endpoint
     endpoint: ""
@@ -216,7 +217,7 @@ testkube-logs:
     # -- MinIO Token
     token: ""
     # -- MinIO Bucket
-    bucket: "testkube-new-logs"
+    bucket: "testkube-logs"
     # -- MinIO Expiration period in days
     expiration: 0
     # -- MinIO Use SSL
@@ -672,6 +673,11 @@ testkube-api:
   #    enabled: true
   #  cypress-executor:
   #    enabled: true
+
+  # Testkube log server parameters
+  testkubeLogs:
+    # -- GRPC address
+    grpcAddress: "testkube-logs:9090"
 
   # Test Connection pod
   testConnection:

@@ -18,7 +18,7 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "testkube-logs.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "testkube-logs.fullname" . }}:{{ .Values.service.httpPort }}']
       {{- if .Values.testConnection.resources }}
       resources: {{ toYaml .Values.testConnection.resources | nindent 8 }}
       {{- end }}

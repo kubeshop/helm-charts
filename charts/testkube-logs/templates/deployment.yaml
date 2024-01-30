@@ -43,13 +43,17 @@ spec:
           env:
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
+          - name: "HTTP_ADDRESS"
+            value:  "{{ .Values.service.httpHostname }}:{{ .Values.service.httpPort }}"
+          - name: "GRPC_ADDRESS"
+            value:  "{{ .Values.service.grpcHostname }}:{{ .Values.service.grpcPort }}"
           - name: "STORAGE_ENDPOINT"
             {{- if .Values.storage.endpoint }}
             value:  "{{ .Values.storage.endpoint }}"
             {{- else }}
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
             {{- end }}
-          - name: "STORAGE_LOGS_BUCKET"
+          - name: "STORAGE_BUCKET"
             value:  "{{ .Values.storage.bucket }}"
           - name: "STORAGE_EXPIRATION"
             value:  "{{ .Values.storage.expiration }}"
@@ -98,7 +102,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.httpPort }}
+              protocol: TCP
+            - name: grpc
+              containerPort: {{ .Values.service.grpcPort }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

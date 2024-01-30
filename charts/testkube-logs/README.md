@@ -47,8 +47,11 @@ A Helm chart for Kubernetes
 | resources | object | `{}` |  |
 | securityContext | object | `{}` |  |
 | service.annotations | object | `{}` |  |
+| service.grpcPort | int | `9090` |  |
+| service.grpcHostname | string | `""` |  |
+| service.httpPort | int | `8080` |  |
+| service.httpHostname | string | `""` |  |
 | service.labels | object | `{}` |  |
-| service.port | int | `8080` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
