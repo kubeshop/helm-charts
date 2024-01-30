@@ -154,14 +154,12 @@ nats:
       max_payload: << 8MB >>
     jetstream:
       enabled: true
-
   merge:
     spec:
       template:
         spec:
           nodeSelector:
             cloud.google.com/gke-provisioning: standard
-
   natsbox:
     enabled: false
 
