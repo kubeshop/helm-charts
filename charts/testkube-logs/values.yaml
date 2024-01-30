@@ -85,8 +85,14 @@ securityContext: {}
 service:
   ## Adapter service type
   type: ClusterIP
+  ## HTTP Hostname
+  httpHostname: ""
   ## HTTP Port
-  port: 8080
+  httpPort: 8080
+  ## GRPC Hostname
+  grpcHostname: ""
+  ## GRPC Port
+  grpcPort: 9090 
   ## Annotations
   annotations: {}
   ## Service labels

@@ -344,6 +344,9 @@ testkube-api:
   clusterName: ""
   enableSecretsEndpoint: true
 
+  testkubeLogs:
+    grpcAddress: "testkube-logs:9090"
+
   priorityClassName: "highest-priority"
 
   ##Test Connection pod
