@@ -174,7 +174,7 @@ storage:
   # -- MinIO Token
   token: ""
   # -- MinIO Bucket
-  bucket: "testkube-artifacts"
+  bucket: "testkube-new-logs"
   # -- MinIO Expiration period in days
   expiration: 0
   # -- MinIO Use SSL
