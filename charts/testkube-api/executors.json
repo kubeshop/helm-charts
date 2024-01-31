@@ -110,9 +110,9 @@
         "<runPath>",
         "-l",
         "<jtlFile>",
-        "-e",
         "-o",
         "<reportFile>",
+        "-e",        
         "<envVars>"
       ],
       "types": [
@@ -153,9 +153,9 @@
         "<runPath>",
         "-l",
         "<jtlFile>",
-        "-e",
         "-o",
         "<reportFile>",
+        "-e",       
         "<envVars>"
       ],
       "types": [
