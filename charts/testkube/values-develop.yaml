@@ -375,9 +375,9 @@ testkube-dashboard:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       nginx.ingress.kubernetes.io/enable-cors: "true"
       nginx.ingress.kubernetes.io/cors-allow-credentials: "false"
-      #      nginx.ingress.kubernetes.io/auth-type: basic
-      #      nginx.ingress.kubernetes.io/auth-secret: htpasswd
-      #      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
+      nginx.ingress.kubernetes.io/auth-type: basic
+      nginx.ingress.kubernetes.io/auth-secret: htpasswd
+      nginx.ingress.kubernetes.io/auth-realm: "Enter your credentials"
       # specify the name of the global IP address resource to be associated with the HTTP(S) Load Balancer.
       kubernetes.io/ingress.global-static-ip-name: testkube-develop
       cert-manager.io/issue-temporary-certificate: "true"
