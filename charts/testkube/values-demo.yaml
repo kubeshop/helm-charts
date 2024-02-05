@@ -171,10 +171,8 @@ nats:
     podTemplate:
       merge:
         spec:
-          template:
-            spec:
-              nodeSelector:
-                cloud.google.com/gke-provisioning: standard
+          nodeSelector:
+            cloud.google.com/gke-provisioning: standard
 
 testkube-api:
   rbac:
