@@ -112,7 +112,7 @@
         "<jtlFile>",
         "-o",
         "<reportFile>",
-        "-e",        
+        "-e",
         "<envVars>"
       ],
       "types": [
@@ -155,7 +155,7 @@
         "<jtlFile>",
         "-o",
         "<reportFile>",
-        "-e",       
+        "-e",
         "<envVars>"
       ],
       "types": [

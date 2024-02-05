@@ -489,7 +489,7 @@ testkube-api:
     tls:
       []
       # - hosts:
-      #     - testkube.example.com
+    #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
   # cliIngress parameters
