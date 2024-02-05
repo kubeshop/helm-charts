@@ -59,6 +59,48 @@ preUpgradeHook:
       value: arm64
       effect: NoSchedule
 
+# -- NATS pre-upgrade parameters
+preUpgradeHookNATS:
+  # -- Upgrade hook is enabled
+  enabled: true
+  # -- Upgrade hook name
+  name: nats-upgrade
+  ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+  ttlSecondsAfterFinished: 100
+  ## -- Specific labels
+  labels: {}
+  ## -- Annotations to add to the upgrade Job
+  annotations: {}
+  ## -- Annotations to add to the upgrade Job's pod
+  podAnnotations: {}
+  # -- Specify image
+  image:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -124,75 +166,82 @@ nats:
   #   enabled: false
   natsbox:
     enabled: true
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
     # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
-
-  #fullnameOverride: testkube-nats
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
-  # An array of imagePullSecrets, and they have to be created manually in the same namespace
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  imagePullSecrets: []
-  #  - name: dockersecret
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  # -- NATS Pod Security Context
-  securityContext: {}
-
-  # NATS container settings
-  nats:
+    podTemplate:
+      merge:
+        spec:
+          template:
+            spec:
+              tolerations:
+                - key: kubernetes.io/arch
+                  operator: Equal
+                  value: arm64
+                  effect: NoSchedule
+  config:
+    merge:
+      max_payload: << 8MB >>
     jetstream:
       # -- Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features)
-      enabled: false
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS container
-    securityContext: {}
-    # -- NATS resource settings
-    resources: {}
-    limits:
-      # -- Max payload
-      maxPayload: 8MB
-
-    # Uncomment the following block to enable TLS for NATS
-    # You will need to create a secret with the TLS certificates and provide the name of the secret in the tls.secret.name field
-    #tls:
-    #  allowNonTLS: false
-    #  secret:
-    #    name: nats-server-cert
-    #  ca: "ca.crt"
-    #  cert: "tls.crt"
-    #  key: "tls.key"
+      enabled: true
 
   # Reloader container settings
   reloader:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Reloader container
-    securityContext: {}
-
-  # Exporter container settings
-  exporter:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Exporter container
-    securityContext: {}
-    # -- Exporter resources settings
-    resources: {}
+    enabled: true
 
 testkube-logs:
   # -- Testkube API full name override
   fullnameOverride: testkube-logs
   # -- Testkube API name override
   nameOverride: logs
+  replicaCount: 1
+  storage:
+     # -- MinIO endpoint
+    endpoint: ""
+    # -- MinIO endpoint port
+    endpoint_port: "9000"
+    # -- MinIO Access Key ID
+    accessKeyId: "minio"
+    # -- MinIO Secret Access Key
+    accessKey: "minio123"
+    # -- k8s Secret name for storage accessKeyId
+    secretNameAccessKeyId: ""
+    # -- Key for storage accessKeyId taken from k8s secret
+    secretKeyAccessKeyId: ""
+    # -- K8s Secret Name for storage secretAccessKeyId
+    secretNameSecretAccessKey: ""
+    # -- Key for storage secretAccessKeyId taken from k8s secret
+    secretKeySecretAccessKey: ""
+    # -- MinIO Region
+    region: ""
+    # -- MinIO Token
+    token: ""
+    # -- MinIO Bucket
+    bucket: "testkube-new-logs"
+    # -- MinIO Expiration period in days
+    expiration: 0
+    # -- MinIO Use SSL
+    SSL: false
+    # -- Toggle whether to verify TLS certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
+    # -- Toggle whether to enable scraper in Testkube API
+    scrapperEnabled: true
+    # -- Toggle whether to compress artifacts in Testkube API
+    compressArtifacts: true
 
 # Testkube API parameters
 testkube-api:
