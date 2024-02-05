@@ -152,22 +152,21 @@ preUpgradeHookNATS:
 # -- NATS chart parameters
 nats:
   # NATS container settings
+  podTemplate:
+    merge:
+      spec:
+        nodeSelector:
+          cloud.google.com/gke-provisioning: standard
   config:
     merge:
       max_payload: << 8MB >>
     jetstream:
       enabled: true
-      merge:
-        spec:
-          template:
-            spec:
-              nodeSelector:
-                cloud.google.com/gke-provisioning: standard
 
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
-  natsbox:
+  natsBox:
     enabled: true
     podTemplate:
       merge:

@@ -148,19 +148,18 @@ preUpgradeHookNATS:
       effect: NoSchedule
 
 nats:
+  podTemplate:
+    merge:
+      spec:
+        nodeSelector:
+          cloud.google.com/gke-provisioning: standard
   # NATS container settings
   config:
     merge:
       max_payload: << 8MB >>
     jetstream:
       enabled: true
-  merge:
-    spec:
-      template:
-        spec:
-          nodeSelector:
-            cloud.google.com/gke-provisioning: standard
-  natsbox:
+  natsBox:
     enabled: false
 
 testkube-api:
