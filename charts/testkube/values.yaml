@@ -170,13 +170,11 @@ nats:
     podTemplate:
       merge:
         spec:
-          template:
-            spec:
-              tolerations:
-                - key: kubernetes.io/arch
-                  operator: Equal
-                  value: arm64
-                  effect: NoSchedule
+          tolerations:
+            - key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+              effect: NoSchedule
   config:
     merge:
       max_payload: << 8MB >>
