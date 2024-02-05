@@ -15,7 +15,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
   - name: nats
     condition: testkube-api.nats.enabled
-    version: 0.19.1
+    version: 1.1.7
     repository: https://nats-io.github.io/k8s/helm/charts/
   - name: testkube-api
     version: 1.16.26
