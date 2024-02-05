@@ -164,7 +164,7 @@ nats:
   # change it to
   # natsbox:
   #   enabled: false
-  natsbox:
+  natsBox:
     enabled: true
     # -- NATS Box tolerations settings
     podTemplate:

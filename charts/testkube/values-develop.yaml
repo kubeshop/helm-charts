@@ -154,12 +154,11 @@ preUpgradeHookNATS:
 # NATS values
 nats:
   # NATS container settings
-  merge:
-     spec:
-       template:
-         spec:
-           nodeSelector:
-             cloud.google.com/gke-provisioning: standard
+  podTemplate:
+    merge:
+      spec:
+        nodeSelector:
+          cloud.google.com/gke-provisioning: standard
   config:
     merge:
       max_payload: << 8MB >>
@@ -167,7 +166,7 @@ nats:
     jetstream:
       enabled: true
 
-  natsbox:
+  natsBox:
     enabled: true
     podTemplate:
       merge:
