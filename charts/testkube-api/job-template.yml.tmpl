@@ -59,7 +59,7 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: DEBUG
-          value: {{ .Debug }}
+          value: {{ if .Debug }}"true"{{ else }}"false"{{ end }}
         - name: NAMESPACE
           value: {{ .Namespace }}
         - name: NATS_URI
