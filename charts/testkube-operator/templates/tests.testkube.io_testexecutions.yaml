@@ -55,6 +55,7 @@ spec:
                     enum:
                     - append
                     - override
+                    - replace
                     type: string
                   artifactRequest:
                     description: artifact request body with test artifacts
@@ -431,6 +432,7 @@ spec:
                     enum:
                     - append
                     - override
+                    - replace
                     type: string
                   artifactRequest:
                     description: artifact request body with test artifacts
