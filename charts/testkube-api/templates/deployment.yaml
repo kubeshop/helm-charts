@@ -293,11 +293,11 @@ spec:
             - name: TESTKUBE_OAUTH_SCOPES
               value:  "{{ .Values.cliIngress.oauth.scopes }}"
             {{- if .Values.cloud.key }}
-            - name: TESTKUBE_CLOUD_API_KEY
+            - name: TESTKUBE_PRO_API_KEY
               value:  "{{ .Values.cloud.key }}"
             {{- end}}
             {{- if .Values.cloud.existingSecret.key }}
-            - name: TESTKUBE_CLOUD_API_KEY
+            - name: TESTKUBE_PRO_API_KEY
               valueFrom:
                 secretKeyRef:
                   key: {{ .Values.cloud.existingSecret.key }}
@@ -306,9 +306,13 @@ spec:
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
+            - name: TESTKUBE_PRO_URL
+              value:  "{{ .Values.cloud.url }}"
             {{- end }}
             {{- if .Values.cloud.uiUrl}}
             - name: TESTKUBE_CLOUD_UI_URL
+              value: "{{ .Values.cloud.uiUrl }}"
+            - name: TESTKUBE_PRO_UI_URL
               value: "{{ .Values.cloud.uiUrl }}"
             {{- end}}
             {{- if not .Values.cloud.tls.enabled }}
@@ -330,29 +334,29 @@ spec:
               value:  "true"
             {{- end }}
             {{- if .Values.cloud.orgId }}
-            - name: TESTKUBE_CLOUD_ORG_ID
+            - name: TESTKUBE_PRO_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
             {{- end}}
             {{- if .Values.cloud.existingSecret.orgId }}
-            - name: TESTKUBE_CLOUD_ORG_ID
+            - name: TESTKUBE_PRO_ORG_ID
               valueFrom:
                 secretKeyRef:
                   key: {{ .Values.cloud.existingSecret.orgId }}
                   name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
             {{- if .Values.cloud.envId }}
-            - name: TESTKUBE_CLOUD_ENV_ID
+            - name: TESTKUBE_PRO_ENV_ID
               value:  "{{ .Values.cloud.envId }}"
             {{- end}}
             {{- if .Values.cloud.existingSecret.envId }}
-            - name: TESTKUBE_CLOUD_ENV_ID
+            - name: TESTKUBE_PRO_ENV_ID
               valueFrom:
                 secretKeyRef:
                   key: {{ .Values.cloud.existingSecret.envId }}
                   name: {{ .Values.cloud.existingSecret.name }}
             {{- end}}
             {{- if .Values.cloud.migrate }}
-            - name: TESTKUBE_CLOUD_MIGRATE
+            - name: TESTKUBE_PRO_MIGRATE
               value:  "{{ .Values.cloud.migrate }}"
             {{- end}}
             - name: TESTKUBE_WATCHER_NAMESPACES
