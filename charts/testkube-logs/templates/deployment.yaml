@@ -93,6 +93,20 @@ spec:
             value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.caFile }}"
           {{- end }}
           {{- end }}
+          - name: "GRPC_SECURE"
+            value: "{{ .Values.tls.enabled }}"
+          - name: "GRPC_CLIENT_AUTH"
+            value:  "{{ .Values.tls.clientAuth }}"
+          {{- if .Values.tls.certSecret.enabled }}
+          - name: "GRPC_CERT_FILE"
+            value:  "{{ .Values.tls.certSecret.baseMountPath }}/{{ .Values.tls.certSecret.certFile }}"
+          - name: "GRPC_KEY_FILE"
+            value: "{{ .Values.tls.certSecret.baseMountPath }}/{{ .Values.tls.certSecret.keyFile }}"
+          {{- if .Values.tls.mountClientCACertificate }}
+          - name: "GRPC_CLIENT_CA_FILE"
+            value: "{{ .Values.tls.certSecret.baseMountPath }}/{{ .Values.tls.certSecret.clientCAFile }}"
+          {{- end }}
+          {{- end }}
           {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
           {{- end }}

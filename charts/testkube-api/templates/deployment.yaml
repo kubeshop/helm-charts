@@ -55,6 +55,20 @@ spec:
             - name: LOG_SERVER_GRPC_ADDRESS
               value:  "{{ .Values.testkubeLogs.grpcAddress }}"
               {{- end }}
+            - name: "LOG_SERVER_SECURE"
+              value: "{{ .Values.testkubeLogs.tls.enabled }}"
+            - name: "LOG_SERVER_SKIP_VERIFY"
+              value:  "{{ .Values.testkubeLogs.tls.skipVerify }}"
+            {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+            - name: "LOG_SERVER_CERT_FILE"
+              value:  "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.certFile }}"
+            - name: "LOG_SERVER_KEY_FILE"
+              value: "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.keyFile }}"
+            {{- if .Values.testkubeLogs.tls.mountCACertificate }}
+            - name: "LOG_SERVER_CA_FILE"
+              value: "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.caFile }}"
+            {{- end }}
+            {{- end }}
             {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"

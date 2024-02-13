@@ -104,6 +104,27 @@ nats:
   ## URI that testkube logs uses to connect to NATS
   uri: "nats://testkube-nats"
 
+tls:
+  # -- Toggle whether to enable TLS in GRPC server
+  enabled: false
+  # -- Toggle whether to require client auth
+  clientAuth: false
+  # -- If enabled, will also require a client CA certificate to be provided
+  mountClientCACertificate: false
+  certSecret:
+    # -- Toggle whether to mount k8s secret which contains GRPC server certificate (cert.crt, cert.key, client_ca.crt)
+    enabled: false
+    # -- Name of the storage server certificate secret
+    name: "grpc-server-cert"
+    # -- Base path to mount the server certificate secret
+    baseMountPath: /etc/server-certs/storage
+    # -- Path to server certificate file
+    certFile: "cert.crt"
+    # -- Path to server certificate key file
+    keyFile: "cert.key"
+    # -- Path to cliebt ca file (used for self-signed certificates)
+    clientCAFile: "client_ca.crt"
+
 ## Extra Environment Variables which will be injected into the Testkube Logs container
 extraEnvVars: {}
 # - name: FOO
