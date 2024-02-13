@@ -123,11 +123,23 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.tls.certSecret.enabled }}
+          volumeMounts:
+            - mountPath: /etc/server-certs/grpc
+              name: {{ .Values.tls.certSecret.name }}
+              readOnly: true
+          {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tls.certSecret.enabled }}
+      volumes:
+        - name: {{ .Values.tls.certSecret.name }}
+          secret:
+            secretName: {{ .Values.tls.certSecret.name }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:

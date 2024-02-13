@@ -203,10 +203,10 @@ testkube-logs:
     certSecret:
       # -- Toggle whether to mount k8s secret which contains GRPC server certificate (cert.crt, cert.key, client_ca.crt)
       enabled: false
-      # -- Name of the storage server certificate secret
+      # -- Name of the grpc server certificate secret
       name: "grpc-server-cert"
       # -- Base path to mount the server certificate secret
-      baseMountPath: /etc/server-certs/storage
+      baseMountPath: /etc/server-certs/grpc
       # -- Path to server certificate file
       certFile: "cert.crt"
       # -- Path to server certificate key file
@@ -714,10 +714,10 @@ testkube-api:
       certSecret:
         # -- Toggle whether to mount k8s secret which contains GRPC client certificate (cert.crt, cert.key, ca.crt)
         enabled: false
-        # -- Name of the storage client certificate secret
+        # -- Name of the grpc client certificate secret
         name: "grpc-client-cert"
         # -- Base path to mount the client certificate secret
-        baseMountPath: /etc/client-certs/storage
+        baseMountPath: /etc/client-certs/grpc
         # -- Path to client certificate file
         certFile: "cert.crt"
         # -- Path to client certificate key file

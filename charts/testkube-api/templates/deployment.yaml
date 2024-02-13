@@ -410,6 +410,13 @@ spec:
               name: {{ .Values.nats.tls.certSecret.name }}
               readOnly: true
             {{- end }}
+            {{- if .Values.global.features.logsV2 }}
+            {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+            - mountPath: /etc/client-certs/grpc
+              name: {{ .Values.testkubeLogs.tls.certSecret.name }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
             {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}
             {{- end }}
@@ -434,6 +441,13 @@ spec:
         - name: {{ .Values.nats.tls.certSecret.name }}
           secret:
             secretName: {{ .Values.nats.tls.certSecret.name }}
+        {{- end }}
+        {{- if .Values.global.features.logsV2 }}
+        {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+        - name: {{ .Values.testkubeLogs.tls.certSecret.name }}
+          secret:
+            secretName: {{ .Values.testkubeLogs.tls.certSecret.name }}
+        {{- end }}        
         {{- end }}
         {{- with .Values.additionalVolumes }}
         {{- toYaml . | nindent 8 -}}
