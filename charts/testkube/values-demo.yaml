@@ -191,6 +191,8 @@ testkube-api:
   service:
     type: ClusterIP
     port: 8088
+  imageInspectionCache:
+    enabled: true
   minio:
     enabled: true
     nodeSelector:
