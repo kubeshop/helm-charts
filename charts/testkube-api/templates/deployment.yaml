@@ -334,6 +334,12 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}
+            {{- if .Values.imageInspectionCache.enabled }}
+            - name: TESTKUBE_ENABLE_IMAGE_DATA_PERSISTENT_CACHE
+              value:  "true"
+            - name: TESTKUBE_IMAGE_DATA_PERSISTENT_CACHE_KEY
+              value:  "{{ .Values.imageInspectionCache.name }}"
+            {{- end}}
             - name: TESTKUBE_CONFIG_DIR
               value: /app/config
             {{- if .Values.global }}
