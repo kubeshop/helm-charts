@@ -89,6 +89,13 @@ cloud:
     ## Key for the Environment ID
     envId: ""
 
+## Persistent cache for Docker
+imageInspectionCache:
+  ## Status of the persistent cache
+  enabled: false
+  ## ConfigMap name to persist cache
+  name: "testkube-image-cache"
+
 ## Multinamespace feature. Disabled by default
 multinamespace:
   enabled: false

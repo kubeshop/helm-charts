@@ -372,6 +372,13 @@ testkube-api:
       # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
       skipVerify: false
 
+  ## Persistent cache for Docker
+  imageInspectionCache:
+    ## Status of the persistent cache
+    enabled: false
+    ## ConfigMap name to persist cache
+    name: "testkube-image-cache"
+
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations:
