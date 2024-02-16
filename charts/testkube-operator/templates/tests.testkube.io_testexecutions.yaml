@@ -279,6 +279,9 @@ spec:
                             type: object
                         type: object
                     type: object
+                  sourceScripts:
+                    description: run scripts using source command
+                    type: boolean
                   sync:
                     description: whether to start execution sync or async
                     type: boolean
@@ -718,6 +721,9 @@ spec:
                             type: object
                         type: object
                     type: object
+                  sourceScripts:
+                    description: run scripts using source command
+                    type: boolean
                   startTime:
                     description: test start time
                     format: date-time
