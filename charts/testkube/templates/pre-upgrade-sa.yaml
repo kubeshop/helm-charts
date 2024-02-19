@@ -1,4 +1,4 @@
-{{- if .Values.preUpgradeHook.serviceAccount.create }}
+{{- if and .Values.preUpgradeHook.serviceAccount.create .Values.mongodb.enabled }}
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -14,7 +14,7 @@ metadata:
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
 {{- end }}
 
-{{- if .Values.preUpgradeHook.serviceAccount.create }}
+{{- if and .Values.preUpgradeHook.serviceAccount.create .Values.mongodb.enabled }}
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
@@ -35,7 +35,7 @@ rules:
     verbs: ["create","delete","get","list","patch","update","watch"]
 {{- end }}
 
-{{- if .Values.preUpgradeHook.serviceAccount.create }}
+{{- if and .Values.preUpgradeHook.serviceAccount.create .Values.mongodb.enabled }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
