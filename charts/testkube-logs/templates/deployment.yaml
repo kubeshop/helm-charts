@@ -41,54 +41,54 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-          {{- if .Values.cloud.key }}
+          {{- if .Values.pro.key }}
           - name: TESTKUBE_PRO_API_KEY
-            value:  "{{ .Values.cloud.key }}"
+            value:  "{{ .Values.pro.key }}"
           {{- end}}
-          {{- if .Values.cloud.existingSecret.key }}
+          {{- if .Values.pro.existingSecret.key }}
           - name: TESTKUBE_PRO_API_KEY
             valueFrom:
               secretKeyRef:
-                key: {{ .Values.cloud.existingSecret.key }}
-                name: {{ .Values.cloud.existingSecret.name }}
+                key: {{ .Values.pro.existingSecret.key }}
+                name: {{ .Values.pro.existingSecret.name }}
           {{- end}}
-          {{- if .Values.cloud.url }}
+          {{- if .Values.pro.url }}
           - name: TESTKUBE_PRO_URL
-            value:  "{{ .Values.cloud.url }}"
+            value:  "{{ .Values.pro.url }}"
           {{- end }}
-          {{- if .Values.cloud.uiUrl}}
+          {{- if .Values.pro.uiUrl}}
           - name: TESTKUBE_PRO_UI_URL
-            value: "{{ .Values.cloud.uiUrl }}"
+            value: "{{ .Values.pro.uiUrl }}"
           {{- end}}
-          {{- if not .Values.cloud.tls.enabled }}
+          {{- if not .Values.pro.tls.enabled }}
           - name: TESTKUBE_PRO_TLS_INSECURE
             value:  "true"
           {{- end }}
-          {{- if .Values.cloud.tls.skipVerify }}
+          {{- if .Values.pro.tls.skipVerify }}
           - name: TESTKUBE_PRO_SKIP_VERIFY
             value:  "true"
           {{- end }}
-          {{- if .Values.cloud.orgId }}
+          {{- if .Values.pro.orgId }}
           - name: TESTKUBE_PRO_ORG_ID
-            value:  "{{ .Values.cloud.orgId }}"
+            value:  "{{ .Values.pro.orgId }}"
           {{- end}}
-          {{- if .Values.cloud.existingSecret.orgId }}
+          {{- if .Values.pro.existingSecret.orgId }}
           - name: TESTKUBE_PRO_ORG_ID
             valueFrom:
               secretKeyRef:
-                key: {{ .Values.cloud.existingSecret.orgId }}
-                name: {{ .Values.cloud.existingSecret.name }}
+                key: {{ .Values.pro.existingSecret.orgId }}
+                name: {{ .Values.pro.existingSecret.name }}
           {{- end}}
-          {{- if .Values.cloud.envId }}
+          {{- if .Values.pro.envId }}
           - name: TESTKUBE_PRO_ENV_ID
-            value:  "{{ .Values.cloud.envId }}"
+            value:  "{{ .Values.pro.envId }}"
           {{- end}}
-          {{- if .Values.cloud.existingSecret.envId }}
+          {{- if .Values.pro.existingSecret.envId }}
           - name: TESTKUBE_PRO_ENV_ID
             valueFrom:
               secretKeyRef:
-                key: {{ .Values.cloud.existingSecret.envId }}
-                name: {{ .Values.cloud.existingSecret.name }}
+                key: {{ .Values.pro.existingSecret.envId }}
+                name: {{ .Values.pro.existingSecret.name }}
           {{- end}}
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
