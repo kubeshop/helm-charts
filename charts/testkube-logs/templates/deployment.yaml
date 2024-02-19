@@ -41,6 +41,55 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+          {{- if .Values.cloud.key }}
+          - name: TESTKUBE_CLOUD_API_KEY
+            value:  "{{ .Values.cloud.key }}"
+          {{- end}}
+          {{- if .Values.cloud.existingSecret.key }}
+          - name: TESTKUBE_CLOUD_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.cloud.existingSecret.key }}
+                name: {{ .Values.cloud.existingSecret.name }}
+          {{- end}}
+          {{- if .Values.cloud.url }}
+          - name: TESTKUBE_CLOUD_URL
+            value:  "{{ .Values.cloud.url }}"
+          {{- end }}
+          {{- if .Values.cloud.uiUrl}}
+          - name: TESTKUBE_CLOUD_UI_URL
+            value: "{{ .Values.cloud.uiUrl }}"
+          {{- end}}
+          {{- if not .Values.cloud.tls.enabled }}
+          - name: TESTKUBE_PRO_TLS_INSECURE
+            value:  "true"
+          {{- end }}
+          {{- if .Values.cloud.tls.skipVerify }}
+          - name: TESTKUBE_PRO_SKIP_VERIFY
+            value:  "true"
+          {{- end }}
+          {{- if .Values.cloud.orgId }}
+          - name: TESTKUBE_CLOUD_ORG_ID
+            value:  "{{ .Values.cloud.orgId }}"
+          {{- end}}
+          {{- if .Values.cloud.existingSecret.orgId }}
+          - name: TESTKUBE_CLOUD_ORG_ID
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.cloud.existingSecret.orgId }}
+                name: {{ .Values.cloud.existingSecret.name }}
+          {{- end}}
+          {{- if .Values.cloud.envId }}
+          - name: TESTKUBE_CLOUD_ENV_ID
+            value:  "{{ .Values.cloud.envId }}"
+          {{- end}}
+          {{- if .Values.cloud.existingSecret.envId }}
+          - name: TESTKUBE_CLOUD_ENV_ID
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.cloud.existingSecret.envId }}
+                name: {{ .Values.cloud.existingSecret.name }}
+          {{- end}}
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
           - name: "HTTP_ADDRESS"
