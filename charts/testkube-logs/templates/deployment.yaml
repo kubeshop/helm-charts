@@ -41,6 +41,8 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+          - name: DEBUG
+            value:  "{{ .Values.debug }}"
           {{- if .Values.pro.key }}
           - name: TESTKUBE_PRO_API_KEY
             value:  "{{ .Values.pro.key }}"
@@ -90,6 +92,8 @@ spec:
                 key: {{ .Values.pro.existingSecret.envId }}
                 name: {{ .Values.pro.existingSecret.name }}
           {{- end}}
+          - name: TESTKUBE_PRO_LOGS_PATH
+            value:  "{{ .Values.pro.logsPath }}"
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
           - name: "HTTP_ADDRESS"
