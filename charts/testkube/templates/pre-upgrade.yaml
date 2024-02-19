@@ -1,4 +1,4 @@
-{{- if .Values.preUpgradeHook.enabled -}}
+{{- if and .Values.preUpgradeHook.enabled .Values.mongodb.enabled -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
