@@ -336,6 +336,7 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
   enableSecretsEndpoint: false
+  disableSecretCreation: false
 
   priorityClassName: "highest-priority"
 
