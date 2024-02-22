@@ -310,7 +310,7 @@ spec:
               value: "{{ .Values.cloud.uiUrl }}"
             {{- end}}
             {{- if not .Values.cloud.tls.enabled }}
-            - name: TESTKUBE_PRO_TLS_INSECURE
+            - name: TESTKUBE_CLOUD_TLS_INSECURE
               value:  "true"
             {{- end }}
             {{- if .Values.cloud.tls.skipVerify }}
