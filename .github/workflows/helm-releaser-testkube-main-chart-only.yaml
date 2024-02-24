@@ -1,5 +1,7 @@
 name: Releasing Testkube main helm chart
 
+concurrency: demo_cluster
+
 on:
   push:
     paths:
@@ -189,7 +191,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set testkube-api.minio.storage=80Gi --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
 
   notify_slack_if_deploy_dev_succeeds:
     runs-on: ubuntu-latest

@@ -1,7 +1,8 @@
 # Section for configuring the postgres database that will be used by Tracetest
 postgresql:
-  # For now, this is required to be enabled, otherwise tracetest will not
-  # be able to function properly.
+  # if enabled is true, the postgres chart will be installed.
+  # it can be turned off if you already have a postgres database running.
+  # In that case, you need to pass the values for `postgres.auth`
   enabled: true
   architecture: standalone
   image:
@@ -9,12 +10,18 @@ postgresql:
 
   # credentials for accessing the database
   auth:
+    # host is only required if not using the postgres chart
+    host: ""
+    port: 5432
+    params: sslmode=disable
     database: "tracetest"
     username: "tracetest"
     password: not-secure-database-password
     existingSecret: ""
 
-# Provisioning allows to define initial settings to be loaded into the database on first run. 
+
+
+# Provisioning allows to define initial settings to be loaded into the database on first run.
 # These will only be applied when running tracetest against an empty database. If tracetest has already
 # been configured, the provisioning settings are ignored.
 provisioning: |
@@ -120,6 +127,8 @@ environmentVars:
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
+# If set, it allows to pass a custom configmap to the tracetest server
+configMapOverride: ""
 serviceAccount:
   # Specifies whether a service account should be created
   create: false

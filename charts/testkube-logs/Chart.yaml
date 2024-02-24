@@ -1,17 +1,6 @@
 apiVersion: v2
-name: tracetest
-description: A Helm chart for Trace Test
-
-home: https://github.com/kubeshop/helm-charts
-
-sources:
-  - "https://github.com/kubeshop/helm-charts/tree/main/charts"
-
-dependencies:
-  - name: postgresql
-    version: 12.1.6
-    condition: postgresql.enabled
-    repository: "https://charts.bitnami.com/bitnami"
+name: testkube-logs
+description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -26,10 +15,15 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.3.8
+version: 0.2.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "v0.15.5"
+appVersion: "1.0.0"
+dependencies:
+  - name: global
+    version: 0.1.2
+    #repository: https://kubeshop.github.io/helm-charts
+    repository: "file://../global"

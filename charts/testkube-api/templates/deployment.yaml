@@ -39,9 +39,37 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
+      {{- if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      {{- end }}
+      {{- if .Values.dnsPolicy }}
+      dnsPolicy: {{ .Values.dnsPolicy }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if .Values.global.features.logsV2 }}
+            - name: FF_LOGS_V2
+              value:  "{{ .Values.global.features.logsV2 }}"
+              {{- if .Values.testkubeLogs.grpcAddress }}            
+            - name: LOG_SERVER_GRPC_ADDRESS
+              value:  "{{ .Values.testkubeLogs.grpcAddress }}"
+              {{- end }}
+            - name: "LOG_SERVER_SECURE"
+              value: "{{ .Values.testkubeLogs.tls.enabled }}"
+            - name: "LOG_SERVER_SKIP_VERIFY"
+              value:  "{{ .Values.testkubeLogs.tls.skipVerify }}"
+            {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+            - name: "LOG_SERVER_CERT_FILE"
+              value:  "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.certFile }}"
+            - name: "LOG_SERVER_KEY_FILE"
+              value: "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.keyFile }}"
+            {{- if .Values.testkubeLogs.tls.mountCACertificate }}
+            - name: "LOG_SERVER_CA_FILE"
+              value: "{{ .Values.testkubeLogs.tls.certSecret.baseMountPath }}/{{ .Values.testkubeLogs.tls.certSecret.caFile }}"
+            {{- end }}
+            {{- end }}
+            {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"
             - name: API_MONGO_DSN
@@ -276,7 +304,19 @@ spec:
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
               value:  "{{ .Values.cloud.url }}"
+            {{- end }}
+            {{- if .Values.cloud.uiUrl}}
+            - name: TESTKUBE_CLOUD_UI_URL
+              value: "{{ .Values.cloud.uiUrl }}"
             {{- end}}
+            {{- if not .Values.cloud.tls.enabled }}
+            - name: TESTKUBE_CLOUD_TLS_INSECURE
+              value:  "true"
+            {{- end }}
+            {{- if .Values.cloud.tls.skipVerify }}
+            - name: TESTKUBE_PRO_SKIP_VERIFY
+              value:  "true"
+            {{- end }}
             {{- if .Values.cloud.orgId }}
             - name: TESTKUBE_CLOUD_ORG_ID
               value:  "{{ .Values.cloud.orgId }}"
@@ -308,6 +348,12 @@ spec:
             {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
             {{- end }}
+            {{- if .Values.imageInspectionCache.enabled }}
+            - name: TESTKUBE_ENABLE_IMAGE_DATA_PERSISTENT_CACHE
+              value:  "true"
+            - name: TESTKUBE_IMAGE_DATA_PERSISTENT_CACHE_KEY
+              value:  "{{ .Values.imageInspectionCache.name }}"
+            {{- end}}
             - name: TESTKUBE_CONFIG_DIR
               value: /app/config
             {{- if .Values.global }}
@@ -331,6 +377,8 @@ spec:
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
               value: "{{ .Values.disableMongoMigrations }}"
+            - name: DISABLE_SECRET_CREATION
+              value: "{{ .Values.disableSecretCreation }}"              
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -364,6 +412,13 @@ spec:
               name: {{ .Values.nats.tls.certSecret.name }}
               readOnly: true
             {{- end }}
+            {{- if .Values.global.features.logsV2 }}
+            {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+            - mountPath: /etc/client-certs/grpc
+              name: {{ .Values.testkubeLogs.tls.certSecret.name }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
             {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}
             {{- end }}
@@ -388,6 +443,13 @@ spec:
         - name: {{ .Values.nats.tls.certSecret.name }}
           secret:
             secretName: {{ .Values.nats.tls.certSecret.name }}
+        {{- end }}
+        {{- if .Values.global.features.logsV2 }}
+        {{- if .Values.testkubeLogs.tls.certSecret.enabled }}
+        - name: {{ .Values.testkubeLogs.tls.certSecret.name }}
+          secret:
+            secretName: {{ .Values.testkubeLogs.tls.certSecret.name }}
+        {{- end }}        
         {{- end }}
         {{- with .Values.additionalVolumes }}
         {{- toYaml . | nindent 8 -}}
