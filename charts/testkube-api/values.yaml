@@ -55,10 +55,10 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-## Custom job-container-template.yml that will passed to Testkube API
+## Custom job-container-template.yml that will be passed to Testkube API
 jobContainerTemplate: ""
 
-## Custom job-scraper-template.yml that will passed to Testkube API
+## Custom job-scraper-template.yml that will be passed to Testkube API
 jobScraperTemplate: ""
 
 ## Custom job-template.yml that will be passed to Testkube API

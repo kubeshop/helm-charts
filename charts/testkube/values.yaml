@@ -278,6 +278,12 @@ testkube-api:
   multinamespace:
     enabled: false
 
+  # Custom job-container-template.yml that will be passed to Testkube API
+  #  jobContainerTemplate: ""
+  #
+  # Custom job-scraper-template.yml that will be passed to Testkube API
+  #  jobScraperTemplate: ""
+  #
   # Custom job-template.yml that will be passed to Testkube API. Example:
   #  configValues: |
   #    apiVersion: batch/v1
