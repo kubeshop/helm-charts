@@ -13,9 +13,17 @@ data:
   executors.json: |-
 {{ .Files.Get "executors.json" | indent 4 }}
   job-container-template.yml: |-
+{{- if .Values.jobContainerTemplate }}
+  {{ toYaml .Values.jobContainerTemplate | trimAll "|" | trim | indent 4 }}
+{{- else }}
 {{ .Files.Get "job-container-template.yml.tmpl" | indent 4 }}
+{{- end }}
   job-scraper-template.yml: |-
+{{- if .Values.jobScraperTemplate }}
+  {{ toYaml .Values.jobScraperTemplate | trimAll "|" | trim | indent 4 }}
+{{- else }}
 {{ .Files.Get "job-scraper-template.yml.tmpl" | indent 4 }}
+{{- end }}
   job-template.yml: |-
 {{- if .Values.configValues }}
   {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
