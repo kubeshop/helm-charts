@@ -436,6 +436,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}    
 
 ---
 
@@ -459,6 +460,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
 
 ---
 
