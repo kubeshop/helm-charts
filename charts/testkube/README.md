@@ -220,6 +220,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.enabledExecutors | string | `nil` |  |
+| testkube-api.executionNamespaces | list | `[]` | Execution namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace. |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
