@@ -696,7 +696,7 @@ rules:
       - watch
       - deletecollection
 
-{{- if not .Values.executionNamespaces }}
+{{- if .Values.executionNamespaces }}
 {{- range .Values.executionNamespaces }}
 {{- $rangeItem := . -}}
 {{- with $ }}

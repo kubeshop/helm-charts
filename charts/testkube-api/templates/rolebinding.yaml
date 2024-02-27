@@ -431,7 +431,7 @@ subjects:
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
-{{- if not .Values.executionNamespaces }}
+{{- if .Values.executionNamespaces }}
 {{- range .Values.executionNamespaces }}
 {{- $rangeItem := . -}}
 {{- with $ }}
