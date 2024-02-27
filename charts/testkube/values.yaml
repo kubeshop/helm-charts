@@ -1137,6 +1137,9 @@ testkube-operator:
       # -- Testkube Operator webhook certificate volume default mode
       defaultMode: 420
 
+  ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
+  cronJobTemplate: ""
+
   # Webhook parameters
   webhook:
     # -- Use webhook
