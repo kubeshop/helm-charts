@@ -67,7 +67,11 @@ spec:
         - name: APISERVER_PORT
           value: "{{ .Values.apiPort }}"
         - name: APISERVER_TEMPLATE_CRONJOB
-          value: "{{ .Files.Get "cronjob-template.yml" | b64enc }}"
+          value: {{- if .Values.cronJobTemplate }}
+              "{{ toYaml .Values.cronJobTemplate | trimAll "|" | trim | indent 4 | b64enc }}"
+            {{- else }}
+              "{{ .Files.Get "cronjob-template.yml" | indent 4 | b64enc }}"
+            {{- end }}
         {{- if not .Values.webhook.enabled }}
         - name: ENABLE_WEBHOOKS
           value: "false"

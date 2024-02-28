@@ -217,6 +217,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.clusterName | string | `""` |  |
 | testkube-api.dashboardUri | string | `""` |  |
 | testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.enabledExecutors | string | `nil` |  |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
