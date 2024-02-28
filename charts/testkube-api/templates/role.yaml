@@ -700,13 +700,15 @@ rules:
 {{- range .Values.executionNamespaces }}
 {{- $rangeItem := . -}}
 {{- with $ }}
+
+{{- if $rangeItem.generateAPIServerRBAC }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: get-secrets-role-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: get-secrets-role-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -727,8 +729,8 @@ r ules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: get-configmaps-role-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: get-configmaps-role-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -749,8 +751,8 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: persistentvolumeclaims-role-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: persistentvolumeclaims-role-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -773,8 +775,8 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: jobs-role-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: jobs-role-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -804,6 +806,54 @@ rules:
       - list
       - create
       - delete
+{{- end }}
+
+{{- if $rangeItem.generateTestJobRBAC }}
+---
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: tests-job-role-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
 
 {{- end }}
 {{- end }}

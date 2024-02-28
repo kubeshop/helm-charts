@@ -436,13 +436,14 @@ subjects:
 {{- $rangeItem := . -}}
 {{- with $ }}
 
+{{- if $rangeItem.generateAPIServerRBAC }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: get-secrets-role-rb-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: get-secrets-role-rb-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -453,7 +454,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: get-secrets-role-{{ $rangeItem }}
+  name: get-secrets-role-{{ $rangeItem.namespace  }}
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -465,8 +466,8 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: get-configmaps-role-rb-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: get-configmaps-role-rb-{{ $rangeItem.namespace  }}
+  namespace: {{ $rangeItem.namespace  }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -477,7 +478,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: get-configmaps-role-{{ $rangeItem }}
+  name: get-configmaps-role-{{ $rangeItem.namespace  }}
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
@@ -489,8 +490,8 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: persistentvolumeclaims-role-rb-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: persistentvolumeclaims-role-rb-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -501,7 +502,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: persistentvolumeclaims-role-{{ $rangeItem }}
+  name: persistentvolumeclaims-role-{{ $rangeItem.namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
@@ -512,8 +513,8 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: jobs-role-rb-{{ $rangeItem }}
-  namespace: {{ $rangeItem }}
+  name: jobs-role-rb-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
@@ -524,11 +525,37 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: jobs-role-{{ $rangeItem }}
+  name: jobs-role-{{ $rangeItem.namespace }}
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
+{{- end}}
+
+{{- if $rangeItem.generateTestJobRBAC }}
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: tests-job-crb-{{ $rangeItem.namespace }}
+  namespace: {{ $rangeItem.namespace }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tests-job-role-{{ $rangeItem.namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ $rangeItem.jobServiceAccountName }}
+    namespace: {{ $rangeItem.namespace }}
+{{- end }}
 
 {{- end }}
 {{- end }}
