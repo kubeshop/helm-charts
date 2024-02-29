@@ -103,6 +103,8 @@ spec:
           - name: "STORAGE_ENDPOINT"
             {{- if .Values.storage.endpoint }}
             value:  "{{ .Values.storage.endpoint }}"
+            {{- else if .Values.executionNamespaces }}
+            value:  "testkube-minio-service-{{ .Release.Namespace }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.endpoint_port }}"
             {{- else }}
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
             {{- end }}
