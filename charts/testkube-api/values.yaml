@@ -168,10 +168,14 @@ enabledExecutors:
 ## Execution namespaces for Testkube API to only run tests
 ## Execution namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
 executionNamespaces:
-##  - namespace: default
-##    generateAPIServerRBAC: true
-##    jobServiceAccountName: tests-job-default
-##    generateTestJobRBAC: true
+     # -- Namespace for test execution  
+#  - namespace: default 
+     # -- Whether to genrate RBAC for testkube api server or use manually provided 
+#    generateAPIServerRBAC: true
+     # -- Job service account name for test jobs 
+#    jobServiceAccountName: tests-job-default
+     # -- Whether to genrate RBAC for test job or use manually provided 
+#    generateTestJobRBAC: true
 
 # Testkube log server parameters
 testkubeLogs:
