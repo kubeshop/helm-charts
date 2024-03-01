@@ -16,6 +16,36 @@ global:
   # --  Annotations to add to all deployed objects
   annotations: {}
 
+debug: true
+
+pro:
+  ## URL of the Cloud Saas Control Plane
+  url: "agent.testkube.io:443"
+  ## Path of the logs service (in case of ingress path routing)
+  logsPath: "/logs"
+  uiUrl: ""
+  ## License Key
+  key: ""
+  ## Organization ID
+  orgId: ""
+  ## Environment ID
+  envId: ""
+  tls:
+    ## Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+    enabled: true
+    ## Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+    skipVerify: false
+  ## Retrieve cloud information from existing secret
+  existingSecret:
+    ## Name of the secret. If set, this will be used instead of the above values
+    name: ""
+    ## Key for the License Key
+    key: ""
+    ## Key for the Organization ID
+    orgId: ""
+    ## Key for the Environment ID
+    envId: ""
+
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
@@ -92,7 +122,7 @@ service:
   ## GRPC Hostname
   grpcHostname: ""
   ## GRPC Port
-  grpcPort: 9090 
+  grpcPort: 9090
   ## Annotations
   annotations: {}
   ## Service labels
@@ -180,7 +210,7 @@ testConnection:
   enabled: false
 
 storage:
-    # -- MinIO endpoint
+  # -- MinIO endpoint
   endpoint: ""
   # -- MinIO endpoint port
   endpoint_port: "9000"

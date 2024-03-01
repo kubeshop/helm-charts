@@ -278,6 +278,12 @@ testkube-api:
   multinamespace:
     enabled: false
 
+  # Custom job-container-template.yml that will be passed to Testkube API
+  #  jobContainerTemplate: ""
+  #
+  # Custom job-scraper-template.yml that will be passed to Testkube API
+  #  jobScraperTemplate: ""
+  #
   # Custom job-template.yml that will be passed to Testkube API. Example:
   #  configValues: |
   #    apiVersion: batch/v1
@@ -685,20 +691,33 @@ testkube-api:
   executors: ""
   # -- SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud.
   jobServiceAccountName: ""
-  ## target for cdevents emission via http(s)
+  # -- target for cdevents emission via http(s)
   cdeventsTarget: ""
-  ## dashboard uri to be used in notification events
+  # -- dashboard uri to be used in notification events
   dashboardUri: ""
-  ## cluster name to be used in events
+  # -- cluster name to be used in events
   clusterName: ""
   # -- enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
-  ## enable only specified executors with enabled flag
+  # -- disable secret creation for tests and test sources
+  disableSecretCreation: false
+  # -- enable only specified executors with enabled flag
   enabledExecutors:
   #  postman-executor:
   #    enabled: true
   #  cypress-executor:
   #    enabled: true
+  # -- Execution namespaces for Testkube API to only run tests
+  # In this case, a Role and a RoleBinding will be created for each specified namespace.
+  executionNamespaces: []
+       # -- Namespace for test execution  
+  #  - namespace: default 
+       # -- Whether to generate RBAC for testkube api server or use manually provided 
+  #    generateAPIServerRBAC: true
+       # -- Job service account name for test jobs 
+  #    jobServiceAccountName: tests-job-default
+       # -- Whether to generate RBAC for test job or use manually provided 
+  #    generateTestJobRBAC: true
 
   # Testkube log server parameters
   testkubeLogs:
@@ -1128,6 +1147,9 @@ testkube-operator:
     secret:
       # -- Testkube Operator webhook certificate volume default mode
       defaultMode: 420
+
+  ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
+  cronJobTemplate: ""
 
   # Webhook parameters
   webhook:

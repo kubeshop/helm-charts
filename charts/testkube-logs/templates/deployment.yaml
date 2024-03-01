@@ -41,6 +41,59 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+          - name: DEBUG
+            value:  "{{ .Values.debug }}"
+          {{- if .Values.pro.key }}
+          - name: TESTKUBE_PRO_API_KEY
+            value:  "{{ .Values.pro.key }}"
+          {{- end}}
+          {{- if .Values.pro.existingSecret.key }}
+          - name: TESTKUBE_PRO_API_KEY
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.pro.existingSecret.key }}
+                name: {{ .Values.pro.existingSecret.name }}
+          {{- end}}
+          {{- if .Values.pro.url }}
+          - name: TESTKUBE_PRO_URL
+            value:  "{{ .Values.pro.url }}"
+          {{- end }}
+          {{- if .Values.pro.uiUrl}}
+          - name: TESTKUBE_PRO_UI_URL
+            value: "{{ .Values.pro.uiUrl }}"
+          {{- end}}
+          {{- if not .Values.pro.tls.enabled }}
+          - name: TESTKUBE_PRO_TLS_INSECURE
+            value:  "true"
+          {{- end }}
+          {{- if .Values.pro.tls.skipVerify }}
+          - name: TESTKUBE_PRO_SKIP_VERIFY
+            value:  "true"
+          {{- end }}
+          {{- if .Values.pro.orgId }}
+          - name: TESTKUBE_PRO_ORG_ID
+            value:  "{{ .Values.pro.orgId }}"
+          {{- end}}
+          {{- if .Values.pro.existingSecret.orgId }}
+          - name: TESTKUBE_PRO_ORG_ID
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.pro.existingSecret.orgId }}
+                name: {{ .Values.pro.existingSecret.name }}
+          {{- end}}
+          {{- if .Values.pro.envId }}
+          - name: TESTKUBE_PRO_ENV_ID
+            value:  "{{ .Values.pro.envId }}"
+          {{- end}}
+          {{- if .Values.pro.existingSecret.envId }}
+          - name: TESTKUBE_PRO_ENV_ID
+            valueFrom:
+              secretKeyRef:
+                key: {{ .Values.pro.existingSecret.envId }}
+                name: {{ .Values.pro.existingSecret.name }}
+          {{- end}}
+          - name: TESTKUBE_PRO_LOGS_PATH
+            value:  "{{ .Values.pro.logsPath }}"
           - name: NATS_URI
             value: {{ .Values.nats.uri }}
           - name: "HTTP_ADDRESS"
@@ -50,6 +103,8 @@ spec:
           - name: "STORAGE_ENDPOINT"
             {{- if .Values.storage.endpoint }}
             value:  "{{ .Values.storage.endpoint }}"
+            {{- else if .Values.executionNamespaces }}
+            value:  "testkube-minio-service-{{ .Release.Namespace }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.endpoint_port }}"
             {{- else }}
             value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
             {{- end }}

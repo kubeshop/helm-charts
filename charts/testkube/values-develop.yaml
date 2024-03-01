@@ -345,6 +345,7 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
   enableSecretsEndpoint: true
+  disableSecretCreation: false 
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"

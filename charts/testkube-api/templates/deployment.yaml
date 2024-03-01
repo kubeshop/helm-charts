@@ -187,6 +187,8 @@ spec:
             - name: "STORAGE_ENDPOINT"
               {{- if .Values.storage.endpoint }}
               value:  "{{ .Values.storage.endpoint }}"
+              {{- else if .Values.executionNamespaces }}
+              value:  "testkube-minio-service-{{ .Release.Namespace }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.endpoint_port }}"
               {{- else }}
               value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
               {{- end }}
@@ -377,6 +379,19 @@ spec:
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
               value: "{{ .Values.disableMongoMigrations }}"
+            - name: DISABLE_SECRET_CREATION
+              value: "{{ .Values.disableSecretCreation }}"
+            {{- if .Values.executionNamespaces }}
+            {{- $value := "" }}
+            {{- range $rangeItem := .Values.executionNamespaces }}
+                {{- if $value }}
+                  {{ $value = printf "%s," $value }}
+                {{- end }}
+                {{ $value = printf "%s%s=%s" $value $rangeItem.namespace $rangeItem.jobServiceAccountName }}
+            {{- end }}
+            - name: TESTKUBE_EXECUTION_NAMESPACES
+              value: "{{ $value }}"
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

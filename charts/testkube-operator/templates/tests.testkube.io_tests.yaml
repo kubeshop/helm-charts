@@ -567,6 +567,9 @@ spec:
                       type: string
                     description: test execution labels
                     type: object
+                  executionNamespace:
+                    description: namespace for test execution (Pro edition only)
+                    type: string
                   httpProxy:
                     description: http proxy for executor containers
                     type: string

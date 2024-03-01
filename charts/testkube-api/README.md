@@ -51,7 +51,9 @@ A Helm chart for Testkube api
 | dashboardUri | string | `""` |  |
 | dnsPolicy | string | `""` |  |
 | disableMongoMigrations | bool | `false` |  |
+| disableSecretCreation | bool | `false` |  |
 | enableSecretsEndpoint | bool | `false` |  |
+| executionNamespaces | list | `[]` |  |
 | executors | string | `""` |  |
 | extraEnvVars | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
@@ -67,6 +69,8 @@ A Helm chart for Testkube api
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-api-server"` |  |
 | enabledExecutors | object | `{}` |  |
+| jobContainerTemplate | string | `""` |  |
+| jobScraperTemplate | string | `""` |  |
 | jobServiceAccountName | string | `""` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
