@@ -40,8 +40,8 @@ spec:
         args:
         - --secure-listen-address=0.0.0.0:8443
         - --upstream=http://127.0.0.1:8080/
-        - --logtostderr=true
         - --v=10
+        {{- toYaml .Values.args | nindent 8 }}
         image: {{ include "global.images.image" (dict "imageRoot" .Values.proxy.image "global" .Values.global) }}
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
         {{- if .Values.proxy.resources }}

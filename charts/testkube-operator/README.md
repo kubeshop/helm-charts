@@ -30,6 +30,7 @@ A Helm chart for the testkube-operator (installs needed CRDs only for now)
 | image.pullSecrets | list | `[]` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-operator"` |  |
+| args | list | `--logtostderr=true` | |
 | installCRD | bool | `true` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `3` |  |
