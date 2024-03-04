@@ -13,6 +13,9 @@ global:
   labels: {}
   # --  Annotations to add to all deployed objects
   annotations: {}
+  # -- Features map for the whole chart
+  features:
+    logsV2: false
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -56,6 +59,47 @@ preUpgradeHook:
       value: arm64
       effect: NoSchedule
 
+# -- NATS pre-upgrade parameters
+preUpgradeHookNATS:
+  # -- Upgrade hook is enabled
+  enabled: true
+  # -- Upgrade hook name
+  name: nats-upgrade
+  ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+  ttlSecondsAfterFinished: 100
+  ## -- Specific labels
+  labels: {}
+  ## -- Annotations to add to the upgrade Job
+  annotations: {}
+  ## -- Annotations to add to the upgrade Job's pod
+  podAnnotations: {}
+  # -- Specify image
+  image:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # -- Node labels for pod assignment.
+  nodeSelector: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
 
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -114,66 +158,110 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
-  #fullnameOverride: testkube-nats
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
-  # An array of imagePullSecrets, and they have to be created manually in the same namespace
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  imagePullSecrets: []
-  #  - name: dockersecret
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  # -- NATS Pod Security Context
-  securityContext: {}
-
-  # NATS container settings
-  nats:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS container
-    securityContext: {}
-    # -- NATS resource settings
-    resources: {}
-    limits:
-      # -- Max payload
-      maxPayload: 8MB
-
-    # Uncomment the following block to enable TLS for NATS
-    # You will need to create a secret with the TLS certificates and provide the name of the secret in the tls.secret.name field
-    #tls:
-    #  allowNonTLS: false
-    #  secret:
-    #    name: nats-server-cert
-    #  ca: "ca.crt"
-    #  cert: "tls.crt"
-    #  key: "tls.key"
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
+  # change it to
+  # natsbox:
+  #   enabled: false
+  natsBox:
+    enabled: true
+    # -- NATS Box tolerations settings
+    podTemplate:
+      merge:
+        spec:
+          tolerations:
+            - key: kubernetes.io/arch
+              operator: Equal
+              value: arm64
+              effect: NoSchedule
+  config:
+    merge:
+      max_payload: << 8MB >>
+    jetstream:
+      # -- Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features)
+      enabled: true
 
   # Reloader container settings
   reloader:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Reloader container
-    securityContext: {}
+    enabled: true
 
-  # NATS Box container settings
-  natsbox:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for NATS Box container
-    securityContext: {}
-    # -- NATS Box tolerations settings
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+testkube-logs:
+  # -- Testkube logs full name override
+  fullnameOverride: testkube-logs
+  # -- Testkube logs name override
+  nameOverride: logs
+  replicaCount: 1
 
-  # Exporter container settings
-  exporter:
-    # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-    # -- Security Context for Exporter container
-    securityContext: {}
-    # -- Exporter resources settings
-    resources: {}
+  tls:
+    # -- Toggle whether to enable TLS in GRPC server
+    enabled: false
+    # -- Toggle whether to require client auth
+    clientAuth: false
+    # -- If enabled, will also require a client CA certificate to be provided
+    mountClientCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains GRPC server certificate (cert.crt, cert.key, client_ca.crt)
+      enabled: false
+      # -- Name of the grpc server certificate secret
+      name: "grpc-server-cert"
+      # -- Base path to mount the server certificate secret
+      baseMountPath: /etc/server-certs/grpc
+      # -- Path to server certificate file
+      certFile: "cert.crt"
+      # -- Path to server certificate key file
+      keyFile: "cert.key"
+      # -- Path to cliebt ca file (used for self-signed certificates)
+      clientCAFile: "client_ca.crt"
+
+  storage:
+     # -- MinIO endpoint
+    endpoint: ""
+    # -- MinIO endpoint port
+    endpoint_port: "9000"
+    # -- MinIO Access Key ID
+    accessKeyId: "minio"
+    # -- MinIO Secret Access Key
+    accessKey: "minio123"
+    # -- k8s Secret name for storage accessKeyId
+    secretNameAccessKeyId: ""
+    # -- Key for storage accessKeyId taken from k8s secret
+    secretKeyAccessKeyId: ""
+    # -- K8s Secret Name for storage secretAccessKeyId
+    secretNameSecretAccessKey: ""
+    # -- Key for storage secretAccessKeyId taken from k8s secret
+    secretKeySecretAccessKey: ""
+    # -- MinIO Region
+    region: ""
+    # -- MinIO Token
+    token: ""
+    # -- MinIO Bucket
+    bucket: "testkube-logs"
+    # -- MinIO Expiration period in days
+    expiration: 0
+    # -- MinIO Use SSL
+    SSL: false
+    # -- Toggle whether to verify TLS certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains storage client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the storage client certificate secret
+      name: "storage-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/storage
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
+    # -- Toggle whether to enable scraper in Testkube API
+    scrapperEnabled: true
+    # -- Toggle whether to compress artifacts in Testkube API
+    compressArtifacts: true
 
 # Testkube API parameters
 testkube-api:
@@ -190,31 +278,31 @@ testkube-api:
   multinamespace:
     enabled: false
 
-# Custom job-template.yml that will be passed to Testkube API. Example:
-#  configValues: |
-#    apiVersion: batch/v1
-#    kind: Job
-#    metadata:
-#      labels:
-#        key1: value1
-#        key2: value2
-#    spec:
-#      template:
-#        metadata:
-#          labels:
-#            key1: value1
-#            key2: value2
-#          annotations:
-#            key1: value1
-#            key2: value2
-#        spec:
-#          containers:
-#            - name: "{{ .Name }}"
-#              image: {{ .Image }}
-#              imagePullPolicy: Always
-#              command:
-#                - "/bin/runner"
-#                - '{{ .Jsn }}'
+  # Custom job-template.yml that will be passed to Testkube API. Example:
+  #  configValues: |
+  #    apiVersion: batch/v1
+  #    kind: Job
+  #    metadata:
+  #      labels:
+  #        key1: value1
+  #        key2: value2
+  #    spec:
+  #      template:
+  #        metadata:
+  #          labels:
+  #            key1: value1
+  #            key2: value2
+  #          annotations:
+  #            key1: value1
+  #            key2: value2
+  #        spec:
+  #          containers:
+  #            - name: "{{ .Name }}"
+  #              image: {{ .Image }}
+  #              imagePullPolicy: Always
+  #              command:
+  #                - "/bin/runner"
+  #                - '{{ .Jsn }}'
 
   # Monitoring parameters
   prometheus:
@@ -274,8 +362,22 @@ testkube-api:
   cloud:
     # -- Testkube Cloud API URL
     url: "agent.testkube.io:443"
+    ## URL of the Cloud UI
+    uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
+    tls:
+      # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+      enabled: true
+      # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+      skipVerify: false
+
+  ## Persistent cache for Docker
+  imageInspectionCache:
+    ## Status of the persistent cache
+    enabled: false
+    ## ConfigMap name to persist cache
+    name: "testkube-image-cache"
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
@@ -416,7 +518,7 @@ testkube-api:
     tls:
       []
       # - hosts:
-      #     - testkube.example.com
+    #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
   # cliIngress parameters
@@ -550,7 +652,6 @@ testkube-api:
     # -- Key for SSL CA File Key k8s Secret
     # sslCAFileKeySecretKey: sslCAFileKeySecretKey
 
-
     # -- k8s Secret Name for SSL Cert Secret
     # sslCertSecretSecretName: sslCertSecretSecretName
 
@@ -590,7 +691,7 @@ testkube-api:
   dashboardUri: ""
   ## cluster name to be used in events
   clusterName: ""
-  ## enable endpoint to list testkube namespace secrets
+  # -- enable endpoint to list testkube namespace secrets
   enableSecretsEndpoint: false
   ## enable only specified executors with enabled flag
   enabledExecutors:
@@ -598,6 +699,31 @@ testkube-api:
   #    enabled: true
   #  cypress-executor:
   #    enabled: true
+
+  # Testkube log server parameters
+  testkubeLogs:
+    # -- GRPC address
+    grpcAddress: "testkube-logs:9090"
+    tls:
+      # -- Toggle whether to enable TLS in GRPC client
+      enabled: false
+      # -- Toggle whether to verify certificates
+      skipVerify: false
+      # -- If enabled, will also require a CA certificate to be provided
+      mountCACertificate: false
+      certSecret:
+        # -- Toggle whether to mount k8s secret which contains GRPC client certificate (cert.crt, cert.key, ca.crt)
+        enabled: false
+        # -- Name of the grpc client certificate secret
+        name: "grpc-client-cert"
+        # -- Base path to mount the client certificate secret
+        baseMountPath: /etc/client-certs/grpc
+        # -- Path to client certificate file
+        certFile: "cert.crt"
+        # -- Path to client certificate key file
+        keyFile: "cert.key"
+        # -- Path to ca file (used for self-signed certificates)
+        caFile: "ca.crt"
 
   # Test Connection pod
   testConnection:
@@ -621,6 +747,12 @@ testkube-api:
   securityContext: {}
   ## Specify priorityClassName for Testkube API
   priorityClassName: ""
+
+  # -- Specify hostNetwork for Testkube API Deployment
+  hostNetwork: ""
+
+  # -- Specify dnsPolicy for Testkube API Deployment
+  dnsPolicy: ""
 
 # --  Testkube Dashboard parameters
 testkube-dashboard:
@@ -711,9 +843,9 @@ testkube-dashboard:
     # -- Path to controller
     path: /
     # -- Hostnames must be provided if Ingress is enabled.
-    hosts:
-      []
-    ipv6enabled: false
+    hosts: []
+    ipv6enabled:
+      false
       # - testkube.example.com
     tlsenabled: false
     # -- Placing a host in the TLS config will indicate a certificate should be created
@@ -754,7 +886,8 @@ testkube-dashboard:
     # -- Add additional labels to the pod (evaluated as a template)
     podLabels: {}
     # -- Array of args for oauth2 provider or github as default
-    args: []
+    args:
+      []
       #- --provider=github
       #- --email-domain=*
       #- --upstream=file:///dev/null
@@ -762,7 +895,8 @@ testkube-dashboard:
     # -- Array with extra environment variables to add to Locator nodes
     extraEnvVars: []
     # -- Array with extra sources for environment variables
-    extraEnvFrom: []
+    extraEnvFrom:
+      []
       #- configMapRef:
       #    name: my-configmap-name
       #- secretRef:
@@ -995,6 +1129,9 @@ testkube-operator:
       # -- Testkube Operator webhook certificate volume default mode
       defaultMode: 420
 
+  ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
+  cronJobTemplate: ""
+
   # Webhook parameters
   webhook:
     # -- Use webhook
@@ -1118,7 +1255,8 @@ testkube-operator:
     port: 80
 
   # -- Testkube Operator resource settings
-  resources: {}
+  resources:
+    {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -1129,11 +1267,8 @@ testkube-operator:
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  # note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes
+  tolerations: []
 
   # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   # note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set

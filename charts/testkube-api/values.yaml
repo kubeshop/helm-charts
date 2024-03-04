@@ -11,6 +11,8 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  features:
+    logsV2: false
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -53,7 +55,7 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-## Custom job-template.yml that will passed to Testkube API
+## Custom job-template.yml that will be passed to Testkube API
 configValues: ""
 
 ## Testkube API Deployment parameters
@@ -61,6 +63,8 @@ configValues: ""
 cloud:
   ## URL of the Cloud Saas Control Plane
   url: "agent.testkube.io:443"
+  ## URL of the Cloud UI
+  uiUrl: ""
   ## License Key
   key: ""
   ## Organization ID
@@ -69,6 +73,11 @@ cloud:
   envId: ""
   ## true if migration from OSS
   migrate: ""
+  tls:
+    ## Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
+    enabled: true
+    ## Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
+    skipVerify: false
   ## Retrieve cloud information from existing secret
   existingSecret:
     ## Name of the secret. If set, this will be used instead of the above values
@@ -79,6 +88,13 @@ cloud:
     orgId: ""
     ## Key for the Environment ID
     envId: ""
+
+## Persistent cache for Docker
+imageInspectionCache:
+  ## Status of the persistent cache
+  enabled: false
+  ## ConfigMap name to persist cache
+  name: "testkube-image-cache"
 
 ## Multinamespace feature. Disabled by default
 multinamespace:
@@ -116,8 +132,8 @@ templates:
   scraperContainer: ""
   ## Base64 encoded PVC Container template
   pvcContainer: ""
-   ## Base64 encoded Slave Pod template
-  slavePod: "" 
+  ## Base64 encoded Slave Pod template
+  slavePod: ""
 
 ## base64 encoded executors.json alike data
 executors: ""
@@ -139,6 +155,31 @@ disableMongoMigrations: false
 
 ## enable only specified executors with enabled flag
 enabledExecutors:
+
+# Testkube log server parameters
+testkubeLogs:
+  # -- GRPC address
+  grpcAddress: "testkube-logs:9090"
+  tls:
+    # -- Toggle whether to enable TLS in GRPC client
+    enabled: false
+    # -- Toggle whether to verify certificates
+    skipVerify: false
+    # -- If enabled, will also require a CA certificate to be provided
+    mountCACertificate: false
+    certSecret:
+      # -- Toggle whether to mount k8s secret which contains GRPC client certificate (cert.crt, cert.key, ca.crt)
+      enabled: false
+      # -- Name of the grpc client certificate secret
+      name: "grpc-client-cert"
+      # -- Base path to mount the client certificate secret
+      baseMountPath: /etc/client-certs/grpc
+      # -- Path to client certificate file
+      certFile: "cert.crt"
+      # -- Path to client certificate key file
+      keyFile: "cert.key"
+      # -- Path to ca file (used for self-signed certificates)
+      caFile: "ca.crt"
 
 ## Testkube API resource requests and limits
 resources:
@@ -184,6 +225,12 @@ affinity: {}
 
 ## Specify priorityClassName for Testkube API Deployment
 priorityClassName: ""
+
+## Specify hostNetwork for Testkube API Deployment
+hostNetwork: ""
+
+## Specify dnsPolicy for Testkube API Deployment
+dnsPolicy: ""
 
 ## Additional volumes to be added
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
@@ -244,6 +291,16 @@ logs:
 
 ## Service Account parameters
 serviceAccount:
+  ## Specifies whether a service account should be created
+  create: true
+  ## Annotations to add to the service account
+  annotations: {}
+  ## The name of the service account to use.
+  ## If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+## Logs service and sidecar service account parameters
+logsServiceAccount:
   ## Specifies whether a service account should be created
   create: true
   ## Annotations to add to the service account
@@ -424,6 +481,8 @@ uiIngress:
   annotations: {}
   ## The Path to Nginx.
   path: /results/(v\d/executions.*)
+  ## The PathType to Nginx.
+  pathType: Prefix
   ## Hostnames must be provided if Ingress is enabled.
   hosts: []
   # - testkube.example.com

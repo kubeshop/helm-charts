@@ -113,6 +113,8 @@ ingress:
   annotations: {}
   ## The Path to Nginx.
   path: /
+  ## The PathType to Nginx.
+  pathType: Prefix
   ## Hostnames must be provided if Ingress is enabled.
   hosts: []
   #  - testkube.example.com

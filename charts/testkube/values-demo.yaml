@@ -2,6 +2,10 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+global:
+  features:
+    logsV2: false
+
 replicaCount: 1
 
 image:
@@ -38,7 +42,7 @@ ingress:
   annotations:
     {}
     # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
       paths:
@@ -60,7 +64,7 @@ resources:
   #   memory: 128Mi
   # requests:
   #   cpu: 100m
-  #   memory: 128Mi
+#   memory: 128Mi
 
 autoscaling:
   enabled: false
@@ -102,18 +106,73 @@ mongodb:
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5-debian-11-r64
 
+# -- NATS pre-upgrade parameters
+preUpgradeHookNATS:
+  # -- Upgrade hook is enabled
+  enabled: true
+  # -- Upgrade hook name
+  name: nats-upgrade
+  ## --  TTL (time to live) mechanism to limit the lifetime of Job objects that have finished execution, specified in seconds
+  ttlSecondsAfterFinished: 100
+  ## -- Specific labels
+  labels: {}
+  ## -- Annotations to add to the upgrade Job
+  annotations: {}
+  ## -- Annotations to add to the upgrade Job's pod
+  podAnnotations: {}
+  # -- Specify image
+  image:
+    registry: docker.io
+    repository: bitnami/kubectl
+    tag: 1.28.2
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  # -- Specify resource limits and requests
+  resources: {}
+  # -- Create SA for upgrade hook
+  serviceAccount:
+    create: true
+  # -- Node labels for pod assignment.
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # -- MongoDB Upgrade Pod Security Context
+  podSecurityContext: {}
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # -- Security Context for MongoDB Upgrade kubectl container
+  securityContext: {}
+  # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
+  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+
+# -- NATS chart parameters
 nats:
   # NATS container settings
-  nats:
-    limits:
-      # -- Max payload
-      maxPayload: 8MB
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
-  natsbox:
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
+  podTemplate:
+    merge:
+      spec:
+        nodeSelector:
+          cloud.google.com/gke-provisioning: standard
+  config:
+    merge:
+      max_payload: << 8MB >>
+    jetstream:
+      enabled: true
 
+  # NATS Box container settings
+  # TODO remove this container after tests on dev and stage
+  # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
+  natsBox:
+    enabled: true
+    podTemplate:
+      merge:
+        spec:
+          nodeSelector:
+            cloud.google.com/gke-provisioning: standard
 
 testkube-api:
   rbac:
@@ -132,6 +191,8 @@ testkube-api:
   service:
     type: ClusterIP
     port: 8088
+  imageInspectionCache:
+    enabled: true
   minio:
     enabled: true
     nodeSelector:
@@ -139,6 +200,7 @@ testkube-api:
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
+    storage: 80Gi
     image:
       registry: docker.io
       repository: minio/minio
@@ -185,19 +247,19 @@ testkube-api:
 
         if ( $request_method = OPTIONS ){
           set $methodallowed "true";
-        } 
+        }
 
         if ( $request_method = PATCH ){
           set $methodallowed "true";
-        }      
+        }
 
         if ( $uri ~ "^(.*)/tests/(.*)/executions$" ){
           set $pathallowed "true";
-        } 
+        }
 
         if ( $uri ~ "^(.*)/tests/(.*)/executions/(.*)$" ){
           set $pathallowed "true";
-        }  
+        }
 
         if ( $uri ~ "^(.*)/test-suites/(.*)/executions$" ){
           set $pathallowed "true";
@@ -209,7 +271,7 @@ testkube-api:
 
         if ( $uri ~ "^(.*)/tests$" ){
           set $pathallowed "true";
-        }  
+        }
 
         if ( $uri ~ "^(.*)/tests/(.*)$" ){
           set $pathallowed "true";
@@ -267,8 +329,7 @@ testkube-api:
     region: ""
     token: ""
     bucket: "testkube-artifacts"
-    # -- MinIO Expiration period in days
-    expiration: 0
+    expiration: 90
     SSL: false
     scrapperEnabled: true
     compressArtifacts: true
@@ -339,6 +400,9 @@ testkube-api:
   dashboardUri: ""
   clusterName: ""
   enableSecretsEndpoint: false
+
+  testkubeLogs:
+    grpcAddress: "testkube-logs:9090"
 
   priorityClassName: "highest-priority"
 
@@ -454,4 +518,3 @@ testkube-operator:
 
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
-

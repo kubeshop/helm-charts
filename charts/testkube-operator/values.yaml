@@ -346,3 +346,6 @@ nats:
   ## load URI from secrets
   # secretName: XXX
   # secretKey: XXX
+
+## Pass a custom cronJobTemplate to the Testkube Operator Deployment
+cronJobTemplate: ""
