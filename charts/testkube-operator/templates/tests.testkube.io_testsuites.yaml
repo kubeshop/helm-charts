@@ -639,13 +639,6 @@ spec:
                               jobTemplateReference:
                                 description: job template extensions reference
                                 type: string
-                              name:
-                                description: test execution custom name
-                                type: string
-                              namespace:
-                                description: test kubernetes namespace (\"testkube\"
-                                  when not set)
-                                type: string
                               negativeTest:
                                 description: negative test will fail the execution
                                   if it is a success and it will succeed if it is
@@ -876,13 +869,6 @@ spec:
                                 type: string
                               jobTemplateReference:
                                 description: job template extensions reference
-                                type: string
-                              name:
-                                description: test execution custom name
-                                type: string
-                              namespace:
-                                description: test kubernetes namespace (\"testkube\"
-                                  when not set)
                                 type: string
                               negativeTest:
                                 description: negative test will fail the execution
@@ -1280,13 +1266,6 @@ spec:
                                 type: string
                               jobTemplateReference:
                                 description: job template extensions reference
-                                type: string
-                              name:
-                                description: test execution custom name
-                                type: string
-                              namespace:
-                                description: test kubernetes namespace (\"testkube\"
-                                  when not set)
                                 type: string
                               negativeTest:
                                 description: negative test will fail the execution
