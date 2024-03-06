@@ -399,6 +399,48 @@ rules:
   - watch
   - deletecollection
 
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: {{ .Release.Name }}-testworkflows-role
+  labels:
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
+rules:
+  - apiGroups:
+      - testworkflows.testkube.io
+    resources:
+      - testworkflows
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+  - apiGroups:
+      - testworkflows.testkube.io
+    resources:
+      - testworkflowtemplates
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+      - deletecollection
+
 {{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
 ---
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
