@@ -402,7 +402,7 @@ rules:
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
+kind: ClusterRole
 metadata:
   name: {{ .Release.Name }}-testworkflows-role
   labels:
