@@ -669,13 +669,13 @@ metadata:
   {{- if .Values.global.annotations}}
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
-r ules:
+rules:
   - apiGroups:
       - ""
     resources:
       - secrets
     verbs:
-      - create    
+      - create
       - get
 
 ---
