@@ -3,10 +3,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ .Release.Name }}-{{ .Values.webhook.name }}
-  {{- if .Values.webhook.namespaceSelector }}
-  namespaceSelector:
-  {{ toYaml .Values.webhook.namespaceSelector | nindent 4 | trim | indent 2 }}
-  {{- end }}
   annotations:
     {{- if .Values.webhook.annotations }}
     {{- include "global.tplvalues.render" ( dict "value" .Values.webhook.annotations "context" $ ) | nindent 4 }}
@@ -24,6 +20,10 @@ metadata:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
 webhooks:
+  {{- if .Values.webhook.namespaceSelector }}
+  namespaceSelector:
+  {{- toYaml .Values.webhook.namespaceSelector | nindent 4 }}
+  {{- end }}
 - admissionReviewVersions:
   - v1
   - v1beta1
@@ -44,8 +44,6 @@ webhooks:
     - UPDATE
     resources:
     - testtriggers
-    {{- if .Values.webhook.scope }}
-    scope: {{ .Values.webhook.scope }}
-    {{- end }}
+    scope: Namespaced
   sideEffects: None
 {{- end }}

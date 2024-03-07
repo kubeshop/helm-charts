@@ -1,0 +1,30 @@
+## Reference: https://github.com/helm/chart-testing-action
+name: Lint
+on: pull_request
+
+permissions:
+  contents: write
+
+jobs:
+  chart-test:
+    name: Chart lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ${{ github.event.pull_request.head.ref }}
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4.1.0
+        with:
+          version: v3.14.1
+
+      - name: Run helm dependency update
+        run: helm dependency update ./charts/testkube
+
+      - name: Run helm-lint
+        run: helm lint ./charts/testkube --with-subcharts --values ./charts/testkube/values.yaml
+
+      - name: Run helm template
+        run: helm template ./charts/testkube
