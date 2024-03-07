@@ -675,6 +675,7 @@ r ules:
     resources:
       - secrets
     verbs:
+      - create    
       - get
 
 ---
