@@ -464,6 +464,10 @@ spec:
                                     description: execute post run script before scraping
                                       (prebuilt executor only)
                                     type: boolean
+                                  executionNamespace:
+                                    description: namespace for test execution (Pro
+                                      edition only)
+                                    type: string
                                   executionResult:
                                     description: execution result returned from executor
                                     properties:
@@ -1019,6 +1023,10 @@ spec:
                               description: execute post run script before scraping
                                 (prebuilt executor only)
                               type: boolean
+                            executionNamespace:
+                              description: namespace for test execution (Pro edition
+                                only)
+                              type: string
                             executionResult:
                               description: execution result returned from executor
                               properties:
