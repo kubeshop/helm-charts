@@ -20,13 +20,13 @@ metadata:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
 webhooks:
+- admissionReviewVersions:
+  - v1
+  - v1beta1
   {{- if .Values.webhook.namespaceSelector }}
   namespaceSelector:
   {{- toYaml .Values.webhook.namespaceSelector | nindent 4 }}
   {{- end }}
-- admissionReviewVersions:
-  - v1
-  - v1beta1
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}

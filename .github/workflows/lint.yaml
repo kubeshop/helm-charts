@@ -1,6 +1,9 @@
 ## Reference: https://github.com/helm/chart-testing-action
 name: Lint
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - develop
 
 permissions:
   contents: write
@@ -11,12 +14,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@v4
         with:
           version: v3.10.1
 
@@ -34,7 +37,7 @@ jobs:
         id: list-changed
         run: |
           ## If executed with debug this won't work anymore.
-          changed=$(ct --target-branch ${{ github.event.pull_request.head.ref }} --config ./.github/configs/ct-lint.yaml list-changed)
+          changed=$(ct --target-branch develop --config ./.github/configs/ct-lint.yaml list-changed)
           charts=$(echo "$changed" | tr '\n' ' ' | xargs)
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -42,4 +45,4 @@ jobs:
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --debug --target-branch ${{ github.event.pull_request.head.ref }} --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
+        run: ct lint --debug --target-branch develop --config ./.github/configs/ct-lint.yaml --lint-conf ./.github/configs/lintconf.yaml
