@@ -1157,6 +1157,10 @@ testkube-operator:
     enabled: true
     # -- Name of the webhook
     name: testkube-operator-webhook-admission
+    ## Limit which requests for namespaced resources are intercepted, by specifying a namespaceSelector.
+    namespaceSelector: []
+    ## Scope specifies a scope to match. Valid values are "Cluster", "Namespaced", and "*". Default is "*".
+    scope: ""
     # -- Webhook specific labels
     labels: {}
     # -- Webhook specific annotations
