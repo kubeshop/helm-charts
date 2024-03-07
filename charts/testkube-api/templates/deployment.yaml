@@ -51,7 +51,7 @@ spec:
             {{- if .Values.global.features.logsV2 }}
             - name: FF_LOGS_V2
               value:  "{{ .Values.global.features.logsV2 }}"
-              {{- if .Values.testkubeLogs.grpcAddress }}            
+              {{- if .Values.testkubeLogs.grpcAddress }}
             - name: LOG_SERVER_GRPC_ADDRESS
               value:  "{{ .Values.testkubeLogs.grpcAddress }}"
               {{- end }}
@@ -315,6 +315,16 @@ spec:
             - name: TESTKUBE_PRO_TLS_INSECURE
               value:  "true"
             {{- end }}
+            {{- if .Values.cloud.tls.certificate.secretRef }}
+            - name: TESTKUBE_PRO_TLS_SECRET
+              value: {{ .Values.cloud.tls.certificate.secretRef }}
+            - name: TESTKUBE_PRO_CERT_FILE
+              value:  {{ .Values.cloud.tls.certificate.certFile }}
+            - name: TESTKUBE_PRO_KEY_FILE
+              value: {{ .Values.cloud.tls.certificate.keyFile }}
+            - name: TESTKUBE_PRO_CA_FILE
+              value: {{ .Values.cloud.tls.certificate.caFile }}
+            {{- end }}
             {{- if .Values.cloud.tls.skipVerify }}
             - name: TESTKUBE_PRO_SKIP_VERIFY
               value:  "true"
@@ -462,7 +472,7 @@ spec:
         - name: {{ .Values.testkubeLogs.tls.certSecret.name }}
           secret:
             secretName: {{ .Values.testkubeLogs.tls.certSecret.name }}
-        {{- end }}        
+        {{- end }}
         {{- end }}
         {{- with .Values.additionalVolumes }}
         {{- toYaml . | nindent 8 -}}
