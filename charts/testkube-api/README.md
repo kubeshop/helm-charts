@@ -53,6 +53,7 @@ A Helm chart for Testkube api
 | disableMongoMigrations | bool | `false` |  |
 | disableSecretCreation | bool | `false` |  |
 | enableSecretsEndpoint | bool | `false` |  |
+| executionNamespaces | list | `[]` |  |
 | executors | string | `""` |  |
 | extraEnvVars | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
