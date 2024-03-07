@@ -22,14 +22,10 @@ jobs:
 
       - name: Run helm dependency update
         run: |
-          for chart in \
-            ./charts/testkube \
-            ./charts/testkube-api \
-            ./charts/testkube-dashboard \
-            ./charts/testkube-logs \
-            ./charts/testkube-operator; do
-            helm dependency build "$chart"
-          done
+          helm dependency build ./charts/testkube
+          helm dependency build ./charts/testkube-api
+          helm dependency build ./charts/testkube-operator
+
 
       - name: Run helm-lint
         run: helm lint ./charts/testkube --with-subcharts --values ./charts/testkube/values.yaml
