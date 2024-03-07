@@ -51,6 +51,7 @@ A Helm chart for Testkube api
 | dashboardUri | string | `""` |  |
 | dnsPolicy | string | `""` |  |
 | disableMongoMigrations | bool | `false` |  |
+| disableSecretCreation | bool | `false` |  |
 | enableSecretsEndpoint | bool | `false` |  |
 | executors | string | `""` |  |
 | extraEnvVars | object | `{}` |  |

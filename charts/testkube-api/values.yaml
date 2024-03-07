@@ -153,6 +153,9 @@ enableSecretsEndpoint: false
 ## disable running MongoDB migrations on API start
 disableMongoMigrations: false
 
+## disable secret creation for tests and test sources
+disableSecretCreation: false
+
 ## enable only specified executors with enabled flag
 enabledExecutors:
 
