@@ -21,7 +21,15 @@ jobs:
           version: v3.14.1
 
       - name: Run helm dependency update
-        run: helm dependency build ./charts/testkube
+        run: |
+          for chart in \
+            ./charts/testkube \
+            ./charts/testkube-api \
+            ./charts/testkube-dashboard \
+            ./charts/testkube-logs \
+            ./charts/testkube-operator; do
+            helm dependency build "$chart"
+          done
 
       - name: Run helm-lint
         run: helm lint ./charts/testkube --with-subcharts --values ./charts/testkube/values.yaml
