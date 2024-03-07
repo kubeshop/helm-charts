@@ -23,6 +23,10 @@ webhooks:
 - admissionReviewVersions:
   - v1
   - v1beta1
+  {{- if .Values.webhook.namespaceSelector }}
+  namespaceSelector:
+  {{- toYaml .Values.webhook.namespaceSelector | nindent 4 }}
+  {{- end }}
   clientConfig:
     service:
       name: {{ include "testkube-operator.webhookServiceName" . }}
@@ -40,5 +44,6 @@ webhooks:
     - UPDATE
     resources:
     - testtriggers
+    scope: Namespaced
   sideEffects: None
 {{- end }}

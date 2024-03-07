@@ -146,6 +146,8 @@ webhook:
   enabled: true
   ## Name of the webhook
   name: webhook-admission
+  ## Limit which requests for namespaced resources are intercepted, by specifying a namespaceSelector.
+  namespaceSelector: {}
   ## Webhook specific labels
   labels: {}
   ## Webhook specific annotations
