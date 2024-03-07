@@ -377,6 +377,15 @@ testkube-api:
       enabled: true
       # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
       skipVerify: false
+      certificate:
+        # -- When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt)
+        secretRef: ""
+        # -- Default path for certificate file
+        certFile: /tmp/agent-cert/cert.crt
+        # -- Default path for certificate key file
+        keyFile: /tmp/agent-cert/cert.key
+        # -- Default path for ca file
+        caFile: /tmp/agent-cert/ca.crt
 
   ## Persistent cache for Docker
   imageInspectionCache:
@@ -710,13 +719,13 @@ testkube-api:
   # -- Execution namespaces for Testkube API to only run tests
   # In this case, a Role and a RoleBinding will be created for each specified namespace.
   executionNamespaces: []
-       # -- Namespace for test execution  
-  #  - namespace: default 
-       # -- Whether to generate RBAC for testkube api server or use manually provided 
+       # -- Namespace for test execution
+  #  - namespace: default
+       # -- Whether to generate RBAC for testkube api server or use manually provided
   #    generateAPIServerRBAC: true
-       # -- Job service account name for test jobs 
+       # -- Job service account name for test jobs
   #    jobServiceAccountName: tests-job-default
-       # -- Whether to generate RBAC for test job or use manually provided 
+       # -- Whether to generate RBAC for test job or use manually provided
   #    generateTestJobRBAC: true
 
   # Testkube log server parameters
