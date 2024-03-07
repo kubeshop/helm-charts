@@ -672,6 +672,9 @@ spec:
                             type: object
                         type: object
                     type: object
+                  sourceScripts:
+                    description: run scripts using source command (container executor only)
+                    type: boolean
                   sync:
                     description: whether to start execution sync or async
                     type: boolean

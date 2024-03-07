@@ -605,6 +605,9 @@ spec:
                                             type: object
                                         type: object
                                     type: object
+                                  sourceScripts:
+                                    description: run scripts using source command (container executor only)
+                                    type: boolean
                                   startTime:
                                     description: test start time
                                     format: date-time
@@ -1163,6 +1166,9 @@ spec:
                                       type: object
                                   type: object
                               type: object
+                            sourceScripts:
+                              description: run scripts using source command (container executor only)
+                              type: boolean
                             startTime:
                               description: test start time
                               format: date-time
