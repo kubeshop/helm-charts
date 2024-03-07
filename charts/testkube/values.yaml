@@ -1158,11 +1158,7 @@ testkube-operator:
     # -- Name of the webhook
     name: testkube-operator-webhook-admission
     ## Limit which requests for namespaced resources are intercepted, by specifying a namespaceSelector.
-    namespaceSelector:
-      matchExpressions:
-        - key: runlevel
-          operator: NotIn
-          values: [ "0","1" ]
+    namespaceSelector: {}
     # -- Webhook specific labels
     labels: {}
     # -- Webhook specific annotations
