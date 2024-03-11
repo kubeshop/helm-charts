@@ -55,6 +55,7 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - ""
     resources:
@@ -66,6 +67,7 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
 
 ---
 
@@ -797,6 +799,7 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - ""
     resources:
@@ -808,6 +811,7 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
 {{- end }}
 
 {{- if $rangeItem.generateTestJobRBAC }}
