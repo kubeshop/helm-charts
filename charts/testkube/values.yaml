@@ -320,7 +320,7 @@ testkube-api:
     # -- Testkube API image name
     repository: kubeshop/testkube-api-server
     # Overrides the image tag whose default is the chart appVersion.
-    # tag: "latest"
+    tag: "fffa4a4"
     # -- Testkube API image tag
     pullPolicy: IfNotPresent
     # -- Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
@@ -330,7 +330,13 @@ testkube-api:
     # -- Testkube API k8s secret for private registries
     pullSecrets: []
   # -- Extra environment variables to be set on deployment
-  extraEnvVars: []
+  extraEnvVars:
+    - name: "TESTKUBE_TW_TOOLKIT_IMAGE"
+      value: "kubeshop/testkube-tw-toolkit:fffa4a4"
+    - name: "TESTKUBE_TW_INIT_IMAGE"
+      value: "kubeshop/testkube-tw-init:fffa4a4"
+    - name: "TESTKUBE_ENABLE_IMAGE_DATA_PERSISTENT_CACHE"
+      value: "true"
   #  - name: FOO
   #    value: BAR
   # -- Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
