@@ -901,9 +901,6 @@ spec:
                               scraperTemplateReference:
                                 description: scraper template extensions reference
                                 type: string
-                              sync:
-                                description: whether to start execution sync or async
-                                type: boolean
                               variables:
                                 additionalProperties:
                                   properties:
