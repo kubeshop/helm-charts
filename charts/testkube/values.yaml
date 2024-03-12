@@ -320,7 +320,7 @@ testkube-api:
     # -- Testkube API image name
     repository: kubeshop/testkube-api-server
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "fffa4a4"
+    tag: "d4264af"
     # -- Testkube API image tag
     pullPolicy: IfNotPresent
     # -- Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
@@ -332,9 +332,9 @@ testkube-api:
   # -- Extra environment variables to be set on deployment
   extraEnvVars:
     - name: "TESTKUBE_TW_TOOLKIT_IMAGE"
-      value: "kubeshop/testkube-tw-toolkit:fffa4a4"
+      value: "kubeshop/testkube-tw-toolkit:d4264af"
     - name: "TESTKUBE_TW_INIT_IMAGE"
-      value: "kubeshop/testkube-tw-init:fffa4a4"
+      value: "kubeshop/testkube-tw-init:d4264af"
     - name: "TESTKUBE_ENABLE_IMAGE_DATA_PERSISTENT_CACHE"
       value: "true"
   #  - name: FOO
