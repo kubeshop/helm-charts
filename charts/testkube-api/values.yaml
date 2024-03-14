@@ -107,7 +107,7 @@ cloud:
 ## Persistent cache for Docker
 imageInspectionCache:
   ## Status of the persistent cache
-  enabled: false
+  enabled: true
   ## ConfigMap name to persist cache
   name: "testkube-image-cache"
 
