@@ -196,7 +196,7 @@ testkube-api:
       cloud.google.com/gke-provisioning: standard
 
   uiIngress:
-    enabled: true
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
