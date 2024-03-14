@@ -14,9 +14,6 @@ testkube-api:
 mongodb:
   enabled: false
 
-testkube-dashboard:
-  enabled: false
-
 nats:
   nats:
     jetstream:
