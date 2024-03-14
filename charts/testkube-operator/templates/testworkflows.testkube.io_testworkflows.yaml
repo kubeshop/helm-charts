@@ -60,6 +60,10 @@ spec:
                           items:
                             type: string
                           type: array
+                        workingDir:
+                          description: working directory to override, so it will be
+                            used as a base dir
+                          type: string
                       type: object
                     condition:
                       description: 'expression to declare under which conditions the
@@ -3778,6 +3782,10 @@ spec:
                           items:
                             type: string
                           type: array
+                        workingDir:
+                          description: working directory to override, so it will be
+                            used as a base dir
+                          type: string
                       type: object
                     condition:
                       description: 'expression to declare under which conditions the
@@ -5072,6 +5080,10 @@ spec:
                           items:
                             type: string
                           type: array
+                        workingDir:
+                          description: working directory to override, so it will be
+                            used as a base dir
+                          type: string
                       type: object
                     condition:
                       description: 'expression to declare under which conditions the
