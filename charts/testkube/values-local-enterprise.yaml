@@ -29,5 +29,4 @@ testkube-logs:
   pro:
     url: testkube-enterprise-logs-service.testkube-enterprise.svc.cluster.local:8089
     key: "" #Required
-    logsPath: "" # When using Ingress need to be set to valid path routing
     tls.enabled: false

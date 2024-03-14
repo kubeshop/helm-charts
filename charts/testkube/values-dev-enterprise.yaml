@@ -31,4 +31,3 @@ testkube-logs:
   pro:
     url: logs.enterprise.testkube.dev:443
     key: "" #Required
-    logsPath: "" # When using Ingress need to be set to valid path routing

@@ -20,9 +20,7 @@ debug: true
 
 pro:
   ## URL of the Cloud Saas Control Plane
-  url: "agent.testkube.io:443"
-  ## Path of the logs service (in case of ingress path routing)
-  logsPath: "/logs"
+  url: "logs.testkube.io:443"
   uiUrl: ""
   ## License Key
   key: ""
