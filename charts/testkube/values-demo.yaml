@@ -397,6 +397,7 @@ testkube-api:
   slackConfig: ""
   executors: ""
   cdeventsTarget: ""
+  dashboardUri: ""
   clusterName: ""
   enableSecretsEndpoint: false
   disableSecretCreation: false
