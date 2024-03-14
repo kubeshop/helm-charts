@@ -208,7 +208,7 @@ testkube-api:
   #        cpu: "200m"
 
   uiIngress:
-    enabled: true
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
