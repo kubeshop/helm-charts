@@ -149,14 +149,6 @@ jobs:
       - name: Run Postman sanity tests
         run: kubectl testkube run test sanity -f --git-branch develop
 
-      - name: (Re)create Dashboard E2E tests (from CRD)
-        working-directory: ./testkube-repo
-        run: |-
-          # enabling debug mode
-          set -x
-          kubectl -n testkube delete test dashboard-e2e-tests --ignore-not-found=true
-          kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml -ntestkube
-
       - name: (Re)create staging testsuite
         working-directory: ./testkube-repo
         run: |-
