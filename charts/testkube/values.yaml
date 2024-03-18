@@ -348,11 +348,11 @@ testkube-api:
 
   ## Service Account parameters
   serviceAccount:
-    #-- Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
-    #-- Annotations to add to the service account
+    # -- Annotations to add to the service account
     annotations: {}
-    #-- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
     name: ""
 
   # -- Service Account parameters
@@ -402,8 +402,8 @@ testkube-api:
 
   # Service parameters
   service:
-    # -- Adapter service type
-    type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
+    # -- Adapter service type for working with real k8s we should use "ClusterIP" type.
+    type: ClusterIP
     # -- HTTP Port
     port: 8088
     # -- Service Annotations
@@ -815,7 +815,7 @@ testkube-operator:
     # -- Testkube Operator image pull policy
     pullPolicy: ""
     # Overrides the image tag whose default is the chart appVersion.
-    #tag: "1.7.1"
+    # tag: "1.7.1"
     # -- Testkube Operator image digest
     digest: ""
     # -- Operator k8s secret for private registries
