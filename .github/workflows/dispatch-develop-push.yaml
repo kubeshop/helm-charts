@@ -1,0 +1,21 @@
+name: Dispatch events based on develop push
+
+# TODO(emil): switch on push to develop
+on:
+  workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
+        script: |
+          const result = await github.rest.repos.createDispatchEvent({
+            owner: 'kubeshop',
+            repo: 'emil-testkube-deployment',
+            event_type: 'testkube_charts_push',
+            client_payload: {"ref": "${{ env.GITHUB_REF }}", "ref_name": "${{ env.GITHUB_REF_NAME }}", "sha": "${{ env.GITHUB_SHA }}"}
+          })
+          console.log(result);
