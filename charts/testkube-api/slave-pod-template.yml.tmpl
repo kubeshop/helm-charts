@@ -72,7 +72,7 @@ spec:
     - name: GROUP
       value: test
     - name: SOURCE
-      value: "test:{{ .Name }}"
+      value: "test-slave-pod:{{ .Name }}-{{ .SlavePodNumber }}"
   {{- end }}
   - name: main
     {{- if .Registry }}
