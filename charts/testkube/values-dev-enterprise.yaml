@@ -1,3 +1,4 @@
+# agent settings for dev enterprise
 global:
   features:
     logsV2: true

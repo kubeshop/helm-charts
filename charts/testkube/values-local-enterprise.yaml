@@ -1,3 +1,4 @@
+# agent settings for in cluster only agent on enterprise installation
 global:
   features:
     logsV2: true
