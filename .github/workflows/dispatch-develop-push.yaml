@@ -14,4 +14,4 @@ jobs:
         token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
         repository: kubeshop/emil-testkube-deployment
         event-type: testkube_charts_push
-        client-payload: '{"ref": "${{ env.GITHUB_REF }}", "ref_name": "${{ env.GITHUB_REF_NAME }}", "sha": "${{ env.GITHUB_SHA }}"}'
+        client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}"}'
