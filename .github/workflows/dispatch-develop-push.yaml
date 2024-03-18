@@ -5,17 +5,14 @@ on:
   workflow_dispatch
 
 jobs:
-  release:
+  dispatch:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/github-script@v7
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v2
       with:
-        github-token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
-        script: |
-          const result = await github.rest.repos.createDispatchEvent({
-            owner: 'kubeshop',
-            repo: 'emil-testkube-deployment',
-            event_type: 'testkube_charts_push',
-            client_payload: {"ref": "${{ env.GITHUB_REF }}", "ref_name": "${{ env.GITHUB_REF_NAME }}", "sha": "${{ env.GITHUB_SHA }}"}
-          })
-          console.log(result);
+        token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
+        repository: kubeshop/emil-testkube-deployment
+        event_type: testkube_charts_push
+        client-payload: '{"image_tag_dashboard": "${{ steps.github_sha.outputs.sha_short }}"}'
+        client_payload: '{"ref": "${{ env.GITHUB_REF }}", "ref_name": "${{ env.GITHUB_REF_NAME }}", "sha": "${{ env.GITHUB_SHA }}"}'
