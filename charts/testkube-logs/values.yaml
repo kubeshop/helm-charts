@@ -203,7 +203,7 @@ affinity: {}
 ## Specify priorityClassName for Testkube Logs Deployment
 priorityClassName: ""
 
-##Test Connection pod
+## -- Test Connection pod
 testConnection:
   enabled: false
 
