@@ -50,7 +50,7 @@ spec:
     {{- end }}
   containers:
   {{ if .Features.LogsV2 -}}
-  - name: "{{ .Name }}-logs"
+  - name: "main-logs"
     {{- if .Registry }}
     image: {{ .Registry }}/{{ .LogSidecarImage }}
     {{- else }}
@@ -61,18 +61,16 @@ spec:
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
-    - name: DEBUG
-      value: {{ if .Debug }}"true"{{ else }}"false"{{ end }}
     - name: NAMESPACE
       value: {{ .Namespace }}
     - name: NATS_URI
       value: {{ .NatsUri }}
     - name: ID
-      value: {{ .Name }}
+      value: {{ .JobName }}
     - name: GROUP
       value: test
     - name: SOURCE
-      value: "test-slave-pod:{{ .Name }}-{{ .SlavePodNumber }}"
+      value: "test-slave-pod:{{ .Name }}"
   {{- end }}
   - name: main
     {{- if .Registry }}
