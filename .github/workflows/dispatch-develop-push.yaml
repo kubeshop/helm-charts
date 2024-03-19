@@ -1,0 +1,18 @@
+name: Dispatch events based on develop push
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
+          repository: kubeshop/testkube-deployment
+          event-type: testkube_charts_push
+          client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
