@@ -13,6 +13,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
-          repository: kubeshop/emil-testkube-deployment
+          repository: kubeshop/testkube-deployment
           event-type: testkube_charts_push
           client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
