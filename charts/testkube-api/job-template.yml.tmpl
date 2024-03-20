@@ -53,6 +53,7 @@ spec:
         {{- else }}
         image: {{ .LogSidecarImage }}
         {{- end }}
+        imagePullPolicy: IfNotPresent
         env:
         - name: POD_NAME
           valueFrom:
@@ -69,7 +70,7 @@ spec:
         - name: GROUP
           value: test
         - name: SOURCE
-          value: "test:{{ .Name }}"
+          value: "job-pod:{{ .Name }}"
       {{- end }}
       - name: "{{ .Name }}"
         {{- if .Registry }}
