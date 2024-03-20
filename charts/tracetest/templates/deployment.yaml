@@ -52,11 +52,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ include "tracetest.pathPrefix" . }}/api/tests
+              path: {{ include "tracetest.pathPrefix" . }}
               port: http
           readinessProbe:
             httpGet:
-              path: {{ include "tracetest.pathPrefix" . }}/api/tests
+              path: {{ include "tracetest.pathPrefix" . }}
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
