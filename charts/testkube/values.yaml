@@ -1084,3 +1084,6 @@ testkube-operator:
         operator: Equal
         value: arm64
         effect: NoSchedule
+
+networkPolicy:
+  enabled: false
