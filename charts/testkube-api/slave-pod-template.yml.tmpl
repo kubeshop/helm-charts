@@ -24,7 +24,7 @@ spec:
       - "/bin/runner"
       - '{{ .Jsn }}'
     volumeMounts:
-    {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
+    {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
     - name: data-volume
       mountPath: /data
     {{ end }}
@@ -133,7 +133,7 @@ spec:
       {{- end }}
     {{- end }}
     volumeMounts:
-    {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
+    {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
     - name: data-volume
       mountPath: /data
     {{ end }}
@@ -166,7 +166,7 @@ spec:
     {{- end }}
     {{- end }}
   volumes:
-  {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
+  {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
   - name: data-volume
     emptyDir: {}
   {{ end }}
