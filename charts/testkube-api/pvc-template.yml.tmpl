@@ -1,3 +1,4 @@
+{{ if .ArtifactRequest }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -14,3 +15,21 @@ spec:
   resources:
     requests:
       storage: 1Gi
+{{ else if .VolumeRequest }} 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Name }}-storage-pvc
+  namespace: {{ .Namespace }}
+spec:
+  storageClassName: {{ .VolumeRequest.StorageClassName }}
+  accessModes:
+  {{- if .VolumeRequest.SharedBetweenPods }}
+    - ReadWriteMany
+  {{- else }}
+    - ReadWriteOnce
+  {{- end }}
+  resources:
+    requests:
+      storage: 1Gi
+{{ end }} 
