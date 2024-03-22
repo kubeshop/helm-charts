@@ -22,8 +22,10 @@ spec:
           - "/bin/runner"
           - '{{ .Jsn }}'
         volumeMounts:
+        {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
         - name: data-volume
           mountPath: /data
+        {{ end }}
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
@@ -32,6 +34,12 @@ spec:
           {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
         - name: artifact-volume
           mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+          {{- end }}
+        {{- end }}
+        {{- if .VolumeRequest }}
+          {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
+        - name: storage-volume
+          mountPath: {{ .VolumeRequest.VolumeMountPath }}
           {{- end }}
         {{- end }}
         {{- range $configmap := .EnvConfigMaps }}
@@ -97,8 +105,10 @@ spec:
         workingDir: {{ .WorkingDir }}
         {{- end }}
         volumeMounts:
+        {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
         - name: data-volume
           mountPath: /data
+        {{ end }}
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
@@ -114,6 +124,12 @@ spec:
           mountPath: {{ .ArtifactRequest.VolumeMountPath }}
           {{- end }}
         {{- end }}
+        {{- if .VolumeRequest }}
+          {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
+        - name: storage-volume
+          mountPath: {{ .VolumeRequest.VolumeMountPath }}
+          {{- end }}
+        {{- end }}
         {{- range $configmap := .EnvConfigMaps }}
         {{- if and $configmap.Mount $configmap.Reference }}
         - name: {{ $configmap.Reference.Name }}
@@ -127,8 +143,10 @@ spec:
         {{- end }}
         {{- end }}
       volumes:
+      {{- if ne .ArtifactRequest.VolumeMountPath "/data" }}
       - name: data-volume
         emptyDir: {}
+      {{ end }}
       {{- if .CertificateSecret }}
       - name: {{ .CertificateSecret }}
         secret:
@@ -144,6 +162,13 @@ spec:
       - name: artifact-volume
         persistentVolumeClaim:
           claimName: {{ .Name }}-pvc
+        {{- end }}
+      {{- end }}
+      {{- if .VolumeRequest }}
+        {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
+      - name: storage-volume
+        persistentVolumeClaim:
+          claimName: {{ .Name }}-storage-pvc
         {{- end }}
       {{- end }}
       {{- range $configmap := .EnvConfigMaps }}

@@ -46,11 +46,15 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if or .ArtifactRequest .AgentAPITLSSecret }}
+        {{- if or .VolumeRequest .ArtifactRequest .AgentAPITLSSecret }}
         volumeMounts:
           {{- if .ArtifactRequest.VolumeMountPath }}
           - name: artifact-volume
             mountPath: {{ .ArtifactRequest.VolumeMountPath }}
+          {{- end }}
+          {{- if .VolumeRequest.VolumeMountPath }}
+          - name: storage-volume
+            mountPath: {{ .VolumeRequest.VolumeMountPath }}
           {{- end }}
           {{- if .AgentAPITLSSecret }}
           - mountPath: /tmp/agent-cert
@@ -58,12 +62,17 @@ spec:
             name: {{ .AgentAPITLSSecret }}
           {{- end }}
         {{- end }}
-      {{- if or .ArtifactRequest .AgentAPITLSSecret }}
+      {{- if or .VolumeRequest .ArtifactRequest .AgentAPITLSSecret }}
       volumes:
         {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
         - name: artifact-volume
           persistentVolumeClaim:
             claimName: {{ .Name }}-pvc
+        {{- end }}
+        {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: {{ .Name }}-storage-pvc
         {{- end }}
         {{- if .AgentAPITLSSecret }}
         - name: { { .AgentAPITLSSecret } }
