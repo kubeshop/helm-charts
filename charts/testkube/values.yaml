@@ -158,6 +158,13 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  # -- Uncomment to override the NATS Server image options
+  # container:
+  #   image:
+  #     repository: nats
+  #     tag: 2.10.9-alpine
+  #     pullPolicy:
+  #     registry:
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
@@ -166,6 +173,13 @@ nats:
   #   enabled: false
   natsBox:
     enabled: true
+    # -- Uncomment to override the NATS Box image options
+    # container:
+    #   image:
+    #     repository: natsio/nats-box
+    #     tag: 0.14.1
+    #     pullPolicy:
+    #     registry:
     # -- NATS Box tolerations settings
     podTemplate:
       merge:
@@ -185,6 +199,12 @@ nats:
   # Reloader container settings
   reloader:
     enabled: true
+    # -- Uncomment to override the NATS Server Config Reloader image options
+    # image:
+    #   repository: natsio/nats-server-config-reloader
+    #   tag: 0.14.1
+    #   pullPolicy:
+    #   registry:
 
 testkube-logs:
   # -- Testkube logs full name override
