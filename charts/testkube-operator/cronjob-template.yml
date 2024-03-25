@@ -33,5 +33,13 @@ spec:
             args:
             - 'curl -X POST -H "Content-Type: application/json" -d ''{{ .Data }}'' "http://{{ .ServiceName }}:{{ .ServicePort}}/v1/{{ .ResourceURI }}/{{ .Id }}/executions"'
           restartPolicy: Never
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       backoffLimit: 0
       ttlSecondsAfterFinished: 180
