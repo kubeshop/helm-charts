@@ -38,12 +38,6 @@ spec:
       mountPath: {{ .ArtifactRequest.VolumeMountPath }}
       {{- end }}
     {{- end }}
-    {{- if .VolumeRequest }}
-      {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
-    - name: artifact-volume
-      mountPath: {{ .VolumeRequest.VolumeMountPath }}
-      {{- end }}
-    {{- end }}
     {{- range $configmap := .EnvConfigMaps }}
     {{- if and $configmap.Mount $configmap.Reference }}
     - name: {{ $configmap.Reference.Name }}
@@ -147,12 +141,6 @@ spec:
       mountPath: {{ .ArtifactRequest.VolumeMountPath }}
       {{- end }}
     {{- end }}
-    {{- if .VolumeRequest }}
-      {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
-    - name: storage-volume
-      mountPath: {{ .VolumeRequest.VolumeMountPath }}
-      {{- end }}
-    {{- end }}
     {{- range $configmap := .EnvConfigMaps }}
     {{- if and $configmap.Mount $configmap.Reference }}
     - name: {{ $configmap.Reference.Name }}
@@ -180,13 +168,6 @@ spec:
   - name: artifact-volume
     persistentVolumeClaim:
       claimName: {{ .JobName }}-pvc
-    {{- end }}
-  {{- end }}
-  {{- if .VolumeRequest }}
-    {{- if and .VolumeRequest.VolumeMountPath .VolumeRequest.StorageClassName }}
-  - name: artifact-volume
-    persistentVolumeClaim:
-      claimName: {{ .JobName }}-storage-pvc
     {{- end }}
   {{- end }}
   {{- range $configmap := .EnvConfigMaps }}
