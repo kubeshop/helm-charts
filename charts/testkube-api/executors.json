@@ -3,7 +3,7 @@
     "name": "tracetest-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-tracetest-executor:31e71dc",
+      "image": "kubeshop/testkube-tracetest-executor:ae96b66",
       "command": [
         "tracetest"
       ],
@@ -39,7 +39,7 @@
     "name": "zap-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-zap-executor:31e71dc",
+      "image": "kubeshop/testkube-zap-executor:ae96b66",
       "command": [
         "<pythonScriptPath>"
       ],
@@ -69,7 +69,7 @@
     "name": "playwright-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-playwright-executor:31e71dc",
+      "image": "kubeshop/testkube-playwright-executor:ae96b66",
       "command": [
         "<depManager>"
       ],
@@ -98,7 +98,7 @@
     "name": "jmeter-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeter-executor:31e71dc",
+      "image": "kubeshop/testkube-jmeter-executor:ae96b66",
       "command": [
         "<entryPoint>"
       ],
@@ -138,12 +138,12 @@
     "name": "jmeterd-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeterd-executor:31e71dc",
+      "image": "kubeshop/testkube-jmeterd-executor:ae96b66",
       "command": [
         "<entryPoint>"
       ],
       "slaves": {
-        "image": "kubeshop/testkube-jmeterd-slave:31e71dc"
+        "image": "kubeshop/testkube-jmeterd-slave:ae96b66"
       },
       "args": [
         "-n",
@@ -181,7 +181,7 @@
     "name": "ginkgo-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-ginkgo-executor:31e71dc",
+      "image": "kubeshop/testkube-ginkgo-executor:ae96b66",
       "command": [
         "ginkgo"
       ],
@@ -221,7 +221,7 @@
     "name": "maven-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-maven-executor:31e71dc",
+      "image": "kubeshop/testkube-maven-executor:ae96b66",
       "command": [
         "mvn"
       ],
@@ -254,7 +254,7 @@
     "name": "gradle-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-gradle-executor:31e71dc",
+      "image": "kubeshop/testkube-gradle-executor:ae96b66",
       "command": [
         "gradle"
       ],
@@ -286,7 +286,7 @@
     "name": "kubepug-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-kubepug-executor:31e71dc",
+      "image": "kubeshop/testkube-kubepug-executor:ae96b66",
       "command": [
         "kubepug"
       ],
@@ -319,7 +319,7 @@
     "name": "soapui-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-soapui-executor:31e71dc",
+      "image": "kubeshop/testkube-soapui-executor:ae96b66",
       "command": [
         "/bin/sh",
         "/usr/local/SmartBear/EntryPoint.sh"
@@ -350,7 +350,7 @@
     "name": "k6-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-k6-executor:31e71dc",
+      "image": "kubeshop/testkube-k6-executor:ae96b66",
       "command": [
         "k6"
       ],
@@ -382,7 +382,7 @@
     "name": "cypress-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-cypress-executor:31e71dc",
+      "image": "kubeshop/testkube-cypress-executor:ae96b66",
       "command": [
         "./node_modules/cypress/bin/cypress"
       ],
@@ -418,7 +418,7 @@
     "name": "curl-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-curl-executor:31e71dc",
+      "image": "kubeshop/testkube-curl-executor:ae96b66",
       "command": [
         "curl"
       ],
@@ -448,7 +448,7 @@
     "name": "postman-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-postman-executor:31e71dc",
+      "image": "kubeshop/testkube-postman-executor:ae96b66",
       "command": [
         "newman"
       ],
@@ -485,7 +485,7 @@
     "name": "artillery-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-artillery-executor:31e71dc",
+      "image": "kubeshop/testkube-artillery-executor:ae96b66",
       "command": [
         "artillery"
       ],
@@ -520,7 +520,7 @@
     "name": "scraper-executor",
     "executor": {
       "executorType": "scraper",
-      "image": "kubeshop/testkube-scraper-executor:31e71dc",
+      "image": "kubeshop/testkube-scraper-executor:ae96b66",
       "types": []
     }
   },
@@ -528,7 +528,7 @@
     "name": "init-executor",
     "executor": {
       "executorType": "init",
-      "image": "kubeshop/testkube-init-executor:31e71dc",
+      "image": "kubeshop/testkube-init-executor:ae96b66",
       "types": []
     }
   },
@@ -536,7 +536,7 @@
     "name": "logs-sidecar",
     "executor": {
       "executorType": "sidecar",
-      "image": "kubeshop/testkube-logs-sidecar:31e71dc",
+      "image": "kubeshop/testkube-logs-sidecar:ae96b66",
       "types": []
     }
   }
