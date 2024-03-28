@@ -357,6 +357,12 @@ testkube-api:
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
 
+testkube-logs:
+  fullnameOverride: testkube-logs
+  nameOverride: logs
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+
 testkube-operator:
   priorityClassName: "highest-priority"
   ##Proxy Image parameters

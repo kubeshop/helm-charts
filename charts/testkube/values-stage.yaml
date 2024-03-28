@@ -104,6 +104,12 @@ mongodb:
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
 
+testkube-logs:
+  fullnameOverride: testkube-logs
+  nameOverride: logs
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
   # -- Upgrade hook is enabled
