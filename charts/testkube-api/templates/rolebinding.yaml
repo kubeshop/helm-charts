@@ -442,7 +442,7 @@ subjects:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
-  name: create-get-secrets-role-rb-{{ $rangeItem.namespace }}
+  name: create-get-list-secrets-role-rb-{{ $rangeItem.namespace }}
   namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
@@ -454,7 +454,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: create-get-secrets-role-{{ $rangeItem.namespace  }}
+  name: create-get-list-secrets-role-{{ $rangeItem.namespace  }}
   namespace: {{ .Release.Namespace }}
 subjects:
   - kind: ServiceAccount
