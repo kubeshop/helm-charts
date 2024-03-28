@@ -12,6 +12,7 @@ spec:
   {{- if gt .ActiveDeadlineSeconds 0 }}
   activeDeadlineSeconds: {{ .ActiveDeadlineSeconds }}
   {{- end }}
+  {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
   initContainers:
   - name: init
     {{- if .Registry }}
@@ -24,10 +25,8 @@ spec:
       - "/bin/runner"
       - '{{ .Jsn }}'
     volumeMounts:
-    {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
     - name: data-volume
       mountPath: /data
-    {{ end }}
     {{- if .CertificateSecret }}
     - name: {{ .CertificateSecret }}
       mountPath: /etc/certs
@@ -50,6 +49,7 @@ spec:
       mountPath: {{ $secret.MountPath }}
     {{- end }}
     {{- end }}
+  {{ end }}
   containers:
   {{ if .Features.LogsV2 -}}
   - name: "main-logs"
