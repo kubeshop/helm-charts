@@ -81,7 +81,7 @@ jobs:
         run: |
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
-      - name: Get image tag of Testkube APi, Dashboard, Operator
+      - name: Get image tag of Testkube APi, Operator
         id: vars
         run: |
           echo ::set-output name=api_image_tag::$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
