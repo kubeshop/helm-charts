@@ -34,7 +34,7 @@ spec:
     {{- end }}
     {{- if .ArtifactRequest }}
       {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
-    - name: storage-volume
+    - name: artifact-volume
       mountPath: {{ .ArtifactRequest.VolumeMountPath }}
       {{- end }}
     {{- end }}
