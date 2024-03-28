@@ -1,0 +1,160 @@
+{{- if .Values.networkPolicy.enabled -}}
+# this policy will be assigned to any pod in the namespace
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-all
+  namespace: testkube
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: api-server
+            app.kubernetes.io/instance: testkube
+      ports:
+        - protocol: TCP
+          port: {{ index .Values "testkube-api" "service" "port" }}
+    - to:
+      - podSelector:
+          matchLabels:
+            app: testkube-minio-testkube
+      ports:
+        - protocol: TCP
+          port: {{ index .Values "testkube-api" "storage" "endpoint_port" }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-operator
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      control-plane: controller-manager
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 9443
+---
+# API must accept connections from everything 
+# (e.g. kube-proxy, pods in this namespace, external ingress controller)
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-api-server
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: api-server
+      app.kubernetes.io/instance: testkube
+  policyTypes:
+    - Egress
+    - Ingress
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: nats
+              app.kubernetes.io/instance: testkube
+      ports:
+        - protocol: TCP
+          port: 4222
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: mongodb
+              app.kubernetes.io/instance: testkube
+      ports:
+        - protocol: TCP
+          port: {{ .Values.mongodb.service.port }}
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: {{ index .Values "testkube-api" "service" "port" }}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-minio
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      app: testkube-minio-testkube
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: {{ index .Values "testkube-api" "storage" "endpoint_port" }}
+---
+{{- if .Values.mongodb.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-mongodb
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: mongodb
+      app.kubernetes.io/instance: testkube
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: testkube
+      ports:
+        - protocol: TCP
+          port: {{ .Values.mongodb.service.port }}
+---
+{{- end -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-nats
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: nats
+      app.kubernetes.io/instance: testkube
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: testkube
+      ports:
+        - protocol: TCP
+          port: 4222
+---
+{{- if index .Values "testkube-dashboard" "enabled" -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: testkube-dashboard
+  namespace: testkube
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: dashboard
+      app.kubernetes.io/instance: testkube
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: {{ index .Values "testkube-dashboard" "service" "port" }} 
+{{- end -}}
+{{- end -}}
