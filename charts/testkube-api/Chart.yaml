@@ -3,8 +3,9 @@ name: testkube-api
 description: A Helm chart for Testkube api
 type: application
 version: 1.17.8
-appVersion: 1.17.7
+appVersion: 1.17.8
 dependencies:
   - name: global
     version: 0.1.2
+    #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../global"
