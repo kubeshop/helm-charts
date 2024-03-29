@@ -22,8 +22,10 @@ spec:
           - "/bin/runner"
           - '{{ .Jsn }}'
         volumeMounts:
+        {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
           mountPath: /data
+        {{ end }}
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
@@ -55,6 +57,7 @@ spec:
         {{- else }}
         image: {{ .LogSidecarImage }}
         {{- end }}
+        imagePullPolicy: IfNotPresent
         env:
         - name: POD_NAME
           valueFrom:
@@ -69,7 +72,7 @@ spec:
         - name: GROUP
           value: test
         - name: SOURCE
-          value: "test:{{ .Name }}"
+          value: "job-pod:{{ .Name }}"
         - name: ID
           value: "{{ .Name }}"
       {{- end }}
@@ -96,8 +99,10 @@ spec:
         workingDir: {{ .WorkingDir }}
         {{- end }}
         volumeMounts:
+        {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
           mountPath: /data
+        {{ end }}
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
@@ -126,8 +131,10 @@ spec:
         {{- end }}
         {{- end }}
       volumes:
+      {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
       - name: data-volume
         emptyDir: {}
+      {{ end }}
       {{- if .CertificateSecret }}
       - name: {{ .CertificateSecret }}
         secret:

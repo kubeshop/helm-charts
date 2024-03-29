@@ -710,7 +710,7 @@ rules:
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
-  name: create-get-secrets-role-{{ $rangeItem.namespace }}
+  name: create-get-list-secrets-role-{{ $rangeItem.namespace }}
   namespace: {{ $rangeItem.namespace }}
   labels: {{- include "testkube-api.labels" . | nindent 4 }}
     {{- if .Values.global.labels }}
@@ -727,6 +727,7 @@ rules:
     verbs:
       - create
       - get
+      - list
 
 ---
 
