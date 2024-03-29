@@ -1,7 +1,10 @@
 # Stage values for testkube.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+global:
+  features:
+    logsV2: true
+    
 replicaCount: 1
 
 image:
