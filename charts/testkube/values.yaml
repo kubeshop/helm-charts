@@ -186,6 +186,7 @@ nats:
   reloader:
     enabled: true
 
+# TODO(emil): what is this doing? should it get CAs?
 testkube-logs:
   # -- Testkube logs full name override
   fullnameOverride: testkube-logs
@@ -198,6 +199,7 @@ testkube-logs:
     enabled: false
     # -- Toggle whether to require client auth
     clientAuth: false
+    # TODO(emil): should this be added here?
     # -- If enabled, will also require a client CA certificate to be provided
     mountClientCACertificate: false
     certSecret:
@@ -211,11 +213,12 @@ testkube-logs:
       certFile: "cert.crt"
       # -- Path to server certificate key file
       keyFile: "cert.key"
-      # -- Path to cliebt ca file (used for self-signed certificates)
+      # TODO(emil): why is this in the same secret?
+      # -- Path to client ca file (used for self-signed certificates)
       clientCAFile: "client_ca.crt"
 
   storage:
-     # -- MinIO endpoint
+    # -- MinIO endpoint
     endpoint: ""
     # -- MinIO endpoint port
     endpoint_port: "9000"
@@ -256,6 +259,7 @@ testkube-logs:
       certFile: "cert.crt"
       # -- Path to client certificate key file
       keyFile: "cert.key"
+      # TODO(emil): what is all this?
       # -- Path to ca file (used for self-signed certificates)
       caFile: "ca.crt"
     # -- Toggle whether to enable scraper in Testkube API
@@ -378,13 +382,6 @@ testkube-api:
         keyFile: /tmp/agent-cert/cert.key
         # -- Default path for ca file
         caFile: /tmp/agent-cert/ca.crt
-
-  ## Persistent cache for Docker
-  imageInspectionCache:
-    ## Status of the persistent cache
-    enabled: false
-    ## ConfigMap name to persist cache
-    name: "testkube-image-cache"
 
   ## Persistent cache for Docker
   imageInspectionCache:
@@ -718,13 +715,14 @@ testkube-api:
   # -- Execution namespaces for Testkube API to only run tests
   # In this case, a Role and a RoleBinding will be created for each specified namespace.
   executionNamespaces: []
-       # -- Namespace for test execution
+
+  # -- Namespace for test execution
   #  - namespace: default
-       # -- Whether to generate RBAC for testkube api server or use manually provided
+  # -- Whether to generate RBAC for testkube api server or use manually provided
   #    generateAPIServerRBAC: true
-       # -- Job service account name for test jobs
+  # -- Job service account name for test jobs
   #    jobServiceAccountName: tests-job-default
-       # -- Whether to generate RBAC for test job or use manually provided
+  # -- Whether to generate RBAC for test job or use manually provided
   #    generateTestJobRBAC: true
 
   # Testkube log server parameters
