@@ -84,6 +84,8 @@ cloud:
     enabled: true
     ## Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
     skipVerify: false
+    ## If specified, injects a custom CA into the list of trusted CAs. Specify a secret with the PEM encoded CA under the ca.crt key.
+    customCaSecretRef: ""
     certificate:
       ## When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt)
       secretRef: ""
@@ -177,13 +179,14 @@ enabledExecutors:
 ## Execution namespaces for Testkube API to only run tests
 ## Execution namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace.
 executionNamespaces:
-     # -- Namespace for test execution
+
+# -- Namespace for test execution
 #  - namespace: default
-     # -- Whether to generate RBAC for testkube api server or use manually provided
+# -- Whether to generate RBAC for testkube api server or use manually provided
 #    generateAPIServerRBAC: true
-     # -- Job service account name for test jobs
+# -- Job service account name for test jobs
 #    jobServiceAccountName: tests-job-default
-     # -- Whether to generate RBAC for test job or use manually provided
+# -- Whether to generate RBAC for test job or use manually provided
 #    generateTestJobRBAC: true
 
 # Testkube log server parameters
