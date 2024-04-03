@@ -369,6 +369,8 @@ testkube-api:
       enabled: true
       # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
       skipVerify: false
+      ## If specified, injects a custom CA into the list of trusted CAs. Specify a secret with the PEM encoded CA under the ca.crt key.
+      customCaSecretRef: ""
       certificate:
         # -- When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt)
         secretRef: ""
