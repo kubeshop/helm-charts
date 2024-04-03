@@ -20,6 +20,9 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        env:
+          - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
         volumeMounts:
         - name: data-volume
           mountPath: /data
@@ -45,6 +48,10 @@ spec:
           mountPath: {{ $secret.MountPath }}
         {{- end }}
         {{- end }}
+        - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          name: custom-ca
+          readOnly: true
+          subPath: ca.crt
       containers:
       {{ if .Features.LogsV2 -}}
       - name: "{{ .Name }}-logs"
@@ -81,6 +88,9 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        env:
+          - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
         volumeMounts:
         - name: data-volume
           mountPath: /data
@@ -111,6 +121,10 @@ spec:
           mountPath: {{ $secret.MountPath }}
         {{- end }}
         {{- end }}
+        - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          name: custom-ca
+          readOnly: true
+          subPath: ca.crt
       volumes:
       - name: data-volume
         emptyDir: {}
@@ -155,5 +169,9 @@ spec:
       - name: {{ $secret -}}
       {{- end }}
       {{- end }}
+      - name: custom-ca
+        secret:
+          defaultMode: 420
+          secretName: testkube-enterprise-self-ca-wildcard-tls
   backoffLimit: 0
   ttlSecondsAfterFinished: 180
