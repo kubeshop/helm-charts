@@ -1235,6 +1235,9 @@ spec:
                                   type: string
                               type: object
                           type: object
+                        shell:
+                          description: script to run in a default shell for the container
+                          type: string
                         volumeMounts:
                           description: volume mounts to append to the container
                           items:
@@ -4944,6 +4947,9 @@ spec:
                                   type: string
                               type: object
                           type: object
+                        shell:
+                          description: script to run in a default shell for the container
+                          type: string
                         volumeMounts:
                           description: volume mounts to append to the container
                           items:
@@ -6204,6 +6210,9 @@ spec:
                                   type: string
                               type: object
                           type: object
+                        shell:
+                          description: script to run in a default shell for the container
+                          type: string
                         volumeMounts:
                           description: volume mounts to append to the container
                           items:
