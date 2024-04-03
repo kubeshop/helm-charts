@@ -41,11 +41,19 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
-        {{- if or .ArtifactRequest .AgentAPITLSSecret }}
+        {{- end }}
         volumeMounts:
+        {{- if .RunnerCustomCASecret }}
+          - name: {{ .RunnerCustomCASecret }}
+            mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+            readOnly: true
+            subPath: ca.crt
+        {{- end }}
+        {{- if or .ArtifactRequest .AgentAPITLSSecret }}
           {{- if .ArtifactRequest.VolumeMountPath }}
           - name: artifact-volume
             mountPath: {{ .ArtifactRequest.VolumeMountPath }}
@@ -55,13 +63,15 @@ spec:
             readOnly: true
             name: {{ .AgentAPITLSSecret }}
           {{- end }}
-          - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
-            name: custom-ca
-            readOnly: true
-            subPath: ca.crt
         {{- end }}
-      {{- if or .ArtifactRequest .AgentAPITLSSecret }}
       volumes:
+      {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          secret:
+            secretName: {{ .RunnerCustomCASecret }}
+            defaultMode: 420
+      {{- end }}
+      {{- if or .ArtifactRequest .AgentAPITLSSecret }}
         {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
         - name: artifact-volume
           persistentVolumeClaim:
@@ -72,10 +82,6 @@ spec:
           secret:
             secretName: {{ .AgentAPITLSSecret }}
         {{- end }}
-        - name: custom-ca
-          secret:
-            defaultMode: 420
-            secretName: testkube-enterprise-self-ca-wildcard-tls
       {{- end }}
       restartPolicy: Never
       {{- if .ServiceAccountName }}
