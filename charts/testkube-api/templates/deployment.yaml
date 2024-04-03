@@ -405,6 +405,8 @@ spec:
             {{- if .Values.cloud.tls.customCaSecretRef }}
             - name: SSL_CERT_DIR
               value: /etc/testkube/certs
+            - name: TESTKUBE_PRO_RUNNER_CUSTOM_CA_SECRET
+              value:  {{ .Values.cloud.tls.customCaSecretRef }}
             {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -451,7 +453,7 @@ spec:
             {{- end }}
             {{- if .Values.cloud.tls.customCaSecretRef }}
             - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
-              name: custom-ca
+              name: {{ .Values.cloud.tls.customCaSecretRef }}
               readOnly: true
               subPath: ca.crt
             {{- end }}
@@ -488,7 +490,7 @@ spec:
         {{- toYaml . | nindent 8 -}}
         {{- end }}
         {{- if .Values.cloud.tls.customCaSecretRef }}
-        - name: custom-ca
+        - name: {{ .Values.cloud.tls.customCaSecretRef }}
           secret:
             defaultMode: 420
             secretName: {{ .Values.cloud.tls.customCaSecretRef }}
