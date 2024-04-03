@@ -20,6 +20,11 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
+        env:
+          - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
+        {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
@@ -28,6 +33,12 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{- end }}
         {{- if .ArtifactRequest }}
           {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
@@ -84,6 +95,11 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
+        env:
+          - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
+        {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
@@ -92,6 +108,12 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{- end }}
         {{- if .AgentAPITLSSecret }}
         - mountPath: /tmp/agent-cert
@@ -125,6 +147,12 @@ spec:
       - name: {{ .CertificateSecret }}
         secret:
           secretName: {{ .CertificateSecret }}
+      {{- end }}
+      {{- if .RunnerCustomCASecret }}
+      - name: {{ .RunnerCustomCASecret }}
+        secret:
+          secretName: {{ .RunnerCustomCASecret }}
+          defaultMode: 420
       {{- end }}
       {{- if .AgentAPITLSSecret }}
       - name: {{ .AgentAPITLSSecret }}
