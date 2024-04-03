@@ -186,7 +186,6 @@ nats:
   reloader:
     enabled: true
 
-# TODO(emil): what is this doing? should it get CAs?
 testkube-logs:
   # -- Testkube logs full name override
   fullnameOverride: testkube-logs
@@ -199,7 +198,6 @@ testkube-logs:
     enabled: false
     # -- Toggle whether to require client auth
     clientAuth: false
-    # TODO(emil): should this be added here?
     # -- If enabled, will also require a client CA certificate to be provided
     mountClientCACertificate: false
     certSecret:
@@ -213,7 +211,6 @@ testkube-logs:
       certFile: "cert.crt"
       # -- Path to server certificate key file
       keyFile: "cert.key"
-      # TODO(emil): why is this in the same secret?
       # -- Path to client ca file (used for self-signed certificates)
       clientCAFile: "client_ca.crt"
 
@@ -259,7 +256,6 @@ testkube-logs:
       certFile: "cert.crt"
       # -- Path to client certificate key file
       keyFile: "cert.key"
-      # TODO(emil): what is all this?
       # -- Path to ca file (used for self-signed certificates)
       caFile: "ca.crt"
     # -- Toggle whether to enable scraper in Testkube API
