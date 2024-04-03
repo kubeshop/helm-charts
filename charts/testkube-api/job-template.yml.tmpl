@@ -20,15 +20,23 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+        {{- end }}
         volumeMounts:
         - name: data-volume
           mountPath: /data
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{- end }}
         {{- if .ArtifactRequest }}
           {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
@@ -48,10 +56,6 @@ spec:
           mountPath: {{ $secret.MountPath }}
         {{- end }}
         {{- end }}
-        - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
-          name: custom-ca
-          readOnly: true
-          subPath: ca.crt
       containers:
       {{ if .Features.LogsV2 -}}
       - name: "{{ .Name }}-logs"
@@ -88,15 +92,23 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+        {{- end }}
         volumeMounts:
         - name: data-volume
           mountPath: /data
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{- end }}
         {{- if .AgentAPITLSSecret }}
         - mountPath: /tmp/agent-cert
@@ -121,10 +133,6 @@ spec:
           mountPath: {{ $secret.MountPath }}
         {{- end }}
         {{- end }}
-        - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
-          name: custom-ca
-          readOnly: true
-          subPath: ca.crt
       volumes:
       - name: data-volume
         emptyDir: {}
@@ -132,6 +140,12 @@ spec:
       - name: {{ .CertificateSecret }}
         secret:
           secretName: {{ .CertificateSecret }}
+      {{- end }}
+      {{- if .RunnerCustomCASecret }}
+      - name: {{ .RunnerCustomCASecret }}
+        secret:
+          secretName: {{ .RunnerCustomCASecret }}
+          defaultMode: 420
       {{- end }}
       {{- if .AgentAPITLSSecret }}
       - name: {{ .AgentAPITLSSecret }}
@@ -169,9 +183,5 @@ spec:
       - name: {{ $secret -}}
       {{- end }}
       {{- end }}
-      - name: custom-ca
-        secret:
-          defaultMode: 420
-          secretName: testkube-enterprise-self-ca-wildcard-tls
   backoffLimit: 0
   ttlSecondsAfterFinished: 180
