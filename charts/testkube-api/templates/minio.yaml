@@ -150,14 +150,28 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.minio.affinity }}
+      {{- if .Values.minio.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml .Values.minio.affinity | nindent 8 }}
+      {{- else if .Values.global.affinity }}
+      affinity:
+      {{- toYaml .Values.global.affinity | nindent 8 }}
       {{- end }}
-      {{- with .Values.minio.tolerations }}
+      {{- if .Values.minio.tolerations }}
       tolerations:
-        {{- toYaml . | nindent 8 }}
+      {{- toYaml .Values.minio.tolerations | nindent 6 }}
+      {{- else if .Values.global.tolerations }}
+      tolerations:
+      {{- toYaml .Values.global.tolerations | nindent 6 }}
       {{- end }}
+      {{- if .Values.minio.nodeSelector }}
+      nodeSelector:
+      {{- toYaml .Values.minio.nodeSelector | nindent 8 }}
+      {{- else if .Values.global.nodeSelector }}
+      nodeSelector:
+      {{- toYaml .Values.global.nodeSelector | nindent 8 }}
+      {{- end }}
+
 ---
 apiVersion: v1
 kind: Service

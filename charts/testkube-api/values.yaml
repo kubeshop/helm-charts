@@ -11,6 +11,9 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
   features:
     logsV2: false
 
@@ -565,6 +568,9 @@ prometheus:
 ##Test Connection pod
 testConnection:
   enabled: false
+  affinity: {}
+  tolerations: []
+  nodeSelector: {}
 
 ## Testkube API Liveness probe
 livenessProbe:

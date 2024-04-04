@@ -13,8 +13,14 @@ global:
   imagePullSecrets: []
   # -- Labels to add to all deployed objects
   labels: {}
-  # --  Annotations to add to all deployed objects
+  # -- Annotations to add to all deployed objects
   annotations: {}
+  # -- Node labels to add to all deployed Pods
+  nodeSelector: {}
+  # -- Affinity rules to add to all deployed Pods
+  affinity: {}
+  # -- Tolerations to add to all deployed pods
+  tolerations: []
 
 debug: true
 
