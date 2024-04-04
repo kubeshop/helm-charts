@@ -18,7 +18,11 @@ global:
   # -- Affinity rules to add to all deployed Pods
   affinity: {}
   # -- Tolerations to add to all deployed pods
-  tolerations: []
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
   # -- Features map for the whole chart
   features:
     logsV2: false
@@ -59,11 +63,7 @@ preUpgradeHook:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
@@ -101,11 +101,7 @@ preUpgradeHookNATS:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -142,12 +138,12 @@ mongodb:
     # -- MongoDB image pull Secret
     pullSecrets: []
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
-  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  # -- Uncomment to schedule a multi-arch image to any available architecture type in a GGP Standard k8s cluster.
+#  tolerations:
+#    - key: kubernetes.io/arch
+#      operator: Equal
+#      value: arm64
+#      effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext: {}
@@ -186,15 +182,15 @@ nats:
     #     tag: 0.14.1
     #     pullPolicy:
     #     registry:
-    # -- NATS Box tolerations settings
-    podTemplate:
-      merge:
-        spec:
-          tolerations:
-            - key: kubernetes.io/arch
-              operator: Equal
-              value: arm64
-              effect: NoSchedule
+    # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
+#    podTemplate:
+#      merge:
+#        spec:
+#          tolerations:
+#            - key: kubernetes.io/arch
+#              operator: Equal
+#              value: arm64
+#              effect: NoSchedule
   config:
     merge:
       max_payload: << 8MB >>
@@ -422,11 +418,7 @@ testkube-api:
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
   # Service parameters
   service:
@@ -484,11 +476,7 @@ testkube-api:
     nodeSelector: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
     # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
     # Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
     # -- Affinity for pod assignment.
@@ -788,11 +776,7 @@ testkube-api:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
 
   # -- Testkube API Pod Security Context
   podSecurityContext: {}
@@ -990,15 +974,10 @@ testkube-operator:
 
       # ref: https://kubernetes.io/docs/user-guide/node-selection/
       # -- Node labels for pod assignment
-      nodeSelector:
-        kubernetes.io/os: linux
+      nodeSelector: {}
       # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
       # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-      tolerations:
-        - key: kubernetes.io/arch
-          operator: Equal
-          value: arm64
-          effect: NoSchedule
+      tolerations: []
       # Create Job config
       createSecretJob:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -1070,11 +1049,7 @@ testkube-operator:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
 
   preUpgrade:
     # -- Upgrade hook is enabled
@@ -1107,8 +1082,4 @@ testkube-operator:
     podAnnotations: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []

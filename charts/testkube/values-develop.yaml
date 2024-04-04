@@ -3,6 +3,13 @@
 # Declare variables to be passed into your templates.
 
 global:
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
   features:
     logsV2: true
 
@@ -73,12 +80,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -135,8 +136,7 @@ preUpgradeHookNATS:
   serviceAccount:
     create: true
   # -- Node labels for pod assignment.
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Upgrade Pod Security Context
   podSecurityContext: {}
@@ -145,12 +145,7 @@ preUpgradeHookNATS:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
-
+  tolerations: []
 # NATS values
 nats:
   # NATS container settings
@@ -190,8 +185,7 @@ testkube-api:
     port: 8088
   minio:
     enabled: true
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
+    nodeSelector: {}
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
@@ -354,15 +348,12 @@ testkube-api:
   testConnection:
     enabled: true
 
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
 
 testkube-logs:
   fullnameOverride: testkube-logs
   nameOverride: logs
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
-
+  nodeSelector: {}
 testkube-operator:
   priorityClassName: "highest-priority"
   ##Proxy Image parameters
@@ -389,5 +380,4 @@ testkube-operator:
   testConnection:
     enabled: true
 
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
