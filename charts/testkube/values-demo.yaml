@@ -8,7 +8,7 @@ global:
   tolerations:
     - key: kubernetes.io/arch
       operator: Equal
-      value: amd
+      value: arm64
       effect: NoSchedule
   features:
     logsV2: false

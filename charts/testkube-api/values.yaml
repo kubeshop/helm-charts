@@ -567,7 +567,7 @@ prometheus:
 
 ##Test Connection pod
 testConnection:
-  enabled: true
+  enabled: false
   affinity: {}
   tolerations: []
   nodeSelector: {}
