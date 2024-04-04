@@ -90,7 +90,7 @@ spec:
       {{- if .Values.webhook.patch.nodeSelector }}
       nodeSelector:
       {{- toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
-      {{- else if .Values.global..nodeSelector }}
+      {{- else if .Values.global.nodeSelector }}
       nodeSelector:
       {{- toYaml .Values.global.nodeSelector | nindent 8 }}
       {{- end }}
