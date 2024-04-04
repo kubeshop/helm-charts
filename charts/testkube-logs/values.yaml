@@ -13,8 +13,28 @@ global:
   imagePullSecrets: []
   # -- Labels to add to all deployed objects
   labels: {}
-  # --  Annotations to add to all deployed objects
+  # -- Annotations to add to all deployed objects
   annotations: {}
+  # -- Node labels to add to all deployed Pods
+  nodeSelector:
+    disktype: ssd
+  # -- Affinity rules to add to all deployed Pods
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                  - ssd
+  # -- Tolerations to add to all deployed pods
+  tolerations:
+    - key: "key1"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoSchedule"
 
 debug: true
 

@@ -13,7 +13,23 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
-  ## Toggle and define pod-level security context.
+  nodeSelector:
+    disktype: ssd
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                  - ssd
+  tolerations:
+    - key: "key1"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoSchedule"
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -252,6 +268,8 @@ webhook:
     ### Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
     ###
     tolerations: []
+    ## Affinity for pod assignment.
+    affinity: {}
     ## Number of retries before considering a Job as failed
     backoffLimit: 1
 
@@ -339,6 +357,13 @@ preUpgrade:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  ## Node labels for Testkube Logs pod assignment.
+  nodeSelector: {}
+
+  ## Affinity for pre-upgrade job
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+  affinity: {}
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server

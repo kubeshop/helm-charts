@@ -69,15 +69,30 @@ spec:
           {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
-      {{- if .Values.webhook.patch.nodeSelector }}
-      nodeSelector: {{ toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
-      {{- end }}
-      {{- if .Values.webhook.patch.tolerations }}
-      tolerations: {{ toYaml .Values.webhook.patch.tolerations | nindent 8 }}
-      {{- end }}
       {{- if .Values.webhook.patch.podSecurityContext }}
       securityContext:
         {{- toYaml .Values.webhook.patch.podSecurityContext | nindent 8 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.affinity }}
+      affinity:
+      {{- toYaml .Values.webhook.patch.affinity | nindent 8 }}
+      {{- else if .Values.global.affinity }}
+      affinity:
+      {{- toYaml .Values.global.affinity | nindent 8 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.tolerations }}
+      tolerations:
+      {{- toYaml .Values.webhook.patch.tolerations | nindent 6 }}
+      {{- else if .Values.global.tolerations }}
+      tolerations:
+      {{- toYaml .Values.global.tolerations | nindent 6 }}
+      {{- end }}
+      {{- if .Values.webhook.patch.nodeSelector }}
+      nodeSelector:
+      {{- toYaml .Values.webhook.patch.nodeSelector | nindent 8 }}
+      {{- else if .Values.global..nodeSelector }}
+      nodeSelector:
+      {{- toYaml .Values.global.nodeSelector | nindent 8 }}
       {{- end }}
   backoffLimit: {{ .Values.webhook.patch.backoffLimit }}
 {{- end }}

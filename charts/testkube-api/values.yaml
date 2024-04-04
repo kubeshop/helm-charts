@@ -11,6 +11,23 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  nodeSelector:
+    disktype: ssd
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 1
+          preference:
+            matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                  - ssd
+  tolerations:
+    - key: "key1"
+      operator: "Equal"
+      value: "value1"
+      effect: "NoSchedule"
   features:
     logsV2: false
 
@@ -564,7 +581,9 @@ prometheus:
 
 ##Test Connection pod
 testConnection:
-  enabled: false
+  enabled: true
+  affinity: {}
+  tolerations: {}
 
 ## Testkube API Liveness probe
 livenessProbe:
