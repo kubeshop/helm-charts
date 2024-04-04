@@ -13,6 +13,16 @@ global:
   labels: {}
   # --  Annotations to add to all deployed objects
   annotations: {}
+  # -- Node labels to add to all deployed Pods
+  nodeSelector: {}
+  # -- Affinity rules to add to all deployed Pods
+  affinity: {}
+  # -- Tolerations to add to all deployed pods
+  tolerations:
+  - key: kubernetes.io/arch
+    operator: Equal
+    value: arm64
+    effect: NoSchedule
   # -- Features map for the whole chart
   features:
     logsV2: false
@@ -416,11 +426,11 @@ testkube-api:
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
+#    - key: kubernetes.io/arch
+#      operator: Equal
+#      value: arm64
+#      effect: NoSchedule
 
   # Service parameters
   service:
@@ -782,11 +792,11 @@ testkube-api:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
+#      - key: kubernetes.io/arch
+#        operator: Equal
+#        value: arm64
+#        effect: NoSchedule
 
   # -- Testkube API Pod Security Context
   podSecurityContext: {}
@@ -1064,11 +1074,11 @@ testkube-operator:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
+#      - key: kubernetes.io/arch
+#        operator: Equal
+#        value: arm64
+#        effect: NoSchedule
 
   preUpgrade:
     # -- Upgrade hook is enabled

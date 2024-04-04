@@ -13,23 +13,9 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
-  nodeSelector:
-    disktype: ssd
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-              - key: disktype
-                operator: In
-                values:
-                  - ssd
-  tolerations:
-    - key: "key1"
-      operator: "Equal"
-      value: "value1"
-      effect: "NoSchedule"
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
