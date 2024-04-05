@@ -1,4 +1,5 @@
 {{- if .Values.installCRD }}
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -805,6 +806,187 @@ spec:
                       description: delay before the step
                       pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                       type: string
+                    distribute:
+                      description: run multiple pods with specification and wait until
+                        finish
+                      properties:
+                        container:
+                          description: container definition for simplicity
+                          x-kubernetes-preserve-unknown-fields: true
+                        count:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: static number of sharded instances to spawn
+                          x-kubernetes-int-or-string: true
+                        error:
+                          description: expression that determines if the pod initialization
+                            has failed
+                          type: string
+                        files:
+                          description: files to load into spawned pods
+                          items:
+                            properties:
+                              content:
+                                description: plain-text content to put inside
+                                type: string
+                              contentFrom:
+                                description: external source to use
+                                properties:
+                                  configMapKeyRef:
+                                    description: Selects a key of a ConfigMap.
+                                    properties:
+                                      key:
+                                        description: The key to select.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the ConfigMap
+                                          or its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                  fieldRef:
+                                    description: 'Selects a field of the pod: supports
+                                      metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                      `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                      spec.serviceAccountName, status.hostIP, status.podIP,
+                                      status.podIPs.'
+                                    properties:
+                                      apiVersion:
+                                        description: Version of the schema the FieldPath
+                                          is written in terms of, defaults to "v1".
+                                        type: string
+                                      fieldPath:
+                                        description: Path of the field to select in
+                                          the specified API version.
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
+                                  resourceFieldRef:
+                                    description: 'Selects a resource of the container:
+                                      only resources limits and requests (limits.cpu,
+                                      limits.memory, limits.ephemeral-storage, requests.cpu,
+                                      requests.memory and requests.ephemeral-storage)
+                                      are currently supported.'
+                                    properties:
+                                      containerName:
+                                        description: 'Container name: required for
+                                          volumes, optional for env vars'
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                        - type: integer
+                                        - type: string
+                                        description: Specifies the output format of
+                                          the exposed resources, defaults to "1"
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        description: 'Required: resource to select'
+                                        type: string
+                                    required:
+                                    - resource
+                                    type: object
+                                  secretKeyRef:
+                                    description: Selects a key of a secret in the
+                                      pod's namespace
+                                    properties:
+                                      key:
+                                        description: The key of the secret to select
+                                          from.  Must be a valid secret key.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the Secret or
+                                          its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                type: object
+                              mode:
+                                description: mode to use for the file
+                                format: int32
+                                type: integer
+                              path:
+                                description: path where the file should be accessible
+                                  at
+                                minLength: 1
+                                type: string
+                            required:
+                            - path
+                            type: object
+                          type: array
+                        matrix:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: matrix of parameters to spawn instances (static)
+                          type: object
+                        matrixExpressions:
+                          additionalProperties:
+                            type: string
+                          description: matrix of parameters to spawn instances (expressions)
+                          type: object
+                        maxCount:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: dynamic number of sharded instances to spawn
+                            - it will be lowered if there is not enough sharded values
+                          x-kubernetes-int-or-string: true
+                        parallelism:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: how many pods can be initializing at once
+                          x-kubernetes-int-or-string: true
+                        pod:
+                          description: pod template to spawn
+                          x-kubernetes-preserve-unknown-fields: true
+                        ready:
+                          description: expression that determines if the pod initialization
+                            has completed successfully
+                          type: string
+                        shardExpressions:
+                          additionalProperties:
+                            type: string
+                          description: parameters that should be distributed across
+                            sharded instances (expressions)
+                          type: object
+                        shards:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: parameters that should be distributed across
+                            sharded instances (static)
+                          type: object
+                        timeout:
+                          description: how long we should wait for successful initialization
+                          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                          type: string
+                      type: object
                     execute:
                       description: execute other Testkube resources
                       properties:
@@ -1282,6 +1464,190 @@ spec:
                           description: override default working directory in the image
                             (empty string to default WORKDIR for the image)
                           type: string
+                      type: object
+                    services:
+                      additionalProperties:
+                        properties:
+                          container:
+                            description: container definition for simplicity
+                            x-kubernetes-preserve-unknown-fields: true
+                          count:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          error:
+                            description: expression that determines if the pod initialization
+                              has failed
+                            type: string
+                          files:
+                            description: files to load into spawned pods
+                            items:
+                              properties:
+                                content:
+                                  description: plain-text content to put inside
+                                  type: string
+                                contentFrom:
+                                  description: external source to use
+                                  properties:
+                                    configMapKeyRef:
+                                      description: Selects a key of a ConfigMap.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                    fieldRef:
+                                      description: 'Selects a field of the pod: supports
+                                        metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                        `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                        spec.serviceAccountName, status.hostIP, status.podIP,
+                                        status.podIPs.'
+                                      properties:
+                                        apiVersion:
+                                          description: Version of the schema the FieldPath
+                                            is written in terms of, defaults to "v1".
+                                          type: string
+                                        fieldPath:
+                                          description: Path of the field to select
+                                            in the specified API version.
+                                          type: string
+                                      required:
+                                      - fieldPath
+                                      type: object
+                                    resourceFieldRef:
+                                      description: 'Selects a resource of the container:
+                                        only resources limits and requests (limits.cpu,
+                                        limits.memory, limits.ephemeral-storage, requests.cpu,
+                                        requests.memory and requests.ephemeral-storage)
+                                        are currently supported.'
+                                      properties:
+                                        containerName:
+                                          description: 'Container name: required for
+                                            volumes, optional for env vars'
+                                          type: string
+                                        divisor:
+                                          anyOf:
+                                          - type: integer
+                                          - type: string
+                                          description: Specifies the output format
+                                            of the exposed resources, defaults to
+                                            "1"
+                                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                          x-kubernetes-int-or-string: true
+                                        resource:
+                                          description: 'Required: resource to select'
+                                          type: string
+                                      required:
+                                      - resource
+                                      type: object
+                                    secretKeyRef:
+                                      description: Selects a key of a secret in the
+                                        pod's namespace
+                                      properties:
+                                        key:
+                                          description: The key of the secret to select
+                                            from.  Must be a valid secret key.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                  type: object
+                                mode:
+                                  description: mode to use for the file
+                                  format: int32
+                                  type: integer
+                                path:
+                                  description: path where the file should be accessible
+                                    at
+                                  minLength: 1
+                                  type: string
+                              required:
+                              - path
+                              type: object
+                            type: array
+                          matrix:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                          matrixExpressions:
+                            additionalProperties:
+                              type: string
+                            description: matrix of parameters to spawn instances (expressions)
+                            type: object
+                          maxCount:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: dynamic number of sharded instances to spawn
+                              - it will be lowered if there is not enough sharded
+                              values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: how many pods can be initializing at once
+                            x-kubernetes-int-or-string: true
+                          pod:
+                            description: pod template to spawn
+                            x-kubernetes-preserve-unknown-fields: true
+                          ready:
+                            description: expression that determines if the pod initialization
+                              has completed successfully
+                            type: string
+                          shardExpressions:
+                            additionalProperties:
+                              type: string
+                            description: parameters that should be distributed across
+                              sharded instances (expressions)
+                            type: object
+                          shards:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: parameters that should be distributed across
+                              sharded instances (static)
+                            type: object
+                          timeout:
+                            description: how long we should wait for successful initialization
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
+                        type: object
+                      description: accompanying pods to create for the step
                       type: object
                     setup:
                       description: steps to run before other operations in this step
@@ -3763,6 +4129,188 @@ spec:
                       type: object
                     type: array
                 type: object
+              services:
+                additionalProperties:
+                  properties:
+                    container:
+                      description: container definition for simplicity
+                      x-kubernetes-preserve-unknown-fields: true
+                    count:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      description: static number of sharded instances to spawn
+                      x-kubernetes-int-or-string: true
+                    error:
+                      description: expression that determines if the pod initialization
+                        has failed
+                      type: string
+                    files:
+                      description: files to load into spawned pods
+                      items:
+                        properties:
+                          content:
+                            description: plain-text content to put inside
+                            type: string
+                          contentFrom:
+                            description: external source to use
+                            properties:
+                              configMapKeyRef:
+                                description: Selects a key of a ConfigMap.
+                                properties:
+                                  key:
+                                    description: The key to select.
+                                    type: string
+                                  name:
+                                    description: 'Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                      TODO: Add other useful fields. apiVersion, kind,
+                                      uid?'
+                                    type: string
+                                  optional:
+                                    description: Specify whether the ConfigMap or
+                                      its key must be defined
+                                    type: boolean
+                                required:
+                                - key
+                                type: object
+                              fieldRef:
+                                description: 'Selects a field of the pod: supports
+                                  metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                  `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                  spec.serviceAccountName, status.hostIP, status.podIP,
+                                  status.podIPs.'
+                                properties:
+                                  apiVersion:
+                                    description: Version of the schema the FieldPath
+                                      is written in terms of, defaults to "v1".
+                                    type: string
+                                  fieldPath:
+                                    description: Path of the field to select in the
+                                      specified API version.
+                                    type: string
+                                required:
+                                - fieldPath
+                                type: object
+                              resourceFieldRef:
+                                description: 'Selects a resource of the container:
+                                  only resources limits and requests (limits.cpu,
+                                  limits.memory, limits.ephemeral-storage, requests.cpu,
+                                  requests.memory and requests.ephemeral-storage)
+                                  are currently supported.'
+                                properties:
+                                  containerName:
+                                    description: 'Container name: required for volumes,
+                                      optional for env vars'
+                                    type: string
+                                  divisor:
+                                    anyOf:
+                                    - type: integer
+                                    - type: string
+                                    description: Specifies the output format of the
+                                      exposed resources, defaults to "1"
+                                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                    x-kubernetes-int-or-string: true
+                                  resource:
+                                    description: 'Required: resource to select'
+                                    type: string
+                                required:
+                                - resource
+                                type: object
+                              secretKeyRef:
+                                description: Selects a key of a secret in the pod's
+                                  namespace
+                                properties:
+                                  key:
+                                    description: The key of the secret to select from.  Must
+                                      be a valid secret key.
+                                    type: string
+                                  name:
+                                    description: 'Name of the referent. More info:
+                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                      TODO: Add other useful fields. apiVersion, kind,
+                                      uid?'
+                                    type: string
+                                  optional:
+                                    description: Specify whether the Secret or its
+                                      key must be defined
+                                    type: boolean
+                                required:
+                                - key
+                                type: object
+                            type: object
+                          mode:
+                            description: mode to use for the file
+                            format: int32
+                            type: integer
+                          path:
+                            description: path where the file should be accessible
+                              at
+                            minLength: 1
+                            type: string
+                        required:
+                        - path
+                        type: object
+                      type: array
+                    matrix:
+                      additionalProperties:
+                        items:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          x-kubernetes-int-or-string: true
+                        type: array
+                      description: matrix of parameters to spawn instances (static)
+                      type: object
+                    matrixExpressions:
+                      additionalProperties:
+                        type: string
+                      description: matrix of parameters to spawn instances (expressions)
+                      type: object
+                    maxCount:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      description: dynamic number of sharded instances to spawn -
+                        it will be lowered if there is not enough sharded values
+                      x-kubernetes-int-or-string: true
+                    parallelism:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      description: how many pods can be initializing at once
+                      x-kubernetes-int-or-string: true
+                    pod:
+                      description: pod template to spawn
+                      x-kubernetes-preserve-unknown-fields: true
+                    ready:
+                      description: expression that determines if the pod initialization
+                        has completed successfully
+                      type: string
+                    shardExpressions:
+                      additionalProperties:
+                        type: string
+                      description: parameters that should be distributed across sharded
+                        instances (expressions)
+                      type: object
+                    shards:
+                      additionalProperties:
+                        items:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          x-kubernetes-int-or-string: true
+                        type: array
+                      description: parameters that should be distributed across sharded
+                        instances (static)
+                      type: object
+                    timeout:
+                      description: how long we should wait for successful initialization
+                      pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                      type: string
+                  type: object
+                description: accompanying pods to create for the TestWorkflow
+                type: object
               setup:
                 description: steps for setting up the workflow
                 items:
@@ -4530,6 +5078,187 @@ spec:
                       description: delay before the step
                       pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                       type: string
+                    distribute:
+                      description: run multiple pods with specification and wait until
+                        finish
+                      properties:
+                        container:
+                          description: container definition for simplicity
+                          x-kubernetes-preserve-unknown-fields: true
+                        count:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: static number of sharded instances to spawn
+                          x-kubernetes-int-or-string: true
+                        error:
+                          description: expression that determines if the pod initialization
+                            has failed
+                          type: string
+                        files:
+                          description: files to load into spawned pods
+                          items:
+                            properties:
+                              content:
+                                description: plain-text content to put inside
+                                type: string
+                              contentFrom:
+                                description: external source to use
+                                properties:
+                                  configMapKeyRef:
+                                    description: Selects a key of a ConfigMap.
+                                    properties:
+                                      key:
+                                        description: The key to select.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the ConfigMap
+                                          or its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                  fieldRef:
+                                    description: 'Selects a field of the pod: supports
+                                      metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                      `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                      spec.serviceAccountName, status.hostIP, status.podIP,
+                                      status.podIPs.'
+                                    properties:
+                                      apiVersion:
+                                        description: Version of the schema the FieldPath
+                                          is written in terms of, defaults to "v1".
+                                        type: string
+                                      fieldPath:
+                                        description: Path of the field to select in
+                                          the specified API version.
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
+                                  resourceFieldRef:
+                                    description: 'Selects a resource of the container:
+                                      only resources limits and requests (limits.cpu,
+                                      limits.memory, limits.ephemeral-storage, requests.cpu,
+                                      requests.memory and requests.ephemeral-storage)
+                                      are currently supported.'
+                                    properties:
+                                      containerName:
+                                        description: 'Container name: required for
+                                          volumes, optional for env vars'
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                        - type: integer
+                                        - type: string
+                                        description: Specifies the output format of
+                                          the exposed resources, defaults to "1"
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        description: 'Required: resource to select'
+                                        type: string
+                                    required:
+                                    - resource
+                                    type: object
+                                  secretKeyRef:
+                                    description: Selects a key of a secret in the
+                                      pod's namespace
+                                    properties:
+                                      key:
+                                        description: The key of the secret to select
+                                          from.  Must be a valid secret key.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the Secret or
+                                          its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                type: object
+                              mode:
+                                description: mode to use for the file
+                                format: int32
+                                type: integer
+                              path:
+                                description: path where the file should be accessible
+                                  at
+                                minLength: 1
+                                type: string
+                            required:
+                            - path
+                            type: object
+                          type: array
+                        matrix:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: matrix of parameters to spawn instances (static)
+                          type: object
+                        matrixExpressions:
+                          additionalProperties:
+                            type: string
+                          description: matrix of parameters to spawn instances (expressions)
+                          type: object
+                        maxCount:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: dynamic number of sharded instances to spawn
+                            - it will be lowered if there is not enough sharded values
+                          x-kubernetes-int-or-string: true
+                        parallelism:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: how many pods can be initializing at once
+                          x-kubernetes-int-or-string: true
+                        pod:
+                          description: pod template to spawn
+                          x-kubernetes-preserve-unknown-fields: true
+                        ready:
+                          description: expression that determines if the pod initialization
+                            has completed successfully
+                          type: string
+                        shardExpressions:
+                          additionalProperties:
+                            type: string
+                          description: parameters that should be distributed across
+                            sharded instances (expressions)
+                          type: object
+                        shards:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: parameters that should be distributed across
+                            sharded instances (static)
+                          type: object
+                        timeout:
+                          description: how long we should wait for successful initialization
+                          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                          type: string
+                      type: object
                     execute:
                       description: execute other Testkube resources
                       properties:
@@ -5007,6 +5736,190 @@ spec:
                           description: override default working directory in the image
                             (empty string to default WORKDIR for the image)
                           type: string
+                      type: object
+                    services:
+                      additionalProperties:
+                        properties:
+                          container:
+                            description: container definition for simplicity
+                            x-kubernetes-preserve-unknown-fields: true
+                          count:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          error:
+                            description: expression that determines if the pod initialization
+                              has failed
+                            type: string
+                          files:
+                            description: files to load into spawned pods
+                            items:
+                              properties:
+                                content:
+                                  description: plain-text content to put inside
+                                  type: string
+                                contentFrom:
+                                  description: external source to use
+                                  properties:
+                                    configMapKeyRef:
+                                      description: Selects a key of a ConfigMap.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                    fieldRef:
+                                      description: 'Selects a field of the pod: supports
+                                        metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                        `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                        spec.serviceAccountName, status.hostIP, status.podIP,
+                                        status.podIPs.'
+                                      properties:
+                                        apiVersion:
+                                          description: Version of the schema the FieldPath
+                                            is written in terms of, defaults to "v1".
+                                          type: string
+                                        fieldPath:
+                                          description: Path of the field to select
+                                            in the specified API version.
+                                          type: string
+                                      required:
+                                      - fieldPath
+                                      type: object
+                                    resourceFieldRef:
+                                      description: 'Selects a resource of the container:
+                                        only resources limits and requests (limits.cpu,
+                                        limits.memory, limits.ephemeral-storage, requests.cpu,
+                                        requests.memory and requests.ephemeral-storage)
+                                        are currently supported.'
+                                      properties:
+                                        containerName:
+                                          description: 'Container name: required for
+                                            volumes, optional for env vars'
+                                          type: string
+                                        divisor:
+                                          anyOf:
+                                          - type: integer
+                                          - type: string
+                                          description: Specifies the output format
+                                            of the exposed resources, defaults to
+                                            "1"
+                                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                          x-kubernetes-int-or-string: true
+                                        resource:
+                                          description: 'Required: resource to select'
+                                          type: string
+                                      required:
+                                      - resource
+                                      type: object
+                                    secretKeyRef:
+                                      description: Selects a key of a secret in the
+                                        pod's namespace
+                                      properties:
+                                        key:
+                                          description: The key of the secret to select
+                                            from.  Must be a valid secret key.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                  type: object
+                                mode:
+                                  description: mode to use for the file
+                                  format: int32
+                                  type: integer
+                                path:
+                                  description: path where the file should be accessible
+                                    at
+                                  minLength: 1
+                                  type: string
+                              required:
+                              - path
+                              type: object
+                            type: array
+                          matrix:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                          matrixExpressions:
+                            additionalProperties:
+                              type: string
+                            description: matrix of parameters to spawn instances (expressions)
+                            type: object
+                          maxCount:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: dynamic number of sharded instances to spawn
+                              - it will be lowered if there is not enough sharded
+                              values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: how many pods can be initializing at once
+                            x-kubernetes-int-or-string: true
+                          pod:
+                            description: pod template to spawn
+                            x-kubernetes-preserve-unknown-fields: true
+                          ready:
+                            description: expression that determines if the pod initialization
+                              has completed successfully
+                            type: string
+                          shardExpressions:
+                            additionalProperties:
+                              type: string
+                            description: parameters that should be distributed across
+                              sharded instances (expressions)
+                            type: object
+                          shards:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: parameters that should be distributed across
+                              sharded instances (static)
+                            type: object
+                          timeout:
+                            description: how long we should wait for successful initialization
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
+                        type: object
+                      description: accompanying pods to create for the step
                       type: object
                     setup:
                       description: steps to run before other operations in this step
@@ -5831,6 +6744,187 @@ spec:
                       description: delay before the step
                       pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                       type: string
+                    distribute:
+                      description: run multiple pods with specification and wait until
+                        finish
+                      properties:
+                        container:
+                          description: container definition for simplicity
+                          x-kubernetes-preserve-unknown-fields: true
+                        count:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: static number of sharded instances to spawn
+                          x-kubernetes-int-or-string: true
+                        error:
+                          description: expression that determines if the pod initialization
+                            has failed
+                          type: string
+                        files:
+                          description: files to load into spawned pods
+                          items:
+                            properties:
+                              content:
+                                description: plain-text content to put inside
+                                type: string
+                              contentFrom:
+                                description: external source to use
+                                properties:
+                                  configMapKeyRef:
+                                    description: Selects a key of a ConfigMap.
+                                    properties:
+                                      key:
+                                        description: The key to select.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the ConfigMap
+                                          or its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                  fieldRef:
+                                    description: 'Selects a field of the pod: supports
+                                      metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                      `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                      spec.serviceAccountName, status.hostIP, status.podIP,
+                                      status.podIPs.'
+                                    properties:
+                                      apiVersion:
+                                        description: Version of the schema the FieldPath
+                                          is written in terms of, defaults to "v1".
+                                        type: string
+                                      fieldPath:
+                                        description: Path of the field to select in
+                                          the specified API version.
+                                        type: string
+                                    required:
+                                    - fieldPath
+                                    type: object
+                                  resourceFieldRef:
+                                    description: 'Selects a resource of the container:
+                                      only resources limits and requests (limits.cpu,
+                                      limits.memory, limits.ephemeral-storage, requests.cpu,
+                                      requests.memory and requests.ephemeral-storage)
+                                      are currently supported.'
+                                    properties:
+                                      containerName:
+                                        description: 'Container name: required for
+                                          volumes, optional for env vars'
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                        - type: integer
+                                        - type: string
+                                        description: Specifies the output format of
+                                          the exposed resources, defaults to "1"
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        description: 'Required: resource to select'
+                                        type: string
+                                    required:
+                                    - resource
+                                    type: object
+                                  secretKeyRef:
+                                    description: Selects a key of a secret in the
+                                      pod's namespace
+                                    properties:
+                                      key:
+                                        description: The key of the secret to select
+                                          from.  Must be a valid secret key.
+                                        type: string
+                                      name:
+                                        description: 'Name of the referent. More info:
+                                          https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                          TODO: Add other useful fields. apiVersion,
+                                          kind, uid?'
+                                        type: string
+                                      optional:
+                                        description: Specify whether the Secret or
+                                          its key must be defined
+                                        type: boolean
+                                    required:
+                                    - key
+                                    type: object
+                                type: object
+                              mode:
+                                description: mode to use for the file
+                                format: int32
+                                type: integer
+                              path:
+                                description: path where the file should be accessible
+                                  at
+                                minLength: 1
+                                type: string
+                            required:
+                            - path
+                            type: object
+                          type: array
+                        matrix:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: matrix of parameters to spawn instances (static)
+                          type: object
+                        matrixExpressions:
+                          additionalProperties:
+                            type: string
+                          description: matrix of parameters to spawn instances (expressions)
+                          type: object
+                        maxCount:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: dynamic number of sharded instances to spawn
+                            - it will be lowered if there is not enough sharded values
+                          x-kubernetes-int-or-string: true
+                        parallelism:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          description: how many pods can be initializing at once
+                          x-kubernetes-int-or-string: true
+                        pod:
+                          description: pod template to spawn
+                          x-kubernetes-preserve-unknown-fields: true
+                        ready:
+                          description: expression that determines if the pod initialization
+                            has completed successfully
+                          type: string
+                        shardExpressions:
+                          additionalProperties:
+                            type: string
+                          description: parameters that should be distributed across
+                            sharded instances (expressions)
+                          type: object
+                        shards:
+                          additionalProperties:
+                            items:
+                              anyOf:
+                              - type: integer
+                              - type: string
+                              x-kubernetes-int-or-string: true
+                            type: array
+                          description: parameters that should be distributed across
+                            sharded instances (static)
+                          type: object
+                        timeout:
+                          description: how long we should wait for successful initialization
+                          pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                          type: string
+                      type: object
                     execute:
                       description: execute other Testkube resources
                       properties:
@@ -6308,6 +7402,190 @@ spec:
                           description: override default working directory in the image
                             (empty string to default WORKDIR for the image)
                           type: string
+                      type: object
+                    services:
+                      additionalProperties:
+                        properties:
+                          container:
+                            description: container definition for simplicity
+                            x-kubernetes-preserve-unknown-fields: true
+                          count:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          error:
+                            description: expression that determines if the pod initialization
+                              has failed
+                            type: string
+                          files:
+                            description: files to load into spawned pods
+                            items:
+                              properties:
+                                content:
+                                  description: plain-text content to put inside
+                                  type: string
+                                contentFrom:
+                                  description: external source to use
+                                  properties:
+                                    configMapKeyRef:
+                                      description: Selects a key of a ConfigMap.
+                                      properties:
+                                        key:
+                                          description: The key to select.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                    fieldRef:
+                                      description: 'Selects a field of the pod: supports
+                                        metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
+                                        `metadata.annotations[''<KEY>'']`, spec.nodeName,
+                                        spec.serviceAccountName, status.hostIP, status.podIP,
+                                        status.podIPs.'
+                                      properties:
+                                        apiVersion:
+                                          description: Version of the schema the FieldPath
+                                            is written in terms of, defaults to "v1".
+                                          type: string
+                                        fieldPath:
+                                          description: Path of the field to select
+                                            in the specified API version.
+                                          type: string
+                                      required:
+                                      - fieldPath
+                                      type: object
+                                    resourceFieldRef:
+                                      description: 'Selects a resource of the container:
+                                        only resources limits and requests (limits.cpu,
+                                        limits.memory, limits.ephemeral-storage, requests.cpu,
+                                        requests.memory and requests.ephemeral-storage)
+                                        are currently supported.'
+                                      properties:
+                                        containerName:
+                                          description: 'Container name: required for
+                                            volumes, optional for env vars'
+                                          type: string
+                                        divisor:
+                                          anyOf:
+                                          - type: integer
+                                          - type: string
+                                          description: Specifies the output format
+                                            of the exposed resources, defaults to
+                                            "1"
+                                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                          x-kubernetes-int-or-string: true
+                                        resource:
+                                          description: 'Required: resource to select'
+                                          type: string
+                                      required:
+                                      - resource
+                                      type: object
+                                    secretKeyRef:
+                                      description: Selects a key of a secret in the
+                                        pod's namespace
+                                      properties:
+                                        key:
+                                          description: The key of the secret to select
+                                            from.  Must be a valid secret key.
+                                          type: string
+                                        name:
+                                          description: 'Name of the referent. More
+                                            info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                            TODO: Add other useful fields. apiVersion,
+                                            kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret
+                                            or its key must be defined
+                                          type: boolean
+                                      required:
+                                      - key
+                                      type: object
+                                  type: object
+                                mode:
+                                  description: mode to use for the file
+                                  format: int32
+                                  type: integer
+                                path:
+                                  description: path where the file should be accessible
+                                    at
+                                  minLength: 1
+                                  type: string
+                              required:
+                              - path
+                              type: object
+                            type: array
+                          matrix:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                          matrixExpressions:
+                            additionalProperties:
+                              type: string
+                            description: matrix of parameters to spawn instances (expressions)
+                            type: object
+                          maxCount:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: dynamic number of sharded instances to spawn
+                              - it will be lowered if there is not enough sharded
+                              values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: how many pods can be initializing at once
+                            x-kubernetes-int-or-string: true
+                          pod:
+                            description: pod template to spawn
+                            x-kubernetes-preserve-unknown-fields: true
+                          ready:
+                            description: expression that determines if the pod initialization
+                              has completed successfully
+                            type: string
+                          shardExpressions:
+                            additionalProperties:
+                              type: string
+                            description: parameters that should be distributed across
+                              sharded instances (expressions)
+                            type: object
+                          shards:
+                            additionalProperties:
+                              items:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                x-kubernetes-int-or-string: true
+                              type: array
+                            description: parameters that should be distributed across
+                              sharded instances (static)
+                            type: object
+                          timeout:
+                            description: how long we should wait for successful initialization
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
+                        type: object
+                      description: accompanying pods to create for the step
                       type: object
                     setup:
                       description: steps to run before other operations in this step
