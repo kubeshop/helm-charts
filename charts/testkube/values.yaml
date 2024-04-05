@@ -30,6 +30,8 @@ global:
   testWorkflows:
     # -- Create headless service for assisting pods
     createAssistingPodsService: true
+    # -- Create TestWorkflowTemplates to easily use the service account
+    createServiceAccountTemplates: true
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:

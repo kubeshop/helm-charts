@@ -18,6 +18,7 @@ global:
     logsV2: false
   testWorkflows:
     createAssistingPodsService: true
+    createServiceAccountTemplates: true
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
