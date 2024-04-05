@@ -26,6 +26,10 @@ global:
   # -- Features map for the whole chart
   features:
     logsV2: false
+  # -- Test Workflows configuration
+  testWorkflows:
+    # -- Create headless service for assisting pods
+    createAssistingPodsService: true
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:

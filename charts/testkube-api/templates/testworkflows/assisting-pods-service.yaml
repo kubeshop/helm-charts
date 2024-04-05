@@ -1,0 +1,10 @@
+{{- if .Values.global.testWorkflows.createAssistingPodsService }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: tkassist
+spec:
+  selector:
+    tkassist: 'true'
+  clusterIP: None
+{{- end }}
