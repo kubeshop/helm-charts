@@ -743,6 +743,9 @@ testkube-api:
   # -- Whether to generate RBAC for test job or use manually provided
   #    generateTestJobRBAC: true
 
+  # -- default storage class name to use
+  defaultStorageClassName: ""
+
   # Testkube log server parameters
   testkubeLogs:
     # -- GRPC address
