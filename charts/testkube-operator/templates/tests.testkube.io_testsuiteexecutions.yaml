@@ -333,13 +333,14 @@ spec:
                                         description: artifact storage class name for
                                           container executor
                                         type: string
+                                      useDefaultStorageClassName:
+                                        description: whether to use default storage
+                                          class name
+                                        type: boolean
                                       volumeMountPath:
                                         description: artifact volume mount path for
                                           container executor
                                         type: string
-                                    required:
-                                    - storageClassName
-                                    - volumeMountPath
                                     type: object
                                   bucketName:
                                     description: minio bucket name to get uploads
@@ -899,13 +900,14 @@ spec:
                                   description: artifact storage class name for container
                                     executor
                                   type: string
+                                useDefaultStorageClassName:
+                                  description: whether to use default storage class
+                                    name
+                                  type: boolean
                                 volumeMountPath:
                                   description: artifact volume mount path for container
                                     executor
                                   type: string
-                              required:
-                              - storageClassName
-                              - volumeMountPath
                               type: object
                             bucketName:
                               description: minio bucket name to get uploads from
