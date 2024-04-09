@@ -408,6 +408,8 @@ spec:
             - name: TESTKUBE_PRO_RUNNER_CUSTOM_CA_SECRET
               value:  {{ .Values.cloud.tls.customCaSecretRef }}
             {{- end }}
+            - name: TESTKUBE_DEFAULT_STORAGE_CLASS_NAME
+              value: "{{ .Values.defaultStorageClassName }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

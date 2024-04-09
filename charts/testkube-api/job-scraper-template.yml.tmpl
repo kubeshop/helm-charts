@@ -77,7 +77,7 @@ spec:
             defaultMode: 420
       {{- end }}
       {{- if or .ArtifactRequest .AgentAPITLSSecret }}
-        {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+        {{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}
         - name: artifact-volume
           persistentVolumeClaim:
             claimName: {{ .Name }}-pvc

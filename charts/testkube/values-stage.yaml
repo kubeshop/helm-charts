@@ -337,6 +337,7 @@ testkube-api:
   clusterName: ""
   enableSecretsEndpoint: false
   disableSecretCreation: false
+  defaultStorageClassName: ""
 
   priorityClassName: "highest-priority"
 

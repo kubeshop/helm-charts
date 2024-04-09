@@ -43,7 +43,7 @@ spec:
       subPath: ca.crt
     {{- end }}
     {{- if .ArtifactRequest }}
-      {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+      {{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}
     - name: artifact-volume
       mountPath: {{ .ArtifactRequest.VolumeMountPath }}
       {{- end }}
@@ -147,7 +147,7 @@ spec:
       mountPath: /etc/certs
     {{- end }}
     {{- if .ArtifactRequest }}
-      {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+      {{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}
     - name: artifact-volume
       mountPath: {{ .ArtifactRequest.VolumeMountPath }}
       {{- end }}
@@ -181,7 +181,7 @@ spec:
       defaultMode: 420
   {{- end }}
   {{- if .ArtifactRequest }}
-    {{- if and .ArtifactRequest.VolumeMountPath .ArtifactRequest.StorageClassName }}
+    {{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}
   - name: artifact-volume
     persistentVolumeClaim:
       claimName: {{ .JobName }}-pvc
