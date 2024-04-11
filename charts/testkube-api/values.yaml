@@ -192,7 +192,7 @@ executionNamespaces:
 # -- Whether to generate RBAC for test job or use manually provided
 #    generateTestJobRBAC: true
 
-## default storage class name to use
+## default storage class name for PVC volumes
 defaultStorageClassName: ""
 
 # Testkube log server parameters
