@@ -2106,6 +2106,31 @@ spec:
                         type: object
                     type: object
                 type: object
+              events:
+                description: events triggering execution of the test workflow
+                items:
+                  properties:
+                    cronjob:
+                      description: cron job configuration
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          description: annotations to attach to the cron job
+                          type: object
+                        cron:
+                          description: cron schedule to run a test workflow
+                          type: string
+                        labels:
+                          additionalProperties:
+                            type: string
+                          description: labels to attach to the cron job
+                          type: object
+                      required:
+                      - cron
+                      type: object
+                  type: object
+                type: array
               job:
                 description: configuration for the scheduled job
                 properties:
