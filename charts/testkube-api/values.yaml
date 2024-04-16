@@ -52,6 +52,16 @@ image:
   digest: ""
   pullSecret: []
 
+imageWorkflows:
+  registry: docker.io
+  repositoryToolkit: kubeshop/testkube-tw-toolkit
+  repositoryInit: kubeshop/testkube-tw-init
+  pullPolicy: IfNotPresent
+  ## Overrides the image tag whose default is the chart appVersion.
+  # tag: "1.7.24"
+  digest: ""
+  pullSecret: []
+
 ## Chart parameters
 ## nameOverride Overrides Chart name
 ## fullnameOverride Full name that overrides Chart name

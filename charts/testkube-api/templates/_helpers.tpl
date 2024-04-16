@@ -94,6 +94,53 @@ Define API image
 {{- end -}}
 
 {{/*
+Define Test Workflows Toolkit Image
+*/}}
+{{- define "testkube-tw-toolkit.image" -}}
+{{- $registryName := .Values.imageWorkflows.registry -}}
+{{- $repositoryName := .Values.imageWorkflows.repositoryToolkit -}}
+{{- $tag := default .Chart.AppVersion .Values.imageWorkflows.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.imageWorkflows.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.imageWorkflows.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}
+
+
+{{/*
+Define Test Workflows Init Image
+*/}}
+{{- define "testkube-tw-init.image" -}}
+{{- $registryName := .Values.imageWorkflows.registry -}}
+{{- $repositoryName := .Values.imageWorkflows.repositoryInit -}}
+{{- $tag := default .Chart.AppVersion .Values.imageWorkflows.tag | toString -}}
+{{- $separator := ":" -}}
+{{- if .Values.imageWorkflows.digest }}
+    {{- $separator = "@" -}}
+    {{- $tag = .Values.imageWorkflows.digest | toString -}}
+{{- end -}}
+{{- if .Values.global }}
+    {{- if .Values.global.imageRegistry }}
+        {{- printf "%s/%s%s%s" .Values.global.imageRegistry $repositoryName $separator $tag -}}
+    {{- else -}}
+        {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+    {{- end -}}
+{{- else -}}
+    {{- printf "%s/%s%s%s" $registryName $repositoryName $separator $tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Define TESTKUBE_WATCHER_NAMESPACES variable
 */}}
 {{- define "testkube-api.watcher-namespaces" -}}
