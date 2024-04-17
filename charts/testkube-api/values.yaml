@@ -52,12 +52,19 @@ image:
   digest: ""
   pullSecret: []
 
-imageWorkflows:
+imageTwToolkit:
   registry: docker.io
-  repositoryToolkit: kubeshop/testkube-tw-toolkit
-  repositoryInit: kubeshop/testkube-tw-init
-  pullPolicy: IfNotPresent
-  ## Overrides the image tag whose default is the chart appVersion.
+  repository: kubeshop/testkube-tw-toolkit
+  ## Overrides the image tag whose default is the api-server version.
+  # tag: "1.7.24"
+  digest: ""
+  pullSecret: []
+
+
+imageTwInit:
+  registry: docker.io
+  repository: kubeshop/testkube-tw-init
+  ## Overrides the image tag whose default is the api-server version.
   # tag: "1.7.24"
   digest: ""
   pullSecret: []
