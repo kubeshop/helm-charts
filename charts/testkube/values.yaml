@@ -174,7 +174,7 @@ nats:
   # natsBox:
   #   enabled: false
   natsBox:
-    enabled: true
+    enabled: false
     # -- Uncomment to override the NATS Box image options
     # container:
     #   image:

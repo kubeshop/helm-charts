@@ -162,7 +162,7 @@ nats:
       enabled: true
 
   natsBox:
-    enabled: true
+    enabled: false
     podTemplate:
       merge:
         spec:
