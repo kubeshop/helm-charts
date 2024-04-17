@@ -20,7 +20,7 @@ nats:
     jetstream:
       enabled: true
 
-  natsbox:
+  natsBox:
     enabled: false
 
 testkube-logs:

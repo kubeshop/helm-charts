@@ -163,7 +163,7 @@ nats:
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   natsBox:
-    enabled: true
+    enabled: false
     podTemplate:
       merge:
         spec:
