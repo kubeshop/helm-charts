@@ -401,6 +401,7 @@ testkube-api:
   clusterName: ""
   enableSecretsEndpoint: false
   disableSecretCreation: false
+  defaultStorageClassName: ""
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"

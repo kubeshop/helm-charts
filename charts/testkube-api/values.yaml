@@ -13,6 +13,13 @@ global:
   annotations: {}
   features:
     logsV2: false
+  testWorkflows:
+    createServiceAccountTemplates: true
+    createOfficialTemplates: true
+    globalTemplate:
+      enabled: false
+      name: global-template
+      spec: {}
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -197,6 +204,9 @@ executionNamespaces:
 #    jobServiceAccountName: tests-job-default
 # -- Whether to generate RBAC for test job or use manually provided
 #    generateTestJobRBAC: true
+
+## default storage class name for PVC volumes
+defaultStorageClassName: ""
 
 # Testkube log server parameters
 testkubeLogs:
