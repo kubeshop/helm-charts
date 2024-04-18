@@ -1,0 +1,7 @@
+{{- if .Values.global.testWorkflows.globalTemplate.enabled }}
+apiVersion: testworkflows.testkube.io/v1
+kind: TestWorkflowTemplate
+metadata:
+  name: "{{ .Values.global.testWorkflows.globalTemplate.name }}"
+spec: {{- toYaml .Values.global.testWorkflows.globalTemplate.spec | nindent 2 }}
+{{- end }}
