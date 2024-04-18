@@ -26,11 +26,11 @@ spec:
       default: "npx playwright test"
   steps:
   - name: Install dependencies
-    container:
+    run:
       image: "mcr.microsoft.com/playwright:v{{ config.version }}"
-    shell: "{{ config.dependencies_command }}"
+      shell: "{{ config.dependencies_command }}"
   - name: Run Playwright tests
-    container:
+    run:
       image: "mcr.microsoft.com/playwright:v{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}

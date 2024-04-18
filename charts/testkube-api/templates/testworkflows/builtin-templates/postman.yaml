@@ -22,7 +22,7 @@ spec:
       default: "newman run"
   steps:
   - name: Run Postman tests
-    container:
+    run:
       image: "postman/newman:{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}

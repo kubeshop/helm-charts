@@ -22,7 +22,7 @@ spec:
       default: "mvn test"
   steps:
   - name: Run Maven command
-    container:
+    run:
       image: "maven:{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}

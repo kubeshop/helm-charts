@@ -22,7 +22,7 @@ spec:
       default: "jmeter -n"
   steps:
   - name: Run k6 tests
-    container:
+    run:
       image: "justb4/jmeter:{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}

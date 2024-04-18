@@ -29,7 +29,7 @@ spec:
       default: "k6 run"
   steps:
   - name: Run k6 tests
-    container:
+    run:
       image: "grafana/k6:{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}

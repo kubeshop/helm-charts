@@ -22,7 +22,7 @@ spec:
       default: "gradle --no-daemon test"
   steps:
   - name: Run Gradle command
-    container:
+    run:
       image: "gradle:{{ config.version }}"
-    shell: "{{ config.run }}"
+      shell: "{{ config.run }}"
 {{- end }}
