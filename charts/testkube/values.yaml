@@ -32,6 +32,14 @@ global:
     createServiceAccountTemplates: true
     # -- Create TestWorkflowTemplates with automatically configured execution
     createOfficialTemplates: true
+    # -- Global TestWorkflowTemplate that will be automatically included for all executions
+    globalTemplate:
+      # -- Is global template enabled
+      enabled: false
+      # -- Name of the global template
+      name: global-template
+      # -- Specification for the global template
+      spec: {}
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -373,7 +381,7 @@ testkube-api:
     # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
     digest: ""
 
-  
+
   # Test Workflows init image parameters
   imageTwInit:
     # -- Test Workflows image registry
@@ -386,7 +394,7 @@ testkube-api:
     digest: ""
     # -- Test Workflows image k8s secret for private registries
     pullSecrets: []
-  
+
   # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
