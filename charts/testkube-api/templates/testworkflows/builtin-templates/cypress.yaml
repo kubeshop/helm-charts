@@ -24,13 +24,11 @@ spec:
       description: Run command
       type: string
       default: "npx cypress run"
+  container:
+    image: "cypress/included:{{ config.version }}"
   steps:
   - name: Install dependencies
-    run:
-      image: "cypress/included:{{ config.version }}"
-      shell: "{{ config.dependencies_command }}"
+    shell: "{{ config.dependencies_command }}"
   - name: Run Cypress tests
-    run:
-      image: "cypress/included:{{ config.version }}"
-      shell: "{{ config.run }}"
+    shell: "{{ config.run }}"
 {{- end }}
