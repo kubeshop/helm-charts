@@ -357,7 +357,6 @@ testkube-api:
     # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
     digest: ""
 
-
   # Test Workflows init image parameters
   imageTwInit:
     # -- Test Workflows image registry
