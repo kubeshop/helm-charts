@@ -23,6 +23,6 @@ spec:
   steps:
   - name: Run k6 tests
     run:
-      image: "justb4/jmeter:{{ config.version }}"
-      shell: "{{ config.run }}"
+      image: {{`"justb4/jmeter:{{ config.version }}"`}}
+      shell: {{`"{{ config.run }}"`}}
 {{- end }}
