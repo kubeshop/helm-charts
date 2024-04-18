@@ -23,6 +23,6 @@ spec:
   steps:
   - name: Run Maven command
     container:
-      image: maven:{{ config.version }}
+      image: "maven:{{ config.version }}"
     shell: "{{ config.run }}"
 {{- end }}

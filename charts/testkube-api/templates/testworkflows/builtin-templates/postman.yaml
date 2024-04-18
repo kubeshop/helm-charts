@@ -23,6 +23,6 @@ spec:
   steps:
   - name: Run Postman tests
     container:
-      image: postman/newman:{{ config.version }}
+      image: "postman/newman:{{ config.version }}"
     shell: "{{ config.run }}"
 {{- end }}

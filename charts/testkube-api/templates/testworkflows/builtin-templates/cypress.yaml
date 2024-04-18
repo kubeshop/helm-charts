@@ -27,10 +27,10 @@ spec:
   steps:
   - name: Install dependencies
     container:
-      image: cypress/included:{{ config.version }}
+      image: "cypress/included:{{ config.version }}"
     shell: "{{ config.dependencies_command }}"
   - name: Run Cypress tests
     container:
-      image: cypress/included:{{ config.version }}
+      image: "cypress/included:{{ config.version }}"
     shell: "{{ config.run }}"
 {{- end }}

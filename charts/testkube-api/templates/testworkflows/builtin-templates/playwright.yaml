@@ -27,10 +27,10 @@ spec:
   steps:
   - name: Install dependencies
     container:
-      image: mcr.microsoft.com/playwright:v{{ config.version }}
+      image: "mcr.microsoft.com/playwright:v{{ config.version }}"
     shell: "{{ config.dependencies_command }}"
   - name: Run Playwright tests
     container:
-      image: mcr.microsoft.com/playwright:v{{ config.version }}
+      image: "mcr.microsoft.com/playwright:v{{ config.version }}"
     shell: "{{ config.run }}"
 {{- end }}
