@@ -16,6 +16,8 @@ global:
   tolerations: []
   features:
     logsV2: false
+  testWorkflows:
+    createServiceAccountTemplates: true
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
