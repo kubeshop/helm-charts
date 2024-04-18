@@ -40,6 +40,10 @@ global:
       name: global-template
       # -- Specification for the global template
       spec: {}
+      # spec:
+      #   pod:
+      #     imagePullSecrets:
+      #     - name: regcred
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
