@@ -16,6 +16,10 @@ global:
   testWorkflows:
     createServiceAccountTemplates: true
     createOfficialTemplates: true
+    globalTemplate:
+      enabled: false
+      name: global-template
+      spec: {}
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
