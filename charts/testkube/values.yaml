@@ -361,6 +361,32 @@ testkube-api:
     digest: ""
     # -- Testkube API k8s secret for private registries
     pullSecrets: []
+
+  # Test Workflows toolkit image parameters
+  imageTwToolkit:
+    # -- Test Workflows image registry
+    registry: docker.io
+    # -- Test Workflows image name
+    repository: kubeshop/testkube-tw-toolkit
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "latest"
+    # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+    digest: ""
+
+  
+  # Test Workflows init image parameters
+  imageTwInit:
+    # -- Test Workflows image registry
+    registry: docker.io
+    # -- Test Workflows image name
+    repository: kubeshop/testkube-tw-init
+    # Overrides the image tag whose default is the chart appVersion.
+    # tag: "latest"
+    # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+    digest: ""
+    # -- Test Workflows image k8s secret for private registries
+    pullSecrets: []
+  
   # -- Extra environment variables to be set on deployment
   extraEnvVars: []
   #  - name: FOO
