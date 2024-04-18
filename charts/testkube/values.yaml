@@ -30,6 +30,8 @@ global:
   testWorkflows:
     # -- Create TestWorkflowTemplates to easily use the service account
     createServiceAccountTemplates: true
+    # -- Create TestWorkflowTemplates with automatically configured execution
+    createOfficialTemplates: true
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
