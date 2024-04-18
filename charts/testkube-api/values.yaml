@@ -13,6 +13,9 @@ global:
   annotations: {}
   features:
     logsV2: false
+  testWorkflows:
+    createServiceAccountTemplates: true
+    createOfficialTemplates: true
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
