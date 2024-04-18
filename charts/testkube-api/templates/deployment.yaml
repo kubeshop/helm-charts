@@ -418,6 +418,10 @@ spec:
               value: "{{ include "testkube-tw-toolkit.image" . }}"
             - name: TESTKUBE_TW_INIT_IMAGE
               value: "{{ include "testkube-tw-init.image" . }}"
+            {{- if .Values.global.testWorkflows.globalTemplate.enabled }}
+            - name: TESTKUBE_GLOBAL_WORKFLOW_TEMPLATE_NAME
+              value: "{{ .Values.global.testWorkflows.globalTemplate.name }}"
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
