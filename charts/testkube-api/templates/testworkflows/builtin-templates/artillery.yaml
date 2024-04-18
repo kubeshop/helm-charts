@@ -37,9 +37,9 @@ spec:
       default: "artillery run"
   steps:
   - name: Run Artillery tests
-    container:
+    run:
       image: "artilleryio/artillery:{{ config.version }}"
-    shell: |
-      artillery() { {{ config.artillery_binary }} $@; }
-      {{ config.run }}
+      shell: |
+        artillery() { {{ config.artillery_binary }} $@; }
+        {{ config.run }}
 {{- end }}
