@@ -801,6 +801,24 @@ spec:
                                   type: object
                               type: object
                           type: object
+                        tarball:
+                          description: tarballs to unpack
+                          items:
+                            properties:
+                              mount:
+                                description: should it mount a new volume there
+                                type: boolean
+                              path:
+                                description: path where the tarball should be extracted
+                                type: string
+                              url:
+                                description: url for the tarball to extract
+                                type: string
+                            required:
+                            - path
+                            - url
+                            type: object
+                          type: array
                       type: object
                     delay:
                       description: delay before the step
@@ -1166,6 +1184,11 @@ spec:
                                   across sharded instances
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
                             type: object
                           type: array
                         workflows:
@@ -1213,6 +1236,11 @@ spec:
                               shards:
                                 description: parameters that should be distributed
                                   across sharded instances
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
                             type: object
@@ -2445,6 +2473,24 @@ spec:
                             type: object
                         type: object
                     type: object
+                  tarball:
+                    description: tarballs to unpack
+                    items:
+                      properties:
+                        mount:
+                          description: should it mount a new volume there
+                          type: boolean
+                        path:
+                          description: path where the tarball should be extracted
+                          type: string
+                        url:
+                          description: url for the tarball to extract
+                          type: string
+                      required:
+                      - path
+                      - url
+                      type: object
+                    type: array
                 type: object
               events:
                 description: events triggering execution of the test workflow
@@ -4887,6 +4933,24 @@ spec:
                                   type: object
                               type: object
                           type: object
+                        tarball:
+                          description: tarballs to unpack
+                          items:
+                            properties:
+                              mount:
+                                description: should it mount a new volume there
+                                type: boolean
+                              path:
+                                description: path where the tarball should be extracted
+                                type: string
+                              url:
+                                description: url for the tarball to extract
+                                type: string
+                            required:
+                            - path
+                            - url
+                            type: object
+                          type: array
                       type: object
                     delay:
                       description: delay before the step
@@ -5252,6 +5316,11 @@ spec:
                                   across sharded instances
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
                             type: object
                           type: array
                         workflows:
@@ -5299,6 +5368,11 @@ spec:
                               shards:
                                 description: parameters that should be distributed
                                   across sharded instances
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
                             type: object
@@ -6524,6 +6598,24 @@ spec:
                                   type: object
                               type: object
                           type: object
+                        tarball:
+                          description: tarballs to unpack
+                          items:
+                            properties:
+                              mount:
+                                description: should it mount a new volume there
+                                type: boolean
+                              path:
+                                description: path where the tarball should be extracted
+                                type: string
+                              url:
+                                description: url for the tarball to extract
+                                type: string
+                            required:
+                            - path
+                            - url
+                            type: object
+                          type: array
                       type: object
                     delay:
                       description: delay before the step
@@ -6889,6 +6981,11 @@ spec:
                                   across sharded instances
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
                             type: object
                           type: array
                         workflows:
@@ -6936,6 +7033,11 @@ spec:
                               shards:
                                 description: parameters that should be distributed
                                   across sharded instances
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
+                              tarball:
+                                description: pack some data from the original file
+                                  system to serve them down
                                 type: object
                                 x-kubernetes-preserve-unknown-fields: true
                             type: object
