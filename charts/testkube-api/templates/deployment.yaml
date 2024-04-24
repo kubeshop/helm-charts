@@ -305,11 +305,11 @@ spec:
             {{- end}}
             {{- if .Values.cloud.url }}
             - name: TESTKUBE_CLOUD_URL
-              value:  "{{ .Values.cloud.url }}"
+              value:  {{ tpl .Values.cloud.url $ | quote }}
             {{- end }}
             {{- if .Values.cloud.uiUrl}}
             - name: TESTKUBE_CLOUD_UI_URL
-              value: "{{ .Values.cloud.uiUrl }}"
+              value: {{ tpl .Values.cloud.uiUrl $ | quote }}
             {{- end}}
             {{- if not .Values.cloud.tls.enabled }}
             - name: TESTKUBE_PRO_TLS_INSECURE
