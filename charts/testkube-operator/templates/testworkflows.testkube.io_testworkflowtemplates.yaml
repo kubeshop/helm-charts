@@ -1257,8 +1257,8 @@ spec:
                         the TestWorkflow result
                       type: boolean
                     paused:
-                      description: configuration for pausing the step initially
-                      type: string
+                      description: pause the step initially
+                      type: boolean
                     retry:
                       description: policy for retrying the step
                       properties:
@@ -5392,8 +5392,8 @@ spec:
                         the TestWorkflow result
                       type: boolean
                     paused:
-                      description: configuration for pausing the step initially
-                      type: string
+                      description: pause the step initially
+                      type: boolean
                     retry:
                       description: policy for retrying the step
                       properties:
@@ -7060,8 +7060,8 @@ spec:
                         the TestWorkflow result
                       type: boolean
                     paused:
-                      description: configuration for pausing the step initially
-                      type: string
+                      description: pause the step initially
+                      type: boolean
                     retry:
                       description: policy for retrying the step
                       properties:
