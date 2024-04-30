@@ -752,7 +752,7 @@ testkube-api:
   slackToken: ""
   # -- Slack secret to store slackToken, the key name should be SLACK_TOKEN
   slackSecret: ""
-  # -- Slack config for the events, tests, testsuites and channels
+  # -- Slack config for the events, tests, testsuites, testworkflows and channels
   slackConfig:
   # -- default executors as base64-encoded string
   executors: ""
