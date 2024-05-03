@@ -19,7 +19,7 @@
       "queue-testworkflow",
       "end-testworkflow-success",
       "end-testworkflow-failed",
-      "end-testworkflow-aborted"      
+      "end-testworkflow-aborted"
     ]
   }
 ]
