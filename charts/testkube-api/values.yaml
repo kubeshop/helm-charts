@@ -63,7 +63,6 @@ imageTwToolkit:
   # tag: "1.7.24"
   digest: ""
 
-
 imageTwInit:
   registry: docker.io
   repository: kubeshop/testkube-tw-init
@@ -600,6 +599,13 @@ readinessProbe:
 ## Might need further increase if observing "431 Request Header Fields Too Large from api server"
 ##  See https://github.com/kubeshop/testkube/pull/2871#issuecomment-1341116696
 httpReadBufferSize: 8192
+
+# istioProxyWait triggers logic in the test runner jobs to wait for Istio'
+# Envoy proxy to become ready.
+# This should only be necessary with Istio versions before 1.7, after
+# which one should use either the global (1.7) or pod-level (1.8)
+# holdApplicationUntilProxyStarts setting.
+istioProxyWait: false
 
 # istioProxyExit enables logic in the test runner jobs that sends an exit
 # signal to Istio's Envoy proxy sidecar, otherwise, the proxy never exits.

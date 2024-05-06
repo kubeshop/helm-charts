@@ -418,6 +418,10 @@ spec:
             - name: TESTKUBE_GLOBAL_WORKFLOW_TEMPLATE_NAME
               value: "{{ .Values.global.testWorkflows.globalTemplate.name }}"
             {{- end }}
+            {{- if .Values.istioProxyWait }}
+            - name: ISTIO_PROXY_WAIT
+              value: "true"
+            {{- end }}
             {{- if .Values.istioProxyExit }}
             - name: ISTIO_PROXY_EXIT
               value: "true"

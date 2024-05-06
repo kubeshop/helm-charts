@@ -59,7 +59,7 @@ spec:
         {{- end }}
         {{- end }}
       containers:
-      {{ if .Features.LogsV2 -}}
+      {{- if .Features.LogsV2 }}
       - name: "{{ .Name }}-logs"
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .LogSidecarImage }}
