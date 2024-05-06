@@ -420,7 +420,7 @@ spec:
             {{- end }}
             {{- if .Values.istioProxyExit }}
             - name: ISTIO_PROXY_EXIT
-              value: true
+              value: "true"
             {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
