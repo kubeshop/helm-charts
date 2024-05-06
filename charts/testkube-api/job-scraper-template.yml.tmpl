@@ -44,18 +44,20 @@ spec:
         {{- end }}
         imagePullPolicy: IfNotPresent
         command:
-          - "/bin/wrapper.sh"
+          - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if or .RunnerCustomCASecret .IstioProxyExit }}
+        {{- if or .RunnerCustomCASecret .IstioProxyWait .IstioProxyExit }}
         env:
         {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
         {{- end }}
-        {{- if .IstioProxyExit }}
-          - name: ISTIO_PROXY_WAIT
+        {{- if .IstioProxyWait }}
+          - name: RUNNER_ISTIO_PROXY_WAIT
             value: "true"
-          - name: ISTIO_PROXY_EXIT
+        {{- end }}
+        {{- if .IstioProxyExit }}
+          - name: RUNNER_ISTIO_PROXY_EXIT
             value: "true"
         {{- end }}
         {{- end }}

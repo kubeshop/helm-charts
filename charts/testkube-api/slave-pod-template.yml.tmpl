@@ -21,13 +21,19 @@ spec:
     image: {{ .InitImage }}
     {{- end }}
     imagePullPolicy: IfNotPresent
-    command: 
+    command:
       - "/bin/runner"
       - '{{ .Jsn }}'
-    {{- if .RunnerCustomCASecret }}
+    {{- if or .RunnerCustomCASecret .IstioProxyWait }}
     env:
+    {{- if .RunnerCustomCASecret }}
       - name: SSL_CERT_DIR
         value: /etc/testkube/certs
+    {{- end }}
+    {{- if .IstioProxyWait }}
+      - name: RUNNER_ISTIO_PROXY_WAIT
+        value: "true"
+    {{- end }}
     {{- end }}
     volumeMounts:
     - name: data-volume
@@ -93,13 +99,18 @@ spec:
     image: {{ .Image }}
     {{- end }}
     imagePullPolicy: IfNotPresent
+    {{- if .IstioProxyExit }}
+    env:
+      - name: RUNNER_ISTIO_PROXY_EXIT
+        value: "true"
+    {{- end }}
     ports:
     {{- range $port := .Ports }}
     - name: {{ $port.Name }}
       containerPort: {{ $port.ContainerPort }}
     {{- end}}
     {{- range $port := .Ports }}
-    {{- if eq $port.Name "server-port" }}  
+    {{- if eq $port.Name "server-port" }}
     livenessProbe:
       tcpSocket:
         port: {{ $port.ContainerPort }}

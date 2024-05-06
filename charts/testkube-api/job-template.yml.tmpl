@@ -20,10 +20,16 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if .RunnerCustomCASecret }}
+        {{- if or .RunnerCustomCASecret .IstioProxyWait }}
         env:
+        {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+        {{- end }}
+        {{- if .IstioProxyWait }}
+          - name: RUNNER_ISTIO_PROXY_WAIT
+            value: "true"
+        {{- end }}
         {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
@@ -93,7 +99,7 @@ spec:
         {{- end }}
         imagePullPolicy: IfNotPresent
         command:
-          - "/bin/wrapper.sh"
+          - "/bin/runner"
           - '{{ .Jsn }}'
         {{- if or .RunnerCustomCASecret .IstioProxyExit }}
         env:
@@ -102,9 +108,7 @@ spec:
             value: /etc/testkube/certs
         {{- end }}
         {{- if .IstioProxyExit }}
-          - name: ISTIO_PROXY_WAIT
-            value: "true"
-          - name: ISTIO_PROXY_EXIT
+          - name: RUNNER_ISTIO_PROXY_EXIT
             value: "true"
         {{- end }}
         {{- end }}
@@ -150,7 +154,7 @@ spec:
       {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
       - name: data-volume
         emptyDir: {}
-      {{ end }} 
+      {{ end }}
       {{- if .CertificateSecret }}
       - name: {{ .CertificateSecret }}
         secret:
