@@ -93,7 +93,7 @@ spec:
         {{- end }}
         imagePullPolicy: IfNotPresent
         command:
-          - "/bin/runner"
+          - "/bin/wrapper.sh"
           - '{{ .Jsn }}'
         {{- if or .RunnerCustomCASecret .IstioProxyExit }}
         env:
