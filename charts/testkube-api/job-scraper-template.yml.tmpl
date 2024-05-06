@@ -53,6 +53,8 @@ spec:
             value: /etc/testkube/certs
         {{- end }}
         {{- if .IstioProxyExit }}
+          - name: ISTIO_PROXY_WAIT
+            value: "true"
           - name: ISTIO_PROXY_EXIT
             value: "true"
         {{- end }}
