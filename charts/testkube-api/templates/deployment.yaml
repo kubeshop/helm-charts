@@ -418,6 +418,10 @@ spec:
             - name: TESTKUBE_GLOBAL_WORKFLOW_TEMPLATE_NAME
               value: "{{ .Values.global.testWorkflows.globalTemplate.name }}"
             {{- end }}
+            {{- if .Values.istioProxyExit }}
+            - name: ISTIO_PROXY_EXIT
+              value: true
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

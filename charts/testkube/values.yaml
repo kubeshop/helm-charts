@@ -823,6 +823,13 @@ testkube-api:
   # -- Specify dnsPolicy for Testkube API Deployment
   dnsPolicy: ""
 
+  # istioProxyExit enables logic in the test runner jobs that sends an exit
+  # signal to Istio's Envoy proxy sidecar, otherwise, the proxy never exits.
+  # This should not be necessery in environments that support native sidecars
+  # (Kubernetes 1.28+ and Istio 1.19+):
+  # https://istio.io/latest/blog/2023/native-sidecars/
+  istioProxyExit: false
+
 testkube-operator:
   ## deploy Operator chart
   enabled: true
