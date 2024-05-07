@@ -10,6 +10,10 @@ spec:
   template:
     spec:
       initContainers:
+      {{- if .IstioProxyWait }}
+      - name: istio-init
+        image: auto
+      {{- end }}
       - name: {{ .Name }}-init
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .InitImage }}
@@ -20,13 +24,17 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if .RunnerCustomCASecret }}
+        {{- if or .RunnerCustomCASecret .IstioProxyWait }}
         env:
+        {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
         {{- end }}
-        securityContext:
-          runAsUser: 1337
+        {{- if .IstioProxyWait }}
+          - name: RUNNER_ISTIO_PROXY_WAIT
+            value: "true"
+        {{- end }}
+        {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
@@ -97,15 +105,11 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
-        {{- if or .RunnerCustomCASecret .IstioProxyWait .IstioProxyExit }}
+        {{- if or .RunnerCustomCASecret .IstioProxyExit }}
         env:
         {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
-        {{- end }}
-        {{- if .IstioProxyWait }}
-          - name: RUNNER_ISTIO_PROXY_WAIT
-            value: "true"
         {{- end }}
         {{- if .IstioProxyExit }}
           - name: RUNNER_ISTIO_PROXY_EXIT
