@@ -108,6 +108,8 @@ mongodb:
   #      cpu: "200m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
+  updateStrategy:
+    type: Recreate
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:

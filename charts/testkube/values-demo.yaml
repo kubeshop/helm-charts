@@ -106,6 +106,8 @@ mongodb:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5-debian-11-r64
+  updateStrategy:
+    type: Recreate
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
