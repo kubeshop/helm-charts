@@ -302,6 +302,9 @@ testkube-logs:
     scrapperEnabled: true
     # -- Toggle whether to compress artifacts in Testkube API
     compressArtifacts: true
+  # -- Test Connection pod
+  testConnection:
+    enabled: false
 
 # Testkube API parameters
 testkube-api:
@@ -508,7 +511,7 @@ testkube-api:
     # -- Toggle whether to install MinIO
     enabled: true
     # -- Minio extra vars
-    extraEnvVars: {}
+    extraEnvVars: []
     # - name: FOO
     #   value: BAR
 
@@ -818,7 +821,7 @@ testkube-api:
   # Test Connection pod
   testConnection:
     # -- Toggle whether to create Test Connection pod
-    enabled: true
+    enabled: false
     # -- Test Connection resource settings
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
@@ -1091,7 +1094,7 @@ testkube-operator:
 
   # -- Test Connection pod
   testConnection:
-    enabled: true
+    enabled: false
     # -- Test Connection resource settings
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
