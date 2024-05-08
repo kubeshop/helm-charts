@@ -1686,6 +1686,9 @@ spec:
                         type: string
                       description: labels added to the scheduled job
                       type: object
+                    namespace:
+                      description: namespace for execution of test workflow
+                      type: string
                   type: object
                 pod:
                   description: configuration for the scheduled pod
