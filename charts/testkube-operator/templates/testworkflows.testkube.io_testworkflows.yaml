@@ -785,9 +785,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                           workflows:
@@ -832,9 +834,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                         type: object
@@ -847,6 +851,44 @@ spec:
                       optional:
                         description: is the step optional, so its failure won't affect the TestWorkflow result
                         type: boolean
+                      parallel:
+                        description: instructions for parallel execution
+                        properties:
+                          count:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          description:
+                            description: worker description to display
+                            type: string
+                          matrix:
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          maxCount:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            description: how many resources could be scheduled in parallel
+                            format: int32
+                            type: integer
+                          shards:
+                            description: parameters that should be distributed across sharded instances
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          transfer:
+                            description: instructions for transferring files
+                            items:
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       paused:
                         description: pause the step initially
                         type: boolean
@@ -3736,9 +3778,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                           workflows:
@@ -3783,9 +3827,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                         type: object
@@ -3798,6 +3844,44 @@ spec:
                       optional:
                         description: is the step optional, so its failure won't affect the TestWorkflow result
                         type: boolean
+                      parallel:
+                        description: instructions for parallel execution
+                        properties:
+                          count:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          description:
+                            description: worker description to display
+                            type: string
+                          matrix:
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          maxCount:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            description: how many resources could be scheduled in parallel
+                            format: int32
+                            type: integer
+                          shards:
+                            description: parameters that should be distributed across sharded instances
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          transfer:
+                            description: instructions for transferring files
+                            items:
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       paused:
                         description: pause the step initially
                         type: boolean
@@ -4840,9 +4924,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                           workflows:
@@ -4887,9 +4973,11 @@ spec:
                                   type: object
                                   x-kubernetes-preserve-unknown-fields: true
                                 tarball:
+                                  additionalProperties:
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
                                   description: pack some data from the original file system to serve them down
                                   type: object
-                                  x-kubernetes-preserve-unknown-fields: true
                               type: object
                             type: array
                         type: object
@@ -4902,6 +4990,44 @@ spec:
                       optional:
                         description: is the step optional, so its failure won't affect the TestWorkflow result
                         type: boolean
+                      parallel:
+                        description: instructions for parallel execution
+                        properties:
+                          count:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: static number of sharded instances to spawn
+                            x-kubernetes-int-or-string: true
+                          description:
+                            description: worker description to display
+                            type: string
+                          matrix:
+                            description: matrix of parameters to spawn instances (static)
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          maxCount:
+                            anyOf:
+                              - type: integer
+                              - type: string
+                            description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                            x-kubernetes-int-or-string: true
+                          parallelism:
+                            description: how many resources could be scheduled in parallel
+                            format: int32
+                            type: integer
+                          shards:
+                            description: parameters that should be distributed across sharded instances
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
+                          transfer:
+                            description: instructions for transferring files
+                            items:
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
+                        type: object
+                        x-kubernetes-preserve-unknown-fields: true
                       paused:
                         description: pause the step initially
                         type: boolean
