@@ -1676,6 +1676,10 @@ spec:
                 job:
                   description: configuration for the scheduled job
                   properties:
+                    activeDeadlineSeconds:
+                      description: duration in seconds the job may be active on the node
+                      format: int64
+                      type: integer
                     annotations:
                       additionalProperties:
                         type: string
