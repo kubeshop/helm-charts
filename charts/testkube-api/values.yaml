@@ -532,6 +532,19 @@ minio:
   ## MinIO Container Security Context
   securityContext: {}
 
+  ## Service Monitor for MinIO
+  ## ref: https://github.com/minio/minio/blob/master/docs/metrics/prometheus/README.md
+  serviceMonitor:
+    ## Toggle whether to install ServiceMonitor
+    enabled: false
+    ## Additional monitoring labels
+    labels: {}
+    ## Selector labels to match
+    matchLabels: []
+    ## Scrape interval
+    interval: 15s
+
+
 ## uiIngress parameters
 uiIngress:
   ## Use uiIngress
