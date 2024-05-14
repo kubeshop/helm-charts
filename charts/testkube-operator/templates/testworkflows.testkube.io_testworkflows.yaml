@@ -854,15 +854,383 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          artifacts:
+                            description: scrape artifacts from the volumes
+                            properties:
+                              compress:
+                                description: compression options for the artifacts
+                                properties:
+                                  name:
+                                    description: artifact name
+                                    minLength: 1
+                                    type: string
+                                required:
+                                  - name
+                                type: object
+                              paths:
+                                description: paths to fetch from the container
+                                items:
+                                  type: string
+                                type: array
+                              workingDir:
+                                description: working directory to override, so it will be used as a base dir
+                                type: string
+                            type: object
                           count:
                             anyOf:
                               - type: integer
                               - type: string
                             description: static number of sharded instances to spawn
                             x-kubernetes-int-or-string: true
+                          delay:
+                            description: delay before the step
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           description:
                             description: worker description to display
                             type: string
+                          execute:
+                            description: execute other Testkube resources
+                            properties:
+                              async:
+                                description: only schedule the resources, don't watch the results (unless it is needed for parallelism)
+                                type: boolean
+                              parallelism:
+                                description: how many resources could be scheduled in parallel
+                                format: int32
+                                type: integer
+                              tests:
+                                description: tests to run
+                                items:
+                                  properties:
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test execution description to display
+                                      type: string
+                                    executionRequest:
+                                      description: pass the execution request overrides
+                                      properties:
+                                        activeDeadlineSeconds:
+                                          description: Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
+                                          format: int64
+                                          type: integer
+                                        args:
+                                          description: additional executor binary arguments
+                                          items:
+                                            type: string
+                                          type: array
+                                        argsMode:
+                                          description: usage mode for arguments
+                                          enum:
+                                            - append
+                                            - override
+                                            - replace
+                                          type: string
+                                        artifactRequest:
+                                          description: artifact request body with test artifacts
+                                          properties:
+                                            dirs:
+                                              description: artifact directories for scraping
+                                              items:
+                                                type: string
+                                              type: array
+                                            masks:
+                                              description: regexp to filter scraped artifacts, single or comma separated
+                                              items:
+                                                type: string
+                                              type: array
+                                            omitFolderPerExecution:
+                                              description: don't use a separate folder for execution artifacts
+                                              type: boolean
+                                            sharedBetweenPods:
+                                              description: whether to share volume between pods
+                                              type: boolean
+                                            storageBucket:
+                                              description: artifact bucket storage
+                                              type: string
+                                            storageClassName:
+                                              description: artifact storage class name for container executor
+                                              type: string
+                                            useDefaultStorageClassName:
+                                              description: whether to use default storage class name
+                                              type: boolean
+                                            volumeMountPath:
+                                              description: artifact volume mount path for container executor
+                                              type: string
+                                          type: object
+                                        command:
+                                          description: executor binary command
+                                          items:
+                                            type: string
+                                          type: array
+                                        cronJobTemplate:
+                                          description: cron job template extensions
+                                          type: string
+                                        envConfigMaps:
+                                          description: config map references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        envSecrets:
+                                          description: secret references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        executePostRunScriptBeforeScraping:
+                                          description: execute post run script before scraping (prebuilt executor only)
+                                          type: boolean
+                                        executionLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: test execution labels
+                                          type: object
+                                        executionNamespace:
+                                          description: namespace for test execution (Pro edition only)
+                                          type: string
+                                        httpProxy:
+                                          description: http proxy for executor containers
+                                          type: string
+                                        httpsProxy:
+                                          description: https proxy for executor containers
+                                          type: string
+                                        image:
+                                          description: container executor image
+                                          type: string
+                                        imagePullSecrets:
+                                          description: container executor image pull secrets
+                                          items:
+                                            description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                            properties:
+                                              name:
+                                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                type: string
+                                            type: object
+                                          type: array
+                                        isVariablesFileUploaded:
+                                          type: boolean
+                                        jobTemplate:
+                                          description: job template extensions
+                                          type: string
+                                        name:
+                                          description: test execution custom name
+                                          type: string
+                                        negativeTest:
+                                          description: negative test will fail the execution if it is a success and it will succeed if it is a failure
+                                          type: boolean
+                                        postRunScript:
+                                          description: script to run after test execution
+                                          type: string
+                                        preRunScript:
+                                          description: script to run before test execution
+                                          type: string
+                                        scraperTemplate:
+                                          description: scraper template extensions
+                                          type: string
+                                        sourceScripts:
+                                          description: run scripts using source command (container executor only)
+                                          type: boolean
+                                        sync:
+                                          description: whether to start execution sync or async
+                                          type: boolean
+                                        testSecretUUID:
+                                          description: test secret uuid
+                                          type: string
+                                        variables:
+                                          additionalProperties:
+                                            properties:
+                                              name:
+                                                description: variable name
+                                                type: string
+                                              type:
+                                                description: variable type
+                                                type: string
+                                              value:
+                                                description: variable string value
+                                                type: string
+                                              valueFrom:
+                                                description: or load it from var source
+                                                properties:
+                                                  configMapKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                  fieldRef:
+                                                    properties:
+                                                      apiVersion:
+                                                        type: string
+                                                      fieldPath:
+                                                        type: string
+                                                    required:
+                                                      - fieldPath
+                                                    type: object
+                                                  resourceFieldRef:
+                                                    properties:
+                                                      containerName:
+                                                        type: string
+                                                      divisor:
+                                                        anyOf:
+                                                          - type: integer
+                                                          - type: string
+                                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                                        x-kubernetes-int-or-string: true
+                                                      resource:
+                                                        type: string
+                                                    required:
+                                                      - resource
+                                                    type: object
+                                                  secretKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                type: object
+                                            type: object
+                                          type: object
+                                        variablesFile:
+                                          description: variables file content - need to be in format for particular executor (e.g. postman envs file)
+                                          type: string
+                                      type: object
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: test name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                              workflows:
+                                description: workflows to run
+                                items:
+                                  properties:
+                                    config:
+                                      additionalProperties:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        x-kubernetes-int-or-string: true
+                                      description: configuration to pass for the workflow
+                                      type: object
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test workflow execution description to display
+                                      type: string
+                                    executionName:
+                                      description: unique execution name to use
+                                      type: string
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: workflow name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          fetch:
+                            description: instructions for fetching files back
+                            items:
+                              required:
+                                - from
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
@@ -873,17 +1241,286 @@ spec:
                               - type: string
                             description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
                             x-kubernetes-int-or-string: true
+                          negative:
+                            description: is the step expected to fail
+                            type: boolean
+                          optional:
+                            description: is the step optional, so its failure won't affect the TestWorkflow result
+                            type: boolean
                           parallelism:
                             description: how many resources could be scheduled in parallel
                             format: int32
                             type: integer
+                          paused:
+                            description: pause the step initially
+                            type: boolean
+                          retry:
+                            description: policy for retrying the step
+                            properties:
+                              count:
+                                description: how many times at most it should retry
+                                format: int32
+                                minimum: 1
+                                type: integer
+                              until:
+                                description: 'until when it should retry (defaults to: "passed")'
+                                type: string
+                            type: object
+                          run:
+                            description: run specific container in the current step
+                            properties:
+                              args:
+                                description: override default command in the image (empty string to default CMD of the image)
+                                items:
+                                  type: string
+                                type: array
+                              command:
+                                description: override default command in the image (empty string to default ENTRYPOINT of the image)
+                                items:
+                                  type: string
+                                type: array
+                              env:
+                                description: environment variables to append to the container
+                                items:
+                                  description: EnvVar represents an environment variable present in a Container.
+                                  properties:
+                                    name:
+                                      description: Name of the environment variable. Must be a C_IDENTIFIER.
+                                      type: string
+                                    value:
+                                      description: 'Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".'
+                                      type: string
+                                    valueFrom:
+                                      description: Source for the environment variable's value. Cannot be used if value is not empty.
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                      type: object
+                                  required:
+                                    - name
+                                  type: object
+                                type: array
+                              envFrom:
+                                description: external environment variables to append to the container
+                                items:
+                                  description: EnvFromSource represents the source of a set of ConfigMaps
+                                  properties:
+                                    configMapRef:
+                                      description: The ConfigMap to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap must be defined
+                                          type: boolean
+                                      type: object
+                                    prefix:
+                                      description: An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+                                      type: string
+                                    secretRef:
+                                      description: The Secret to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret must be defined
+                                          type: boolean
+                                      type: object
+                                  type: object
+                                type: array
+                              image:
+                                description: image to be used for the container
+                                type: string
+                              imagePullPolicy:
+                                description: pulling policy for the image
+                                type: string
+                              resources:
+                                description: expected resources for the container
+                                properties:
+                                  limits:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource limits for the container
+                                    type: object
+                                  requests:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource requests for the container
+                                    type: object
+                                type: object
+                              securityContext:
+                                properties:
+                                  allowPrivilegeEscalation:
+                                    type: boolean
+                                  capabilities:
+                                    properties:
+                                      add:
+                                        items:
+                                          type: string
+                                        type: array
+                                      drop:
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  privileged:
+                                    type: boolean
+                                  procMount:
+                                    type: string
+                                  readOnlyRootFilesystem:
+                                    type: boolean
+                                  runAsGroup:
+                                    format: int64
+                                    type: integer
+                                  runAsNonRoot:
+                                    type: boolean
+                                  runAsUser:
+                                    format: int64
+                                    type: integer
+                                  seLinuxOptions:
+                                    properties:
+                                      level:
+                                        type: string
+                                      role:
+                                        type: string
+                                      type:
+                                        type: string
+                                      user:
+                                        type: string
+                                    type: object
+                                  seccompProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
+                                  windowsOptions:
+                                    properties:
+                                      gmsaCredentialSpec:
+                                        type: string
+                                      gmsaCredentialSpecName:
+                                        type: string
+                                      hostProcess:
+                                        type: boolean
+                                      runAsUserName:
+                                        type: string
+                                    type: object
+                                type: object
+                              shell:
+                                description: script to run in a default shell for the container
+                                type: string
+                              volumeMounts:
+                                items:
+                                  properties:
+                                    mountPath:
+                                      type: string
+                                    mountPropagation:
+                                      type: string
+                                    name:
+                                      type: string
+                                    readOnly:
+                                      type: boolean
+                                    subPath:
+                                      type: string
+                                    subPathExpr:
+                                      type: string
+                                  required:
+                                    - mountPath
+                                    - name
+                                  type: object
+                                type: array
+                              workingDir:
+                                description: override default working directory in the image (empty string to default WORKDIR for the image)
+                                type: string
+                            type: object
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
                             x-kubernetes-preserve-unknown-fields: true
+                          shell:
+                            description: script to run in a default shell for the container
+                            type: string
+                          template:
+                            description: single template to run in this step
+                            properties:
+                              config:
+                                additionalProperties:
+                                  anyOf:
+                                    - type: integer
+                                    - type: string
+                                  x-kubernetes-int-or-string: true
+                                description: trait configuration values if needed
+                                type: object
+                              name:
+                                description: name of the template to include
+                                type: string
+                            required:
+                              - name
+                            type: object
+                          timeout:
+                            description: maximum time this step may take
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           transfer:
                             description: instructions for transferring files
                             items:
+                              required:
+                                - from
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
@@ -3847,15 +4484,383 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          artifacts:
+                            description: scrape artifacts from the volumes
+                            properties:
+                              compress:
+                                description: compression options for the artifacts
+                                properties:
+                                  name:
+                                    description: artifact name
+                                    minLength: 1
+                                    type: string
+                                required:
+                                  - name
+                                type: object
+                              paths:
+                                description: paths to fetch from the container
+                                items:
+                                  type: string
+                                type: array
+                              workingDir:
+                                description: working directory to override, so it will be used as a base dir
+                                type: string
+                            type: object
                           count:
                             anyOf:
                               - type: integer
                               - type: string
                             description: static number of sharded instances to spawn
                             x-kubernetes-int-or-string: true
+                          delay:
+                            description: delay before the step
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           description:
                             description: worker description to display
                             type: string
+                          execute:
+                            description: execute other Testkube resources
+                            properties:
+                              async:
+                                description: only schedule the resources, don't watch the results (unless it is needed for parallelism)
+                                type: boolean
+                              parallelism:
+                                description: how many resources could be scheduled in parallel
+                                format: int32
+                                type: integer
+                              tests:
+                                description: tests to run
+                                items:
+                                  properties:
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test execution description to display
+                                      type: string
+                                    executionRequest:
+                                      description: pass the execution request overrides
+                                      properties:
+                                        activeDeadlineSeconds:
+                                          description: Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
+                                          format: int64
+                                          type: integer
+                                        args:
+                                          description: additional executor binary arguments
+                                          items:
+                                            type: string
+                                          type: array
+                                        argsMode:
+                                          description: usage mode for arguments
+                                          enum:
+                                            - append
+                                            - override
+                                            - replace
+                                          type: string
+                                        artifactRequest:
+                                          description: artifact request body with test artifacts
+                                          properties:
+                                            dirs:
+                                              description: artifact directories for scraping
+                                              items:
+                                                type: string
+                                              type: array
+                                            masks:
+                                              description: regexp to filter scraped artifacts, single or comma separated
+                                              items:
+                                                type: string
+                                              type: array
+                                            omitFolderPerExecution:
+                                              description: don't use a separate folder for execution artifacts
+                                              type: boolean
+                                            sharedBetweenPods:
+                                              description: whether to share volume between pods
+                                              type: boolean
+                                            storageBucket:
+                                              description: artifact bucket storage
+                                              type: string
+                                            storageClassName:
+                                              description: artifact storage class name for container executor
+                                              type: string
+                                            useDefaultStorageClassName:
+                                              description: whether to use default storage class name
+                                              type: boolean
+                                            volumeMountPath:
+                                              description: artifact volume mount path for container executor
+                                              type: string
+                                          type: object
+                                        command:
+                                          description: executor binary command
+                                          items:
+                                            type: string
+                                          type: array
+                                        cronJobTemplate:
+                                          description: cron job template extensions
+                                          type: string
+                                        envConfigMaps:
+                                          description: config map references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        envSecrets:
+                                          description: secret references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        executePostRunScriptBeforeScraping:
+                                          description: execute post run script before scraping (prebuilt executor only)
+                                          type: boolean
+                                        executionLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: test execution labels
+                                          type: object
+                                        executionNamespace:
+                                          description: namespace for test execution (Pro edition only)
+                                          type: string
+                                        httpProxy:
+                                          description: http proxy for executor containers
+                                          type: string
+                                        httpsProxy:
+                                          description: https proxy for executor containers
+                                          type: string
+                                        image:
+                                          description: container executor image
+                                          type: string
+                                        imagePullSecrets:
+                                          description: container executor image pull secrets
+                                          items:
+                                            description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                            properties:
+                                              name:
+                                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                type: string
+                                            type: object
+                                          type: array
+                                        isVariablesFileUploaded:
+                                          type: boolean
+                                        jobTemplate:
+                                          description: job template extensions
+                                          type: string
+                                        name:
+                                          description: test execution custom name
+                                          type: string
+                                        negativeTest:
+                                          description: negative test will fail the execution if it is a success and it will succeed if it is a failure
+                                          type: boolean
+                                        postRunScript:
+                                          description: script to run after test execution
+                                          type: string
+                                        preRunScript:
+                                          description: script to run before test execution
+                                          type: string
+                                        scraperTemplate:
+                                          description: scraper template extensions
+                                          type: string
+                                        sourceScripts:
+                                          description: run scripts using source command (container executor only)
+                                          type: boolean
+                                        sync:
+                                          description: whether to start execution sync or async
+                                          type: boolean
+                                        testSecretUUID:
+                                          description: test secret uuid
+                                          type: string
+                                        variables:
+                                          additionalProperties:
+                                            properties:
+                                              name:
+                                                description: variable name
+                                                type: string
+                                              type:
+                                                description: variable type
+                                                type: string
+                                              value:
+                                                description: variable string value
+                                                type: string
+                                              valueFrom:
+                                                description: or load it from var source
+                                                properties:
+                                                  configMapKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                  fieldRef:
+                                                    properties:
+                                                      apiVersion:
+                                                        type: string
+                                                      fieldPath:
+                                                        type: string
+                                                    required:
+                                                      - fieldPath
+                                                    type: object
+                                                  resourceFieldRef:
+                                                    properties:
+                                                      containerName:
+                                                        type: string
+                                                      divisor:
+                                                        anyOf:
+                                                          - type: integer
+                                                          - type: string
+                                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                                        x-kubernetes-int-or-string: true
+                                                      resource:
+                                                        type: string
+                                                    required:
+                                                      - resource
+                                                    type: object
+                                                  secretKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                type: object
+                                            type: object
+                                          type: object
+                                        variablesFile:
+                                          description: variables file content - need to be in format for particular executor (e.g. postman envs file)
+                                          type: string
+                                      type: object
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: test name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                              workflows:
+                                description: workflows to run
+                                items:
+                                  properties:
+                                    config:
+                                      additionalProperties:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        x-kubernetes-int-or-string: true
+                                      description: configuration to pass for the workflow
+                                      type: object
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test workflow execution description to display
+                                      type: string
+                                    executionName:
+                                      description: unique execution name to use
+                                      type: string
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: workflow name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          fetch:
+                            description: instructions for fetching files back
+                            items:
+                              required:
+                                - from
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
@@ -3866,17 +4871,286 @@ spec:
                               - type: string
                             description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
                             x-kubernetes-int-or-string: true
+                          negative:
+                            description: is the step expected to fail
+                            type: boolean
+                          optional:
+                            description: is the step optional, so its failure won't affect the TestWorkflow result
+                            type: boolean
                           parallelism:
                             description: how many resources could be scheduled in parallel
                             format: int32
                             type: integer
+                          paused:
+                            description: pause the step initially
+                            type: boolean
+                          retry:
+                            description: policy for retrying the step
+                            properties:
+                              count:
+                                description: how many times at most it should retry
+                                format: int32
+                                minimum: 1
+                                type: integer
+                              until:
+                                description: 'until when it should retry (defaults to: "passed")'
+                                type: string
+                            type: object
+                          run:
+                            description: run specific container in the current step
+                            properties:
+                              args:
+                                description: override default command in the image (empty string to default CMD of the image)
+                                items:
+                                  type: string
+                                type: array
+                              command:
+                                description: override default command in the image (empty string to default ENTRYPOINT of the image)
+                                items:
+                                  type: string
+                                type: array
+                              env:
+                                description: environment variables to append to the container
+                                items:
+                                  description: EnvVar represents an environment variable present in a Container.
+                                  properties:
+                                    name:
+                                      description: Name of the environment variable. Must be a C_IDENTIFIER.
+                                      type: string
+                                    value:
+                                      description: 'Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".'
+                                      type: string
+                                    valueFrom:
+                                      description: Source for the environment variable's value. Cannot be used if value is not empty.
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                      type: object
+                                  required:
+                                    - name
+                                  type: object
+                                type: array
+                              envFrom:
+                                description: external environment variables to append to the container
+                                items:
+                                  description: EnvFromSource represents the source of a set of ConfigMaps
+                                  properties:
+                                    configMapRef:
+                                      description: The ConfigMap to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap must be defined
+                                          type: boolean
+                                      type: object
+                                    prefix:
+                                      description: An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+                                      type: string
+                                    secretRef:
+                                      description: The Secret to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret must be defined
+                                          type: boolean
+                                      type: object
+                                  type: object
+                                type: array
+                              image:
+                                description: image to be used for the container
+                                type: string
+                              imagePullPolicy:
+                                description: pulling policy for the image
+                                type: string
+                              resources:
+                                description: expected resources for the container
+                                properties:
+                                  limits:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource limits for the container
+                                    type: object
+                                  requests:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource requests for the container
+                                    type: object
+                                type: object
+                              securityContext:
+                                properties:
+                                  allowPrivilegeEscalation:
+                                    type: boolean
+                                  capabilities:
+                                    properties:
+                                      add:
+                                        items:
+                                          type: string
+                                        type: array
+                                      drop:
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  privileged:
+                                    type: boolean
+                                  procMount:
+                                    type: string
+                                  readOnlyRootFilesystem:
+                                    type: boolean
+                                  runAsGroup:
+                                    format: int64
+                                    type: integer
+                                  runAsNonRoot:
+                                    type: boolean
+                                  runAsUser:
+                                    format: int64
+                                    type: integer
+                                  seLinuxOptions:
+                                    properties:
+                                      level:
+                                        type: string
+                                      role:
+                                        type: string
+                                      type:
+                                        type: string
+                                      user:
+                                        type: string
+                                    type: object
+                                  seccompProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
+                                  windowsOptions:
+                                    properties:
+                                      gmsaCredentialSpec:
+                                        type: string
+                                      gmsaCredentialSpecName:
+                                        type: string
+                                      hostProcess:
+                                        type: boolean
+                                      runAsUserName:
+                                        type: string
+                                    type: object
+                                type: object
+                              shell:
+                                description: script to run in a default shell for the container
+                                type: string
+                              volumeMounts:
+                                items:
+                                  properties:
+                                    mountPath:
+                                      type: string
+                                    mountPropagation:
+                                      type: string
+                                    name:
+                                      type: string
+                                    readOnly:
+                                      type: boolean
+                                    subPath:
+                                      type: string
+                                    subPathExpr:
+                                      type: string
+                                  required:
+                                    - mountPath
+                                    - name
+                                  type: object
+                                type: array
+                              workingDir:
+                                description: override default working directory in the image (empty string to default WORKDIR for the image)
+                                type: string
+                            type: object
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
                             x-kubernetes-preserve-unknown-fields: true
+                          shell:
+                            description: script to run in a default shell for the container
+                            type: string
+                          template:
+                            description: single template to run in this step
+                            properties:
+                              config:
+                                additionalProperties:
+                                  anyOf:
+                                    - type: integer
+                                    - type: string
+                                  x-kubernetes-int-or-string: true
+                                description: trait configuration values if needed
+                                type: object
+                              name:
+                                description: name of the template to include
+                                type: string
+                            required:
+                              - name
+                            type: object
+                          timeout:
+                            description: maximum time this step may take
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           transfer:
                             description: instructions for transferring files
                             items:
+                              required:
+                                - from
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
@@ -4993,15 +6267,383 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          artifacts:
+                            description: scrape artifacts from the volumes
+                            properties:
+                              compress:
+                                description: compression options for the artifacts
+                                properties:
+                                  name:
+                                    description: artifact name
+                                    minLength: 1
+                                    type: string
+                                required:
+                                  - name
+                                type: object
+                              paths:
+                                description: paths to fetch from the container
+                                items:
+                                  type: string
+                                type: array
+                              workingDir:
+                                description: working directory to override, so it will be used as a base dir
+                                type: string
+                            type: object
                           count:
                             anyOf:
                               - type: integer
                               - type: string
                             description: static number of sharded instances to spawn
                             x-kubernetes-int-or-string: true
+                          delay:
+                            description: delay before the step
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           description:
                             description: worker description to display
                             type: string
+                          execute:
+                            description: execute other Testkube resources
+                            properties:
+                              async:
+                                description: only schedule the resources, don't watch the results (unless it is needed for parallelism)
+                                type: boolean
+                              parallelism:
+                                description: how many resources could be scheduled in parallel
+                                format: int32
+                                type: integer
+                              tests:
+                                description: tests to run
+                                items:
+                                  properties:
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test execution description to display
+                                      type: string
+                                    executionRequest:
+                                      description: pass the execution request overrides
+                                      properties:
+                                        activeDeadlineSeconds:
+                                          description: Optional duration in seconds the pod may be active on the node relative to StartTime before the system will actively try to mark it failed and kill associated containers. Value must be a positive integer.
+                                          format: int64
+                                          type: integer
+                                        args:
+                                          description: additional executor binary arguments
+                                          items:
+                                            type: string
+                                          type: array
+                                        argsMode:
+                                          description: usage mode for arguments
+                                          enum:
+                                            - append
+                                            - override
+                                            - replace
+                                          type: string
+                                        artifactRequest:
+                                          description: artifact request body with test artifacts
+                                          properties:
+                                            dirs:
+                                              description: artifact directories for scraping
+                                              items:
+                                                type: string
+                                              type: array
+                                            masks:
+                                              description: regexp to filter scraped artifacts, single or comma separated
+                                              items:
+                                                type: string
+                                              type: array
+                                            omitFolderPerExecution:
+                                              description: don't use a separate folder for execution artifacts
+                                              type: boolean
+                                            sharedBetweenPods:
+                                              description: whether to share volume between pods
+                                              type: boolean
+                                            storageBucket:
+                                              description: artifact bucket storage
+                                              type: string
+                                            storageClassName:
+                                              description: artifact storage class name for container executor
+                                              type: string
+                                            useDefaultStorageClassName:
+                                              description: whether to use default storage class name
+                                              type: boolean
+                                            volumeMountPath:
+                                              description: artifact volume mount path for container executor
+                                              type: string
+                                          type: object
+                                        command:
+                                          description: executor binary command
+                                          items:
+                                            type: string
+                                          type: array
+                                        cronJobTemplate:
+                                          description: cron job template extensions
+                                          type: string
+                                        envConfigMaps:
+                                          description: config map references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        envSecrets:
+                                          description: secret references
+                                          items:
+                                            description: Reference to env resource
+                                            properties:
+                                              mapToVariables:
+                                                description: whether we shoud map to variables from resource
+                                                type: boolean
+                                              mount:
+                                                description: whether we shoud mount resource
+                                                type: boolean
+                                              mountPath:
+                                                description: where we shoud mount resource
+                                                type: string
+                                              reference:
+                                                description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                                properties:
+                                                  name:
+                                                    description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                    type: string
+                                                type: object
+                                            required:
+                                              - reference
+                                            type: object
+                                          type: array
+                                        executePostRunScriptBeforeScraping:
+                                          description: execute post run script before scraping (prebuilt executor only)
+                                          type: boolean
+                                        executionLabels:
+                                          additionalProperties:
+                                            type: string
+                                          description: test execution labels
+                                          type: object
+                                        executionNamespace:
+                                          description: namespace for test execution (Pro edition only)
+                                          type: string
+                                        httpProxy:
+                                          description: http proxy for executor containers
+                                          type: string
+                                        httpsProxy:
+                                          description: https proxy for executor containers
+                                          type: string
+                                        image:
+                                          description: container executor image
+                                          type: string
+                                        imagePullSecrets:
+                                          description: container executor image pull secrets
+                                          items:
+                                            description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
+                                            properties:
+                                              name:
+                                                description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                                type: string
+                                            type: object
+                                          type: array
+                                        isVariablesFileUploaded:
+                                          type: boolean
+                                        jobTemplate:
+                                          description: job template extensions
+                                          type: string
+                                        name:
+                                          description: test execution custom name
+                                          type: string
+                                        negativeTest:
+                                          description: negative test will fail the execution if it is a success and it will succeed if it is a failure
+                                          type: boolean
+                                        postRunScript:
+                                          description: script to run after test execution
+                                          type: string
+                                        preRunScript:
+                                          description: script to run before test execution
+                                          type: string
+                                        scraperTemplate:
+                                          description: scraper template extensions
+                                          type: string
+                                        sourceScripts:
+                                          description: run scripts using source command (container executor only)
+                                          type: boolean
+                                        sync:
+                                          description: whether to start execution sync or async
+                                          type: boolean
+                                        testSecretUUID:
+                                          description: test secret uuid
+                                          type: string
+                                        variables:
+                                          additionalProperties:
+                                            properties:
+                                              name:
+                                                description: variable name
+                                                type: string
+                                              type:
+                                                description: variable type
+                                                type: string
+                                              value:
+                                                description: variable string value
+                                                type: string
+                                              valueFrom:
+                                                description: or load it from var source
+                                                properties:
+                                                  configMapKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                  fieldRef:
+                                                    properties:
+                                                      apiVersion:
+                                                        type: string
+                                                      fieldPath:
+                                                        type: string
+                                                    required:
+                                                      - fieldPath
+                                                    type: object
+                                                  resourceFieldRef:
+                                                    properties:
+                                                      containerName:
+                                                        type: string
+                                                      divisor:
+                                                        anyOf:
+                                                          - type: integer
+                                                          - type: string
+                                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                                        x-kubernetes-int-or-string: true
+                                                      resource:
+                                                        type: string
+                                                    required:
+                                                      - resource
+                                                    type: object
+                                                  secretKeyRef:
+                                                    properties:
+                                                      key:
+                                                        type: string
+                                                      name:
+                                                        type: string
+                                                      optional:
+                                                        type: boolean
+                                                    required:
+                                                      - key
+                                                    type: object
+                                                type: object
+                                            type: object
+                                          type: object
+                                        variablesFile:
+                                          description: variables file content - need to be in format for particular executor (e.g. postman envs file)
+                                          type: string
+                                      type: object
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: test name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                              workflows:
+                                description: workflows to run
+                                items:
+                                  properties:
+                                    config:
+                                      additionalProperties:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        x-kubernetes-int-or-string: true
+                                      description: configuration to pass for the workflow
+                                      type: object
+                                    count:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: static number of sharded instances to spawn
+                                      x-kubernetes-int-or-string: true
+                                    description:
+                                      description: test workflow execution description to display
+                                      type: string
+                                    executionName:
+                                      description: unique execution name to use
+                                      type: string
+                                    matrix:
+                                      description: matrix of parameters to spawn instances (static)
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    maxCount:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
+                                      x-kubernetes-int-or-string: true
+                                    name:
+                                      description: workflow name to run
+                                      type: string
+                                    shards:
+                                      description: parameters that should be distributed across sharded instances
+                                      type: object
+                                      x-kubernetes-preserve-unknown-fields: true
+                                    tarball:
+                                      additionalProperties:
+                                        type: object
+                                        x-kubernetes-preserve-unknown-fields: true
+                                      description: pack some data from the original file system to serve them down
+                                      type: object
+                                  type: object
+                                type: array
+                            type: object
+                          fetch:
+                            description: instructions for fetching files back
+                            items:
+                              required:
+                                - from
+                              type: object
+                              x-kubernetes-preserve-unknown-fields: true
+                            type: array
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
@@ -5012,17 +6654,286 @@ spec:
                               - type: string
                             description: dynamic number of sharded instances to spawn - it will be lowered if there is not enough sharded values
                             x-kubernetes-int-or-string: true
+                          negative:
+                            description: is the step expected to fail
+                            type: boolean
+                          optional:
+                            description: is the step optional, so its failure won't affect the TestWorkflow result
+                            type: boolean
                           parallelism:
                             description: how many resources could be scheduled in parallel
                             format: int32
                             type: integer
+                          paused:
+                            description: pause the step initially
+                            type: boolean
+                          retry:
+                            description: policy for retrying the step
+                            properties:
+                              count:
+                                description: how many times at most it should retry
+                                format: int32
+                                minimum: 1
+                                type: integer
+                              until:
+                                description: 'until when it should retry (defaults to: "passed")'
+                                type: string
+                            type: object
+                          run:
+                            description: run specific container in the current step
+                            properties:
+                              args:
+                                description: override default command in the image (empty string to default CMD of the image)
+                                items:
+                                  type: string
+                                type: array
+                              command:
+                                description: override default command in the image (empty string to default ENTRYPOINT of the image)
+                                items:
+                                  type: string
+                                type: array
+                              env:
+                                description: environment variables to append to the container
+                                items:
+                                  description: EnvVar represents an environment variable present in a Container.
+                                  properties:
+                                    name:
+                                      description: Name of the environment variable. Must be a C_IDENTIFIER.
+                                      type: string
+                                    value:
+                                      description: 'Variable references $(VAR_NAME) are expanded using the previously defined environment variables in the container and any service environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to "".'
+                                      type: string
+                                    valueFrom:
+                                      description: Source for the environment variable's value. Cannot be used if value is not empty.
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                      type: object
+                                  required:
+                                    - name
+                                  type: object
+                                type: array
+                              envFrom:
+                                description: external environment variables to append to the container
+                                items:
+                                  description: EnvFromSource represents the source of a set of ConfigMaps
+                                  properties:
+                                    configMapRef:
+                                      description: The ConfigMap to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the ConfigMap must be defined
+                                          type: boolean
+                                      type: object
+                                    prefix:
+                                      description: An optional identifier to prepend to each key in the ConfigMap. Must be a C_IDENTIFIER.
+                                      type: string
+                                    secretRef:
+                                      description: The Secret to select from
+                                      properties:
+                                        name:
+                                          description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names TODO: Add other useful fields. apiVersion, kind, uid?'
+                                          type: string
+                                        optional:
+                                          description: Specify whether the Secret must be defined
+                                          type: boolean
+                                      type: object
+                                  type: object
+                                type: array
+                              image:
+                                description: image to be used for the container
+                                type: string
+                              imagePullPolicy:
+                                description: pulling policy for the image
+                                type: string
+                              resources:
+                                description: expected resources for the container
+                                properties:
+                                  limits:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource limits for the container
+                                    type: object
+                                  requests:
+                                    additionalProperties:
+                                      anyOf:
+                                        - type: integer
+                                        - type: string
+                                      x-kubernetes-int-or-string: true
+                                    description: resource requests for the container
+                                    type: object
+                                type: object
+                              securityContext:
+                                properties:
+                                  allowPrivilegeEscalation:
+                                    type: boolean
+                                  capabilities:
+                                    properties:
+                                      add:
+                                        items:
+                                          type: string
+                                        type: array
+                                      drop:
+                                        items:
+                                          type: string
+                                        type: array
+                                    type: object
+                                  privileged:
+                                    type: boolean
+                                  procMount:
+                                    type: string
+                                  readOnlyRootFilesystem:
+                                    type: boolean
+                                  runAsGroup:
+                                    format: int64
+                                    type: integer
+                                  runAsNonRoot:
+                                    type: boolean
+                                  runAsUser:
+                                    format: int64
+                                    type: integer
+                                  seLinuxOptions:
+                                    properties:
+                                      level:
+                                        type: string
+                                      role:
+                                        type: string
+                                      type:
+                                        type: string
+                                      user:
+                                        type: string
+                                    type: object
+                                  seccompProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
+                                  windowsOptions:
+                                    properties:
+                                      gmsaCredentialSpec:
+                                        type: string
+                                      gmsaCredentialSpecName:
+                                        type: string
+                                      hostProcess:
+                                        type: boolean
+                                      runAsUserName:
+                                        type: string
+                                    type: object
+                                type: object
+                              shell:
+                                description: script to run in a default shell for the container
+                                type: string
+                              volumeMounts:
+                                items:
+                                  properties:
+                                    mountPath:
+                                      type: string
+                                    mountPropagation:
+                                      type: string
+                                    name:
+                                      type: string
+                                    readOnly:
+                                      type: boolean
+                                    subPath:
+                                      type: string
+                                    subPathExpr:
+                                      type: string
+                                  required:
+                                    - mountPath
+                                    - name
+                                  type: object
+                                type: array
+                              workingDir:
+                                description: override default working directory in the image (empty string to default WORKDIR for the image)
+                                type: string
+                            type: object
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
                             x-kubernetes-preserve-unknown-fields: true
+                          shell:
+                            description: script to run in a default shell for the container
+                            type: string
+                          template:
+                            description: single template to run in this step
+                            properties:
+                              config:
+                                additionalProperties:
+                                  anyOf:
+                                    - type: integer
+                                    - type: string
+                                  x-kubernetes-int-or-string: true
+                                description: trait configuration values if needed
+                                type: object
+                              name:
+                                description: name of the template to include
+                                type: string
+                            required:
+                              - name
+                            type: object
+                          timeout:
+                            description: maximum time this step may take
+                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
+                            type: string
                           transfer:
                             description: instructions for transferring files
                             items:
+                              required:
+                                - from
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
