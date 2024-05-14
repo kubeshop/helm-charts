@@ -21,12 +21,14 @@ spec:
     image: {{ .InitImage }}
     {{- end }}
     imagePullPolicy: IfNotPresent
-    command: 
+    command:
       - "/bin/runner"
       - '{{ .Jsn }}'
     {{- if .RunnerCustomCASecret }}
     env:
       - name: SSL_CERT_DIR
+        value: /etc/testkube/certs
+      - name: GIT_SSL_CAPATH
         value: /etc/testkube/certs
     {{- end }}
     volumeMounts:
@@ -99,7 +101,7 @@ spec:
       containerPort: {{ $port.ContainerPort }}
     {{- end}}
     {{- range $port := .Ports }}
-    {{- if eq $port.Name "server-port" }}  
+    {{- if eq $port.Name "server-port" }}
     livenessProbe:
       tcpSocket:
         port: {{ $port.ContainerPort }}
