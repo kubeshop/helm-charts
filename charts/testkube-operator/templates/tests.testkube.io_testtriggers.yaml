@@ -136,6 +136,9 @@ spec:
                 - event-end-testworkflow-success
                 - event-end-testworkflow-failed
                 - event-end-testworkflow-aborted
+                - event-created
+                - event-updated
+                - event-deleted
                 type: string
               execution:
                 description: Execution identifies for which test execution should

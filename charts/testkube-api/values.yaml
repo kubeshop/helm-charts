@@ -217,6 +217,9 @@ executionNamespaces:
 ## default storage class name for PVC volumes
 defaultStorageClassName: ""
 
+## enable k8s events for testkube events
+enableK8sEvents: true
+
 # Testkube log server parameters
 testkubeLogs:
   # -- GRPC address

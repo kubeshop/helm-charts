@@ -342,6 +342,7 @@ testkube-api:
   enableSecretsEndpoint: false
   disableSecretCreation: false
   defaultStorageClassName: ""
+  enableK8sEvents: true
 
   priorityClassName: "highest-priority"
 

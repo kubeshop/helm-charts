@@ -52,6 +52,7 @@ A Helm chart for Testkube api
 | dnsPolicy | string | `""` |  |
 | disableMongoMigrations | bool | `false` |  |
 | disableSecretCreation | bool | `false` |  |
+| enableK8sEvents | bool | `true` |  |
 | enableSecretsEndpoint | bool | `false` |  |
 | executionNamespaces | list | `[]` |  |
 | executors | string | `""` |  |
