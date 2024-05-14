@@ -24,6 +24,8 @@ spec:
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
+            value: /etc/testkube/certs
         {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
@@ -99,6 +101,8 @@ spec:
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
+            value: /etc/testkube/certs
         {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
@@ -142,7 +146,7 @@ spec:
       {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
       - name: data-volume
         emptyDir: {}
-      {{ end }} 
+      {{ end }}
       {{- if .CertificateSecret }}
       - name: {{ .CertificateSecret }}
         secret:
