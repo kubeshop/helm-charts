@@ -218,6 +218,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.enableK8sEvents | bool | `true` | enable k8s events for testkube events |
 | testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.enabledExecutors | string | `nil` | enable only specified executors with enabled flag |
 | testkube-api.executionNamespaces | list | `[]` | Execution namespaces for Testkube API to only run tests In this case, a Role and a RoleBinding will be created for each specified namespace. |
