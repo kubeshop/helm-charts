@@ -426,6 +426,10 @@ spec:
             - name: ISTIO_PROXY_EXIT
               value: "true"
             {{- end }}
+            {{- if .Values.istioProxyInitBypass }}
+            - name: ISTIO_PROXY_INIT_BYPASS
+              value: "true"
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
