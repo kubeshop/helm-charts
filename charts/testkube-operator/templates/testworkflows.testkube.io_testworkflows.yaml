@@ -1231,6 +1231,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          logs:
+                            description: should save logs for the parallel step (true if not specified)
+                            type: string
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
@@ -4861,6 +4864,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          logs:
+                            description: should save logs for the parallel step (true if not specified)
+                            type: string
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
@@ -6644,6 +6650,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          logs:
+                            description: should save logs for the parallel step (true if not specified)
+                            type: string
                           matrix:
                             description: matrix of parameters to spawn instances (static)
                             type: object
