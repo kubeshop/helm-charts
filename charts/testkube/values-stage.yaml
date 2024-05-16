@@ -1,7 +1,17 @@
 # Stage values for testkube.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
+global:
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
+  features:
+    logsV2: true
+    
 replicaCount: 1
 
 image:
@@ -69,12 +79,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -103,6 +107,13 @@ mongodb:
   #      cpu: "200m"
   nodeSelector:
     cloud.google.com/gke-provisioning: standard
+  updateStrategy:
+    type: Recreate
+
+testkube-logs:
+  fullnameOverride: testkube-logs
+  nameOverride: logs
+  nodeSelector: {}
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
@@ -131,8 +142,7 @@ preUpgradeHookNATS:
   serviceAccount:
     create: true
   # -- Node labels for pod assignment.
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Upgrade Pod Security Context
   podSecurityContext: {}
@@ -141,11 +151,7 @@ preUpgradeHookNATS:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 nats:
   podTemplate:
@@ -176,8 +182,6 @@ testkube-api:
   service:
     type: ClusterIP
     port: 8088
-  imageInspectionCache:
-    enabled: true
   minio:
     enabled: true
     tolerations: []
@@ -338,6 +342,7 @@ testkube-api:
   enableSecretsEndpoint: false
   disableSecretCreation: false
   defaultStorageClassName: ""
+  enableK8sEvents: true
 
   priorityClassName: "highest-priority"
 
@@ -348,8 +353,7 @@ testkube-api:
   testConnection:
     enabled: true
 
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
 
 testkube-operator:
   priorityClassName: "highest-priority"
@@ -375,5 +379,4 @@ testkube-operator:
   testConnection:
     enabled: true
 
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}

@@ -23,8 +23,26 @@ spec:
       resources: {{ toYaml .Values.testConnection.resources | nindent 8 }}
       {{- end }}
   restartPolicy: Never
-  {{- with .Values.testConnection.tolerations }}
+  {{- if .Values.testConnection.tolerations }}
   tolerations:
-    {{- toYaml . | nindent 4 }}
+  {{- toYaml .Values.testConnection.tolerations | nindent 2 }}
+  {{- else if .Values.global.tolerations }}
+  tolerations:
+  {{- toYaml .Values.global.tolerations | nindent 2 }}
+  {{- end }}
+  {{- if .Values.testConnection.affinity }}
+  affinity:
+  {{- toYaml .Values.testConnection.affinity | nindent 4 }}
+  {{- else if .Values.global.affinity }}
+  affinity:
+  {{- toYaml .Values.global.affinity | nindent 4 }}
+  {{- end }}
+  {{- if .Values.testConnection.nodeSelector }}
+  nodeSelector:
+  {{- toYaml .Values.testConnection.nodeSelector | nindent 4 }}
+  {{- else if .Values.global.nodeSelector }}
+  nodeSelector:
+  {{- toYaml .Values.global.nodeSelector | nindent 4 }}
   {{- end }}
 {{- end }}
+

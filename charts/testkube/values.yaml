@@ -13,6 +13,16 @@ global:
   labels: {}
   # --  Annotations to add to all deployed objects
   annotations: {}
+  # -- Node labels to add to all deployed Pods
+  nodeSelector: {}
+  # -- Affinity rules to add to all deployed Pods
+  affinity: {}
+  # -- Tolerations to add to all deployed pods
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
   # -- Features map for the whole chart
   features:
     logsV2: false
@@ -71,11 +81,7 @@ preUpgradeHook:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
@@ -113,11 +119,7 @@ preUpgradeHookNATS:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 # MongoDB parameters
 # For more configuration parameters of MongoDB chart please look here: https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
@@ -154,12 +156,12 @@ mongodb:
     # -- MongoDB image pull Secret
     pullSecrets: []
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
-  # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  # -- Uncomment to schedule a multi-arch image to any available architecture type in a GGP Standard k8s cluster.
+#  tolerations:
+#    - key: kubernetes.io/arch
+#      operator: Equal
+#      value: arm64
+#      effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext: {}
@@ -176,23 +178,37 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  # -- Uncomment to override the NATS Server image options
+  # container:
+  #   image:
+  #     repository: nats
+  #     tag: 2.10.9-alpine
+  #     pullPolicy:
+  #     registry:
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   # change it to
-  # natsbox:
+  # natsBox:
   #   enabled: false
   natsBox:
-    enabled: true
-    # -- NATS Box tolerations settings
-    podTemplate:
-      merge:
-        spec:
-          tolerations:
-            - key: kubernetes.io/arch
-              operator: Equal
-              value: arm64
-              effect: NoSchedule
+    enabled: false
+    # -- Uncomment to override the NATS Box image options
+    # container:
+    #   image:
+    #     repository: natsio/nats-box
+    #     tag: 0.14.1
+    #     pullPolicy:
+    #     registry:
+    # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
+#    podTemplate:
+#      merge:
+#        spec:
+#          tolerations:
+#            - key: kubernetes.io/arch
+#              operator: Equal
+#              value: arm64
+#              effect: NoSchedule
   config:
     merge:
       max_payload: << 8MB >>
@@ -203,6 +219,12 @@ nats:
   # Reloader container settings
   reloader:
     enabled: true
+    # -- Uncomment to override the NATS Server Config Reloader image options
+    # image:
+    #   repository: natsio/nats-server-config-reloader
+    #   tag: 0.14.1
+    #   pullPolicy:
+    #   registry:
 
 testkube-logs:
   # -- Testkube logs full name override
@@ -299,6 +321,12 @@ testkube-api:
   multinamespace:
     enabled: false
 
+  # Custom job-container-template.yml that will be passed to Testkube API
+  #  jobContainerTemplate: ""
+  #
+  # Custom job-scraper-template.yml that will be passed to Testkube API
+  #  jobScraperTemplate: ""
+  #
   # Custom job-template.yml that will be passed to Testkube API. Example:
   #  configValues: |
   #    apiVersion: batch/v1
@@ -360,6 +388,7 @@ testkube-api:
     # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
     digest: ""
 
+
   # Test Workflows init image parameters
   imageTwInit:
     # -- Test Workflows image registry
@@ -388,11 +417,11 @@ testkube-api:
 
   ## Service Account parameters
   serviceAccount:
-    #-- Specifies whether a service account should be created
+    # -- Specifies whether a service account should be created
     create: true
-    #-- Annotations to add to the service account
+    # -- Annotations to add to the service account
     annotations: {}
-    #-- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+    # -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template.
     name: ""
 
   # -- Service Account parameters
@@ -430,22 +459,18 @@ testkube-api:
   ## Persistent cache for Docker
   imageInspectionCache:
     ## Status of the persistent cache
-    enabled: false
+    enabled: true
     ## ConfigMap name to persist cache
     name: "testkube-image-cache"
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
   # Service parameters
   service:
-    # -- Adapter service type
-    type: ClusterIP # for working with real k8s we should use "ClusterIP" type.
+    # -- Adapter service type for working with real k8s we should use "ClusterIP" type.
+    type: ClusterIP
     # -- HTTP Port
     port: 8088
     # -- Service Annotations
@@ -498,11 +523,7 @@ testkube-api:
     nodeSelector: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
     # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
     # Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
     # -- Affinity for pod assignment.
@@ -541,6 +562,18 @@ testkube-api:
     securityContext: {}
     ## Specify priorityClassName for Minio
     priorityClassName: ""
+
+    ## Service Monitor for MinIO
+    ## ref: https://github.com/minio/minio/blob/master/docs/metrics/prometheus/README.md
+    serviceMonitor:
+      ## Toggle whether to install ServiceMonitor
+      enabled: false
+      ## Additional monitoring labels
+      labels: {}
+      ## Selector labels to match
+      matchLabels: []
+      ## Scrape interval
+      interval: 15s
 
   # uiIngress parameters
   uiIngress:
@@ -734,7 +767,7 @@ testkube-api:
   slackToken: ""
   # -- Slack secret to store slackToken, the key name should be SLACK_TOKEN
   slackSecret: ""
-  # -- Slack config for the events, tests, testsuites and channels
+  # -- Slack config for the events, tests, testsuites, testworkflows and channels
   slackConfig:
   # -- default executors as base64-encoded string
   executors: ""
@@ -771,6 +804,8 @@ testkube-api:
 
   # -- default storage class name for PVC volumes
   defaultStorageClassName: ""
+  # -- enable k8s events for testkube events
+  enableK8sEvents: true
 
   # Testkube log server parameters
   testkubeLogs:
@@ -805,11 +840,7 @@ testkube-api:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
 
   # -- Testkube API Pod Security Context
   podSecurityContext: {}
@@ -860,7 +891,7 @@ testkube-operator:
     # -- Testkube Operator image pull policy
     pullPolicy: ""
     # Overrides the image tag whose default is the chart appVersion.
-    #tag: "1.7.1"
+    # tag: "1.7.1"
     # -- Testkube Operator image digest
     digest: ""
     # -- Operator k8s secret for private registries
@@ -1007,15 +1038,10 @@ testkube-operator:
 
       # ref: https://kubernetes.io/docs/user-guide/node-selection/
       # -- Node labels for pod assignment
-      nodeSelector:
-        kubernetes.io/os: linux
+      nodeSelector: {}
       # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
       # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-      tolerations:
-        - key: kubernetes.io/arch
-          operator: Equal
-          value: arm64
-          effect: NoSchedule
+      tolerations: []
       # Create Job config
       createSecretJob:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
@@ -1087,11 +1113,7 @@ testkube-operator:
     resources: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []
 
   preUpgrade:
     # -- Upgrade hook is enabled
@@ -1124,8 +1146,4 @@ testkube-operator:
     podAnnotations: {}
     # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
     # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-    tolerations:
-      - key: kubernetes.io/arch
-        operator: Equal
-        value: arm64
-        effect: NoSchedule
+    tolerations: []

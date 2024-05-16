@@ -1,18 +1,20 @@
-# agent settings for in cluster only agent on enterprise installation
+# agent settings for dev enterprise
 global:
   features:
     logsV2: true
 
 testkube-api:
   cloud:
-    tls.enabled: false
-    url: testkube-enterprise-api.testkube-enterprise.svc.cluster.local:8089
+    url: agent.enterprise.testkube.dev:443
     key: "" # Required
     orgId: "" # Required
     envId: "" # Required
   minio:
     enabled: false
 mongodb:
+  enabled: false
+
+testkube-dashboard:
   enabled: false
 
 nats:
@@ -28,6 +30,5 @@ testkube-logs:
     enabled: false
   replicaCount: 1
   pro:
-    url: testkube-enterprise-logs-service.testkube-enterprise.svc.cluster.local:8089
+    url: logs.enterprise.testkube.dev:443
     key: "" #Required
-    tls.enabled: false

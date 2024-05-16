@@ -70,9 +70,23 @@ spec:
         {{- toYaml .Values.preUpgradeHook.podSecurityContext | nindent 8 }}
       restartPolicy: Never
       {{- if .Values.preUpgradeHook.tolerations }}
-      tolerations: {{ toYaml .Values.preUpgradeHook.tolerations | nindent 8 }}
+      tolerations:
+      {{- toYaml .Values.preUpgradeHook.tolerations | nindent 6 }}
+      {{- else if .Values.global.tolerations }}
+      tolerations:
+      {{- toYaml .Values.global.tolerations | nindent 6 }}
+      {{- end }}
+      {{- if .Values.preUpgradeHook.affinity }}
+      affinity:
+      {{- toYaml .Values.preUpgradeHook.affinity | nindent 8 }}
+      {{- else if .Values.global.affinity }}
+      affinity:
+      {{- toYaml .Values.global.affinity | nindent 8 }}
       {{- end }}
       {{- if .Values.preUpgradeHook.nodeSelector }}
       nodeSelector: {{ toYaml .Values.preUpgradeHook.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.global.nodeSelector }}
+      nodeSelector: {{ toYaml .Values.global.nodeSelector | nindent 8 }}
       {{- end }}
   {{- end }}

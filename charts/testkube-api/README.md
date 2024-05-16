@@ -52,6 +52,7 @@ A Helm chart for Testkube api
 | dnsPolicy | string | `""` |  |
 | disableMongoMigrations | bool | `false` |  |
 | disableSecretCreation | bool | `false` |  |
+| enableK8sEvents | bool | `true` |  |
 | enableSecretsEndpoint | bool | `false` |  |
 | executionNamespaces | list | `[]` |  |
 | executors | string | `""` |  |
@@ -69,6 +70,8 @@ A Helm chart for Testkube api
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"kubeshop/testkube-api-server"` |  |
 | enabledExecutors | object | `{}` |  |
+| jobContainerTemplate | string | `""` |  |
+| jobScraperTemplate | string | `""` |  |
 | jobServiceAccountName | string | `""` |  |
 | kubeVersion | string | `""` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
