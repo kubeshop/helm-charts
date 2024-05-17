@@ -89,7 +89,7 @@ spec:
         - name: ID
           value: "{{ .Name }}"
       {{- end }}
-      {{ if .SidecarScraper -}}     
+      {{- if and .ArtifactRequest .ArtifactRequest.SidecarScraper }}
       - name: "{{ .Name }}-scraper"
         {{- if .Registry }}
         image: {{ .Registry }}/{{ .ScraperImage }}
