@@ -28,6 +28,8 @@ spec:
         env:
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
+            value: /etc/testkube/certs
         {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
@@ -103,6 +105,8 @@ spec:
         env:
         {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
             value: /etc/testkube/certs
         {{- end }}
         {{- if .IstioProxyWait }}

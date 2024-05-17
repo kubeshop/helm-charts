@@ -51,6 +51,8 @@ spec:
         {{- if .RunnerCustomCASecret }}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
+            value: /etc/testkube/certs
         {{- end }}
         {{- if .IstioProxyWait }}
           - name: RUNNER_ISTIO_PROXY_WAIT

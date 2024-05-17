@@ -25,6 +25,13 @@ spec:
         command:
           - "/bin/runner"
           - '{{ .Jsn }}'
+        {{- if .RunnerCustomCASecret }}
+        env:
+          - name: SSL_CERT_DIR
+            value: /etc/testkube/certs
+          - name: GIT_SSL_CAPATH
+            value: /etc/testkube/certs
+        {{- end }}
         volumeMounts:
         {{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}
         - name: data-volume
@@ -33,6 +40,12 @@ spec:
         {{- if .CertificateSecret }}
         - name: {{ .CertificateSecret }}
           mountPath: /etc/certs
+        {{- end }}
+        {{- if .RunnerCustomCASecret }}
+        - name: {{ .RunnerCustomCASecret }}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{- end }}
         {{- if .ArtifactRequest }}
           {{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}
@@ -143,6 +156,12 @@ spec:
       - name: {{ .CertificateSecret }}
         secret:
           secretName: {{ .CertificateSecret }}
+      {{- end }}
+      {{- if .RunnerCustomCASecret }}
+      - name: {{ .RunnerCustomCASecret }}
+        secret:
+          secretName: {{ .RunnerCustomCASecret }}
+          defaultMode: 420
       {{- end }}
       {{- if .AgentAPITLSSecret }}
       - name: { { .AgentAPITLSSecret } }

@@ -13,16 +13,20 @@ global:
   imagePullSecrets: []
   # -- Labels to add to all deployed objects
   labels: {}
-  # --  Annotations to add to all deployed objects
+  # -- Annotations to add to all deployed objects
   annotations: {}
+  # -- Node labels to add to all deployed Pods
+  nodeSelector: {}
+  # -- Affinity rules to add to all deployed Pods
+  affinity: {}
+  # -- Tolerations to add to all deployed pods
+  tolerations: []
 
 debug: true
 
 pro:
   ## URL of the Cloud Saas Control Plane
-  url: "agent.testkube.io:443"
-  ## Path of the logs service (in case of ingress path routing)
-  logsPath: "/logs"
+  url: "logs.testkube.io:443"
   uiUrl: ""
   ## License Key
   key: ""
@@ -205,7 +209,7 @@ affinity: {}
 ## Specify priorityClassName for Testkube Logs Deployment
 priorityClassName: ""
 
-##Test Connection pod
+## -- Test Connection pod
 testConnection:
   enabled: false
 

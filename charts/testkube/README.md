@@ -218,6 +218,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.enableK8sEvents | bool | `true` | enable k8s events for testkube events |
 | testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.enabledExecutors | string | `nil` | enable only specified executors with enabled flag |
 | testkube-api.executionNamespaces | list | `[]` | Execution namespaces for Testkube API to only run tests In this case, a Role and a RoleBinding will be created for each specified namespace. |
@@ -231,7 +232,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
 | testkube-api.image.registry | string | `"docker.io"` | Testkube API image registry |
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
-| testkube-api.imageInspectionCache.enabled | bool | `false` |  |
+| testkube-api.imageInspectionCache.enabled | bool | `true` |  |
 | testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` |  |
 | testkube-api.jobServiceAccountName | string | `""` | SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud. |
 | testkube-api.livenessProbe | object | `{"initialDelaySeconds":15}` | Testkube API Liveness probe parameters |

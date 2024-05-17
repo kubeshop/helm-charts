@@ -7,7 +7,6 @@ on:
     types:
       [
         trigger-workflow-api-release,
-        trigger-workflow-dashboard-release,
         trigger-workflow-operator-release,
       ]
 
@@ -82,30 +81,23 @@ jobs:
         run: |
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
-      - name: Get image tag of Testkube APi, Dashboard, Operator
+      - name: Get image tag of Testkube APi, Operator
         id: vars
         run: |
           echo ::set-output name=api_image_tag::$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
           echo ::set-output name=operator_image_tag::$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[1].image}' -n testkube | awk -F':' '{print $2}') || exit 1
-          echo ::set-output name=dashboard_image_tag::$(kubectl get deployment testkube-dashboard -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
 
       - name: Deploy if Testkube API image is updated
         if: ${{ github.event.client_payload.image_tag_api }}
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag_api }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
-
-      - name: Deploy if Testkube Dashboard image is updated
-        if: ${{ github.event.client_payload.image_tag_dashboard }}
-        run: |
-          helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-dashboard.image.tag=${{ github.event.client_payload.image_tag_dashboard }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
+          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-api.image.tag=${{ github.event.client_payload.image_tag_api }} --set testkube-logs.image.tag=${{ github.event.client_payload.image_tag_api }} --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
 
       - name: Deploy if Testkube Operator image is updated
         if: ${{ github.event.client_payload.image_tag_operator }}
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ github.event.client_payload.image_tag_operator }} --set testkube-dashboard.image.tag=${{ steps.vars.outputs.dashboard_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
+          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ github.event.client_payload.image_tag_operator }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-logs.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest
@@ -193,6 +185,7 @@ jobs:
         run: |-
           # enabling debug mode
           set -x
+          kubectl delete test dashboard-e2e-tests --ignore-not-found=true --namespace ${{ env.DEPLOYMENT_NAME }}
           kubectl apply -f ./test/dashboard-e2e/crd/crd.yaml --namespace ${{ env.DEPLOYMENT_NAME }}
 
       - name: (Re)create staging testsuite (executor tests)
@@ -205,6 +198,9 @@ jobs:
 
       - name: Run Executor tests
         run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop --namespace ${{ env.DEPLOYMENT_NAME }}
+
+      - name: Run Dashboard E2E tests
+        run: kubectl testkube run test dashboard-e2e-tests -f --variable TESTKUBE_NAMESPACE=${{ env.DEPLOYMENT_NAME }} --namespace ${{ env.DEPLOYMENT_NAME }}
 
   notify_slack_if_test_suite_stage_succeeds:
     runs-on: ubuntu-latest

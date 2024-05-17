@@ -3,8 +3,21 @@
 # Declare variables to be passed into your templates.
 
 global:
+  nodeSelector:
+    cloud.google.com/gke-provisioning: standard
+  tolerations:
+    - key: kubernetes.io/arch
+      operator: Equal
+      value: arm64
+      effect: NoSchedule
   features:
     logsV2: false
+  testWorkflows:
+    globalTemplate:
+      enabled: true
+      spec:
+        pod:
+          serviceAccountName: testkube-api-server
 
 replicaCount: 1
 
@@ -73,12 +86,6 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
 # For more configuration parameters of MongoDB chart please look here:
 # https://github.com/bitnami/charts/tree/master/bitnami/mongodb#parameters
 mongodb:
@@ -105,6 +112,8 @@ mongodb:
     registry: docker.io
     repository: zcube/bitnami-compat-mongodb
     tag: 6.0.5-debian-11-r64
+  updateStrategy:
+    type: Recreate
 
 # -- NATS pre-upgrade parameters
 preUpgradeHookNATS:
@@ -133,8 +142,7 @@ preUpgradeHookNATS:
   serviceAccount:
     create: true
   # -- Node labels for pod assignment.
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
+  nodeSelector: {}
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Upgrade Pod Security Context
   podSecurityContext: {}
@@ -143,11 +151,7 @@ preUpgradeHookNATS:
   securityContext: {}
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
-  tolerations:
-    - key: kubernetes.io/arch
-      operator: Equal
-      value: arm64
-      effect: NoSchedule
+  tolerations: []
 
 # -- NATS chart parameters
 nats:
@@ -167,7 +171,7 @@ nats:
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
   natsBox:
-    enabled: true
+    enabled: false
     podTemplate:
       merge:
         spec:
@@ -191,12 +195,8 @@ testkube-api:
   service:
     type: ClusterIP
     port: 8088
-  imageInspectionCache:
-    enabled: true
   minio:
     enabled: true
-    nodeSelector:
-      cloud.google.com/gke-provisioning: standard
     tolerations: []
     affinity: {}
     priorityClassName: "highest-priority"
@@ -211,7 +211,7 @@ testkube-api:
         cpu: "200m"
 
   uiIngress:
-    enabled: true
+    enabled: false
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/rewrite-target: /$1
@@ -402,6 +402,7 @@ testkube-api:
   enableSecretsEndpoint: false
   disableSecretCreation: false
   defaultStorageClassName: ""
+  enableK8sEvents: true
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"
@@ -411,9 +412,6 @@ testkube-api:
   ##Test Connection pod
   testConnection:
     enabled: true
-
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard
 
 testkube-operator:
   # should roles and roles bindings be created
@@ -446,6 +444,3 @@ testkube-operator:
   ##Test Connection pod
   testConnection:
     enabled: true
-
-  nodeSelector:
-    cloud.google.com/gke-provisioning: standard

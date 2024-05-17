@@ -11,6 +11,9 @@ global:
   imagePullSecrets: []
   labels: {}
   annotations: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
   features:
     logsV2: false
   testWorkflows:
@@ -76,6 +79,12 @@ imageTwInit:
 nameOverride: ""
 fullnameOverride: ""
 
+## Custom job-container-template.yml that will be passed to Testkube API
+jobContainerTemplate: ""
+
+## Custom job-scraper-template.yml that will be passed to Testkube API
+jobScraperTemplate: ""
+
 ## Custom job-template.yml that will be passed to Testkube API
 configValues: ""
 
@@ -124,7 +133,7 @@ cloud:
 ## Persistent cache for Docker
 imageInspectionCache:
   ## Status of the persistent cache
-  enabled: false
+  enabled: true
   ## ConfigMap name to persist cache
   name: "testkube-image-cache"
 
@@ -206,6 +215,9 @@ executionNamespaces:
 
 ## default storage class name for PVC volumes
 defaultStorageClassName: ""
+
+## enable k8s events for testkube events
+enableK8sEvents: true
 
 # Testkube log server parameters
 testkubeLogs:
@@ -522,6 +534,19 @@ minio:
   ## MinIO Container Security Context
   securityContext: {}
 
+  ## Service Monitor for MinIO
+  ## ref: https://github.com/minio/minio/blob/master/docs/metrics/prometheus/README.md
+  serviceMonitor:
+    ## Toggle whether to install ServiceMonitor
+    enabled: false
+    ## Additional monitoring labels
+    labels: {}
+    ## Selector labels to match
+    matchLabels: []
+    ## Scrape interval
+    interval: 15s
+
+
 ## uiIngress parameters
 uiIngress:
   ## Use uiIngress
@@ -583,6 +608,9 @@ prometheus:
 ##Test Connection pod
 testConnection:
   enabled: false
+  affinity: {}
+  tolerations: []
+  nodeSelector: {}
 
 ## Testkube API Liveness probe
 livenessProbe:
