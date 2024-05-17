@@ -77,6 +77,9 @@ spec:
                       sharedBetweenPods:
                         description: whether to share volume between pods
                         type: boolean
+                      sidecarScraper:
+                        description: run scraper as pod sidecar container
+                        type: boolean
                       storageBucket:
                         description: artifact bucket storage
                         type: string
@@ -459,6 +462,9 @@ spec:
                         type: boolean
                       sharedBetweenPods:
                         description: whether to share volume between pods
+                        type: boolean
+                      sidecarScraper:
+                        description: run scraper as pod sidecar container
                         type: boolean
                       storageBucket:
                         description: artifact bucket storage
