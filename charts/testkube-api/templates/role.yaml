@@ -666,6 +666,7 @@ rules:
       - pods/log
       - configmaps
       - secrets
+      - events
     verbs:
       - get
       - watch
@@ -873,6 +874,7 @@ rules:
       - pods/log
       - configmaps
       - secrets
+      - events
     verbs:
       - get
       - watch
