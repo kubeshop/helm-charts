@@ -12,12 +12,6 @@ global:
       effect: NoSchedule
   features:
     logsV2: true
-  testWorkflows:
-    globalTemplate:
-      enabled: true
-      spec:
-        pod:
-          serviceAccountName: testkube-api-server
 
 replicaCount: 1
 
