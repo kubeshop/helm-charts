@@ -680,6 +680,53 @@ rules:
       - watch
 
 ---
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: testworkflows-job-role-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+      - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - configmaps
+      - secrets
+    verbs:
+      - get
+      - watch
+      - list
+      - create
+      - delete
+      - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - events
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
+
+---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: Role

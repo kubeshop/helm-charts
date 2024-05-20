@@ -32,6 +32,10 @@ global:
     createServiceAccountTemplates: true
     # -- Create TestWorkflowTemplates with automatically configured execution
     createOfficialTemplates: true
+    # -- Should it create default Service Account to use for the TestWorkflows with default permissions
+    createDefaultServiceAccountName: true
+    # -- Name override for the default service account name
+    # defaultServiceAccountName: ""
     # -- Global TestWorkflowTemplate that will be automatically included for all executions
     globalTemplate:
       # -- Is global template enabled
