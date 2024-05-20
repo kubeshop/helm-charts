@@ -658,17 +658,22 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - ""
     resources:
       - pods
       - pods/log
+      - configmaps
+      - secrets
+      - events
     verbs:
       - get
       - watch
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - metrics.k8s.io
     resources:
@@ -861,17 +866,22 @@ rules:
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - ""
     resources:
       - pods
       - pods/log
+      - configmaps
+      - secrets
+      - events
     verbs:
       - get
       - watch
       - list
       - create
       - delete
+      - deletecollection
   - apiGroups:
       - metrics.k8s.io
     resources:
