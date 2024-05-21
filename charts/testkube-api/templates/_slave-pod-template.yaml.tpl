@@ -10,12 +10,11 @@ metadata:
     kind: job
     name: {{`{{ .JobName }}`}}
     uid: {{`{{ .JobUID }}`}}
-spec:
   {{- with .Values.jobPodAnnotations }}
-  metadata:
-    annotations:
-      {{- toYaml . | nindent 6 }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
   {{- end }}
+spec:
   {{`{{- if gt .ActiveDeadlineSeconds 0 }}`}}
   activeDeadlineSeconds: {{`{{ .ActiveDeadlineSeconds }}`}}
   {{`{{- end }}`}}
