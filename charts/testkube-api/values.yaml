@@ -225,6 +225,9 @@ executionNamespaces:
 ## default storage class name for PVC volumes
 defaultStorageClassName: ""
 
+# storageRequest is the requested storage for PVC utilized for artifact requests.
+storageRequest: "1Gi"
+
 ## enable k8s events for testkube events
 enableK8sEvents: true
 
