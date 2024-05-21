@@ -670,6 +670,8 @@ rules:
     verbs:
       - get
       - watch
+      - patch
+      - update
       - list
       - create
       - delete
