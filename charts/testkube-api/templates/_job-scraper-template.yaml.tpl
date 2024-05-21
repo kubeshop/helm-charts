@@ -10,12 +10,12 @@ spec:
   activeDeadlineSeconds: {{`{{ .ActiveDeadlineSeconds }}`}}
   {{`{{- end }}`}}
   template:
+    {{- with .Values.jobPodAnnotations }}
+    metadata:
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
-      {{- with .Values.jobPodAnnotations }}
-      metadata:
-        annotations:
-          {{- toYaml . | nindent 10 }}
-      {{- end }}
       containers:
       {{`{{ if .Features.LogsV2 -}}`}}
       - name: "{{`{{ .Name }}`}}-logs"

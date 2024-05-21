@@ -10,12 +10,12 @@ spec:
   activeDeadlineSeconds: {{`{{ .ActiveDeadlineSeconds }}`}}
   {{`{{- end }}`}}
   template:
+    {{- with .Values.jobPodAnnotations }}
+    metadata:
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
     spec:
-      {{- with .Values.jobPodAnnotations }}
-      metadata:
-        annotations:
-          {{- toYaml . | nindent 10 }}
-      {{- end }}
       {{`{{- if ne .InitImage "" }}`}}
       initContainers:
       - name: {{`{{ .Name }}`}}-init
