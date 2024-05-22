@@ -37,6 +37,8 @@ replicaCount: 1
 
 ## Testkube Pod annotations
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+## To add annotations to the pods related to the test executions use the
+## jobPodAnnotations field.
 podAnnotations: {}
 
 ## Extra labels for Testkube API pods
@@ -66,7 +68,6 @@ imageTwToolkit:
   # tag: "1.7.24"
   digest: ""
 
-
 imageTwInit:
   registry: docker.io
   repository: kubeshop/testkube-tw-init
@@ -79,6 +80,13 @@ imageTwInit:
 ## fullnameOverride Full name that overrides Chart name
 nameOverride: ""
 fullnameOverride: ""
+
+# jobPodAnnotations adds annotations to the pods spawned to execute tests using
+# prebuilt and container executors.
+# For test workflows you can specify annotations either individually on each workflow
+# or you can specify a global template (use global.testWorkflows.globalTemplate) to
+# set annotations for all workflows.
+jobPodAnnotations: {}
 
 ## Custom job-container-template.yml that will be passed to Testkube API
 jobContainerTemplate: ""
@@ -216,6 +224,9 @@ executionNamespaces:
 
 ## default storage class name for PVC volumes
 defaultStorageClassName: ""
+
+# storageRequest is the requested storage for PVC utilized for artifact requests.
+storageRequest: "1Gi"
 
 ## enable k8s events for testkube events
 enableK8sEvents: true
@@ -546,7 +557,6 @@ minio:
     matchLabels: []
     ## Scrape interval
     interval: 15s
-
 
 ## uiIngress parameters
 uiIngress:
