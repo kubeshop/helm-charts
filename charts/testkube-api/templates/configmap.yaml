@@ -16,22 +16,22 @@ data:
 {{- if .Values.jobContainerTemplate }}
   {{ toYaml .Values.jobContainerTemplate | trimAll "|" | trim | indent 4 }}
 {{- else }}
-{{ .Files.Get "job-container-template.yml.tmpl" | indent 4 }}
+{{ include "testkube-api.job-container-template" . | indent 4 }}
 {{- end }}
   job-scraper-template.yml: |-
 {{- if .Values.jobScraperTemplate }}
   {{ toYaml .Values.jobScraperTemplate | trimAll "|" | trim | indent 4 }}
 {{- else }}
-{{ .Files.Get "job-scraper-template.yml.tmpl" | indent 4 }}
+{{ include "testkube-api.job-scraper-template" . | indent 4 }}
 {{- end }}
   job-template.yml: |-
 {{- if .Values.configValues }}
   {{ toYaml .Values.configValues | trimAll "|" | trim | indent 4 }}
 {{- else }}
-{{ .Files.Get "job-template.yml.tmpl" | indent 4 }}
+{{ include "testkube-api.job-template" . | indent 4 }}
 {{- end }}
   pvc-template.yml: |-
-{{ .Files.Get "pvc-template.yml.tmpl" | indent 4 }}
+{{ include "testkube-api.pvc-template" . | indent 4 }}
   slack-config.json: |-
 {{- if .Values.slackConfig }}
   {{ toJson .Values.slackConfig | indent 4 }}
@@ -41,7 +41,7 @@ data:
   slack-template.json: |-
 {{ .Files.Get "slack-template.json.tmpl" | indent 4 }}
   slave-pod-template.yml: |-
-{{ .Files.Get "slave-pod-template.yml.tmpl" | indent 4 }}
+{{ include "testkube-api.slave-pod-template" . | indent 4 }}
 {{- $executors := "" }}
 {{- range $k, $v := .Values.enabledExecutors }}
   {{- if $v.enabled }}

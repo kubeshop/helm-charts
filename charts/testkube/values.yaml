@@ -157,11 +157,11 @@ mongodb:
     pullSecrets: []
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Uncomment to schedule a multi-arch image to any available architecture type in a GGP Standard k8s cluster.
-#  tolerations:
-#    - key: kubernetes.io/arch
-#      operator: Equal
-#      value: arm64
-#      effect: NoSchedule
+  #  tolerations:
+  #    - key: kubernetes.io/arch
+  #      operator: Equal
+  #      value: arm64
+  #      effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
   podSecurityContext: {}
@@ -201,14 +201,14 @@ nats:
     #     pullPolicy:
     #     registry:
     # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
-#    podTemplate:
-#      merge:
-#        spec:
-#          tolerations:
-#            - key: kubernetes.io/arch
-#              operator: Equal
-#              value: arm64
-#              effect: NoSchedule
+  #    podTemplate:
+  #      merge:
+  #        spec:
+  #          tolerations:
+  #            - key: kubernetes.io/arch
+  #              operator: Equal
+  #              value: arm64
+  #              effect: NoSchedule
   config:
     merge:
       max_payload: << 8MB >>
@@ -321,6 +321,13 @@ testkube-api:
   multinamespace:
     enabled: false
 
+  # jobPodAnnotations adds annotations to the pods spawned to execute tests using
+  # prebuilt and container executors.
+  # For test workflows you can specify annotations either individually on each workflow
+  # or you can specify a global template (use global.testWorkflows.globalTemplate) to
+  # set annotations for all workflows.
+  jobPodAnnotations: {}
+
   # Custom job-container-template.yml that will be passed to Testkube API
   #  jobContainerTemplate: ""
   #
@@ -387,7 +394,6 @@ testkube-api:
     # tag: "latest"
     # -- Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
     digest: ""
-
 
   # Test Workflows init image parameters
   imageTwInit:
@@ -804,6 +810,10 @@ testkube-api:
 
   # -- default storage class name for PVC volumes
   defaultStorageClassName: ""
+
+  # storageRequest is the requested storage for PVC utilized for artifact requests.
+  storageRequest: "1Gi"
+
   # -- enable k8s events for testkube events
   enableK8sEvents: true
 
