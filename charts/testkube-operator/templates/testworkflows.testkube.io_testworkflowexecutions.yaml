@@ -15147,6 +15147,8 @@ spec:
                       type: array
                     statusAt:
                       description: when the execution result's status has changed last time (queued, passed, failed)
+                    testWorkflowExecutionName:
+                      description: test workflow execution name started the test workflow execution
                     workflow:
                       description: TestWorkflow is the Schema for the workflows API
                       properties:
