@@ -262,6 +262,7 @@ subjects:
     namespace: {{ .Release.Namespace }}
 
 ---
+
 # RBAC for additional namespaces
 {{- if .Values.additionalNamespaces }}
 {{- range .Values.additionalNamespaces }}
@@ -287,9 +288,13 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-# end range over additional namespaces
-{{- end }}
+
 ---
+# end with provided value
+ {{- end }}
+# end range over additional namespaces
+ {{- end }}
+
 # end of conditional generation of additional namespaces
 {{- end }}
 
@@ -314,9 +319,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
 
 ---
+{{- end }}
 
 {{- if not .Values.multinamespace.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -339,9 +344,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
 
 ---
+{{- end }}
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
@@ -384,7 +389,6 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{ end }}
 
 ---
 

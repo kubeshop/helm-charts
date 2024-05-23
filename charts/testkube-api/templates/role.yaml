@@ -60,7 +60,6 @@ rules:
       - ""
     resources:
       - pods
-      - pods/log
     verbs:
       - get
       - watch
@@ -68,6 +67,14 @@ rules:
       - create
       - delete
       - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
 
 ---
 
@@ -663,10 +670,8 @@ rules:
       - ""
     resources:
       - pods
-      - pods/log
       - configmaps
       - secrets
-      - events
     verbs:
       - get
       - watch
@@ -676,6 +681,15 @@ rules:
       - create
       - delete
       - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - events
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
   - apiGroups:
       - metrics.k8s.io
     resources:
@@ -832,15 +846,22 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - pods
-      - pods/log
+    - pods
     verbs:
-      - get
-      - watch
-      - list
-      - create
-      - delete
-      - deletecollection
+    - get
+    - watch
+    - list
+    - create
+    - delete
+    - deletecollection
+  - apiGroups:
+    - ""
+    resources:
+    - pods/log
+    verbs:
+    - get
+    - watch
+    - list
 {{- end }}
 
 {{- if $rangeItem.generateTestJobRBAC }}
@@ -873,17 +894,26 @@ rules:
       - ""
     resources:
       - pods
-      - pods/log
       - configmaps
       - secrets
-      - events
     verbs:
       - get
       - watch
+      - patch
+      - update
       - list
       - create
       - delete
       - deletecollection
+  - apiGroups:
+      - ""
+    resources:
+      - events
+      - pods/log
+    verbs:
+      - get
+      - watch
+      - list
   - apiGroups:
       - metrics.k8s.io
     resources:
