@@ -79,6 +79,9 @@ spec:
                 description: Uri is address where webhook should be made (golang template
                   supported)
                 type: string
+              disabled:
+                description: disable the webhook
+                type: boolean
             type: object
           status:
             description: WebhookStatus defines the observed state of Webhook

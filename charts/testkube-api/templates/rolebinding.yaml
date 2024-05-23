@@ -263,6 +263,7 @@ subjects:
 
 ---
 
+# RBAC for additional namespaces
 {{- if .Values.additionalNamespaces }}
 {{- range .Values.additionalNamespaces }}
 {{- $rangeItem := . -}}
@@ -287,12 +288,15 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
----
-{{- end }}
-{{- end }}
 
 ---
+# end with provided value
+ {{- end }}
+# end range over additional namespaces
+ {{- end }}
+
+# end of conditional generation of additional namespaces
+{{- end }}
 
 {{- if .Values.multinamespace.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -315,9 +319,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
 
 ---
+{{- end }}
 
 {{- if not .Values.multinamespace.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -340,9 +344,9 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end }}
 
 ---
+{{- end }}
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
@@ -385,7 +389,6 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{ end }}
 
 ---
 
@@ -481,7 +484,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: {{ include "testkube-api.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}    
+    namespace: {{ .Release.Namespace }}
 
 ---
 
@@ -577,8 +580,11 @@ subjects:
   - kind: ServiceAccount
     name: {{ $rangeItem.jobServiceAccountName }}
     namespace: {{ $rangeItem.namespace }}
+# end of conditional generation if generateTestJobRBAC is enabled
 {{- end }}
-
+# end of conditional generation if generateAPIServerRBAC is enabled
 {{- end }}
 {{- end }}
+{{- end }}
+# end of conditional generation if RBAC is enabled
 {{- end }}
