@@ -45,6 +45,9 @@ spec:
                     name:
                       description: custom execution name
                       type: string
+	                  testWorkflowExecutionName:
+                      descriptio: test workflow execution name started the test workflow execution
+                      type: string
                   type: object
                 testWorkflow:
                   description: LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.
@@ -15149,6 +15152,7 @@ spec:
                       description: when the execution result's status has changed last time (queued, passed, failed)
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
+                      type: string
                     workflow:
                       description: TestWorkflow is the Schema for the workflows API
                       properties:
