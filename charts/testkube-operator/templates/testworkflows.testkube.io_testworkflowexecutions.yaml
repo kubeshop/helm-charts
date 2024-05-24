@@ -46,7 +46,7 @@ spec:
                       description: custom execution name
                       type: string
 	                  testWorkflowExecutionName:
-                      descriptio: test workflow execution name started the test workflow execution
+                      description: test workflow execution name started the test workflow execution
                       type: string
                   type: object
                 testWorkflow:
