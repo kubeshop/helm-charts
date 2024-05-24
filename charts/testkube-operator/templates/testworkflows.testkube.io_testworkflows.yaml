@@ -2114,8 +2114,8 @@ spec:
                               description: pulling policy for the image
                               type: string
                             logs:
-                              description: should it fetch logs for that service
-                              type: boolean
+                              description: should save logs for the service (false if not specified)
+                              type: string
                             matrix:
                               description: matrix of parameters to spawn instances (static)
                               type: object
@@ -3727,8 +3727,8 @@ spec:
                         description: pulling policy for the image
                         type: string
                       logs:
-                        description: should it fetch logs for that service
-                        type: boolean
+                        description: should save logs for the service (false if not specified)
+                        type: string
                       matrix:
                         description: matrix of parameters to spawn instances (static)
                         type: object
@@ -6268,8 +6268,8 @@ spec:
                               description: pulling policy for the image
                               type: string
                             logs:
-                              description: should it fetch logs for that service
-                              type: boolean
+                              description: should save logs for the service (false if not specified)
+                              type: string
                             matrix:
                               description: matrix of parameters to spawn instances (static)
                               type: object
@@ -8864,8 +8864,8 @@ spec:
                               description: pulling policy for the image
                               type: string
                             logs:
-                              description: should it fetch logs for that service
-                              type: boolean
+                              description: should save logs for the service (false if not specified)
+                              type: string
                             matrix:
                               description: matrix of parameters to spawn instances (static)
                               type: object
