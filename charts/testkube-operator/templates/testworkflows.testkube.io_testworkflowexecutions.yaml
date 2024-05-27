@@ -95,6 +95,8 @@ spec:
                             type: string
                           value:
                             description: value returned
+                            type: object
+                            x-kubernetes-preserve-unknown-fields: true
                         type: object
                       type: array
                     reports:
@@ -3797,16 +3799,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
@@ -11243,16 +11241,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
@@ -14939,16 +14933,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
@@ -15032,18 +15022,28 @@ spec:
                           type: integer
                         finishedAt:
                           description: when the pod has been completed
+                          format: date-time
+                          type: string
                         initialization:
                           description: TestWorkflowStepResult contains step result of TestWorkflow
                           properties:
                             errorMessage:
                               type: string
-                            exitCode: {}
+                            exitCode:
+                              format: int64
+                              type: integer
                             finishedAt:
                               description: when the container was finished
+                              format: date-time
+                              type: string
                             queuedAt:
                               description: when the container was created
+                              format: date-time
+                              type: string
                             startedAt:
                               description: when the container was started
+                              format: date-time
+                              type: string
                             status:
                               description: TestWorkfloStepwStatus has step status of TestWorkflow
                               type: string
@@ -15058,11 +15058,15 @@ spec:
                             properties:
                               pausedAt:
                                 description: when the pause has started
+                                format: date-time
+                                type: string
                               ref:
                                 description: step at which it was paused
                                 type: string
                               resumedAt:
                                 description: when the pause has ended
+                                format: date-time
+                                type: string
                             required:
                               - pausedAt
                               - ref
@@ -15080,8 +15084,12 @@ spec:
                           type: string
                         queuedAt:
                           description: when the pod was created
+                          format: date-time
+                          type: string
                         startedAt:
                           description: when the pod has been successfully assigned
+                          format: date-time
+                          type: string
                         status:
                           description: TestWorkflowStatus has status of TestWorkflow
                           enum:
@@ -15098,13 +15106,21 @@ spec:
                             properties:
                               errorMessage:
                                 type: string
-                              exitCode: {}
+                              exitCode:
+                                format: int64
+                                type: integer
                               finishedAt:
                                 description: when the container was finished
+                                format: date-time
+                                type: string
                               queuedAt:
                                 description: when the container was created
+                                format: date-time
+                                type: string
                               startedAt:
                                 description: when the container was started
+                                format: date-time
+                                type: string
                               status:
                                 description: TestWorkfloStepwStatus has step status of TestWorkflow
                                 type: string
@@ -15123,6 +15139,8 @@ spec:
                       type: object
                     scheduledAt:
                       description: when the execution has been scheduled to run
+                      format: date-time
+                      type: string
                     signature:
                       description: structured tree of steps
                       items:
@@ -15132,8 +15150,7 @@ spec:
                             description: step category, that may be used as name fallback
                             type: string
                           children:
-                            items: {}
-                            type: array
+                            x-kubernetes-preserve-unknown-fields: true
                           name:
                             description: step name
                             type: string
@@ -15150,6 +15167,8 @@ spec:
                       type: array
                     statusAt:
                       description: when the execution result's status has changed last time (queued, passed, failed)
+                      format: date-time
+                      type: string
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string
@@ -18809,16 +18828,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
@@ -26255,16 +26270,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
@@ -29951,16 +29962,12 @@ spec:
                                     type: object
                                   setup:
                                     description: steps to run before other operations in this step
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   shell:
                                     description: script to run in a default shell for the container
                                     type: string
                                   steps:
                                     description: sub-steps to run
-                                    items: {}
-                                    type: array
                                     x-kubernetes-preserve-unknown-fields: true
                                   template:
                                     description: single template to run in this step
