@@ -1,7 +1,6 @@
 # Default values for testkube-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 ### @section  Global image parameters
 ## Important! Please, note that this will override sub-chart image parameters.
 ## Global Docker image registry
@@ -638,3 +637,8 @@ readinessProbe:
 ## Might need further increase if observing "431 Request Header Fields Too Large from api server"
 ##  See https://github.com/kubeshop/testkube/pull/2871#issuecomment-1341116696
 httpReadBufferSize: 8192
+
+## Executors' image tag
+executor:
+  image:
+    tag: ""
