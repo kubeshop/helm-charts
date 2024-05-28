@@ -407,11 +407,6 @@ testkube-api:
   testConnection:
     enabled: true
 
-  # -- Executors' image tag
-  executor:
-    image:
-      tag: ""
-
 testkube-operator:
   # should roles and roles bindings be created
   rbac:

@@ -354,11 +354,6 @@ testkube-api:
 
   nodeSelector: {}
 
-  # -- Executors' image tag
-  executor:
-    image:
-      tag: ""
-
 testkube-logs:
   fullnameOverride: testkube-logs
   nameOverride: logs

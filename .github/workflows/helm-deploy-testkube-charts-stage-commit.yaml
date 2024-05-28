@@ -62,7 +62,7 @@ jobs:
       - name: Deploy helm chart to Develop Cluster
         run: |
           helm dependency update ./charts/testkube
-          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-logs.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.executor.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false
+          helm upgrade --debug --install --atomic --timeout 180s testkube ./charts/testkube --namespace ${{ env.DEPLOYMENT_NAME }} --create-namespace  --values ./charts/testkube/values-${{ env.ENV }}.yaml --set testkube-operator.image.tag=${{ steps.vars.outputs.operator_image_tag }} --set testkube-logs.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.image.tag=${{ steps.vars.outputs.api_image_tag }} --set testkube-api.multinamespace.enabled=true --set testkube-operator.enabled=false
 
   notify_slack_if_deploy_stage_succeeds:
     runs-on: ubuntu-latest

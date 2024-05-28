@@ -355,11 +355,6 @@ testkube-api:
 
   nodeSelector: {}
 
-  # -- Executors' image tag
-  executor:
-    image:
-      tag: ""
-
 testkube-operator:
   priorityClassName: "highest-priority"
   ##Proxy Image parameters

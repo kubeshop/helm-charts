@@ -883,11 +883,6 @@ testkube-api:
   # -- Specify dnsPolicy for Testkube API Deployment
   dnsPolicy: ""
 
-  # -- Executors' image tag
-  executor:
-    image:
-      tag: ""
-
 testkube-operator:
   ## deploy Operator chart
   enabled: true
