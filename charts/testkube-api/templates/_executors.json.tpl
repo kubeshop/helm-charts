@@ -1,3 +1,4 @@
+{{- define "testkube-api.executors" -}}
 [
   {
     "name": "tracetest-executor",
@@ -541,3 +542,4 @@
     }
   }
 ]
+{{- end }}
