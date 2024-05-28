@@ -114,10 +114,9 @@ spec:
                           description: step reference
                           type: string
                         value:
-                          additionalProperties:
-                            type: dynamicList
                           description: value returned
                           type: object
+                          x-kubernetes-preserve-unknown-fields: true
                       type: object
                     type: array
                   reports:
