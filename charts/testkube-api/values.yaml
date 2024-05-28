@@ -1,7 +1,6 @@
 # Default values for testkube-api.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 ### @section  Global image parameters
 ## Important! Please, note that this will override sub-chart image parameters.
 ## Global Docker image registry
@@ -151,7 +150,7 @@ multinamespace:
   enabled: false
 
 ## Extra Environment Variables which will be injected into the Testkube API container
-extraEnvVars: {}
+extraEnvVars: []
 # - name: FOO
 #   value: BAR
 ## Additional namespaces for Testkube API to watch
@@ -487,7 +486,7 @@ minio:
   ## Deploy Minio server to the cluster
   enabled: true
   ## Minio extra vars
-  extraEnvVars: {}
+  extraEnvVars: []
   ## PVC Access Modes for Minio. The volume is mounted as read-write by a single node.
   ## Read more about access modes here: http://kubernetes.io/docs/user-guide/persistent-volumes/#access-modes
   accessModes:
