@@ -24,7 +24,7 @@ spec:
       type: string
       default: "jmeter -n"
   steps:
-  - name: Run k6 tests
+  - name: Run JMeter tests
     run:
       image: {{`"justb4/jmeter:{{ config.version }}"`}}
       shell: {{`"{{ config.run }}"`}}
