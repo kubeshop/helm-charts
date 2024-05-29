@@ -11,7 +11,7 @@ metadata:
   {{- end }}
 data:
   executors.json: |-
-{{ .Files.Get "executors.json" | indent 4 }}
+{{ include "testkube-api.executors" . | indent 4 }}
   job-container-template.yml: |-
 {{- if .Values.jobContainerTemplate }}
   {{ toYaml .Values.jobContainerTemplate | trimAll "|" | trim | indent 4 }}

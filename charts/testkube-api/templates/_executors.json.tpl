@@ -1,9 +1,10 @@
+{{- define "testkube-api.executors" -}}
 [
   {
     "name": "tracetest-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-tracetest-executor:1.17.48",
+      "image": "kubeshop/testkube-tracetest-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "tracetest"
       ],
@@ -39,7 +40,7 @@
     "name": "zap-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-zap-executor:1.17.48",
+      "image": "kubeshop/testkube-zap-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "<pythonScriptPath>"
       ],
@@ -69,7 +70,7 @@
     "name": "playwright-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-playwright-executor:1.17.48",
+      "image": "kubeshop/testkube-playwright-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "<depManager>"
       ],
@@ -98,7 +99,7 @@
     "name": "jmeter-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeter-executor:1.17.48",
+      "image": "kubeshop/testkube-jmeter-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "<entryPoint>"
       ],
@@ -138,12 +139,12 @@
     "name": "jmeterd-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeterd-executor:1.17.48",
+      "image": "kubeshop/testkube-jmeterd-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "<entryPoint>"
       ],
       "slaves": {
-        "image": "kubeshop/testkube-jmeterd-slave:1.17.48"
+        "image": "kubeshop/testkube-jmeterd-slave:{{ .Values.image.tag | default .Chart.AppVersion }}"
       },
       "args": [
         "-n",
@@ -181,7 +182,7 @@
     "name": "ginkgo-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-ginkgo-executor:1.17.48",
+      "image": "kubeshop/testkube-ginkgo-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "ginkgo"
       ],
@@ -221,7 +222,7 @@
     "name": "maven-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-maven-executor:1.17.48",
+      "image": "kubeshop/testkube-maven-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "mvn"
       ],
@@ -254,7 +255,7 @@
     "name": "gradle-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-gradle-executor:1.17.48",
+      "image": "kubeshop/testkube-gradle-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "gradle"
       ],
@@ -286,7 +287,7 @@
     "name": "kubepug-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-kubepug-executor:1.17.48",
+      "image": "kubeshop/testkube-kubepug-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "kubepug"
       ],
@@ -319,7 +320,7 @@
     "name": "soapui-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-soapui-executor:1.17.48",
+      "image": "kubeshop/testkube-soapui-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "/bin/sh",
         "/usr/local/SmartBear/EntryPoint.sh"
@@ -350,7 +351,7 @@
     "name": "k6-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-k6-executor:1.17.48",
+      "image": "kubeshop/testkube-k6-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "k6"
       ],
@@ -382,7 +383,7 @@
     "name": "cypress-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-cypress-executor:1.17.48",
+      "image": "kubeshop/testkube-cypress-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "./node_modules/cypress/bin/cypress"
       ],
@@ -418,7 +419,7 @@
     "name": "curl-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-curl-executor:1.17.48",
+      "image": "kubeshop/testkube-curl-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "curl"
       ],
@@ -448,7 +449,7 @@
     "name": "postman-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-postman-executor:1.17.48",
+      "image": "kubeshop/testkube-postman-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "newman"
       ],
@@ -485,7 +486,7 @@
     "name": "artillery-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-artillery-executor:1.17.48",
+      "image": "kubeshop/testkube-artillery-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "command": [
         "artillery"
       ],
@@ -520,7 +521,7 @@
     "name": "scraper-executor",
     "executor": {
       "executorType": "scraper",
-      "image": "kubeshop/testkube-scraper-executor:1.17.48",
+      "image": "kubeshop/testkube-scraper-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "types": []
     }
   },
@@ -528,7 +529,7 @@
     "name": "init-executor",
     "executor": {
       "executorType": "init",
-      "image": "kubeshop/testkube-init-executor:1.17.48",
+      "image": "kubeshop/testkube-init-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "types": []
     }
   },
@@ -536,8 +537,9 @@
     "name": "logs-sidecar",
     "executor": {
       "executorType": "sidecar",
-      "image": "kubeshop/testkube-logs-sidecar:1.17.48",
+      "image": "kubeshop/testkube-logs-sidecar:{{ .Values.image.tag | default .Chart.AppVersion }}",
       "types": []
     }
   }
 ]
+{{- end }}

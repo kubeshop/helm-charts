@@ -51,7 +51,7 @@ The following [Kusk Gateway](https://github.com/kubeshop/kusk-gateway/) Helm Cha
 - `kusk-gateway`: The main Kusk Gateway chart which installs the CRDs as part of the main install.
 - `kusk-gateway-envoyfleet`: The workhorse of Kusk Gateway; Creates a LoadBalancer envoy service which Kusk Gateway's manager component configures to route traffic to your APIs
 - `kusk-gateway-api`: Kusk Gateway's API server
-- `kusk-gateway-dashboard`: Subchart of Kusk Gateway's API server. Dashboard for UI interactions with the API Server.
+- `kusk-gateway-dashboard`: Subchart of Kusk Gateway's API server. Dashboard for UI interactions with the API Server
 
 ## Other projects
 
