@@ -766,6 +766,14 @@ rules:
   - apiGroups:
       - testworkflows.testkube.io
     resources:
+      - testworkflows/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - testworkflows.testkube.io
+    resources:
       - testworkflowtemplates
     verbs:
       - create
