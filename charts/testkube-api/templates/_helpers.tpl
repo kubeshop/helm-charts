@@ -94,6 +94,234 @@ Define API image
 {{- end -}}
 
 {{/*
+Define API environment in agent mode
+*/}}
+{{- define "testkube-api.env-agent-mode" -}}
+{{- if .Values.cloud.key -}}
+- name: TESTKUBE_PRO_API_KEY
+  value:  "{{ .Values.cloud.key }}"
+{{- else if .Values.cloud.existingSecret.key -}}
+- name: TESTKUBE_PRO_API_KEY
+  valueFrom:
+    secretKeyRef:
+      key: {{ .Values.cloud.existingSecret.key }}
+      name: {{ .Values.cloud.existingSecret.name }}
+{{- end -}}
+{{- if .Values.cloud.url }}
+- name: TESTKUBE_CLOUD_URL
+  value:  {{ tpl .Values.cloud.url $ | quote }}
+- name: TESTKUBE_PRO_URL
+  value:  {{ tpl .Values.cloud.url $ | quote }}
+{{- end }}
+{{- if .Values.cloud.uiUrl}}
+- name: TESTKUBE_CLOUD_UI_URL
+  value: {{ tpl .Values.cloud.uiUrl $ | quote }}
+- name: TESTKUBE_PRO_UI_URL
+  value: {{ tpl .Values.cloud.uiUrl $ | quote }}
+{{- end}}
+{{- if not .Values.cloud.tls.enabled }}
+- name: TESTKUBE_PRO_TLS_INSECURE
+  value:  "true"
+{{- end }}
+{{- if .Values.cloud.tls.certificate.secretRef }}
+- name: TESTKUBE_PRO_TLS_SECRET
+  value: {{ .Values.cloud.tls.certificate.secretRef }}
+- name: TESTKUBE_PRO_CERT_FILE
+  value:  {{ .Values.cloud.tls.certificate.certFile }}
+- name: TESTKUBE_PRO_KEY_FILE
+  value: {{ .Values.cloud.tls.certificate.keyFile }}
+- name: TESTKUBE_PRO_CA_FILE
+  value: {{ .Values.cloud.tls.certificate.caFile }}
+{{- end }}
+{{- if .Values.cloud.tls.skipVerify }}
+- name: TESTKUBE_PRO_SKIP_VERIFY
+  value:  "true"
+{{- end }}
+{{- if .Values.cloud.orgId }}
+- name: TESTKUBE_PRO_ORG_ID
+  value:  "{{ .Values.cloud.orgId }}"
+{{- end}}
+{{- if .Values.cloud.existingSecret.orgId }}
+- name: TESTKUBE_PRO_ORG_ID
+  valueFrom:
+    secretKeyRef:
+      key: {{ .Values.cloud.existingSecret.orgId }}
+      name: {{ .Values.cloud.existingSecret.name }}
+{{- end}}
+{{- if .Values.cloud.envId }}
+- name: TESTKUBE_PRO_ENV_ID
+  value:  "{{ .Values.cloud.envId }}"
+{{- end}}
+{{- if .Values.cloud.existingSecret.envId }}
+- name: TESTKUBE_PRO_ENV_ID
+  valueFrom:
+    secretKeyRef:
+      key: {{ .Values.cloud.existingSecret.envId }}
+      name: {{ .Values.cloud.existingSecret.name }}
+{{- end}}
+{{- if .Values.cloud.migrate }}
+- name: TESTKUBE_PRO_MIGRATE
+  value:  "{{ .Values.cloud.migrate }}"
+{{- end}}
+{{- end }}
+
+{{/*
+Define API environment in standalone mode
+*/}}
+{{- define "testkube-api.env-standalone-mode" -}}
+- name: API_MONGO_DSN
+  {{- if .Values.mongodb.secretName }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.mongodb.secretName }}
+      key: {{ .Values.mongodb.secretKey }}
+  {{- else }}
+  value: "{{ .Values.mongodb.dsn }}"
+  {{- end }}
+{{- if .Values.mongodb.sslCertSecret }}
+- name: API_MONGO_SSL_CERT
+  value: {{ .Values.mongodb.sslCertSecret }}
+  {{- else }}
+  {{- if .Values.mongodb.sslCertSecretSecretName }}
+- name: API_MONGO_SSL_CERT
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.mongodb.sslCertSecretSecretName }}
+      key: {{ .Values.mongodb.sslCertSecretSecretKey }}
+{{- end }}
+{{- end }}
+{{- if .Values.mongodb.sslCAFileKey }}
+- name: API_MONGO_SSL_CA_FILE_KEY
+  value: {{ .Values.mongodb.sslCAFileKey }}
+  {{- else }}
+  {{- if .Values.mongodb.sslCAFileKeySecretName }}
+- name: API_MONGO_SSL_CA_FILE_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.mongodb.sslCAFileKeySecretName }}
+      key: {{ .Values.mongodb.sslCAFileKeySecretKey }}
+  {{- end }}
+{{- end }}
+{{- if .Values.mongodb.sslClientFileKey }}
+- name: API_MONGO_SSL_CLIENT_FILE_KEY
+  value: {{ .Values.mongodb.sslClientFileKey }}
+  {{- else }}
+{{- if .Values.mongodb.sslClientFileKeySecretName }}
+- name: API_MONGO_SSL_CLIENT_FILE_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.mongodb.sslClientFileKeySecretName }}
+      key: {{ .Values.mongodb.sslClientFileKeySecretKey }}
+{{- end }}
+{{- end }}
+{{- if .Values.mongodb.sslClientFilePassKey }}
+- name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
+  value: {{ .Values.mongodb.sslClientFilePassKey }}
+  {{- else }}
+{{- if .Values.mongodb.sslClientFilePassKeySecretName }}
+- name: API_MONGO_SSL_CLIENT_FILE_PASS_KEY
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.mongodb.sslClientFilePassKeySecretName }}
+      key: {{ .Values.mongodb.sslClientFilePassKeySecretKey }}
+  {{- end }}
+{{- end }}
+{{- if .Values.mongodb.dbType }}
+- name: API_MONGO_DB_TYPE
+  value: {{ .Values.mongodb.dbType }}
+{{- end }}
+{{- if .Values.mongodb.allowTLS }}
+- name: API_MONGO_ALLOW_TLS
+  value: "{{ .Values.mongodb.allowTLS }}"
+{{- end }}
+- name: API_MONGO_ALLOW_DISK_USE
+  value: "{{ .Values.mongodb.allowDiskUse }}"
+{{- if .Values.nats.enabled }}
+- name: NATS_URI
+  {{- if .Values.nats.secretName }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.nats.secretName }}
+      key: {{ .Values.nats.secretKey }}
+  {{- else }}
+  value: "nats://{{ .Release.Name }}-nats"
+  {{- end }}
+- name: "NATS_SECURE"
+  value: "{{ .Values.nats.tls.enabled }}"
+{{- if .Values.nats.tls.certSecret.enabled }}
+- name: "NATS_CERT_FILE"
+  value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
+- name: "NATS_KEY_FILE"
+  value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.keyFile }}"
+{{- if .Values.nats.tls.mountCACertificate }}
+- name: "NATS_CA_FILE"
+  value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.caFile }}"
+{{- end }}
+{{- end }}
+{{- end }}
+- name: "STORAGE_ENDPOINT"
+  {{- if .Values.storage.endpoint }}
+  value:  "{{ .Values.storage.endpoint }}"
+  {{- else if .Values.executionNamespaces }}
+  value:  "testkube-minio-service-{{ .Release.Namespace }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.storage.endpoint_port }}"
+  {{- else }}
+  value:  "testkube-minio-service-{{ .Release.Namespace }}:{{ .Values.storage.endpoint_port }}"
+  {{- end }}
+- name: "STORAGE_BUCKET"
+  value:  "{{ .Values.storage.bucket }}"
+- name: "STORAGE_EXPIRATION"
+  value:  "{{ .Values.storage.expiration }}"
+- name: "STORAGE_ACCESSKEYID"
+  {{- if .Values.storage.secretNameAccessKeyId }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.storage.secretNameAccessKeyId }}
+      key: {{ .Values.storage.secretKeyAccessKeyId }}
+  {{- else }}
+  value: "{{ .Values.storage.accessKeyId }}"
+{{- end }}
+- name: "STORAGE_SECRETACCESSKEY"
+  {{- if .Values.storage.secretNameSecretAccessKey }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.storage.secretNameSecretAccessKey }}
+      key: {{ .Values.storage.secretKeySecretAccessKey }}
+  {{- else }}
+  value: "{{ .Values.storage.accessKey }}"
+{{- end }}
+- name: "STORAGE_REGION"
+  value: "{{ .Values.storage.region }}"
+- name: "STORAGE_TOKEN"
+  value: "{{ .Values.storage.token }}"
+- name: "STORAGE_SSL"
+  value:  "{{ .Values.storage.SSL }}"
+- name: "STORAGE_SKIP_VERIFY"
+  value:  "{{ .Values.storage.skipVerify }}"
+{{- if .Values.storage.certSecret.enabled }}
+- name: "STORAGE_CERT_FILE"
+  value:  "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.certFile }}"
+- name: "STORAGE_KEY_FILE"
+  value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.keyFile }}"
+{{- if .Values.storage.mountCACertificate }}
+- name: "STORAGE_CA_FILE"
+  value: "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.caFile }}"
+{{- end }}
+{{- end }}
+- name: "SCRAPPERENABLED"
+  value:  "{{ .Values.storage.scrapperEnabled }}"
+- name: "COMPRESSARTIFACTS"
+  value:  "{{ .Values.storage.compressArtifacts }}"
+- name: "LOGS_BUCKET"
+  value:  "{{ .Values.logs.bucket }}"
+- name: "LOGS_STORAGE"
+  {{- if .Values.logs.storage }}
+  value:  "{{ .Values.logs.storage }}"
+  {{- else }}
+  value:  "mongo"
+  {{- end }}
+{{- end }}
+
+{{/*
 Define Test Workflows Toolkit Image
 */}}
 {{- define "testkube-tw-toolkit.image" -}}
