@@ -312,6 +312,12 @@ additionalVolumes: []
 ## Additional volume mounts to be added
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
 additionalVolumeMounts: []
+## Additional volumes to be added to the Test Jobs
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalJobVolumes: []
+## Additional volume mounts to be added to the Test Jobs
+## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+additionalJobVolumeMounts: []
 
 ## Storage for Testkube API. Now Minio is used:
 storage:
