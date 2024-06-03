@@ -334,6 +334,9 @@ spec:
                   cronJobTemplate:
                     description: cron job template extensions
                     type: string
+                  disableWebhooks:
+                    description: whether webhooks should be called on execution
+                    type: boolean
                   executionLabels:
                     additionalProperties:
                       type: string
