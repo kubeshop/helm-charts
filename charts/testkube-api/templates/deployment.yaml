@@ -134,14 +134,6 @@ spec:
             - name: APISERVER_HTTP_READBUFFERSIZE
               value: {{ .Values.httpReadBufferSize | quote }}
             {{- end}}
-            - name: TESTKUBE_OAUTH_CLIENTID
-              value:  "{{ .Values.cliIngress.oauth.clientID }}"
-            - name: TESTKUBE_OAUTH_CLIENTSECRET
-              value:  "{{ .Values.cliIngress.oauth.clientSecret }}"
-            - name: TESTKUBE_OAUTH_PROVIDER
-              value:  "{{ .Values.cliIngress.oauth.provider }}"
-            - name: TESTKUBE_OAUTH_SCOPES
-              value:  "{{ .Values.cliIngress.oauth.scopes }}"
             - name: TESTKUBE_WATCHER_NAMESPACES
               value: "{{ include "testkube-api.watcher-namespaces" . | nindent 12 | trim }}"
             {{- if .Values.extraEnvVars }}
