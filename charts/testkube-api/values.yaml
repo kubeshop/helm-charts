@@ -87,6 +87,10 @@ fullnameOverride: ""
 # set annotations for all workflows.
 jobPodAnnotations: {}
 
+# jobAnnotations adds annotations to the jobs spawned to execute tests using
+# prebuilt and container executors, when using the default job templates.
+jobAnnotations: {}
+
 ## Custom job-container-template.yml that will be passed to Testkube API
 jobContainerTemplate: ""
 
