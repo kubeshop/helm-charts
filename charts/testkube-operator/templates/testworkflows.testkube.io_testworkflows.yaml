@@ -410,6 +410,63 @@ spec:
                               revision:
                                 description: branch, commit or a tag name to fetch
                                 type: string
+                              sshKey:
+                                description: plain text SSH private key to fetch with
+                                type: string
+                              sshKeyFrom:
+                                description: external SSH private key to fetch with
+                                properties:
+                                  configMapKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  fieldRef:
+                                    properties:
+                                      apiVersion:
+                                        type: string
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                      - fieldPath
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  resourceFieldRef:
+                                    properties:
+                                      containerName:
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        type: string
+                                    required:
+                                      - resource
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  secretKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                type: object
                               token:
                                 description: plain text token to fetch with
                                 type: string
@@ -2016,6 +2073,63 @@ spec:
                                     revision:
                                       description: branch, commit or a tag name to fetch
                                       type: string
+                                    sshKey:
+                                      description: plain text SSH private key to fetch with
+                                      type: string
+                                    sshKeyFrom:
+                                      description: external SSH private key to fetch with
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                      type: object
                                     token:
                                       description: plain text token to fetch with
                                       type: string
@@ -3256,6 +3370,63 @@ spec:
                         revision:
                           description: branch, commit or a tag name to fetch
                           type: string
+                        sshKey:
+                          description: plain text SSH private key to fetch with
+                          type: string
+                        sshKeyFrom:
+                          description: external SSH private key to fetch with
+                          properties:
+                            configMapKeyRef:
+                              properties:
+                                key:
+                                  type: string
+                                name:
+                                  type: string
+                                optional:
+                                  type: boolean
+                              required:
+                                - key
+                              type: object
+                              x-kubernetes-map-type: atomic
+                            fieldRef:
+                              properties:
+                                apiVersion:
+                                  type: string
+                                fieldPath:
+                                  type: string
+                              required:
+                                - fieldPath
+                              type: object
+                              x-kubernetes-map-type: atomic
+                            resourceFieldRef:
+                              properties:
+                                containerName:
+                                  type: string
+                                divisor:
+                                  anyOf:
+                                    - type: integer
+                                    - type: string
+                                  pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                  x-kubernetes-int-or-string: true
+                                resource:
+                                  type: string
+                              required:
+                                - resource
+                              type: object
+                              x-kubernetes-map-type: atomic
+                            secretKeyRef:
+                              properties:
+                                key:
+                                  type: string
+                                name:
+                                  type: string
+                                optional:
+                                  type: boolean
+                              required:
+                                - key
+                              type: object
+                              x-kubernetes-map-type: atomic
+                          type: object
                         token:
                           description: plain text token to fetch with
                           type: string
@@ -3753,6 +3924,63 @@ spec:
                               revision:
                                 description: branch, commit or a tag name to fetch
                                 type: string
+                              sshKey:
+                                description: plain text SSH private key to fetch with
+                                type: string
+                              sshKeyFrom:
+                                description: external SSH private key to fetch with
+                                properties:
+                                  configMapKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  fieldRef:
+                                    properties:
+                                      apiVersion:
+                                        type: string
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                      - fieldPath
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  resourceFieldRef:
+                                    properties:
+                                      containerName:
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        type: string
+                                    required:
+                                      - resource
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  secretKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                type: object
                               token:
                                 description: plain text token to fetch with
                                 type: string
@@ -4900,6 +5128,63 @@ spec:
                               revision:
                                 description: branch, commit or a tag name to fetch
                                 type: string
+                              sshKey:
+                                description: plain text SSH private key to fetch with
+                                type: string
+                              sshKeyFrom:
+                                description: external SSH private key to fetch with
+                                properties:
+                                  configMapKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  fieldRef:
+                                    properties:
+                                      apiVersion:
+                                        type: string
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                      - fieldPath
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  resourceFieldRef:
+                                    properties:
+                                      containerName:
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        type: string
+                                    required:
+                                      - resource
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  secretKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                type: object
                               token:
                                 description: plain text token to fetch with
                                 type: string
@@ -6506,6 +6791,63 @@ spec:
                                     revision:
                                       description: branch, commit or a tag name to fetch
                                       type: string
+                                    sshKey:
+                                      description: plain text SSH private key to fetch with
+                                      type: string
+                                    sshKeyFrom:
+                                      description: external SSH private key to fetch with
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                      type: object
                                     token:
                                       description: plain text token to fetch with
                                       type: string
@@ -7708,6 +8050,63 @@ spec:
                               revision:
                                 description: branch, commit or a tag name to fetch
                                 type: string
+                              sshKey:
+                                description: plain text SSH private key to fetch with
+                                type: string
+                              sshKeyFrom:
+                                description: external SSH private key to fetch with
+                                properties:
+                                  configMapKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  fieldRef:
+                                    properties:
+                                      apiVersion:
+                                        type: string
+                                      fieldPath:
+                                        type: string
+                                    required:
+                                      - fieldPath
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  resourceFieldRef:
+                                    properties:
+                                      containerName:
+                                        type: string
+                                      divisor:
+                                        anyOf:
+                                          - type: integer
+                                          - type: string
+                                        pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                        x-kubernetes-int-or-string: true
+                                      resource:
+                                        type: string
+                                    required:
+                                      - resource
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                  secretKeyRef:
+                                    properties:
+                                      key:
+                                        type: string
+                                      name:
+                                        type: string
+                                      optional:
+                                        type: boolean
+                                    required:
+                                      - key
+                                    type: object
+                                    x-kubernetes-map-type: atomic
+                                type: object
                               token:
                                 description: plain text token to fetch with
                                 type: string
@@ -9314,6 +9713,63 @@ spec:
                                     revision:
                                       description: branch, commit or a tag name to fetch
                                       type: string
+                                    sshKey:
+                                      description: plain text SSH private key to fetch with
+                                      type: string
+                                    sshKeyFrom:
+                                      description: external SSH private key to fetch with
+                                      properties:
+                                        configMapKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        fieldRef:
+                                          properties:
+                                            apiVersion:
+                                              type: string
+                                            fieldPath:
+                                              type: string
+                                          required:
+                                            - fieldPath
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        resourceFieldRef:
+                                          properties:
+                                            containerName:
+                                              type: string
+                                            divisor:
+                                              anyOf:
+                                                - type: integer
+                                                - type: string
+                                              pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                              x-kubernetes-int-or-string: true
+                                            resource:
+                                              type: string
+                                          required:
+                                            - resource
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                        secretKeyRef:
+                                          properties:
+                                            key:
+                                              type: string
+                                            name:
+                                              type: string
+                                            optional:
+                                              type: boolean
+                                          required:
+                                            - key
+                                          type: object
+                                          x-kubernetes-map-type: atomic
+                                      type: object
                                     token:
                                       description: plain text token to fetch with
                                       type: string
