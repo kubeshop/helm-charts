@@ -5,6 +5,10 @@ kind: Job
 metadata:
   name: {{`{{ .Name }}`}}-scraper
   namespace: {{`{{ .Namespace }}`}}
+  {{- with .Values.jobAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{`{{- if gt .ActiveDeadlineSeconds 0 }}`}}
   activeDeadlineSeconds: {{`{{ .ActiveDeadlineSeconds }}`}}
