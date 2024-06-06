@@ -163,6 +163,29 @@ Define API environment in agent mode
 - name: TESTKUBE_PRO_MIGRATE
   value:  "{{ .Values.cloud.migrate }}"
 {{- end}}
+{{- if .Values.nats.enabled }}
+- name: NATS_URI
+  {{- if .Values.nats.secretName }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.nats.secretName }}
+      key: {{ .Values.nats.secretKey }}
+  {{- else }}
+  value: "nats://{{ .Release.Name }}-nats"
+  {{- end }}
+- name: "NATS_SECURE"
+  value: "{{ .Values.nats.tls.enabled }}"
+{{- if .Values.nats.tls.certSecret.enabled }}
+- name: "NATS_CERT_FILE"
+  value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
+- name: "NATS_KEY_FILE"
+  value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.keyFile }}"
+{{- if .Values.nats.tls.mountCACertificate }}
+- name: "NATS_CA_FILE"
+  value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.caFile }}"
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 
 {{/*
