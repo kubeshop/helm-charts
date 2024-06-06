@@ -3610,6 +3610,12 @@ spec:
                       description: namespace for execution of test workflow
                       type: string
                   type: object
+                notifications:
+                  description: configuration for notifications
+                  properties:
+                    disableWebhooks:
+                      type: boolean
+                  type: object
                 pod:
                   description: configuration for the scheduled pod
                   properties:
