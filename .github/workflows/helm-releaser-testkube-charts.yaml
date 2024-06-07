@@ -145,6 +145,33 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_FOOTER: "Kubeshop --> TestKube"
 
+  get_agent_version:
+    name: Pass Testkube OSS chart version to cloud-charts repo
+    needs: notify_slack_if_release_succeeds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - name: Get charts version
+        run: echo agent-version=$(helm show chart ./charts/testkube | grep -E "^version:" | awk '{print $2}')  >> $GITHUB_ENV
+
+      - name: Repository dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.CI_BOT_TOKEN }}
+          repository: kubeshop/testkube-cloud-charts
+          event-type: trigger-workflow-testkube-agent-main
+          client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
+
+
   deploy-to-testkube-dev-gke:
     name: Deploy
     runs-on: ubuntu-latest
