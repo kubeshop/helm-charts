@@ -457,6 +457,8 @@ mongodb:
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
 nats:
+  ## Start NATS embedded server in api binary instead of separate deployment
+  embedded: false
   ## Deploy NATS server to the cluster
   enabled: true
   tls:

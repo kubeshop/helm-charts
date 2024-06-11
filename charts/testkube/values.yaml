@@ -507,6 +507,7 @@ testkube-api:
   # NATS parameters
   # ref: https://github.com/nats-io/nats-server
   nats:
+    embedded: false
     # -- Use NATS
     enabled: true
     # -- NATS URI
