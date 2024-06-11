@@ -82,6 +82,9 @@ spec:
             name: {{`{{ .AgentAPITLSSecret }}`}}
           {{`{{- end }}`}}
         {{`{{- end }}`}}
+        {{- with .Values.additionalJobVolumeMounts }}
+          {{- toYaml . | nindent 10 -}}
+        {{- end }}
       volumes:
       {{`{{- if .RunnerCustomCASecret }}`}}
         - name: {{`{{ .RunnerCustomCASecret }}`}}
@@ -101,6 +104,9 @@ spec:
             secretName: {{`{{ .AgentAPITLSSecret }}`}}
         {{`{{- end }}`}}
       {{`{{- end }}`}}
+      {{- with .Values.additionalJobVolumes }}
+        {{- toYaml . | nindent 8 -}}
+      {{- end }}
       restartPolicy: Never
       {{`{{- if .ServiceAccountName }}`}}
       serviceAccountName: {{`{{ .ServiceAccountName }}`}}

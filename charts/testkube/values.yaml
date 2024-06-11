@@ -440,6 +440,12 @@ testkube-api:
   ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
   # -- Additional volume mounts to be added
   additionalVolumeMounts: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volumes to be added to the Test Jobs
+  additionalJobVolumes: []
+  ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
+  # -- Additional volume mounts to be added to the Test Jobs
+  additionalJobVolumeMounts: []
 
   ## Service Account parameters
   serviceAccount:

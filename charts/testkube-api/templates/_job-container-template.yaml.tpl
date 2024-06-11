@@ -72,7 +72,10 @@ spec:
           mountPath: {{`{{ $secret.MountPath }}`}}
         {{`{{- end }}`}}
         {{`{{- end }}`}}
-      {{`{{- end }}`}}
+        {{`{{- end }}`}}
+        {{- with .Values.additionalJobVolumeMounts }}
+        {{- toYaml . | nindent 8 -}}
+        {{- end }}
       containers:
       {{`{{ if .Features.LogsV2 -}}`}}
       - name: "{{`{{ .Name }}`}}-logs"
@@ -131,12 +134,15 @@ spec:
           name: {{`{{ .AgentAPITLSSecret }}`}}
         {{`{{- end }}`}}
         {{`{{- if .RunnerCustomCASecret }}`}}
-          - name: {{`{{ .RunnerCustomCASecret }}`}}
-            mountPath: /etc/testkube/certs/testkube-custom-ca.pem
-            readOnly: true
-            subPath: ca.crt
+        - name: {{`{{ .RunnerCustomCASecret }}`}}
+          mountPath: /etc/testkube/certs/testkube-custom-ca.pem
+          readOnly: true
+          subPath: ca.crt
         {{`{{- end }}`}}
-      {{`{{- end }}`}}
+        {{`{{- end }}`}}
+        {{- with .Values.additionalJobVolumeMounts }}
+        {{- toYaml . | nindent 8 -}}
+        {{- end }}
       - name: "{{`{{ .Name }}`}}"
         {{`{{- if .Registry }}`}}
         image: {{`{{ .Registry }}`}}/{{`{{ .Image }}`}}
@@ -191,6 +197,9 @@ spec:
           mountPath: {{`{{ $secret.MountPath }}`}}
         {{`{{- end }}`}}
         {{`{{- end }}`}}
+        {{- with .Values.additionalJobVolumeMounts }}
+        {{- toYaml . | nindent 8 -}}
+        {{- end }}
       volumes:
       {{`{{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}`}}
       - name: data-volume
@@ -233,6 +242,9 @@ spec:
           secretName: {{`{{ $secret.Reference.Name }}`}}
       {{`{{- end }}`}}
       {{`{{- end }}`}}
+      {{- with .Values.additionalJobVolumes }}
+      {{- toYaml . | nindent 6 -}}
+      {{- end }}
       restartPolicy: Never
       {{`{{- if .ServiceAccountName }}`}}
       serviceAccountName: {{`{{ .ServiceAccountName }}`}}
