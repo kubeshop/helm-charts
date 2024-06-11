@@ -163,6 +163,8 @@ Define API environment in agent mode
 - name: TESTKUBE_PRO_MIGRATE
   value:  "{{ .Values.cloud.migrate }}"
 {{- end}}
+- name: "NATS_EMBEDDED"
+  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.enabled }}
 - name: NATS_URI
   {{- if .Values.nats.secretName }}
@@ -175,8 +177,6 @@ Define API environment in agent mode
   {{- end }}
 - name: "NATS_SECURE"
   value: "{{ .Values.nats.tls.enabled }}"
-- name: "NATS_EMBEDDED"
-  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.tls.certSecret.enabled }}
 - name: "NATS_CERT_FILE"
   value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
@@ -261,6 +261,8 @@ Define API environment in standalone mode
 {{- end }}
 - name: API_MONGO_ALLOW_DISK_USE
   value: "{{ .Values.mongodb.allowDiskUse }}"
+- name: "NATS_EMBEDDED"
+  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.enabled }}
 - name: NATS_URI
   {{- if .Values.nats.secretName }}
@@ -273,8 +275,6 @@ Define API environment in standalone mode
   {{- end }}
 - name: "NATS_SECURE"
   value: "{{ .Values.nats.tls.enabled }}"
-- name: "NATS_EMBEDDED"
-  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.tls.certSecret.enabled }}
 - name: "NATS_CERT_FILE"
   value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
