@@ -225,6 +225,10 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            {{- if .Values.nats.embedded }}
+            - mountPath: /app/nats
+              name: testkube-nats
+            {{- end }}
             - mountPath: /app/config
               name: testkube-config
             {{- if .Values.storage.certSecret.enabled }}
@@ -261,6 +265,10 @@ spec:
         - name: testkube-config
           configMap:
             name: {{ include "testkube-api.fullname" . }}
+        {{- if .Values.nats.embedded }}
+        - name: testkube-nats
+          emptyDir: {}
+        {{- end }}
         {{- if .Values.storage.certSecret.enabled }}
         - name: {{ .Values.storage.certSecret.name }}
           secret:
