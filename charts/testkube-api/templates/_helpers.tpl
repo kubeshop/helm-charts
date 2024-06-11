@@ -175,8 +175,6 @@ Define API environment in agent mode
   {{- end }}
 - name: "NATS_SECURE"
   value: "{{ .Values.nats.tls.enabled }}"
-- name: "NATS_EMBEDDED"
-  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.tls.certSecret.enabled }}
 - name: "NATS_CERT_FILE"
   value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
@@ -279,8 +277,6 @@ Define API environment in standalone mode
   {{- end }}
 - name: "NATS_SECURE"
   value: "{{ .Values.nats.tls.enabled }}"
-- name: "NATS_EMBEDDED"
-  value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.tls.certSecret.enabled }}
 - name: "NATS_CERT_FILE"
   value:  "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.certFile }}"
