@@ -507,6 +507,7 @@ testkube-api:
   # NATS parameters
   # ref: https://github.com/nats-io/nats-server
   nats:
+    # -- Start NATS embedded server in api binary instead of separate deployment
     embedded: false
     # -- Use NATS
     enabled: true
