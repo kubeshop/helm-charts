@@ -5,7 +5,6 @@ metadata:
   name: official--artillery--beta
   labels:
     testkube.io/name: Artillery
-    testkube.io/wizard: enabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"

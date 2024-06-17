@@ -2,7 +2,7 @@
 kind: TestWorkflowTemplate
 apiVersion: testworkflows.testkube.io/v1
 metadata:
-  name: official--k6--beta
+  name: official--k6--v1
   labels:
     testkube.io/name: k6
     testkube.io/wizard: enabled
@@ -13,6 +13,8 @@ metadata:
     testkube.io/categories: Load & Performance
     testkube.io/description: Run k6 tests
     testkube.io/icon: k6
+    testkube.io/image: grafana/k6
+    testkube.io/example-path: k6.js
     testkube.io/example: |
       import http from 'k6/http';
       import { sleep } from 'k6';
@@ -29,7 +31,7 @@ spec:
     run:
       description: Run command
       type: string
-      default: "k6 run"
+      default: "k6 run k6.js"
   steps:
   - name: Run k6 tests
     run:
