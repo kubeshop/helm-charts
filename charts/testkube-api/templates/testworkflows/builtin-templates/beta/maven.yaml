@@ -5,6 +5,7 @@ metadata:
   name: official--maven--beta
   labels:
     testkube.io/name: Maven
+    testkube.io/wizard: disabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"
