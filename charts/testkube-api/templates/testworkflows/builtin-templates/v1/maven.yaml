@@ -2,30 +2,31 @@
 kind: TestWorkflowTemplate
 apiVersion: testworkflows.testkube.io/v1
 metadata:
-  name: official--jmeter--beta
+  name: official--maven--v1
   labels:
-    testkube.io/name: JMeter
+    testkube.io/name: Maven
     testkube.io/wizard: enabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"
     helm.sh/hook-delete-policy: hook-failed,before-hook-creation
-    testkube.io/categories: Load & Performance
-    testkube.io/description: Run JMeter Plan
-    testkube.io/icon: jmeter
+    testkube.io/categories: Other
+    testkube.io/description: Maven
+    testkube.io/icon: maven
+    testkube.io/image: maven
 spec:
   config:
     version:
-      description: JMeter version to use
+      description: Maven version to use
       type: string
-      default: "5.5"
+      default: 3.9.6-eclipse-temurin-22-alpine
     run:
       description: Run command
       type: string
-      default: "jmeter -n"
+      default: "mvn test"
   steps:
-  - name: Run JMeter tests
+  - name: Run Maven command
     run:
-      image: {{`"justb4/jmeter:{{ config.version }}"`}}
+      image: {{`"maven:{{ config.version }}"`}}
       shell: {{`"{{ config.run }}"`}}
 {{- end }}
