@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: API
     testkube.io/description: Run Postman tests
     testkube.io/icon: postman
+    testkube.io/image: postman/newman
 spec:
   config:
     version:

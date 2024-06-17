@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: Load & Performance
     testkube.io/description: Run Artillery tests
     testkube.io/icon: artillery
+    testkube.io/image: artilleryio/artillery
     testkube.io/example-path: script.yaml
     testkube.io/example: |
       config:

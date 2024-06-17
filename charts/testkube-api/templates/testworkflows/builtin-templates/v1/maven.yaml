@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: Other
     testkube.io/description: Maven
     testkube.io/icon: maven
+    testkube.io/image: maven
 spec:
   config:
     version:

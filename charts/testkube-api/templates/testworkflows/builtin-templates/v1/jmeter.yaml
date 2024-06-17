@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: Load & Performance
     testkube.io/description: Run JMeter Plan
     testkube.io/icon: jmeter
+    testkube.io/image: justb4/jmeter
 spec:
   config:
     version:

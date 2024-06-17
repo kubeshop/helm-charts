@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: E2E
     testkube.io/description: Run Cypress tests
     testkube.io/icon: cypress
+    testkube.io/image: cypress/included
 spec:
   config:
     dependencies_command:

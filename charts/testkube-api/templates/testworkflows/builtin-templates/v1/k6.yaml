@@ -13,6 +13,7 @@ metadata:
     testkube.io/categories: Load & Performance
     testkube.io/description: Run k6 tests
     testkube.io/icon: k6
+    testkube.io/image: grafana/k6
     testkube.io/example-path: k6.js
     testkube.io/example: |
       import http from 'k6/http';
