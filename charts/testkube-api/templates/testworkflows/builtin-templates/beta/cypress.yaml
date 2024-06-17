@@ -5,6 +5,7 @@ metadata:
   name: official--cypress--beta
   labels:
     testkube.io/name: Cypress
+    testkube.io/wizard: disabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"
