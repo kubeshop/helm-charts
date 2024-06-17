@@ -5,7 +5,6 @@ metadata:
   name: official--postman--beta
   labels:
     testkube.io/name: Postman
-    testkube.io/wizard: enabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"

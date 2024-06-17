@@ -5,7 +5,6 @@ metadata:
   name: official--k6--beta
   labels:
     testkube.io/name: k6
-    testkube.io/wizard: enabled
   annotations:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"
