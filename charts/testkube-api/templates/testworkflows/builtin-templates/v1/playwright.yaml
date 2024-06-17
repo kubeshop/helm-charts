@@ -22,13 +22,13 @@ spec:
     version:
       description: Playwright version to use
       type: string
-      default: 1.43.0
+      default: v1.43.0
     run:
       description: Run command
       type: string
       default: "npx playwright test"
   container:
-    image: {{`"mcr.microsoft.com/playwright:v{{ config.version }}"`}}
+    image: {{`"mcr.microsoft.com/playwright:{{ config.version }}"`}}
   steps:
   - name: Install dependencies
     shell: {{`"{{ config.dependencies_command }}"`}}
