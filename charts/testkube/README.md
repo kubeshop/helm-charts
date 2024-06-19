@@ -1,6 +1,6 @@
 # testkube
 
-Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
+Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure
 
 ![Version: 1.16.49](https://img.shields.io/badge/Version-1.16.49-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
