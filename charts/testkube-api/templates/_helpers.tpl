@@ -163,6 +163,10 @@ Define API environment in agent mode
 - name: TESTKUBE_PRO_MIGRATE
   value:  "{{ .Values.cloud.migrate }}"
 {{- end}}
+- name: "SCRAPPERENABLED"
+  value:  "{{ .Values.storage.scrapperEnabled }}"
+- name: "COMPRESSARTIFACTS"
+  value:  "{{ .Values.storage.compressArtifacts }}"
 - name: "NATS_EMBEDDED"
   value: "{{ .Values.nats.embedded }}"
 {{- if .Values.nats.enabled }}
