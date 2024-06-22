@@ -44,6 +44,20 @@ global:
       #   pod:
       #     imagePullSecrets:
       #     - name: regcred
+  # -- Running Testkube in Agent mode
+  pro:
+    # -- Testkube Pro Agent API URL
+    url: "agent.testkube.io:443"
+    # -- Testkube Pro UI URL
+    uiUrl: ""
+    # -- Testkube Pro Agent key
+    key: ""
+    ## Retrieve cloud information from existing secret
+    existingSecret:
+      # -- Name of the secret. If set, this will be used instead of the above values
+      name: ""
+      # -- Key for the License Key
+      key: ""
 
 # -- MongoDB pre-upgrade parameters
 preUpgradeHook:
@@ -465,12 +479,6 @@ testkube-api:
 
   # Testkube Agent settings
   cloud:
-    # -- Testkube Cloud API URL
-    url: "agent.testkube.io:443"
-    ## URL of the Cloud UI
-    uiUrl: ""
-    # -- Testkube Clouc License Key (for Environment)
-    key: ""
     tls:
       # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
       enabled: true

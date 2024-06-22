@@ -22,6 +22,20 @@ global:
       enabled: false
       name: global-template
       spec: {}
+  ## Running Testkube in Agent mode
+  pro:
+    ## Testkube Pro Agent API URL
+    url: "agent.testkube.io:443"
+    ## Testkube Pro UI URL
+    uiUrl: ""
+    ## Testkube Pro Agent key
+    key: ""
+    ## Retrieve cloud information from existing secret
+    existingSecret:
+      ## Name of the secret. If set, this will be used instead of the above values
+      name: ""
+      ## Key for the License Key
+      key: ""
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -103,15 +117,18 @@ configValues: ""
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
+  ## DEPRECATED: Use global.pro.url instead
   ## URL of the Cloud Saas Control Plane
   url: "agent.testkube.io:443"
+  ## DEPRECATED: Use global.pro.uiUrl instead
   ## URL of the Cloud UI
   uiUrl: ""
-  ## License Key
+  ## DEPRECATED: Use global.pro.key instead
+  ## Agent Token
   key: ""
-  ## Organization ID
+  ## DEPRECATED: Organization ID is fetched dynamically
   orgId: ""
-  ## Environment ID
+  ## DEPRECATED: Environment ID is fetched dynamically
   envId: ""
   ## true if migration from OSS
   migrate: ""
@@ -137,8 +154,10 @@ cloud:
     name: ""
     ## Key for the License Key
     key: ""
+    ## DEPRECATED: Organization ID is fetched dynamically
     ## Key for the Organization ID
     orgId: ""
+    ## DEPRECATED: Environment ID is fetched dynamically
     ## Key for the Environment ID
     envId: ""
 
