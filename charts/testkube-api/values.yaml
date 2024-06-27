@@ -13,6 +13,8 @@ global:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  tls:
+    skipVerify: false
   features:
     logsV2: false
   testWorkflows:
