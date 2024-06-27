@@ -26,6 +26,9 @@ global:
   # -- Features map for the whole chart
   features:
     logsV2: false
+  tls:
+    # -- Toggle whether to globally skip certificate verification
+    skipVerify: false
   # -- Test Workflows configuration
   testWorkflows:
     # -- Create TestWorkflowTemplates to easily use the service account
