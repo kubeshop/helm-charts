@@ -34,7 +34,7 @@ global:
   ## Global TLS settings
   tls:
     # -- Toggle whether to globally skip certificate verification
-    skipVerify: false
+    #skipVerify: false
     # -- Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously)
     caCertPath: ""
   # -- Global volume settings (API & Test Jobs)

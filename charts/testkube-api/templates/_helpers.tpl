@@ -133,10 +133,8 @@ Define API environment in agent mode
 - name: TESTKUBE_PRO_CA_FILE
   value: {{ .Values.cloud.tls.certificate.caFile }}
 {{- end }}
-{{- if .Values.cloud.tls.skipVerify }}
 - name: TESTKUBE_PRO_SKIP_VERIFY
-  value:  "true"
-{{- end }}
+  value:  "{{ if hasKey .Values.global.tls "skipVerify" }}{{ .Values.global.tls.skipVerify }}{{ else }}{{ .Values.cloud.tls.skipVerify }}{{ end }}"
 {{- if .Values.cloud.orgId }}
 - name: TESTKUBE_PRO_ORG_ID
   value:  "{{ .Values.cloud.orgId }}"
@@ -331,7 +329,7 @@ Define API environment in standalone mode
 - name: "STORAGE_SSL"
   value:  "{{ .Values.storage.SSL }}"
 - name: "STORAGE_SKIP_VERIFY"
-  value:  "{{ .Values.storage.skipVerify }}"
+  value: "{{ if hasKey .Values.global.tls "skipVerify" }}{{ .Values.global.tls.skipVerify }}{{ else }}{{ .Values.storage.skipVerify }}{{ end }}"
 {{- if .Values.storage.certSecret.enabled }}
 - name: "STORAGE_CERT_FILE"
   value:  "{{ .Values.storage.certSecret.baseMountPath }}/{{ .Values.storage.certSecret.certFile }}"
