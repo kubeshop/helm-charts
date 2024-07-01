@@ -15,6 +15,7 @@ global:
   tolerations: []
   features:
     logsV2: false
+    whitelistedContainers: init,logs,scraper
   testWorkflows:
     createServiceAccountTemplates: true
     createOfficialTemplates: true
