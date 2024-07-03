@@ -23,9 +23,15 @@ global:
       operator: Equal
       value: arm64
       effect: NoSchedule
-  # -- Features map for the whole chart
+  ## Features map for the whole chart
   features:
+    # -- Toggle whether to enable V2 log support
     logsV2: false
+    ## logs - scrape logs from v2 logs sidecar container
+    ## init - scrape logs from init container
+    ## scraper - scrape logs from testkube scraper container
+    # -- Comma-separated array of containers which should get scraped for logs
+    whitelistedContainers: init,logs,scraper
   # -- Test Workflows configuration
   testWorkflows:
     # -- Create TestWorkflowTemplates to easily use the service account
