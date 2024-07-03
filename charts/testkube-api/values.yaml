@@ -101,6 +101,18 @@ jobScraperTemplate: ""
 ## Custom job-template.yml that will be passed to Testkube API
 configValues: ""
 
+## Resource requests and limits for Init Container
+initContainerResources: ""
+
+## Resource requests and limits for LogsV2 Container
+logsV2ContainerResources: ""
+
+## Resource requests and limits for Scraper Container
+scraperContainerResources: ""
+
+## Resource requests and limits for Main Container
+containerResources: ""
+
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
@@ -271,7 +283,7 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
   # requests:
-  #   cpu: 100m
+#   cpu: 100m
 #   memory: 128Mi
 
 ## Autoscaling parameters

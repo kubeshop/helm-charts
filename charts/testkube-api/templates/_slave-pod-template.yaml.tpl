@@ -30,6 +30,10 @@ spec:
     command:
       - "/bin/runner"
       - '{{`{{ .Jsn }}`}}'
+    {{- with .Values.initContainerResources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     {{`{{- if .RunnerCustomCASecret }}`}}
     env:
       - name: SSL_CERT_DIR
@@ -78,6 +82,10 @@ spec:
     image: {{`{{ .LogSidecarImage }}`}}
     {{`{{- end }}`}}
     imagePullPolicy: IfNotPresent
+    {{- with .Values.logsV2ContainerResources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     env:
     - name: POD_NAME
       valueFrom:
@@ -101,6 +109,10 @@ spec:
     image: {{`{{ .Image }}`}}
     {{`{{- end }}`}}
     imagePullPolicy: IfNotPresent
+    {{- with .Values.containerResources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
     ports:
     {{`{{- range $port := .Ports }}`}}
     - name: {{`{{ $port.Name }}`}}
