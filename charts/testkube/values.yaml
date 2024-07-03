@@ -349,16 +349,16 @@ testkube-api:
   jobAnnotations: {}
 
   ## Resource requests and limits for Init Container
-  initContainerResources: ""
+  initContainerResources: {}
 
   ## Resource requests and limits for LogsV2 Container
-  logsV2ContainerResources: ""
+  logsV2ContainerResources: {}
 
   ## Resource requests and limits for Scraper Container
-  scraperContainerResources: ""
+  scraperContainerResources: {}
 
   ## Resource requests and limits for Main Container
-  containerResources: ""
+  containerResources: {}
 
   # Custom job-container-template.yml that will be passed to Testkube API
   #  jobContainerTemplate: ""
