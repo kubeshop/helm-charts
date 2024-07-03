@@ -29,6 +29,10 @@ spec:
         image: {{`{{ .LogSidecarImage }}`}}
         {{`{{- end }}`}}
         imagePullPolicy: IfNotPresent
+        {{- with .Values.logsV2ContainerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
         - name: POD_NAME
           valueFrom:
@@ -57,6 +61,10 @@ spec:
         command:
           - "/bin/runner"
           - '{{`{{ .Jsn }}`}}'
+        {{- with .Values.scraperContainerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{`{{- if .RunnerCustomCASecret }}`}}
         env:
           - name: SSL_CERT_DIR
