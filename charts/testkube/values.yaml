@@ -354,6 +354,18 @@ testkube-api:
   # prebuilt and container executors, when using the default job templates.
   jobAnnotations: {}
 
+  ## Resource requests and limits for Init Container
+  initContainerResources: ""
+
+  ## Resource requests and limits for LogsV2 Container
+  logsV2ContainerResources: ""
+
+  ## Resource requests and limits for Scraper Container
+  scraperContainerResources: ""
+
+  ## Resource requests and limits for Main Container
+  containerResources: ""
+
   # Custom job-container-template.yml that will be passed to Testkube API
   #  jobContainerTemplate: ""
   #
