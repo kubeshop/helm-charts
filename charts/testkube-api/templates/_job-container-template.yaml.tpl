@@ -39,6 +39,10 @@ spec:
           - name: GIT_SSL_CAPATH
             value: /etc/testkube/certs
         {{`{{- end }}`}}
+        {{- with .Values.initContainerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         volumeMounts:
         {{`{{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}`}}
         - name: data-volume
@@ -85,6 +89,10 @@ spec:
         image: {{`{{ .LogSidecarImage }}`}}
         {{`{{- end }}`}}
         imagePullPolicy: IfNotPresent
+        {{- with .Values.logsV2ContainerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         env:
         - name: POD_NAME
           valueFrom:
@@ -114,6 +122,10 @@ spec:
         command:
           - "/bin/runner"
           - '{{`{{ .Jsn }}`}}'
+        {{- with .Values.scraperContainerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{`{{- if .RunnerCustomCASecret }}`}}
         env:
           - name: SSL_CERT_DIR
@@ -150,6 +162,10 @@ spec:
         image: {{`{{ .Image }}`}}
         {{`{{- end }}`}}
         imagePullPolicy: IfNotPresent
+        {{- with .Values.containerResources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         {{`{{- if gt (len .Command) 0 }}`}}
         command:
         {{`{{- range $cmd := .Command }}`}}
