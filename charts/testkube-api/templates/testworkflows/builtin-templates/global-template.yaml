@@ -7,11 +7,5 @@ metadata:
     helm.sh/hook: post-install,post-upgrade
     helm.sh/hook-weight: "19"
     helm.sh/hook-delete-policy: hook-failed,before-hook-creation
-  {{- if .Values.global.testWorkflows.globalTemplate.spec }}
-spec:
-  {{- toYaml .Values.global.testWorkflows.globalTemplate.spec | nindent 2 }}
-  {{- end }}
-  {{- if .Values.global.testWorkflows.imageRegistry }}
-  pod:
-    image:
+spec: {{- toYaml .Values.global.testWorkflows.globalTemplate.spec | nindent 2 }}
   {{- end }}

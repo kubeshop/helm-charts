@@ -20,7 +20,7 @@ global:
     createServiceAccountTemplates: true
     createOfficialTemplates: true
     globalTemplate:
-      enabled: true
+      enabled: false
       name: global-template
       spec: {}
 
