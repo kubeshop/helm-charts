@@ -1,7 +1,4 @@
-assets/* @olensmar
-docs/* @olensmar
-img/* @olensmar
-api/* @olensmar
-api/v1/* @olensmar
+* @kubeshop/testkube-devops
 
-* @dejanzele @emil2k @ypoplavs
+LICENSE @kubeshop/testkube-docs
+*.md @kubeshop/testkube-docs
