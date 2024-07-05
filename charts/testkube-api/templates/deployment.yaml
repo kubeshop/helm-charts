@@ -181,7 +181,10 @@ spec:
             - name: TESTKUBE_EXECUTION_NAMESPACES
               value: "{{ $value }}"
             {{- end }}
-            {{- if .Values.cloud.tls.customCaSecretRef }}
+            {{- if .Values.cloud.tls.customCaDirPath }}
+            - name: SSL_CERT_DIR
+              value: {{ .Values.cloud.tls.customCaDirPath }}
+            {{- else if .Values.cloud.tls.customCaSecretRef }}
             - name: SSL_CERT_DIR
               value: /etc/testkube/certs
             - name: TESTKUBE_PRO_RUNNER_CUSTOM_CA_SECRET
