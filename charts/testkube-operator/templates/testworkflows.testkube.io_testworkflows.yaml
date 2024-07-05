@@ -10708,6 +10708,28 @@ spec:
                         - status
                         - totalDurationMs
                       type: object
+                    runningContext:
+                      description: running context for test or test workflow execution
+                      properties:
+                        context:
+                          description: Context value depending from its type
+                          type: string
+                        type:
+                          description: One of possible context types
+                          enum:
+                            - user-cli
+                            - user-ui
+                            - testsuite
+                            - testtrigger
+                            - scheduler
+                            - testexecution
+                            - testsuiteexecution
+                            - testworkflow
+                            - testworkflowexecution
+                          type: string
+                      required:
+                        - type
+                      type: object
                     scheduledAt:
                       description: when the execution has been scheduled to run
                       format: date-time

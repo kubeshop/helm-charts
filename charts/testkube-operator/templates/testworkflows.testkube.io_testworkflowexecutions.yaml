@@ -53,6 +53,28 @@ spec:
                     name:
                       description: custom execution name
                       type: string
+                    runningContext:
+                      description: running context for test or test workflow execution
+                      properties:
+                        context:
+                          description: Context value depending from its type
+                          type: string
+                        type:
+                          description: One of possible context types
+                          enum:
+                          - user-cli
+                          - user-ui
+                          - testsuite
+                          - testtrigger
+                          - scheduler
+                          - testexecution
+                          - testsuiteexecution
+                          - testworkflow
+                          - testworkflowexecution
+                          type: string
+                      required:
+                      - type
+                      type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string
@@ -287,6 +309,28 @@ spec:
                       required:
                         - predictedStatus
                         - status
+                      type: object
+                    runningContext:
+                      description: running context for test or test workflow execution
+                      properties:
+                        context:
+                          description: Context value depending from its type
+                          type: string
+                        type:
+                          description: One of possible context types
+                          enum:
+                          - user-cli
+                          - user-ui
+                          - testsuite
+                          - testtrigger
+                          - scheduler
+                          - testexecution
+                          - testsuiteexecution
+                          - testworkflow
+                          - testworkflowexecution
+                          type: string
+                      required:
+                      - type
                       type: object
                     scheduledAt:
                       description: when the execution has been scheduled to run
