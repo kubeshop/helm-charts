@@ -188,6 +188,10 @@ Define API environment in agent mode
 {{- end }}
 {{- end }}
 {{- end }}
+- name: "SCRAPPERENABLED"
+  value:  "{{ .Values.storage.scrapperEnabled }}"
+- name: "COMPRESSARTIFACTS"
+  value:  "{{ .Values.storage.compressArtifacts }}"
 {{- end }}
 
 {{/*
