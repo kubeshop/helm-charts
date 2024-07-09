@@ -10709,27 +10709,60 @@ spec:
                         - totalDurationMs
                       type: object
                     runningContext:
-                      description: running context for test or test workflow execution
-                      properties:
-                        context:
-                          description: Context value depending from its type
-                          type: string
-                        type:
-                          description: One of possible context types
-                          enum:
-                            - user-cli
-                            - user-ui
-                            - testsuite
-                            - testtrigger
-                            - scheduler
-                            - testexecution
-                            - testsuiteexecution
+                      description: running context for the test workflow execution
+                      items:
+                        description: running context for test workflow execution
+                        properties:
+                          actor:
+                            description: 'TestWorkflowRunningContextActor : supported
+                              actors for test workflow running context'
+                            enum:
+                            - cron
+                            - testrigger
+                            - user
                             - testworkflow
                             - testworkflowexecution
-                          type: string
-                      required:
-                        - type
-                      type: object
+                            type: string
+                          caller:
+                            description: running context caller for test workflow execution
+                            properties:
+                              callerResourceExecutionID:
+                                description: caller resource execution id
+                                type: string
+                              callerResourceName:
+                                description: caller resource name
+                                type: string
+                              callerResourceType:
+                                description: 'TestWorkflowRunningContextCallerResourceType
+                                  : supported caller resource types for test workflow
+                                  running context'
+                                enum:
+                                - testworkflow
+                                - testworkflowexecution
+                                - testrigger
+                                type: string
+                              fullExecutionPath:
+                                description: all test workflow execution ids starting
+                                  from the root
+                                type: string
+                            required:
+                            - callerResourceName
+                            - callerResourceType
+                            type: object
+                          interface:
+                            description: 'TestWorkflowRunningContextInterface : supported
+                              interfaces for test workflow running context'
+                            enum:
+                            - cli
+                            - ui
+                            - api
+                            - internal
+                            type: string
+                        required:
+                        - actor
+                        - interface
+                        type: object
+                      type: array
                     scheduledAt:
                       description: when the execution has been scheduled to run
                       format: date-time
