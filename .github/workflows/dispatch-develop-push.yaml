@@ -7,6 +7,8 @@ on:
 
 jobs:
   dispatch:
+    # TODO(emil): enable when the dispatch token is no longer a personal access token
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Repository dispatch
