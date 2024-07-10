@@ -7,14 +7,17 @@ on:
 
 jobs:
   dispatch:
-    # TODO(emil): enable when the dispatch token is no longer a personal access token
-    if: false
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
       - name: Repository dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.DISPATCH_GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           repository: kubeshop/testkube-deployment
           event-type: testkube_charts_push
           client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
