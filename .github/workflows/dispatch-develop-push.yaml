@@ -14,6 +14,7 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
       - name: Repository dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
