@@ -13,6 +13,18 @@ global:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  ## Global TLS settings
+  tls:
+    ## Toggle whether to globally skip certificate verification
+    skipVerify: false
+    ## Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously)
+    caCertPath: ""
+  ## Global volume settings (API & Test Jobs)
+  volumes:
+    ## Additional volumes to be added to the Testkube API container and Test Jobs containers
+    additionalVolumes: []
+    ## Additional volume mounts to be added to the Testkube API container and Test Jobs containers
+    additionalVolumeMounts: []
   features:
     logsV2: false
     whitelistedContainers: init,logs,scraper
