@@ -147,6 +147,8 @@ cloud:
     skipVerify: false
     ## If specified, injects a custom CA into the list of trusted CAs. Specify a secret with the PEM encoded CA under the ca.crt key.
     customCaSecretRef: ""
+    # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
+    customCaDirPath: ""
     certificate:
       ## When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt)
       secretRef: ""
