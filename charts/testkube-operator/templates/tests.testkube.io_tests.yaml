@@ -503,7 +503,9 @@ spec:
                     description: name of the template resource
                     type: string
                   disableWebhooks:
-                    description: whether webhooks should be called on execution
+                    description: |-
+                      whether webhooks should be called on execution
+                      Deprecated: field is not used
                     type: boolean
                   envConfigMaps:
                     description: config map references
