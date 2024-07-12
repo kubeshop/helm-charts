@@ -43,25 +43,30 @@ spec:
           env:
           - name: DEBUG
             value:  "{{ .Values.debug }}"
-          {{- if .Values.pro.key }}
+          {{- $proKey := .Values.global.pro.key | default .Values.pro.key }}
+          {{- if $proKey }}
           - name: TESTKUBE_PRO_API_KEY
-            value:  "{{ .Values.pro.key }}"
-          {{- end}}
-          {{- if .Values.pro.existingSecret.key }}
+            value:  "{{ $proKey }}"
+          {{- end }}
+          {{- $proSecretKey := .Values.global.pro.existingSecret.key | default .Values.pro.existingSecret.key }}
+          {{- $proSecretName := .Values.global.pro.existingSecret.name | default .Values.pro.existingSecret.name }}
+          {{- if $proSecretKey }}
           - name: TESTKUBE_PRO_API_KEY
             valueFrom:
               secretKeyRef:
-                key: {{ .Values.pro.existingSecret.key }}
-                name: {{ .Values.pro.existingSecret.name }}
+                key: {{ $proSecretKey }}
+                name: {{ $proSecretName }}
           {{- end}}
-          {{- if .Values.pro.url }}
+          {{- $proUrl := .Values.global.pro.url | default .Values.pro.url }}
+          {{- if $proUrl }}
           - name: TESTKUBE_PRO_URL
-            value:  "{{ .Values.pro.url }}"
+            value:  "{{ $proUrl }}"
           {{- end }}
-          {{- if .Values.pro.uiUrl}}
+          {{- $proUiUrl := .Values.global.pro.uiUrl | default .Values.pro.uiUrl }}
+          {{- if $proUiUrl }}
           - name: TESTKUBE_PRO_UI_URL
-            value: "{{ .Values.pro.uiUrl }}"
-          {{- end}}
+            value: "{{ $proUiUrl }}"
+          {{- end }}
           {{- if not .Values.pro.tls.enabled }}
           - name: TESTKUBE_PRO_TLS_INSECURE
             value:  "true"
