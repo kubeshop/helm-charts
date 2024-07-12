@@ -50,6 +50,9 @@ spec:
                           - type: string
                         x-kubernetes-int-or-string: true
                       type: object
+                    disableWebhooks:
+                      description: whether webhooks should be disabled for this execution
+                      type: boolean
                     name:
                       description: custom execution name
                       type: string
