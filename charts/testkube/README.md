@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 2.0.10](https://img.shields.io/badge/Version-2.0.10-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.0.13](https://img.shields.io/badge/Version-2.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -136,7 +136,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 2.0.6 |
+| file://../testkube-api | testkube-api | 2.0.8 |
 | file://../testkube-logs | testkube-logs | 0.2.0 |
 | file://../testkube-operator | testkube-operator | 2.0.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
@@ -146,7 +146,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tls":{"caCertPath":"","skipVerify":false},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"additionalVolumeMounts":[],"additionalVolumes":[]}}` | Important! Please, note that this will override sub-chart image parameters. |
+| global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tls":{"caCertPath":""},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"additionalVolumeMounts":[],"additionalVolumes":[]}}` | Important! Please, note that this will override sub-chart image parameters. |
 | global.affinity | object | `{}` | Affinity rules to add to all deployed Pods |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
 | global.features.logsV2 | bool | `false` | Toggle whether to enable V2 log support |
@@ -162,8 +162,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | global.testWorkflows.globalTemplate.enabled | bool | `false` | Is global template enabled |
 | global.testWorkflows.globalTemplate.name | string | `"global-template"` | Name of the global template |
 | global.testWorkflows.globalTemplate.spec | object | `{}` | Specification for the global template |
-| global.tls.caCertPath | string | `""` | Path to the CA certificate file |
-| global.tls.skipVerify | bool | `false` | Toggle whether to globally skip certificate verification |
+| global.tls.caCertPath | string | `""` | Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously) |
 | global.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to add to all deployed pods |
 | global.volumes | object | `{"additionalVolumeMounts":[],"additionalVolumes":[]}` | Global volume settings (API & Test Jobs) |
 | global.volumes.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added to the Testkube API container and Test Jobs containers |
@@ -232,6 +231,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.tls.certificate.certFile | string | `"/tmp/agent-cert/cert.crt"` | Default path for certificate file |
 | testkube-api.cloud.tls.certificate.keyFile | string | `"/tmp/agent-cert/cert.key"` | Default path for certificate key file |
 | testkube-api.cloud.tls.certificate.secretRef | string | `""` | When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt) |
+| testkube-api.cloud.tls.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-api.cloud.tls.customCaSecretRef | string | `""` |  |
 | testkube-api.cloud.tls.enabled | bool | `true` | Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC) |
 | testkube-api.cloud.tls.skipVerify | bool | `false` | Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise |
@@ -408,7 +408,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-logs.storage.secretKeySecretAccessKey | string | `""` | Key for storage secretAccessKeyId taken from k8s secret |
 | testkube-logs.storage.secretNameAccessKeyId | string | `""` | k8s Secret name for storage accessKeyId |
 | testkube-logs.storage.secretNameSecretAccessKey | string | `""` | K8s Secret Name for storage secretAccessKeyId |
-| testkube-logs.storage.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
+| testkube-logs.storage.skipVerify | bool | `true` | Toggle whether to verify TLS certificates |
 | testkube-logs.storage.token | string | `""` | MinIO Token |
 | testkube-logs.testConnection | object | `{"enabled":false}` | Test Connection pod |
 | testkube-logs.tls.certSecret.baseMountPath | string | `"/etc/server-certs/grpc"` | Base path to mount the server certificate secret |
