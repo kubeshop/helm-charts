@@ -65,8 +65,14 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        {{`{{- if .RunnerCustomCASecret }}`}}
         env:
+        {{- if .Values.global.tls.caCertPath }}
+          - name: SSL_CERT_DIR
+            value: {{ .Values.global.tls.caCertPath }}
+          - name: GIT_SSL_CAPATH
+            value: {{ .Values.global.tls.caCertPath }}
+        {{- end }}
+        {{`{{- if .RunnerCustomCASecret }}`}}
           - name: SSL_CERT_DIR
             value: /etc/testkube/certs
           - name: GIT_SSL_CAPATH
@@ -93,6 +99,9 @@ spec:
         {{- with .Values.additionalJobVolumeMounts }}
           {{- toYaml . | nindent 10 -}}
         {{- end }}
+        {{- with .Values.global.volumes.additionalVolumeMounts }}
+          {{- toYaml . | nindent 10 -}}
+        {{- end }}
       volumes:
       {{`{{- if .RunnerCustomCASecret }}`}}
         - name: {{`{{ .RunnerCustomCASecret }}`}}
@@ -113,6 +122,9 @@ spec:
         {{`{{- end }}`}}
       {{`{{- end }}`}}
       {{- with .Values.additionalJobVolumes }}
+        {{- toYaml . | nindent 8 -}}
+      {{- end }}
+      {{- with .Values.global.volumes.additionalVolumes }}
         {{- toYaml . | nindent 8 -}}
       {{- end }}
       restartPolicy: Never

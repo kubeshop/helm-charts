@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 1.16.49](https://img.shields.io/badge/Version-1.16.49-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.0.13](https://img.shields.io/badge/Version-2.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -136,10 +136,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 1.16.32 |
-| file://../testkube-dashboard | testkube-dashboard | 1.16.7 |
+| file://../testkube-api | testkube-api | 2.0.8 |
 | file://../testkube-logs | testkube-logs | 0.2.0 |
-| file://../testkube-operator | testkube-operator | 1.16.30 |
+| file://../testkube-operator | testkube-operator | 2.0.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.7 |
 
@@ -147,12 +146,27 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"annotations":{},"features":{"logsV2":false},"imagePullSecrets":[],"imageRegistry":"","labels":{}}` | Important! Please, note that this will override sub-chart image parameters. |
+| global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tls":{"caCertPath":""},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"additionalVolumeMounts":[],"additionalVolumes":[]}}` | Important! Please, note that this will override sub-chart image parameters. |
+| global.affinity | object | `{}` | Affinity rules to add to all deployed Pods |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
-| global.features | object | `{"logsV2":false}` | Features map for the whole chart |
+| global.features | object | `{"logsV2":false,"whitelistedContainers":"init,logs,scraper"}` | Features map for the whole chart |
+| global.features.whitelistedContainers | string | `"init,logs,scraper"` | Comma-separated array of containers which should get scraped for logs |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | global.imageRegistry | string | `""` | Global Docker image registry |
 | global.labels | object | `{}` | Labels to add to all deployed objects |
+| global.nodeSelector | object | `{}` | Node labels to add to all deployed Pods |
+| global.testWorkflows | object | `{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}}` | Test Workflows configuration |
+| global.testWorkflows.createOfficialTemplates | bool | `true` | Create TestWorkflowTemplates with automatically configured execution |
+| global.testWorkflows.createServiceAccountTemplates | bool | `true` | Create TestWorkflowTemplates to easily use the service account |
+| global.testWorkflows.globalTemplate | object | `{"enabled":false,"name":"global-template","spec":{}}` | Global TestWorkflowTemplate that will be automatically included for all executions |
+| global.testWorkflows.globalTemplate.enabled | bool | `false` | Is global template enabled |
+| global.testWorkflows.globalTemplate.name | string | `"global-template"` | Name of the global template |
+| global.testWorkflows.globalTemplate.spec | object | `{}` | Specification for the global template |
+| global.tls.caCertPath | string | `""` | Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously) |
+| global.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to add to all deployed pods |
+| global.volumes | object | `{"additionalVolumeMounts":[],"additionalVolumes":[]}` | Global volume settings (API & Test Jobs) |
+| global.volumes.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added to the Testkube API container and Test Jobs containers |
+| global.volumes.additionalVolumes | list | `[]` | Additional volumes to be added to the Testkube API container and Test Jobs containers |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |
 | mongodb.containerSecurityContext | object | `{}` | Security Context for MongoDB container |
 | mongodb.enabled | bool | `true` | Toggle whether to install MongoDB |
@@ -161,16 +175,21 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | mongodb.image.registry | string | `"docker.io"` | MongoDB image registry |
 | mongodb.image.repository | string | `"zcube/bitnami-compat-mongodb"` | MongoDB image repository |
 | mongodb.image.tag | string | `"6.0.5-debian-11-r64"` | MongoDB image tag |
+| mongodb.livenessProbe.enabled | bool | `true` |  |
+| mongodb.livenessProbe.failureThreshold | int | `6` |  |
+| mongodb.livenessProbe.initialDelaySeconds | int | `30` |  |
+| mongodb.livenessProbe.periodSeconds | int | `240` |  |
+| mongodb.livenessProbe.successThreshold | int | `1` |  |
+| mongodb.livenessProbe.timeoutSeconds | int | `10` |  |
 | mongodb.podSecurityContext | object | `{}` | MongoDB Pod Security Context |
+| mongodb.readinessProbe | object | `{"enabled":true,"failureThreshold":6,"initialDelaySeconds":5,"periodSeconds":240,"successThreshold":1,"timeoutSeconds":5}` | Settings for readiness and liveness probes |
 | mongodb.resources | object | `{"requests":{"cpu":"150m","memory":"100Mi"}}` | MongoDB resource settings |
 | mongodb.service | object | `{"clusterIP":"","nodePort":true,"port":"27017","portName":"mongodb"}` | MongoDB service settings |
-| mongodb.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | nats.config.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features) |
 | nats.config.merge.max_payload | string | `"<< 8MB >>"` |  |
-| nats.natsBox.enabled | bool | `true` |  |
-| nats.natsBox.podTemplate | object | `{"merge":{"spec":{"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}}}` | NATS Box tolerations settings |
+| nats.natsBox | object | `{"enabled":false}` | Uncomment to override the NATS Server image options container:   image:     repository: nats     tag: 2.10.9-alpine     pullPolicy:     registry: NATS Box container settings TODO remove this container after tests on dev and stage nats-box is A lightweight container with NATS utilities. It's not needed for nats server change it to natsBox:   enabled: false |
 | nats.reloader.enabled | bool | `true` |  |
-| preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
+| preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
 | preUpgradeHook.enabled | bool | `true` | Upgrade hook is enabled |
 | preUpgradeHook.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
 | preUpgradeHook.name | string | `"mongodb-upgrade"` | Upgrade hook name |
@@ -179,8 +198,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHook.resources | object | `{}` | Specify resource limits and requests |
 | preUpgradeHook.securityContext | object | `{}` | Security Context for MongoDB Upgrade kubectl container |
 | preUpgradeHook.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
-| preUpgradeHook.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| preUpgradeHookNATS | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"nats-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"ttlSecondsAfterFinished":100}` | NATS pre-upgrade parameters |
+| preUpgradeHook.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| preUpgradeHookNATS | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"nats-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[],"ttlSecondsAfterFinished":100}` | NATS pre-upgrade parameters |
 | preUpgradeHookNATS.enabled | bool | `true` | Upgrade hook is enabled |
 | preUpgradeHookNATS.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
 | preUpgradeHookNATS.name | string | `"nats-upgrade"` | Upgrade hook name |
@@ -189,7 +208,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHookNATS.resources | object | `{}` | Specify resource limits and requests |
 | preUpgradeHookNATS.securityContext | object | `{}` | Security Context for MongoDB Upgrade kubectl container |
 | preUpgradeHookNATS.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
-| preUpgradeHookNATS.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| preUpgradeHookNATS.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-api.additionalJobVolumeMounts | list | `[]` | Additional volume mounts to be added to the Test Jobs |
+| testkube-api.additionalJobVolumes | list | `[]` | Additional volumes to be added to the Test Jobs |
 | testkube-api.additionalNamespaces | list | `[]` | Watch namespaces. In this case, a Role and a RoleBinding will be created for each specified namespace. |
 | testkube-api.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added |
 | testkube-api.additionalVolumes | list | `[]` | Additional volumes to be added |
@@ -210,12 +231,16 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.tls.certificate.certFile | string | `"/tmp/agent-cert/cert.crt"` | Default path for certificate file |
 | testkube-api.cloud.tls.certificate.keyFile | string | `"/tmp/agent-cert/cert.key"` | Default path for certificate key file |
 | testkube-api.cloud.tls.certificate.secretRef | string | `""` | When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt) |
+| testkube-api.cloud.tls.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
+| testkube-api.cloud.tls.customCaSecretRef | string | `""` |  |
 | testkube-api.cloud.tls.enabled | bool | `true` | Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC) |
 | testkube-api.cloud.tls.skipVerify | bool | `false` | Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise |
 | testkube-api.cloud.uiUrl | string | `""` |  |
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` | cluster name to be used in events |
+| testkube-api.containerResources | object | `{}` |  |
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
+| testkube-api.defaultStorageClassName | string | `""` | default storage class name for PVC volumes |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
 | testkube-api.enableK8sEvents | bool | `true` | enable k8s events for testkube events |
@@ -224,7 +249,6 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.executionNamespaces | list | `[]` | Execution namespaces for Testkube API to only run tests In this case, a Role and a RoleBinding will be created for each specified namespace. |
 | testkube-api.executors | string | `""` | default executors as base64-encoded string |
 | testkube-api.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
-| testkube-api.defaultStorageClassName | string | `""` | default storage class name for PVC volumes |
 | testkube-api.fullnameOverride | string | `"testkube-api-server"` | Testkube API full name override |
 | testkube-api.hostNetwork | string | `""` | Specify hostNetwork for Testkube API Deployment |
 | testkube-api.image.digest | string | `""` | Testkube API image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
@@ -234,15 +258,26 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
 | testkube-api.imageInspectionCache.enabled | bool | `true` |  |
 | testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` |  |
+| testkube-api.imageTwInit.digest | string | `""` | Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
+| testkube-api.imageTwInit.pullSecrets | list | `[]` | Test Workflows image k8s secret for private registries |
+| testkube-api.imageTwInit.registry | string | `"docker.io"` | Test Workflows image registry |
+| testkube-api.imageTwInit.repository | string | `"kubeshop/testkube-tw-init"` | Test Workflows image name |
+| testkube-api.imageTwToolkit.digest | string | `""` | Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
+| testkube-api.imageTwToolkit.registry | string | `"docker.io"` | Test Workflows image registry |
+| testkube-api.imageTwToolkit.repository | string | `"kubeshop/testkube-tw-toolkit"` | Test Workflows image name |
+| testkube-api.initContainerResources | object | `{}` |  |
+| testkube-api.jobAnnotations | object | `{}` |  |
+| testkube-api.jobPodAnnotations | object | `{}` |  |
 | testkube-api.jobServiceAccountName | string | `""` | SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud. |
 | testkube-api.livenessProbe | object | `{"initialDelaySeconds":15}` | Testkube API Liveness probe parameters |
 | testkube-api.livenessProbe.initialDelaySeconds | int | `15` | Initial delay for liveness probe |
 | testkube-api.logs.bucket | string | `"testkube-logs"` | Bucket should be specified if storage is "minio" |
 | testkube-api.logs.storage | string | `"minio"` | Log storage can either be "minio" or "mongo" |
+| testkube-api.logsV2ContainerResources | object | `{}` |  |
 | testkube-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-api.minio.enabled | bool | `true` | Toggle whether to install MinIO |
-| testkube-api.minio.extraEnvVars | object | `{}` | Minio extra vars |
+| testkube-api.minio.extraEnvVars | list | `[]` | Minio extra vars |
 | testkube-api.minio.extraVolumeMounts | list | `[]` |  |
 | testkube-api.minio.extraVolumes | list | `[]` |  |
 | testkube-api.minio.image | object | `{"pullSecrets":[],"registry":"docker.io","repository":"minio/minio","tag":"RELEASE.2023-09-16T01-01-47Z"}` | Minio image from DockerHub |
@@ -258,12 +293,17 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.minio.secretUserName | string | `""` |  |
 | testkube-api.minio.securityContext | object | `{}` | Security Context for MinIO container |
 | testkube-api.minio.serviceAccountName | string | `""` | ServiceAccount name to use for Minio |
+| testkube-api.minio.serviceMonitor.enabled | bool | `false` |  |
+| testkube-api.minio.serviceMonitor.interval | string | `"15s"` |  |
+| testkube-api.minio.serviceMonitor.labels | object | `{}` |  |
+| testkube-api.minio.serviceMonitor.matchLabels | list | `[]` |  |
 | testkube-api.minio.storage | string | `"10Gi"` | PVC Storage Request for MinIO. Should be available in the cluster. |
-| testkube-api.minio.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.mongodb.allowDiskUse | bool | `true` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-api.mongodb.dsn | string | `"mongodb://testkube-mongodb:27017"` | MongoDB DSN |
 | testkube-api.multinamespace.enabled | bool | `false` |  |
 | testkube-api.nameOverride | string | `"api-server"` | Testkube API name override |
+| testkube-api.nats.embedded | bool | `false` | Start NATS embedded server in api binary instead of separate deployment |
 | testkube-api.nats.enabled | bool | `true` | Use NATS |
 | testkube-api.nats.tls.certSecret.baseMountPath | string | `"/etc/client-certs/storage"` | Base path to mount the client certificate secret |
 | testkube-api.nats.tls.certSecret.caFile | string | `"ca.crt"` | Path to ca file (used for self-signed certificates) |
@@ -285,15 +325,16 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.readinessProbe | object | `{"initialDelaySeconds":30}` | Testkube API Readiness probe parameters |
 | testkube-api.readinessProbe.initialDelaySeconds | int | `30` | Initial delay for readiness probe |
 | testkube-api.resources | object | `{"requests":{"cpu":"200m","memory":"200Mi"}}` | Testkube API resource requests and limits |
+| testkube-api.scraperContainerResources | object | `{}` |  |
 | testkube-api.securityContext | object | `{}` | Security Context for testkube-api container |
 | testkube-api.service.annotations | object | `{}` | Service Annotations |
 | testkube-api.service.labels | object | `{}` | Service labels |
 | testkube-api.service.port | int | `8088` | HTTP Port |
-| testkube-api.service.type | string | `"ClusterIP"` | Adapter service type |
-| testkube-api.serviceAccount.annotations | object | `{}` |  |
-| testkube-api.serviceAccount.create | bool | `true` |  |
-| testkube-api.serviceAccount.name | string | `""` |  |
-| testkube-api.slackConfig | string | `nil` | Slack config for the events, tests, testsuites and channels |
+| testkube-api.service.type | string | `"ClusterIP"` | Adapter service type for working with real k8s we should use "ClusterIP" type. |
+| testkube-api.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| testkube-api.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| testkube-api.serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template. |
+| testkube-api.slackConfig | string | `nil` | Slack config for the events, tests, testsuites, testworkflows and channels |
 | testkube-api.slackSecret | string | `""` | Slack secret to store slackToken, the key name should be SLACK_TOKEN |
 | testkube-api.slackToken | string | `""` | Slack token from the testkube authentication endpoint |
 | testkube-api.storage.SSL | bool | `false` | MinIO Use SSL |
@@ -319,9 +360,10 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.storage.secretNameSecretAccessKey | string | `""` | K8s Secret Name for storage secretAccessKeyId |
 | testkube-api.storage.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | testkube-api.storage.token | string | `""` | MinIO Token |
-| testkube-api.testConnection.enabled | bool | `true` | Toggle whether to create Test Connection pod |
+| testkube-api.storageRequest | string | `"1Gi"` |  |
+| testkube-api.testConnection.enabled | bool | `false` | Toggle whether to create Test Connection pod |
 | testkube-api.testConnection.resources | object | `{}` | Test Connection resource settings |
-| testkube-api.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-api.testConnection.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.testServiceAccount | object | `{"annotations":{},"create":true}` | Service Account parameters |
 | testkube-api.testServiceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | testkube-api.testServiceAccount.create | bool | `true` | Specifies whether a service account should be created |
@@ -335,93 +377,13 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.testkubeLogs.tls.enabled | bool | `false` | Toggle whether to enable TLS in GRPC client |
 | testkube-api.testkubeLogs.tls.mountCACertificate | bool | `false` | If enabled, will also require a CA certificate to be provided |
 | testkube-api.testkubeLogs.tls.skipVerify | bool | `false` | Toggle whether to verify certificates |
-| testkube-api.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-api.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.uiIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
 | testkube-api.uiIngress.enabled | bool | `false` | Use Ingress |
 | testkube-api.uiIngress.hosts | list | `["testkube.example.com"]` | Hostnames must be provided if Ingress is enabled. |
 | testkube-api.uiIngress.path | string | `"/results/(v\\d/.*)"` |  |
 | testkube-api.uiIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
 | testkube-api.uiIngress.tlsenabled | bool | `false` |  |
-| testkube-dashboard | object | `{"affinity":{},"apiServerEndpoint":"","autoscaling":{"annotations":{},"enabled":false,"labels":{},"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80},"disableTelemetry":false,"enabled":true,"extraEnvVars":[],"fullnameOverride":"testkube-dashboard","image":{"digest":"","pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"kubeshop/testkube-dashboard"},"ingress":{"annotations":{},"enabled":false,"hosts":[],"ipv6enabled":false,"labels":{},"path":"/","tls":[],"tlsenabled":false},"nameOverride":"dashboard","nodeSelector":{},"oauth2":{"annotations":{},"args":[],"enabled":false,"env":{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback","secretClientIdKey":"","secretClientIdName":"","secretClientSecretKey":"","secretClientSecretName":"","secretCookieSecretKey":"","secretCookieSecretName":"","secretGithubOrgKey":"","secretGithubOrgName":""},"extraEnvFrom":[],"extraEnvVars":[],"image":{"pullPolicy":"Always","pullSecrets":[],"registry":"quay.io","repository":"oauth2-proxy/oauth2-proxy","tag":"latest"},"ingress":{"annotations":{},"labels":{}},"labels":{},"name":"oauth2-proxy","path":"/oauth2","podAnnotations":{},"podLabels":{},"port":4180,"priorityClassName":"","serviceAnnotations":{},"serviceLabels":{},"serviceType":"ClusterIP","volumeMounts":[],"volumes":[]},"podAnnotations":{},"podLabels":{},"podSecurityContext":{},"priorityClassName":"","proxyPrefix":"","replicaCount":1,"resources":{},"securityContext":{},"service":{"annotations":{},"port":8080,"type":"ClusterIP"},"serviceAccount":{"annotations":{},"create":true,"name":""},"testConnection":{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Testkube Dashboard parameters |
-| testkube-dashboard.affinity | object | `{}` | Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set |
-| testkube-dashboard.apiServerEndpoint | string | `""` | Testkube API Server endpoint |
-| testkube-dashboard.autoscaling.annotations | object | `{}` | Specific autoscaling annotations |
-| testkube-dashboard.autoscaling.enabled | bool | `false` | Enable autoscaling for Testkube dashboard deployment |
-| testkube-dashboard.autoscaling.labels | object | `{}` | Specific autoscaling labels |
-| testkube-dashboard.autoscaling.maxReplicas | int | `100` | Maximum number of replicas to scale out |
-| testkube-dashboard.autoscaling.minReplicas | int | `1` | Minimum number of replicas to scale back |
-| testkube-dashboard.autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization percentage |
-| testkube-dashboard.autoscaling.targetMemoryUtilizationPercentage | int | `80` | Target Memory utilization percentage |
-| testkube-dashboard.disableTelemetry | bool | `false` | Force disabling telemetry on the UI |
-| testkube-dashboard.enabled | bool | `true` | Deploy dashboard |
-| testkube-dashboard.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
-| testkube-dashboard.fullnameOverride | string | `"testkube-dashboard"` | Testkube Dashboard fullname override |
-| testkube-dashboard.image.digest | string | `""` | Dashboard Image digest. If set, will override the tag |
-| testkube-dashboard.image.pullPolicy | string | `"IfNotPresent"` | Dashboard image tag |
-| testkube-dashboard.image.pullSecrets | list | `[]` | Dashboard k8s secret for private registries |
-| testkube-dashboard.image.registry | string | `"docker.io"` | Dashboard image registry. Can be overridden by global parameters |
-| testkube-dashboard.image.repository | string | `"kubeshop/testkube-dashboard"` | Dashboard image name |
-| testkube-dashboard.ingress | object | `{"annotations":{},"enabled":false,"hosts":[],"ipv6enabled":false,"labels":{},"path":"/","tls":[],"tlsenabled":false}` | Ingress parameters |
-| testkube-dashboard.ingress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
-| testkube-dashboard.ingress.enabled | bool | `false` | Use ingress |
-| testkube-dashboard.ingress.hosts | list | `[]` | Hostnames must be provided if Ingress is enabled. |
-| testkube-dashboard.ingress.labels | object | `{}` | Specific Ingress labels |
-| testkube-dashboard.ingress.path | string | `"/"` | Path to controller |
-| testkube-dashboard.ingress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
-| testkube-dashboard.nameOverride | string | `"dashboard"` | Testkube Dashboard name override |
-| testkube-dashboard.nodeSelector | object | `{}` | Node labels for pod assignment. |
-| testkube-dashboard.oauth2.annotations | object | `{}` | Oauth2 specific annotations |
-| testkube-dashboard.oauth2.args | list | `[]` | Array of args for oauth2 provider or github as default |
-| testkube-dashboard.oauth2.enabled | bool | `false` | Use oauth |
-| testkube-dashboard.oauth2.env | object | `{"clientId":"","clientSecret":"","cookieSecret":"","cookieSecure":"false","githubOrg":"","redirectUrl":"http://testkube.example.com/oauth2/callback","secretClientIdKey":"","secretClientIdName":"","secretClientSecretKey":"","secretClientSecretName":"","secretCookieSecretKey":"","secretCookieSecretName":"","secretGithubOrgKey":"","secretGithubOrgName":""}` | Pod environment variables for Teskube UI authentication |
-| testkube-dashboard.oauth2.env.clientId | string | `""` | Client ID from Github OAuth application |
-| testkube-dashboard.oauth2.env.clientSecret | string | `""` | Client Secret from Github OAuth application |
-| testkube-dashboard.oauth2.env.cookieSecret | string | `""` | cookie secret generated using OpenSSL |
-| testkube-dashboard.oauth2.env.cookieSecure | string | `"false"` | false for http connection, true for https connections |
-| testkube-dashboard.oauth2.env.githubOrg | string | `""` | if you need to provide access only to members of your organization |
-| testkube-dashboard.oauth2.env.redirectUrl | string | `"http://testkube.example.com/oauth2/callback"` | "http://demo.testkube.io/oauth2/callback" |
-| testkube-dashboard.oauth2.env.secretClientIdKey | string | `""` | k8s Secret Name key for clientId |
-| testkube-dashboard.oauth2.env.secretClientIdName | string | `""` | k8s Secret Name for clientId |
-| testkube-dashboard.oauth2.env.secretClientSecretKey | string | `""` | k8s Secret Key for clientSecret |
-| testkube-dashboard.oauth2.env.secretClientSecretName | string | `""` | k8s Secret Name for clientSecret |
-| testkube-dashboard.oauth2.env.secretCookieSecretKey | string | `""` | k8s Secret Key for CookieSecret |
-| testkube-dashboard.oauth2.env.secretCookieSecretName | string | `""` | k8s Secret Name for CookieSecret |
-| testkube-dashboard.oauth2.env.secretGithubOrgKey | string | `""` | k8s Secret Key for GithubOrg |
-| testkube-dashboard.oauth2.env.secretGithubOrgName | string | `""` | k8s Secret Name for GithubOrg |
-| testkube-dashboard.oauth2.extraEnvFrom | list | `[]` | Array with extra sources for environment variables |
-| testkube-dashboard.oauth2.extraEnvVars | list | `[]` | Array with extra environment variables to add to Locator nodes |
-| testkube-dashboard.oauth2.image.pullPolicy | string | `"Always"` | Oauth Image pull policy |
-| testkube-dashboard.oauth2.image.pullSecrets | list | `[]` | Oauth k8s secret for private registries |
-| testkube-dashboard.oauth2.image.registry | string | `"quay.io"` | Oauth image registry. Can be overridden by global parameters |
-| testkube-dashboard.oauth2.image.repository | string | `"oauth2-proxy/oauth2-proxy"` | Oauth image name |
-| testkube-dashboard.oauth2.image.tag | string | `"latest"` | Oauth image tag |
-| testkube-dashboard.oauth2.ingress | object | `{"annotations":{},"labels":{}}` | Add additional Ingress labels |
-| testkube-dashboard.oauth2.ingress.annotations | object | `{}` | add Ingress annotations |
-| testkube-dashboard.oauth2.labels | object | `{}` | Oauth2 specific labels |
-| testkube-dashboard.oauth2.name | string | `"oauth2-proxy"` | Oauth Deployment name |
-| testkube-dashboard.oauth2.path | string | `"/oauth2"` | Ingress path |
-| testkube-dashboard.oauth2.podAnnotations | object | `{}` | Oauth2 pod annotations |
-| testkube-dashboard.oauth2.podLabels | object | `{}` | Add additional labels to the pod (evaluated as a template) |
-| testkube-dashboard.oauth2.port | int | `4180` | Oauth container port |
-| testkube-dashboard.oauth2.serviceAnnotations | object | `{}` | Oauth2 Service annotations |
-| testkube-dashboard.oauth2.serviceLabels | object | `{}` | Add additional service labels |
-| testkube-dashboard.oauth2.serviceType | string | `"ClusterIP"` | Oauth2 Service type |
-| testkube-dashboard.podAnnotations | object | `{}` | Testkube Dashboard Pod annotations |
-| testkube-dashboard.podLabels | object | `{}` | Extra labels for Testkube Dashboard pods |
-| testkube-dashboard.podSecurityContext | object | `{}` | Testkube Dashboard Pod Security Context |
-| testkube-dashboard.replicaCount | int | `1` | Number of Testkube Dashboard Pod replicas |
-| testkube-dashboard.resources | object | `{}` | Testkube Dashboard resource settings |
-| testkube-dashboard.securityContext | object | `{}` | Security Context for testkube-dashboard container |
-| testkube-dashboard.service.annotations | object | `{}` | Additional custom annotations for the service |
-| testkube-dashboard.service.port | int | `8080` | Dashboard port |
-| testkube-dashboard.service.type | string | `"ClusterIP"` | Adapter service type |
-| testkube-dashboard.serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Service Account parameters |
-| testkube-dashboard.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| testkube-dashboard.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| testkube-dashboard.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
-| testkube-dashboard.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
-| testkube-dashboard.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
-| testkube-dashboard.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-logs.fullnameOverride | string | `"testkube-logs"` | Testkube logs full name override |
 | testkube-logs.nameOverride | string | `"logs"` | Testkube logs name override |
 | testkube-logs.replicaCount | int | `1` |  |
@@ -448,9 +410,10 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-logs.storage.secretNameSecretAccessKey | string | `""` | K8s Secret Name for storage secretAccessKeyId |
 | testkube-logs.storage.skipVerify | bool | `false` | Toggle whether to verify TLS certificates |
 | testkube-logs.storage.token | string | `""` | MinIO Token |
+| testkube-logs.testConnection | object | `{"enabled":false}` | Test Connection pod |
 | testkube-logs.tls.certSecret.baseMountPath | string | `"/etc/server-certs/grpc"` | Base path to mount the server certificate secret |
 | testkube-logs.tls.certSecret.certFile | string | `"cert.crt"` | Path to server certificate file |
-| testkube-logs.tls.certSecret.clientCAFile | string | `"client_ca.crt"` | Path to cliebt ca file (used for self-signed certificates) |
+| testkube-logs.tls.certSecret.clientCAFile | string | `"client_ca.crt"` | Path to client ca file (used for self-signed certificates) |
 | testkube-logs.tls.certSecret.enabled | bool | `false` | Toggle whether to mount k8s secret which contains GRPC server certificate (cert.crt, cert.key, client_ca.crt) |
 | testkube-logs.tls.certSecret.keyFile | string | `"cert.key"` | Path to server certificate key file |
 | testkube-logs.tls.certSecret.name | string | `"grpc-server-cert"` | Name of the grpc server certificate secret |
@@ -488,7 +451,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.preUpgrade.resources | object | `{}` | Specify resource limits and requests |
 | testkube-operator.preUpgrade.securityContext | object | `{}` | Security Context for Upgrade kubectl container |
 | testkube-operator.preUpgrade.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
-| testkube-operator.preUpgrade.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-operator.preUpgrade.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.preUpgrade.ttlSecondsAfterFinished | int | `100` |  |
 | testkube-operator.priorityClassName | string | `""` |  |
 | testkube-operator.proxy.image.pullSecrets | list | `[]` | Testkube Operator rbac-proxy k8s secret for private registries |
@@ -509,9 +472,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | testkube-operator.serviceAccount.name | string | `""` | If not set and create is true, a name is generated using the fullname template |
 | testkube-operator.terminationGracePeriodSeconds | int | `10` | Terminating a container that failed its liveness or startup probe after 10s |
-| testkube-operator.testConnection | object | `{"enabled":true,"resources":{},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Test Connection pod |
+| testkube-operator.testConnection | object | `{"enabled":false,"resources":{},"tolerations":[]}` | Test Connection pod |
 | testkube-operator.testConnection.resources | object | `{}` | Test Connection resource settings |
-| testkube-operator.testConnection.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-operator.testConnection.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. note: kubebuilder/kube-rbac-proxy:v0.8.0, image used by testkube-operator proxy deployment, doesn't support arm64 nodes |
 | testkube-operator.useArgoCDSync | bool | `false` | Use ArgoCD sync owner references |
 | testkube-operator.volumes.secret.defaultMode | int | `420` | Testkube Operator webhook certificate volume default mode |
@@ -533,6 +496,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.migrate.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
 | testkube-operator.webhook.migrate.ttlSecondsAfterFinished | int | `100` |  |
 | testkube-operator.webhook.name | string | `"testkube-operator-webhook-admission"` | Name of the webhook |
+| testkube-operator.webhook.namespaceSelector | object | `{}` |  |
 | testkube-operator.webhook.patch.annotations | object | `{}` | Annotations to add to the patch Job |
 | testkube-operator.webhook.patch.createSecretJob.resources | object | `{}` | kube-webhook-certgen create secret Job resource settings |
 | testkube-operator.webhook.patch.createSecretJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for webhook create container |
@@ -544,7 +508,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.image.repository | string | `"dpejcev/kube-webhook-certgen"` | patch job image name |
 | testkube-operator.webhook.patch.image.version | string | `"1.0.11"` | patch job image tag |
 | testkube-operator.webhook.patch.labels | object | `{}` | Pod specific labels |
-| testkube-operator.webhook.patch.nodeSelector | object | `{"kubernetes.io/os":"linux"}` | Node labels for pod assignment |
+| testkube-operator.webhook.patch.nodeSelector | object | `{}` | Node labels for pod assignment |
 | testkube-operator.webhook.patch.patchWebhookJob.resources | object | `{}` | kube-webhook-certgen patch webhook Job resource settings |
 | testkube-operator.webhook.patch.patchWebhookJob.securityContext | object | `{"readOnlyRootFilesystem":true}` | Security Context for webhook patch container |
 | testkube-operator.webhook.patch.patchWebhookJob.securityContext.readOnlyRootFilesystem | bool | `true` | Make root filesystem of the container read-only |
@@ -552,9 +516,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.podSecurityContext | object | `{}` | kube-webhook-certgen Job Security Context |
 | testkube-operator.webhook.patch.serviceAccount.annotations | object | `{}` | SA specific annotations |
 | testkube-operator.webhook.patch.serviceAccount.name | string | `"testkube-operator-webhook-cert-mgr"` | SA name |
-| testkube-operator.webhook.patch.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
+| testkube-operator.webhook.patch.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-operator.webhook.patch.ttlSecondsAfterFinished | int | `100` |  |
 | testkube-operator.webhook.patchWebhookJob.resources | object | `{}` |  |
 
 ----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.13.0](https://github.com/norwoodj/helm-docs/releases/v1.13.0)
+Autogenerated from chart metadata using [helm-docs v1.13.1](https://github.com/norwoodj/helm-docs/releases/v1.13.1)
