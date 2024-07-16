@@ -50,6 +50,9 @@ spec:
                           - type: string
                         x-kubernetes-int-or-string: true
                       type: object
+                    disableWebhooks:
+                      description: whether webhooks should be disabled for this execution
+                      type: boolean
                     name:
                       description: custom execution name
                       type: string
@@ -85,6 +88,9 @@ spec:
                     INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
                     Important: Run "make" to regenerate code after modifying this file
                   properties:
+                    disableWebhooks:
+                      description: whether webhooks should be disabled for this execution
+                      type: boolean
                     id:
                       description: unique execution identifier
                       type: string
