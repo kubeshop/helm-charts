@@ -135,7 +135,6 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../global | global | 0.1.2 |
 | file://../testkube-api | testkube-api | 2.0.10 |
 | file://../testkube-logs | testkube-logs | 0.2.0 |
 | file://../testkube-operator | testkube-operator | 2.0.0 |
