@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 2.0.13](https://img.shields.io/badge/Version-2.0.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.0.17](https://img.shields.io/badge/Version-2.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -135,8 +135,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 2.0.8 |
+| file://../testkube-api | testkube-api | 2.0.10 |
 | file://../testkube-logs | testkube-logs | 0.2.0 |
 | file://../testkube-operator | testkube-operator | 2.0.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
@@ -149,7 +148,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tls":{"caCertPath":""},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"additionalVolumeMounts":[],"additionalVolumes":[]}}` | Important! Please, note that this will override sub-chart image parameters. |
 | global.affinity | object | `{}` | Affinity rules to add to all deployed Pods |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
-| global.features | object | `{"logsV2":false,"whitelistedContainers":"init,logs,scraper"}` | Features map for the whole chart |
+| global.features.logsV2 | bool | `false` | Toggle whether to enable V2 log support |
 | global.features.whitelistedContainers | string | `"init,logs,scraper"` | Comma-separated array of containers which should get scraped for logs |
 | global.imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | global.imageRegistry | string | `""` | Global Docker image registry |
@@ -256,8 +255,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
 | testkube-api.image.registry | string | `"docker.io"` | Testkube API image registry |
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
-| testkube-api.imageInspectionCache.enabled | bool | `true` |  |
-| testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` |  |
+| testkube-api.imageInspectionCache.enabled | bool | `true` | Status of the persistent cache |
+| testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` | ConfigMap name to persist cache |
+| testkube-api.imageInspectionCache.ttl | string | `"30m"` | TTL for image pull secrets cache (set to 0 to disable) |
 | testkube-api.imageTwInit.digest | string | `""` | Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.imageTwInit.pullSecrets | list | `[]` | Test Workflows image k8s secret for private registries |
 | testkube-api.imageTwInit.registry | string | `"docker.io"` | Test Workflows image registry |

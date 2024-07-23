@@ -27,6 +27,7 @@ global:
     additionalVolumeMounts: []
   features:
     logsV2: false
+    whitelistedContainers: init,logs,scraper
   testWorkflows:
     createServiceAccountTemplates: true
     createOfficialTemplates: true
@@ -174,6 +175,8 @@ imageInspectionCache:
   enabled: true
   ## ConfigMap name to persist cache
   name: "testkube-image-cache"
+  ## TTL for image pull secrets cache (set to 0 to disable)
+  ttl: 30m
 
 ## Multinamespace feature. Disabled by default
 multinamespace:

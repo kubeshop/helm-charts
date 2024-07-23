@@ -213,6 +213,10 @@ spec:
             {{- else }}
               {{- include "testkube-api.env-standalone-mode" . | nindent 12 }}
             {{- end }}
+            - name: WHITELISTED_CONTAINERS
+              value: "{{ .Values.global.features.whitelistedContainers }}"
+            - name: TESTKUBE_IMAGE_CREDENTIALS_CACHE_TTL
+              value: "{{ .Values.imageInspectionCache.ttl }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
