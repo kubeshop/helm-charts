@@ -4227,6 +4227,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2024-07-23T09:00:28.956820055Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.0.11
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 1.1.7
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.0.10
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 3ce7ecc907efee9ea11f70e92203966e7fa6ccb8815006ffba5720aa53df1be5
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-2.0.18/testkube-2.0.18.tgz
+    version: 2.0.18
+  - apiVersion: v2
     created: "2024-07-12T09:21:46.903835047Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -53103,9 +53136,9 @@ entries:
     version: 1.9.2
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-21T16:52:39.420120847Z"
+    created: "2023-02-23T10:49:27.352033737Z"
     description: A Helm chart for Kubernetes
-    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
+    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
     name: testkube-dashboard
     type: application
     urls:
@@ -53113,9 +53146,13 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-23T10:49:27.352033737Z"
+    created: "2023-03-03T07:48:52.204309663Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.1
     description: A Helm chart for Kubernetes
-    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
+    digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
     name: testkube-dashboard
     type: application
     urls:
@@ -53137,13 +53174,9 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-03-03T07:48:52.204309663Z"
-    dependencies:
-    - name: global
-      repository: file://../global
-      version: 0.1.1
+    created: "2023-02-21T16:52:39.420120847Z"
     description: A Helm chart for Kubernetes
-    digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
+    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
     name: testkube-dashboard
     type: application
     urls:
@@ -54210,6 +54243,21 @@ entries:
     version: 0.2.0
   testkube-operator:
   - apiVersion: v2
+    appVersion: 2.0.11
+    created: "2024-07-23T09:00:29.122445862Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: ef39af12b4a99c63f54e85d4981ea8fc7bffd5321c968a73e69315cccf65ddec
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-2.0.11/testkube-operator-2.0.11.tgz
+    version: 2.0.11
+  - apiVersion: v2
     appVersion: 2.0.0
     created: "2024-06-26T13:10:29.648979386Z"
     dependencies:
@@ -54796,14 +54844,14 @@ entries:
     version: 1.10.5
   - apiVersion: v2
     appVersion: 1.10.5-beta002
-    created: "2023-04-24T14:00:34.980572993Z"
+    created: "2023-04-21T13:55:25.621747585Z"
     dependencies:
     - name: global
       repository: file://../global
       version: 0.1.1
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
-    digest: 7aeb9c111fe9ac7403c13831aa2e2e753dea9389ba244c565a427e56b0c8506a
+    digest: dd02c613d611fc423acc9d5b431638e374c1b69abfeb4bfe2690f2b895c17cf6
     name: testkube-operator
     type: application
     urls:
@@ -54826,14 +54874,14 @@ entries:
     version: 1.10.5-beta002
   - apiVersion: v2
     appVersion: 1.10.5-beta002
-    created: "2023-04-21T13:55:25.621747585Z"
+    created: "2023-04-24T14:00:34.980572993Z"
     dependencies:
     - name: global
       repository: file://../global
       version: 0.1.1
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
-    digest: dd02c613d611fc423acc9d5b431638e374c1b69abfeb4bfe2690f2b895c17cf6
+    digest: 7aeb9c111fe9ac7403c13831aa2e2e753dea9389ba244c565a427e56b0c8506a
     name: testkube-operator
     type: application
     urls:
@@ -55785,10 +55833,10 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.10.3/testkube-operator-0.10.3.tgz
     version: 0.10.3
   - apiVersion: v2
-    created: "2022-03-03T10:26:31.623861424Z"
+    created: "2022-03-04T12:43:53.193142185Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
-    digest: 3441cab1dbeea80e02d659a0234b0bf8d43cb6664963e87277853a0bd7d8fb88
+    digest: 78ccb022979ffaa92d6c49ad167ce02a1bbb88ad9e95989b7b0d13c9c1ee0dea
     name: testkube-operator
     type: application
     urls:
@@ -55805,10 +55853,10 @@ entries:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.10.2-beta001/testkube-operator-0.10.2-beta001.tgz
     version: 0.10.2-beta001
   - apiVersion: v2
-    created: "2022-03-04T12:43:53.193142185Z"
+    created: "2022-03-03T10:26:31.623861424Z"
     description: A Helm chart for the testkube-operator (installs needed CRDs only
       for now)
-    digest: 78ccb022979ffaa92d6c49ad167ce02a1bbb88ad9e95989b7b0d13c9c1ee0dea
+    digest: 3441cab1dbeea80e02d659a0234b0bf8d43cb6664963e87277853a0bd7d8fb88
     name: testkube-operator
     type: application
     urls:
@@ -58755,4 +58803,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2024-07-17T22:12:38.070174325Z"
+generated: "2024-07-23T09:00:29.15264201Z"
