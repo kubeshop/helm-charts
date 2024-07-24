@@ -501,6 +501,8 @@ testkube-api:
     uiUrl: ""
     # -- Testkube Clouc License Key (for Environment)
     key: ""
+    # -- Testkube Cloud Runner Id
+    runnerId: ""
     tls:
       # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
       enabled: true
