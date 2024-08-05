@@ -992,6 +992,8 @@ testkube-operator:
   healthcheckPort: 8081
   # -- Use ArgoCD sync owner references
   useArgoCDSync: false
+  # ~~ Purge executions on CRD deletion
+  purgeExecutions: false
 
   # Service Account parameters
   serviceAccount:

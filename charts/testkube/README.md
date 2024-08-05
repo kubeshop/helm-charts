@@ -459,6 +459,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.proxy.image.repository | string | `"kubebuilder/kube-rbac-proxy"` | Testkube Operator rbac-proxy image repository |
 | testkube-operator.proxy.image.tag | string | `"v0.8.0"` | Testkube Operator rbac-proxy image tag |
 | testkube-operator.proxy.resources | object | `{}` | Testkube Operator rbac-proxy resource settings |
+| testkube-operator.purgeExecutions | bool | `false` |  |
 | testkube-operator.rbac.create | bool | `true` |  |
 | testkube-operator.readinessProbe | object | `{"initialDelaySeconds":3}` | Testkube Operator Readiness Probe parameters |
 | testkube-operator.readinessProbe.initialDelaySeconds | int | `3` | Initial delay seconds for readiness probe |

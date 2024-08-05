@@ -87,6 +87,8 @@ apiPort: 8088
 healthcheckPort: 8081
 # use ArgoCD sync owner references
 useArgoCDSync: false
+# purge executions on CRD deletion
+purgeExecutions: false
 
 ## Service Account parameters
 serviceAccount:
