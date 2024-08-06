@@ -374,6 +374,7 @@ testkube-operator:
     containerPort: 8443
 
   useArgoCDSync: true
+  purgeExecutions: false
 
   resources: {}
   #    requests:

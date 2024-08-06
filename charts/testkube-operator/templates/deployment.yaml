@@ -98,6 +98,10 @@ spec:
           value: "nats://{{ .Release.Name }}-nats"
           {{- end }}
         {{- end }}
+        {{- if .Values.purgeExecutions }}
+        - name: APISERVER_PURGE_EXECUTIONS
+          value: "true"
+        {{- end }}
         ports:
         - containerPort: 9443
           name: webhook-server
