@@ -59,6 +59,7 @@ A Helm chart for the testkube-operator (installs needed CRDs only for now)
 | proxy.image.repository | string | `"kubebuilder/kube-rbac-proxy"` |  |
 | proxy.image.tag | string | `"v0.8.0"` |  |
 | proxy.resources | object | `{}` |  |
+| purgeExecutions | bool | `false` |  |
 | rbac.create | bool | `true` |  |
 | readinessProbe.initialDelaySeconds | int | `3` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
