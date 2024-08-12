@@ -53,6 +53,10 @@ jobs:
           echo "- Storage: https://storage.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
           echo "- Websockets: https://websockets.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
           echo -e '```' >> $GITHUB_STEP_SUMMARY
+          
+      - name: Checkout
+        if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
+        uses: actions/checkout@v4
 
       - name: Get a branch name if PR is created
         if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
@@ -71,7 +75,7 @@ jobs:
         id: template
         uses: chuhlomin/render-template@v1.4
         with:
-          template: .github/comment-template.md
+          template: .github/sandbox-comment-template.md
           vars: |
             branch_ref: ${{ env.branch_ref }}
 
