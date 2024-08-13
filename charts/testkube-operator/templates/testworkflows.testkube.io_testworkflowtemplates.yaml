@@ -1692,6 +1692,9 @@ spec:
                       paused:
                         description: pause the step initially
                         type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
+                        type: boolean
                       retry:
                         description: policy for retrying the step
                         properties:
@@ -6327,6 +6330,9 @@ spec:
                       paused:
                         description: pause the step initially
                         type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
+                        type: boolean
                       retry:
                         description: policy for retrying the step
                         properties:
@@ -9175,6 +9181,9 @@ spec:
                       paused:
                         description: pause the step initially
                         type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
+                        type: boolean
                       retry:
                         description: policy for retrying the step
                         properties:
@@ -10374,6 +10383,16 @@ spec:
                         type: string
                     type: object
                   type: array
+                system:
+                  description: system configuration to define the orchestration behavior
+                  properties:
+                    isolatedContainers:
+                      description: disable the behavior of merging multiple operations in a single container
+                      type: boolean
+                    pureByDefault:
+                      description: assume all the steps are pure by default
+                      type: boolean
+                  type: object
               type: object
           required:
             - spec

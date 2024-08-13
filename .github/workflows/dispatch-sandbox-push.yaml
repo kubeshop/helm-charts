@@ -4,21 +4,86 @@ on:
   push:
     branches:
       - sandbox/**
+  pull_request:
+    types:
+      - opened
 
 jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/create-github-app-token@v1
+        if: startsWith(github.ref, 'refs/heads/sandbox/')
         id: app-token
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
+
       - name: Repository dispatch
+        if: startsWith(github.ref, 'refs/heads/sandbox/')
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ steps.app-token.outputs.token }}
           repository: kubeshop/testkube-deployment
           event-type: sandbox_agent_charts_update
           client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "agent_sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
+
+      - name: Set version
+        if: startsWith(github.ref, 'refs/heads/sandbox/')
+        run: |
+          #get short commit sha that triggered the flow
+          echo git_hash="$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_ENV
+
+          # Extract everything before the first slash
+          branch_identifier=$(echo "$GITHUB_REF_NAME" | cut -d'/' -f2-)
+
+          # Replace slashes with dashes using sed
+          echo branch_identifier=$(echo "$branch_identifier" | sed 's/\//-/g') >> $GITHUB_ENV
+
+      - name: Output summary
+        if: startsWith(github.ref, 'refs/heads/sandbox/')
+        run: |
+          echo -e "### Sandbox Environment" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+          echo -e "## URLs" >> $GITHUB_STEP_SUMMARY
+          echo "- Dashboard: https://dashboard.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
+          echo "- API: https://api.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
+          echo "- Agent: https://agent.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
+          echo "- Storage: https://storage.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
+          echo "- Websockets: https://websockets.${{ env.branch_identifier }}.testkube.dev" >> $GITHUB_STEP_SUMMARY
+          echo -e '```' >> $GITHUB_STEP_SUMMARY
+          
+      - name: Checkout
+        if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
+        uses: actions/checkout@v4
+
+      - name: Get a branch name if PR is created
+        if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
+        run: |
+          # get a branch name
+          branch_ref="${{ github.event.pull_request.head.ref }}"
+
+          #remove slash
+          branch_ref="${branch_ref#*/}"
+
+          #create env var
+          echo "branch_ref=$branch_ref" >> $GITHUB_ENV
+
+      - name: Render template
+        if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
+        id: template
+        uses: chuhlomin/render-template@v1.4
+        with:
+          template: .github/sandbox-comment-template.md
+          vars: |
+            branch_ref: ${{ env.branch_ref }}
+
+      - name: Create comment on a PR with the endpoints
+        if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.CI_BOT_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ steps.template.outputs.result }}
+
