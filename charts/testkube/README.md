@@ -37,7 +37,8 @@ nats:
       key: "cert.key"
 ```
 
-If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so it uses a secure protocol when connecting to NATS.
+If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so
+it uses a secure protocol when connecting to NATS.
 
 ```yaml
 testkube-api:
