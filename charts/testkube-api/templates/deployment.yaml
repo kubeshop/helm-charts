@@ -86,10 +86,6 @@ spec:
             - name: SLACK_TOKEN
               value: "{{ .Values.slackToken }}"
             {{- end }}
-            {{- if .Values.slackConfig }}
-            - name: SLACK_CONFIG
-              value:  "{{ .Values.slackConfig }}"
-            {{- end }}
             {{- if .Values.slackTemplate }}
             - name: SLACK_TEMPLATE
               value:  "{{ .Values.slackTemplate }}"
