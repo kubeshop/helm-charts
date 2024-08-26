@@ -15,13 +15,15 @@ helm repo update
 
 ### TLS
 
-Testkube API needs to have additional configuration if NATS or MinIO (or any S3-compatible storage) is used.
-THe following sections describe how to configure TLS for NATS and MinIO.
+Testkube API needs to have additional configuration if NATS or MinIO (or any
+S3-compatible storage) is used.  THe following sections describe how to
+configure TLS for NATS and MinIO.
 
 #### NATS
 
-If you want to provision NATS server with TLS, first you will need to create a Kubernetes secret which contains the
-server certificate, certificate key and CA certificate, and then you can use the following configuration
+If you want to provision NATS server with TLS, first you will need to create a
+Kubernetes secret which contains the server certificate, certificate key and CA
+certificate, and then you can use the following configuration
 
 ```yaml
 nats:
