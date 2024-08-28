@@ -21,10 +21,6 @@ dependencies:
     version: 2.1.2
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-api"
-  - name: testkube-logs
-    version: 0.2.0
-    repository: "file://../testkube-logs"
-    condition: global.features.logsV2
   - name: global
     version: 0.1.2
     repository: "file://../global"
