@@ -54011,16 +54011,6 @@ entries:
     version: 1.9.2
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-23T10:49:27.352033737Z"
-    description: A Helm chart for Kubernetes
-    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
-    name: testkube-dashboard
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.9.2-beta1/testkube-dashboard-1.9.2-beta1.tgz
-    version: 1.9.2-beta1
-  - apiVersion: v2
-    appVersion: 1.9.2-beta1
     created: "2023-03-03T07:48:52.204309663Z"
     dependencies:
     - name: global
@@ -54028,6 +54018,16 @@ entries:
       version: 0.1.1
     description: A Helm chart for Kubernetes
     digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.9.2-beta1/testkube-dashboard-1.9.2-beta1.tgz
+    version: 1.9.2-beta1
+  - apiVersion: v2
+    appVersion: 1.9.2-beta1
+    created: "2023-02-21T16:52:39.420120847Z"
+    description: A Helm chart for Kubernetes
+    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
     name: testkube-dashboard
     type: application
     urls:
@@ -54049,9 +54049,9 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-21T16:52:39.420120847Z"
+    created: "2023-02-23T10:49:27.352033737Z"
     description: A Helm chart for Kubernetes
-    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
+    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
     name: testkube-dashboard
     type: application
     urls:
@@ -57069,6 +57069,24 @@ entries:
     version: 0.5.8-testing
   tracetest:
   - apiVersion: v2
+    appVersion: v1.5.1
+    created: "2024-08-28T17:29:35.744824213Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.1.6
+    description: A Helm chart for Trace Test
+    digest: 609a538df9f35378949d3a038f308e64bac1697c4a24119986be3f80b19ca21d
+    home: https://github.com/kubeshop/helm-charts
+    name: tracetest
+    sources:
+    - https://github.com/kubeshop/helm-charts/tree/main/charts
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.3.30/tracetest-0.3.30.tgz
+    version: 0.3.30
+  - apiVersion: v2
     appVersion: v1.5.0
     created: "2024-08-28T17:00:03.612363196Z"
     dependencies:
@@ -59762,4 +59780,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2024-08-28T17:00:03.640798778Z"
+generated: "2024-08-28T17:29:35.774996204Z"
