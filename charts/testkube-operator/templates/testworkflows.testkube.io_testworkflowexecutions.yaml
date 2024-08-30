@@ -56,6 +56,11 @@ spec:
                     name:
                       description: custom execution name
                       type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string
@@ -326,6 +331,11 @@ spec:
                       description: when the execution result's status has changed last time (queued, passed, failed)
                       format: date-time
                       type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string
