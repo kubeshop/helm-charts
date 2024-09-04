@@ -3595,6 +3595,15 @@ spec:
                         type: object
                     type: object
                   type: array
+                execution:
+                  description: values to be used for test workflow execution
+                  properties:
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
+                  type: object
                 job:
                   description: configuration for the scheduled job
                   properties:
@@ -10740,6 +10749,11 @@ spec:
                       description: when the execution result's status has changed last time (queued, passed, failed)
                       format: date-time
                       type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     workflow:
                       description: TestWorkflowSummary fas TestWorkflow summary
                       properties:
