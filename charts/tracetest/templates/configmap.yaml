@@ -17,7 +17,8 @@ data:
       {{- toYaml .Values.telemetry | nindent 6 }}
     server:
       {{- toYaml .Values.server | nindent 6 }}
-  provisioning.yaml: |-
-    {{- toYaml .Values.provisioning | nindent 4 }}
+  {{- $provision := .Values.provisioning }}
+  provisioning.yaml: |- 
+  {{- $provision | nindent 4 }}
 ---
 {{- end }}
