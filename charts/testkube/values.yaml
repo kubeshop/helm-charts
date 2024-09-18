@@ -1086,9 +1086,9 @@ testkube-operator:
         # -- patch job image registry
         registry: docker.io
         # -- patch job image name
-        repository: dpejcev/kube-webhook-certgen
+        repository: kubeshop/kube-webhook-certgen
         # -- patch job image tag
-        version: 1.0.11
+        tag: 0.0.4
         # -- patch job image pull policy
         pullPolicy: Always
         # -- patch job k8s secret for private registries
