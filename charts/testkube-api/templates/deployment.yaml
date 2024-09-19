@@ -261,7 +261,7 @@ spec:
             - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
               name: {{ .Values.cloud.tls.customCaSecretRef }}
               readOnly: true
-              subPath: ca.crt
+              subPath: {{ .Values.cloud.tls.customCaSecretKey }}
             {{- end }}
             {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}

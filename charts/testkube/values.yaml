@@ -506,8 +506,10 @@ testkube-api:
       enabled: true
       # -- Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise
       skipVerify: false
-      ## If specified, injects a custom CA into the list of trusted CAs. Specify a secret with the PEM encoded CA under the ca.crt key.
+      ## If specified, injects a custom CA into the list of trusted CAs. Specify a secret with the PEM encoded CA under the key specified by customCaSecretKey.
       customCaSecretRef: ""
+      ## Specify the key for the PEM encoded CA in the secret specified by customCaSecretRef.
+      customCaSecretKey: "ca.crt"
       # -- Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate.
       customCaDirPath: ""
       certificate:
