@@ -1709,6 +1709,9 @@ spec:
                       paused:
                         description: pause the step initially
                         type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
+                        type: boolean
                       retry:
                         description: policy for retrying the step
                         properties:
@@ -3022,6 +3025,9 @@ spec:
                       pattern:
                         description: regular expression to match
                         type: string
+                      sensitive:
+                        description: whether this value should be stored in the secret
+                        type: boolean
                       type:
                         default: string
                         description: type of the parameter
@@ -3589,6 +3595,15 @@ spec:
                         type: object
                     type: object
                   type: array
+                execution:
+                  description: values to be used for test workflow execution
+                  properties:
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
+                  type: object
                 job:
                   description: configuration for the scheduled job
                   properties:
@@ -6434,6 +6449,9 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       paused:
                         description: pause the step initially
+                        type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
                         type: boolean
                       retry:
                         description: policy for retrying the step
@@ -9357,6 +9375,9 @@ spec:
                       paused:
                         description: pause the step initially
                         type: boolean
+                      pure:
+                        description: mark the step as pure, applying optimizations to merge the containers together
+                        type: boolean
                       retry:
                         description: policy for retrying the step
                         properties:
@@ -10613,6 +10634,16 @@ spec:
                         type: string
                     type: object
                   type: array
+                system:
+                  description: system configuration to define the orchestration behavior
+                  properties:
+                    isolatedContainers:
+                      description: disable the behavior of merging multiple operations in a single container
+                      type: boolean
+                    pureByDefault:
+                      description: assume all the steps are pure by default
+                      type: boolean
+                  type: object
                 use:
                   description: templates to include at a top-level of workflow
                   items:
@@ -10718,6 +10749,11 @@ spec:
                       description: when the execution result's status has changed last time (queued, passed, failed)
                       format: date-time
                       type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     workflow:
                       description: TestWorkflowSummary fas TestWorkflow summary
                       properties:

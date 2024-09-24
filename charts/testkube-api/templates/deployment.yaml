@@ -86,10 +86,6 @@ spec:
             - name: SLACK_TOKEN
               value: "{{ .Values.slackToken }}"
             {{- end }}
-            {{- if .Values.slackConfig }}
-            - name: SLACK_CONFIG
-              value:  "{{ .Values.slackConfig }}"
-            {{- end }}
             {{- if .Values.slackTemplate }}
             - name: SLACK_TEMPLATE
               value:  "{{ .Values.slackTemplate }}"
@@ -265,7 +261,7 @@ spec:
             - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
               name: {{ .Values.cloud.tls.customCaSecretRef }}
               readOnly: true
-              subPath: ca.crt
+              subPath: {{ .Values.cloud.tls.customCaSecretKey }}
             {{- end }}
             {{- with .Values.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}

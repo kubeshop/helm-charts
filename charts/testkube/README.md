@@ -15,13 +15,15 @@ helm repo update
 
 ### TLS
 
-Testkube API needs to have additional configuration if NATS or MinIO (or any S3-compatible storage) is used.
-THe following sections describe how to configure TLS for NATS and MinIO.
+Testkube API needs to have additional configuration if NATS or MinIO (or any
+S3-compatible storage) is used.  THe following sections describe how to
+configure TLS for NATS and MinIO.
 
 #### NATS
 
-If you want to provision NATS server with TLS, first you will need to create a Kubernetes secret which contains the
-server certificate, certificate key and CA certificate, and then you can use the following configuration
+If you want to provision NATS server with TLS, first you will need to create a
+Kubernetes secret which contains the server certificate, certificate key and CA
+certificate, and then you can use the following configuration
 
 ```yaml
 nats:
@@ -35,7 +37,8 @@ nats:
       key: "cert.key"
 ```
 
-If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so it uses a secure protocol when connecting to NATS.
+If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so
+it uses a secure protocol when connecting to NATS.
 
 ```yaml
 testkube-api:
@@ -459,6 +462,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.proxy.image.repository | string | `"kubebuilder/kube-rbac-proxy"` | Testkube Operator rbac-proxy image repository |
 | testkube-operator.proxy.image.tag | string | `"v0.8.0"` | Testkube Operator rbac-proxy image tag |
 | testkube-operator.proxy.resources | object | `{}` | Testkube Operator rbac-proxy resource settings |
+| testkube-operator.purgeExecutions | bool | `false` | Purge executions on CRD deletion |
 | testkube-operator.rbac.create | bool | `true` |  |
 | testkube-operator.readinessProbe | object | `{"initialDelaySeconds":3}` | Testkube Operator Readiness Probe parameters |
 | testkube-operator.readinessProbe.initialDelaySeconds | int | `3` | Initial delay seconds for readiness probe |
