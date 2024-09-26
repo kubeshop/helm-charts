@@ -33,6 +33,7 @@ global:
     createOfficialTemplates: true
     globalTemplate:
       enabled: false
+      external: false
       name: global-template
       spec: {}
 
