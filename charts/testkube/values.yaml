@@ -56,6 +56,8 @@ global:
       enabled: false
       # -- Name of the global template
       name: global-template
+      # -- Is the global template sourced externally? (otherwise it's created from spec below)
+      external: false
       # -- Specification for the global template
       spec: {}
       # spec:
