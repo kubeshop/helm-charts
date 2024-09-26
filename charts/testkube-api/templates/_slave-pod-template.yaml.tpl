@@ -52,7 +52,7 @@ spec:
     - name: {{`{{ .RunnerCustomCASecret }}`}}
       mountPath: /etc/testkube/certs/testkube-custom-ca.pem
       readOnly: true
-      subPath: ca.crt
+      subPath: {{ .Values.cloud.tls.customCaSecretKey }}
     {{`{{- end }}`}}
     {{`{{- if .ArtifactRequest }}`}}
       {{`{{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}`}}
