@@ -84,6 +84,7 @@ A Helm chart for Testkube api
 | global.testWorkflows.createOfficialTemplates | bool | `true` |  |
 | global.testWorkflows.createServiceAccountTemplates | bool | `true` |  |
 | global.testWorkflows.globalTemplate.enabled | bool | `false` |  |
+| global.testWorkflows.globalTemplate.external | bool | `false` |  |
 | global.testWorkflows.globalTemplate.name | string | `"global-template"` |  |
 | global.testWorkflows.globalTemplate.spec | object | `{}` |  |
 | global.tls.caCertPath | string | `""` |  |

@@ -163,6 +163,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | global.testWorkflows.globalTemplate | object | `{"enabled":false,"name":"global-template","spec":{}}` | Global TestWorkflowTemplate that will be automatically included for all executions |
 | global.testWorkflows.globalTemplate.enabled | bool | `false` | Is global template enabled |
 | global.testWorkflows.globalTemplate.name | string | `"global-template"` | Name of the global template |
+| global.testWorkflows.globalTemplate.external | bool | `false` | Is the global template sourced externally? (otherwise it's created from spec below) |
 | global.testWorkflows.globalTemplate.spec | object | `{}` | Specification for the global template |
 | global.tls.caCertPath | string | `""` | Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously) |
 | global.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to add to all deployed pods |
