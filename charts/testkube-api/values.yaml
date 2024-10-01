@@ -266,6 +266,9 @@ storageRequest: "1Gi"
 ## enable k8s events for testkube events
 enableK8sEvents: true
 
+## container environment used to run Testkube Agent, by default it's "kubernetes"
+containerEnv: ""
+
 # Testkube log server parameters
 testkubeLogs:
   # -- GRPC address
