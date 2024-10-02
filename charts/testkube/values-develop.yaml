@@ -342,6 +342,7 @@ testkube-api:
   disableSecretCreation: false
   defaultStorageClassName: ""
   enableK8sEvents: true
+  containerEnv: ""
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"

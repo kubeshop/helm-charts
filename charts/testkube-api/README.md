@@ -60,6 +60,7 @@ A Helm chart for Testkube api
 | cloud.url | string | `"agent.testkube.io:443"` |  |
 | clusterName | string | `""` |  |
 | configValues | string | `""` |  |
+| containerEnv | string | `""` |  |
 | containerResources | object | `{}` |  |
 | dashboardUri | string | `""` |  |
 | defaultStorageClassName | string | `""` | Whether to generate RBAC for test job or use manually provided    generateTestJobRBAC: true # default storage class name for PVC volumes |

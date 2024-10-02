@@ -242,6 +242,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` | cluster name to be used in events |
 | testkube-api.containerResources | object | `{}` |  |
+| testkube-api.containerEnv | string | "" | container environment used to run Testkube Agent, by default it's "kubernetes" |
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.defaultStorageClassName | string | `""` | default storage class name for PVC volumes |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |

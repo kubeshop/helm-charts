@@ -213,6 +213,10 @@ spec:
               value: "{{ .Values.global.features.whitelistedContainers }}"
             - name: TESTKUBE_IMAGE_CREDENTIALS_CACHE_TTL
               value: "{{ .Values.imageInspectionCache.ttl }}"
+            {{- if .Values.containerEnv }}
+            - name: TESTKUBE_CONTAINER_ENV
+              value: "{{ .Values.containerEnv }}"
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
