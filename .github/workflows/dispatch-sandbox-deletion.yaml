@@ -1,12 +1,12 @@
-name: Dispatch events based on develop push
+name: Remove sandbox environment
 
 on:
-  push:
-    branches:
-      - develop
+  pull_request:
+    types: [closed]
 
 jobs:
-  dispatch:
+  delete:
+    if: startsWith(github.event.pull_request.head.ref, 'sandbox/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/create-github-app-token@v1
@@ -15,10 +15,11 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
+
       - name: Repository dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ steps.app-token.outputs.token }}
           repository: kubeshop/testkube-deployment
-          event-type: testkube_charts_push
-          client-payload: '{"ref": "${{ github.ref }}", "ref_name": "${{ github.ref_name }}", "sha": "${{ github.sha }}", "repository": "${{ github.repository }}"}'
+          event-type: sandbox_env_delete
+          client-payload: '{"ref_name": "${{ github.event.pull_request.head.ref }}"}'

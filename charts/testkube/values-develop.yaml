@@ -342,6 +342,7 @@ testkube-api:
   disableSecretCreation: false
   defaultStorageClassName: ""
   enableK8sEvents: true
+  containerEnv: ""
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"
@@ -374,6 +375,7 @@ testkube-operator:
     containerPort: 8443
 
   useArgoCDSync: true
+  purgeExecutions: false
 
   resources: {}
   #    requests:

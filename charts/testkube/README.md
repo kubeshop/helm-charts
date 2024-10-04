@@ -2,7 +2,7 @@
 
 Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 
-![Version: 2.0.3](https://img.shields.io/badge/Version-2.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 2.0.17](https://img.shields.io/badge/Version-2.0.17-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 ## Install
 
@@ -15,13 +15,15 @@ helm repo update
 
 ### TLS
 
-Testkube API needs to have additional configuration if NATS or MinIO (or any S3-compatible storage) is used.
-THe following sections describe how to configure TLS for NATS and MinIO.
+Testkube API needs to have additional configuration if NATS or MinIO (or any
+S3-compatible storage) is used.  THe following sections describe how to
+configure TLS for NATS and MinIO.
 
 #### NATS
 
-If you want to provision NATS server with TLS, first you will need to create a Kubernetes secret which contains the
-server certificate, certificate key and CA certificate, and then you can use the following configuration
+If you want to provision NATS server with TLS, first you will need to create a
+Kubernetes secret which contains the server certificate, certificate key and CA
+certificate, and then you can use the following configuration
 
 ```yaml
 nats:
@@ -35,7 +37,8 @@ nats:
       key: "cert.key"
 ```
 
-If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so it uses a secure protocol when connecting to NATS.
+If NATS is configured to use TLS, Testkube API needs to set the `secure` flag so
+it uses a secure protocol when connecting to NATS.
 
 ```yaml
 testkube-api:
@@ -135,8 +138,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Repository | Name | Version |
 |------------|------|---------|
-| file://../global | global | 0.1.2 |
-| file://../testkube-api | testkube-api | 2.0.1 |
+| file://../testkube-api | testkube-api | 2.0.10 |
 | file://../testkube-logs | testkube-logs | 0.2.0 |
 | file://../testkube-operator | testkube-operator | 2.0.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
@@ -146,7 +148,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]}` | Important! Please, note that this will override sub-chart image parameters. |
+| global | object | `{"affinity":{},"annotations":{},"features":{"logsV2":false,"whitelistedContainers":"init,logs,scraper"},"imagePullSecrets":[],"imageRegistry":"","labels":{},"nodeSelector":{},"testWorkflows":{"createOfficialTemplates":true,"createServiceAccountTemplates":true,"globalTemplate":{"enabled":false,"name":"global-template","spec":{}}},"tls":{"caCertPath":""},"tolerations":[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}],"volumes":{"additionalVolumeMounts":[],"additionalVolumes":[]}}` | Important! Please, note that this will override sub-chart image parameters. |
 | global.affinity | object | `{}` | Affinity rules to add to all deployed Pods |
 | global.annotations | object | `{}` | Annotations to add to all deployed objects |
 | global.features.logsV2 | bool | `false` | Toggle whether to enable V2 log support |
@@ -161,8 +163,13 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | global.testWorkflows.globalTemplate | object | `{"enabled":false,"name":"global-template","spec":{}}` | Global TestWorkflowTemplate that will be automatically included for all executions |
 | global.testWorkflows.globalTemplate.enabled | bool | `false` | Is global template enabled |
 | global.testWorkflows.globalTemplate.name | string | `"global-template"` | Name of the global template |
+| global.testWorkflows.globalTemplate.external | bool | `false` | Is the global template sourced externally? (otherwise it's created from spec below) |
 | global.testWorkflows.globalTemplate.spec | object | `{}` | Specification for the global template |
+| global.tls.caCertPath | string | `""` | Path to the PEM-encoded CA certificate file (needs to be mounted to the container previously) |
 | global.tolerations | list | `[{"effect":"NoSchedule","key":"kubernetes.io/arch","operator":"Equal","value":"arm64"}]` | Tolerations to add to all deployed pods |
+| global.volumes | object | `{"additionalVolumeMounts":[],"additionalVolumes":[]}` | Global volume settings (API & Test Jobs) |
+| global.volumes.additionalVolumeMounts | list | `[]` | Additional volume mounts to be added to the Testkube API container and Test Jobs containers |
+| global.volumes.additionalVolumes | list | `[]` | Additional volumes to be added to the Testkube API container and Test Jobs containers |
 | mongodb.auth.enabled | bool | `false` | Toggle whether to enable MongoDB authentication |
 | mongodb.containerSecurityContext | object | `{}` | Security Context for MongoDB container |
 | mongodb.enabled | bool | `true` | Toggle whether to install MongoDB |
@@ -227,12 +234,15 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.tls.certificate.certFile | string | `"/tmp/agent-cert/cert.crt"` | Default path for certificate file |
 | testkube-api.cloud.tls.certificate.keyFile | string | `"/tmp/agent-cert/cert.key"` | Default path for certificate key file |
 | testkube-api.cloud.tls.certificate.secretRef | string | `""` | When provided, it will use the provided certificates when authenticating with the Agent (gRPC) API (secret should contain cert.crt, key.crt and ca.crt) |
+| testkube-api.cloud.tls.customCaDirPath | string | `""` | Specifies the path to the directory (skip the trailing slash) where CA certificates should be mounted. The mounted file should container a PEM encoded CA certificate. |
 | testkube-api.cloud.tls.customCaSecretRef | string | `""` |  |
 | testkube-api.cloud.tls.enabled | bool | `true` | Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC) |
 | testkube-api.cloud.tls.skipVerify | bool | `false` | Toggle should the client skip verifying the Agent API server cert in Cloud/Enterprise |
 | testkube-api.cloud.uiUrl | string | `""` |  |
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` | cluster name to be used in events |
+| testkube-api.containerResources | object | `{}` |  |
+| testkube-api.containerEnv | string | "" | container environment used to run Testkube Agent, by default it's "kubernetes" |
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.defaultStorageClassName | string | `""` | default storage class name for PVC volumes |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
@@ -250,8 +260,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.image.pullSecrets | list | `[]` | Testkube API k8s secret for private registries |
 | testkube-api.image.registry | string | `"docker.io"` | Testkube API image registry |
 | testkube-api.image.repository | string | `"kubeshop/testkube-api-server"` | Testkube API image name |
-| testkube-api.imageInspectionCache.enabled | bool | `true` |  |
-| testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` |  |
+| testkube-api.imageInspectionCache.enabled | bool | `true` | Status of the persistent cache |
+| testkube-api.imageInspectionCache.name | string | `"testkube-image-cache"` | ConfigMap name to persist cache |
+| testkube-api.imageInspectionCache.ttl | string | `"30m"` | TTL for image pull secrets cache (set to 0 to disable) |
 | testkube-api.imageTwInit.digest | string | `""` | Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.imageTwInit.pullSecrets | list | `[]` | Test Workflows image k8s secret for private registries |
 | testkube-api.imageTwInit.registry | string | `"docker.io"` | Test Workflows image registry |
@@ -259,6 +270,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.imageTwToolkit.digest | string | `""` | Test Workflows image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag |
 | testkube-api.imageTwToolkit.registry | string | `"docker.io"` | Test Workflows image registry |
 | testkube-api.imageTwToolkit.repository | string | `"kubeshop/testkube-tw-toolkit"` | Test Workflows image name |
+| testkube-api.initContainerResources | object | `{}` |  |
 | testkube-api.jobAnnotations | object | `{}` |  |
 | testkube-api.jobPodAnnotations | object | `{}` |  |
 | testkube-api.jobServiceAccountName | string | `""` | SA that is used by a job. Can be annotated with the IAM Role Arn to access S3 service in AWS Cloud. |
@@ -266,6 +278,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.livenessProbe.initialDelaySeconds | int | `15` | Initial delay for liveness probe |
 | testkube-api.logs.bucket | string | `"testkube-logs"` | Bucket should be specified if storage is "minio" |
 | testkube-api.logs.storage | string | `"minio"` | Log storage can either be "minio" or "mongo" |
+| testkube-api.logsV2ContainerResources | object | `{}` |  |
 | testkube-api.minio.accessModes | list | `["ReadWriteOnce"]` | PVC Access Modes for Minio. The volume is mounted as read-write by a single node. |
 | testkube-api.minio.affinity | object | `{}` | Affinity for pod assignment. |
 | testkube-api.minio.enabled | bool | `true` | Toggle whether to install MinIO |
@@ -317,6 +330,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.readinessProbe | object | `{"initialDelaySeconds":30}` | Testkube API Readiness probe parameters |
 | testkube-api.readinessProbe.initialDelaySeconds | int | `30` | Initial delay for readiness probe |
 | testkube-api.resources | object | `{"requests":{"cpu":"200m","memory":"200Mi"}}` | Testkube API resource requests and limits |
+| testkube-api.scraperContainerResources | object | `{}` |  |
 | testkube-api.securityContext | object | `{}` | Security Context for testkube-api container |
 | testkube-api.service.annotations | object | `{}` | Service Annotations |
 | testkube-api.service.labels | object | `{}` | Service labels |
@@ -450,6 +464,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.proxy.image.repository | string | `"kubebuilder/kube-rbac-proxy"` | Testkube Operator rbac-proxy image repository |
 | testkube-operator.proxy.image.tag | string | `"v0.8.0"` | Testkube Operator rbac-proxy image tag |
 | testkube-operator.proxy.resources | object | `{}` | Testkube Operator rbac-proxy resource settings |
+| testkube-operator.purgeExecutions | bool | `false` | Purge executions on CRD deletion |
 | testkube-operator.rbac.create | bool | `true` |  |
 | testkube-operator.readinessProbe | object | `{"initialDelaySeconds":3}` | Testkube Operator Readiness Probe parameters |
 | testkube-operator.readinessProbe.initialDelaySeconds | int | `3` | Initial delay seconds for readiness probe |

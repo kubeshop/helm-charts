@@ -86,10 +86,6 @@ spec:
             - name: SLACK_TOKEN
               value: "{{ .Values.slackToken }}"
             {{- end }}
-            {{- if .Values.slackConfig }}
-            - name: SLACK_CONFIG
-              value:  "{{ .Values.slackConfig }}"
-            {{- end }}
             {{- if .Values.slackTemplate }}
             - name: SLACK_TEMPLATE
               value:  "{{ .Values.slackTemplate }}"
@@ -181,7 +177,16 @@ spec:
             - name: TESTKUBE_EXECUTION_NAMESPACES
               value: "{{ $value }}"
             {{- end }}
-            {{- if .Values.cloud.tls.customCaSecretRef }}
+            {{- if .Values.global.tls.caCertPath }}
+            - name: SSL_CERT_DIR
+              value: {{ .Values.global.tls.caCertPath }}
+            - name: GIT_SSL_CAPATH
+              value: {{ .Values.global.tls.caCertPath }}
+            {{- end }}
+            {{- if .Values.cloud.tls.customCaDirPath }}
+            - name: SSL_CERT_DIR
+              value: {{ .Values.cloud.tls.customCaDirPath }}
+            {{- else if .Values.cloud.tls.customCaSecretRef }}
             - name: SSL_CERT_DIR
               value: /etc/testkube/certs
             - name: TESTKUBE_PRO_RUNNER_CUSTOM_CA_SECRET
@@ -206,6 +211,12 @@ spec:
             {{- end }}
             - name: WHITELISTED_CONTAINERS
               value: "{{ .Values.global.features.whitelistedContainers }}"
+            - name: TESTKUBE_IMAGE_CREDENTIALS_CACHE_TTL
+              value: "{{ .Values.imageInspectionCache.ttl }}"
+            {{- if .Values.containerEnv }}
+            - name: TESTKUBE_CONTAINER_ENV
+              value: "{{ .Values.containerEnv }}"
+            {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -227,6 +238,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
+            - mountPath: /tmp
+              name: testkube-tmp
             {{- if .Values.nats.embedded }}
             - mountPath: /app/nats
               name: testkube-nats
@@ -250,20 +263,25 @@ spec:
               readOnly: true
             {{- end }}
             {{- end }}
-            {{- with .Values.additionalVolumeMounts }}
-            {{- toYaml . | nindent 12 -}}
-            {{- end }}
             {{- if .Values.cloud.tls.customCaSecretRef }}
             - mountPath: /etc/testkube/certs/testkube-custom-ca.pem
               name: {{ .Values.cloud.tls.customCaSecretRef }}
               readOnly: true
-              subPath: ca.crt
+              subPath: {{ .Values.cloud.tls.customCaSecretKey }}
+            {{- end }}
+            {{- with .Values.additionalVolumeMounts }}
+            {{- toYaml . | nindent 12 -}}
+            {{- end }}
+            {{- with .Values.global.volumes.additionalVolumeMounts }}
+            {{- toYaml . | nindent 12 -}}
             {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       volumes:
+        - name: testkube-tmp
+          emptyDir: {}
         - name: testkube-config
           configMap:
             name: {{ include "testkube-api.fullname" . }}
@@ -288,14 +306,17 @@ spec:
             secretName: {{ .Values.testkubeLogs.tls.certSecret.name }}
         {{- end }}
         {{- end }}
-        {{- with .Values.additionalVolumes }}
-        {{- toYaml . | nindent 8 -}}
-        {{- end }}
         {{- if .Values.cloud.tls.customCaSecretRef }}
         - name: {{ .Values.cloud.tls.customCaSecretRef }}
           secret:
             defaultMode: 420
             secretName: {{ .Values.cloud.tls.customCaSecretRef }}
+        {{- end }}
+        {{- with .Values.additionalVolumes }}
+        {{- toYaml . | nindent 8 -}}
+        {{- end }}
+        {{- with .Values.global.volumes.additionalVolumes }}
+        {{- toYaml . | nindent 8 -}}
         {{- end }}
       {{- if .Values.affinity }}
       affinity:

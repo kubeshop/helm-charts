@@ -50,6 +50,9 @@ spec:
                           - type: string
                         x-kubernetes-int-or-string: true
                       type: object
+                    disableWebhooks:
+                      description: whether webhooks should be disabled for this execution
+                      type: boolean
                     name:
                       description: custom execution name
                       type: string
@@ -108,6 +111,11 @@ spec:
                         - interface
                         type: object
                       type: array
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string
@@ -140,6 +148,9 @@ spec:
                     INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
                     Important: Run "make" to regenerate code after modifying this file
                   properties:
+                    disableWebhooks:
+                      description: whether webhooks should be disabled for this execution
+                      type: boolean
                     id:
                       description: unique execution identifier
                       type: string
@@ -430,6 +441,11 @@ spec:
                       description: when the execution result's status has changed last time (queued, passed, failed)
                       format: date-time
                       type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
                       type: string

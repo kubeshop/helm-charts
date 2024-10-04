@@ -52,7 +52,7 @@ spec:
     - name: {{`{{ .RunnerCustomCASecret }}`}}
       mountPath: /etc/testkube/certs/testkube-custom-ca.pem
       readOnly: true
-      subPath: ca.crt
+      subPath: {{ .Values.cloud.tls.customCaSecretKey }}
     {{`{{- end }}`}}
     {{`{{- if .ArtifactRequest }}`}}
       {{`{{- if and .ArtifactRequest.VolumeMountPath (or .ArtifactRequest.StorageClassName .ArtifactRequest.UseDefaultStorageClassName) }}`}}
@@ -112,6 +112,13 @@ spec:
     {{- with .Values.containerResources }}
     resources:
       {{- toYaml . | nindent 6 }}
+    {{- end }}
+    env:
+    {{- if .Values.global.tls.caCertPath }}
+    - name: SSL_CERT_DIR
+      value: {{ .Values.global.tls.caCertPath }}
+    - name: GIT_SSL_CAPATH
+      value: {{ .Values.global.tls.caCertPath }}
     {{- end }}
     ports:
     {{`{{- range $port := .Ports }}`}}
@@ -184,6 +191,12 @@ spec:
       mountPath: {{`{{ $secret.MountPath }}`}}
     {{`{{- end }}`}}
     {{`{{- end }}`}}
+    {{- with .Values.additionalJobVolumeMounts }}
+    {{- toYaml . | nindent 4 -}}
+    {{- end }}
+    {{- with .Values.global.volumes.additionalVolumeMounts }}
+    {{- toYaml . | nindent 4 -}}
+    {{- end }}
   volumes:
   {{`{{- if not (and  .ArtifactRequest (eq .ArtifactRequest.VolumeMountPath "/data")) }}`}}
   - name: data-volume
@@ -221,6 +234,12 @@ spec:
       secretName: {{`{{ $secret.Reference.Name }}`}}
   {{`{{- end }}`}}
   {{`{{- end }}`}}
+  {{- with .Values.additionalJobVolumes }}
+  {{- toYaml . | nindent 2 -}}
+  {{- end }}
+  {{- with .Values.global.volumes.additionalVolumes }}
+  {{- toYaml . | nindent 2 -}}
+  {{- end }}
   restartPolicy: Always
   {{`{{- if .ServiceAccountName }}`}}
   serviceAccountName: {{`{{ .ServiceAccountName }}`}}
