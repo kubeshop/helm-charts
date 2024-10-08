@@ -5,7 +5,7 @@ concurrency: develop_cluster
 on:
   push:
     branches:
-      - develop
+      - main
 
   repository_dispatch:
     types:
