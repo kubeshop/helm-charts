@@ -1,6 +1,6 @@
 name: Releasing Helm charts.
 
-concurrency: demo_cluster
+concurrency: develop_cluster
 
 on:
   push:
@@ -16,9 +16,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER_NAME_DEV: ${{ secrets.GKE_CLUSTER_NAME_DEV }} # Add your cluster name here.
-  GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }} # Add your cluster zone here.
-  DEPLOYMENT_NAME: testkube # Add your deployment name here.
+  GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_DEVELOP }} # Add your cluster name here.
+  GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }} # Add your cluster zone here.
 
 jobs:
   release_charts:
@@ -172,7 +171,7 @@ jobs:
           client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
 
 
-  deploy-to-testkube-dev-gke:
+  deploy-to-testkube-integration-gke:
     name: Deploy
     runs-on: ubuntu-latest
     needs: notify_slack_if_release_succeeds
@@ -201,8 +200,8 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
-          cluster_name: ${{ env.GKE_CLUSTER_NAME_DEV }}
-          location: ${{ env.GKE_ZONE_DEV }}
+          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
+          location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install Helm
@@ -218,7 +217,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube-integration --create-namespace --values ./charts/testkube/values-stage.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
 
   notify_slack_if_deploy_dev_succeeds:
     runs-on: ubuntu-latest
@@ -385,8 +384,8 @@ jobs:
       # Get the GKE credentials so we can deploy to the cluster
       - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
         with:
-          cluster_name: ${{ env.GKE_CLUSTER_NAME_DEV }}
-          location: ${{ env.GKE_ZONE_DEV }}
+          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
+          location: ${{ env.GKE_ZONE }}
           credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install testkube kubectl plugin
