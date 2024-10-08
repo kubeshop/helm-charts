@@ -171,7 +171,7 @@ jobs:
           client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
 
 
-  deploy-to-testkube-integration-gke:
+  deploy-to-testkube-dev-gke:
     name: Deploy
     runs-on: ubuntu-latest
     needs: notify_slack_if_release_succeeds
