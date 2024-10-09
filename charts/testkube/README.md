@@ -242,11 +242,11 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.cloud.url | string | `"agent.testkube.io:443"` | Testkube Cloud API URL |
 | testkube-api.clusterName | string | `""` | cluster name to be used in events |
 | testkube-api.containerResources | object | `{}` |  |
-| testkube-api.containerEnv | string | "" | container environment used to run Testkube Agent, by default it's "kubernetes" |
 | testkube-api.dashboardUri | string | `""` | dashboard uri to be used in notification events |
 | testkube-api.defaultStorageClassName | string | `""` | default storage class name for PVC volumes |
 | testkube-api.disableSecretCreation | bool | `false` | disable secret creation for tests and test sources |
 | testkube-api.dnsPolicy | string | `""` | Specify dnsPolicy for Testkube API Deployment |
+| testkube-api.dockerImageVersion | string | "" | dockerImageVersion of Testkube Agent |
 | testkube-api.enableK8sEvents | bool | `true` | enable k8s events for testkube events |
 | testkube-api.enableSecretsEndpoint | bool | `false` | enable endpoint to list testkube namespace secrets |
 | testkube-api.enabledExecutors | string | `nil` | enable only specified executors with enabled flag |

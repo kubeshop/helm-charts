@@ -883,8 +883,8 @@ testkube-api:
   # -- enable k8s events for testkube events
   enableK8sEvents: true
 
-  # -- container environment used to run Testkube Agent, by default it's "kubernetes"
-  containerEnv: ""
+  # -- docker image versionof Testkube Agent
+  dockerImageVersion: ""
 
   # Testkube log server parameters
   testkubeLogs:

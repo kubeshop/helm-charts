@@ -213,9 +213,9 @@ spec:
               value: "{{ .Values.global.features.whitelistedContainers }}"
             - name: TESTKUBE_IMAGE_CREDENTIALS_CACHE_TTL
               value: "{{ .Values.imageInspectionCache.ttl }}"
-            {{- if .Values.containerEnv }}
-            - name: TESTKUBE_CONTAINER_ENV
-              value: "{{ .Values.containerEnv }}"
+            {{- if .Values.dockerImageVersion }}
+            - name: TESTKUBE_DOCKER_IMAGE_VERSION
+              value: "{{ .Values.dockerImageVersion }}"
             {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
