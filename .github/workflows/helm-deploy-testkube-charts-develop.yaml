@@ -34,19 +34,15 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - uses: google-github-actions/setup-gcloud@v2
-#        with:
-#          service_account_key: ${{ secrets.GKE_SA_KEY }}
-#          project_id: ${{ secrets.GKE_PROJECT }}
-#      - run: |-
-#          gcloud --quiet auth configure-docker
-
       - uses: google-github-actions/auth@v2
         with:
-#          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
-#          location: ${{ env.GKE_ZONE }}
           credentials_json: ${{ secrets.GKE_SA_KEY }}
 
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
+          location: ${{ env.GKE_ZONE }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -57,11 +53,11 @@ jobs:
         run: |
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
-#      - name: Get image tag of Testkube APi, Operator
-#        id: vars
-#        run: |
-#          echo ::set-output name=api_image_tag::$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
-#          echo ::set-output name=operator_image_tag::$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
+      - name: Get image tag of Testkube APi, Operator
+        id: vars
+        run: |
+          echo ::set-output name=api_image_tag::$(kubectl get deployment testkube-api-server -o=jsonpath='{$.spec.template.spec.containers[:1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
+          echo ::set-output name=operator_image_tag::$(kubectl get deployment testkube-operator-controller-manager -o=jsonpath='{$.spec.template.spec.containers[1].image}' -n ${{ env.DEPLOYMENT_NAME }} | awk -F':' '{print $2}') || exit 1
 #
 #      - name: Deploy if Testkube API image is updated
 #        if: ${{ github.event.client_payload.image_tag_api }}

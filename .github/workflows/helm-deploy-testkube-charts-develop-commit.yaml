@@ -38,8 +38,8 @@ jobs:
         with:
           credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - id: 'get-credentials'
-        uses: 'google-github-actions/get-gke-credentials@v2'
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: ${{ env.GKE_CLUSTER_NAME }}
           location: ${{ env.GKE_ZONE }}
