@@ -5,12 +5,9 @@ concurrency: develop_cluster
 on:
   push:
     paths:
-      - ".github/workflows/helm-releaser-testkube-charts.yaml"
       - "charts/testkube/Chart.yaml"
       - "charts/testkube-api/Chart.yaml"
-      - "charts/testkube-dashboard/Chart.yaml"
       - "charts/testkube-operator/Chart.yaml"
-      - "charts/testkube-api/executors.json"
     branches:
       - main
 
