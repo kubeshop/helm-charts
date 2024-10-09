@@ -47,8 +47,6 @@ jobs:
 #          location: ${{ env.GKE_ZONE }}
           credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
 
       - name: Install Helm
         uses: azure/setup-helm@v3
