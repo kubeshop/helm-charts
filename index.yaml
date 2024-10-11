@@ -4227,6 +4227,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2024-10-11T11:47:21.719376009Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.1.20
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: https://nats-io.github.io/k8s/helm/charts/
+      version: 1.1.7
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.1.37
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: f2331a5bac0f345e8a23f4f24e34efa67615ca8aef6f6716488a7cf54cce2f2c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-2.1.49/testkube-2.1.49.tgz
+    version: 2.1.49
+  - apiVersion: v2
     created: "2024-10-11T10:50:48.969558085Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -47532,6 +47565,20 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 2.1.37
+    created: "2024-10-11T11:47:21.897791183Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.2
+    description: A Helm chart for Testkube api
+    digest: 731d32d770c95ec0cfc2a0d0c6f9493c9413f639f3e8d4c4de7b00e3a8890ae6
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-2.1.37/testkube-api-2.1.37.tgz
+    version: 2.1.37
+  - apiVersion: v2
     appVersion: 2.1.36
     created: "2024-10-09T14:21:35.427762734Z"
     dependencies:
@@ -55784,16 +55831,6 @@ entries:
     version: 1.9.2
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-23T10:49:27.352033737Z"
-    description: A Helm chart for Kubernetes
-    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
-    name: testkube-dashboard
-    type: application
-    urls:
-    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.9.2-beta1/testkube-dashboard-1.9.2-beta1.tgz
-    version: 1.9.2-beta1
-  - apiVersion: v2
-    appVersion: 1.9.2-beta1
     created: "2023-03-03T07:48:52.204309663Z"
     dependencies:
     - name: global
@@ -55801,6 +55838,16 @@ entries:
       version: 0.1.1
     description: A Helm chart for Kubernetes
     digest: 83b10f2beddbe74d8e7ebd07f3ac72da4cf21766c9e57def211c9b7c52caec2e
+    name: testkube-dashboard
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-dashboard-1.9.2-beta1/testkube-dashboard-1.9.2-beta1.tgz
+    version: 1.9.2-beta1
+  - apiVersion: v2
+    appVersion: 1.9.2-beta1
+    created: "2023-02-21T16:52:39.420120847Z"
+    description: A Helm chart for Kubernetes
+    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
     name: testkube-dashboard
     type: application
     urls:
@@ -55822,9 +55869,9 @@ entries:
     version: 1.9.2-beta1
   - apiVersion: v2
     appVersion: 1.9.2-beta1
-    created: "2023-02-21T16:52:39.420120847Z"
+    created: "2023-02-23T10:49:27.352033737Z"
     description: A Helm chart for Kubernetes
-    digest: ea1dc321b693c3cde9cb2b80d28640efe9a6c62b44b4e30f664e4a6b19238354
+    digest: 4369755286e33ab4dcabc1cb3da2fd04c648b491d2b2aed821712beed55061a3
     name: testkube-dashboard
     type: application
     urls:
@@ -61745,4 +61792,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2024-10-11T10:50:49.095208893Z"
+generated: "2024-10-11T11:47:21.930840454Z"
