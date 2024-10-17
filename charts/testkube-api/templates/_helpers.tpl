@@ -107,6 +107,10 @@ Define API environment in agent mode
       key: {{ .Values.cloud.existingSecret.key }}
       name: {{ .Values.cloud.existingSecret.name }}
 {{- end -}}
+{{- if .Values.cloud.runnerId -}}
+- name: TESTKUBE_PRO_RUNNER_ID
+  value:  "{{ .Values.cloud.runnerId }}"
+{{- end -}}
 {{- if .Values.cloud.url }}
 - name: TESTKUBE_CLOUD_URL
   value:  {{ tpl .Values.cloud.url $ | quote }}
