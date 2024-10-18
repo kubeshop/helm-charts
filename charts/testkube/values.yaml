@@ -260,6 +260,11 @@ nats:
   reloader:
     enabled: true
     # -- Uncomment to override the NATS Server Config Reloader image options
+    # image:
+    #   repository: natsio/nats-server-config-reloader
+    #   tag: 0.14.1
+    #   pullPolicy:
+    #   registry:
 
 testkube-logs:
   # -- Testkube logs full name override
