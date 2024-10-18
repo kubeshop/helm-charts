@@ -214,6 +214,10 @@ mongodb:
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
 nats:
+  # -- Uncomment to pass a global registry name to all NATS images
+  # global:
+  #   image:
+  #     registry: <registry-name>
   # -- Uncomment to override the NATS Server image options
   # container:
   #   image:
@@ -237,14 +241,14 @@ nats:
     #     pullPolicy:
     #     registry:
     # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
-  #    podTemplate:
-  #      merge:
-  #        spec:
-  #          tolerations:
-  #            - key: kubernetes.io/arch
-  #              operator: Equal
-  #              value: arm64
-  #              effect: NoSchedule
+    #   podTemplate:
+    #     merge:
+    #       spec:
+    #         tolerations:
+    #           - key: kubernetes.io/arch
+    #             operator: Equal
+    #             value: arm64
+    #             effect: NoSchedule
   config:
     merge:
       max_payload: << 8MB >>
@@ -256,11 +260,6 @@ nats:
   reloader:
     enabled: true
     # -- Uncomment to override the NATS Server Config Reloader image options
-    # image:
-    #   repository: natsio/nats-server-config-reloader
-    #   tag: 0.14.1
-    #   pullPolicy:
-    #   registry:
 
 testkube-logs:
   # -- Testkube logs full name override
