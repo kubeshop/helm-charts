@@ -5,7 +5,6 @@ set -o pipefail
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -h|--helm-chart-folder) target_folder="$2"; shift ;;
-        -e|--testkube-executor) testkube_executor="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -56,61 +55,24 @@ fi
 # Output the new chart version
 echo "New Testkube Chart version is: $NEW_VERSION"
 
-if [[ $testkube_executor == "" ]]
-then
-    echo "Executors will not be updated"
-    # Lower-casing entered helm-chart-folder name to omit any issues with Upper case letters.
-    target_folder=$(echo "$target_folder" | tr '[:upper:]' '[:lower:]')
+# Editing $target_folder Chart, and its App versions:
+sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
+sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
+echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
+cat ../charts/$target_folder/Chart.yaml
 
-    # Editing $target_folder Chart, and its App versions:
-    sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
-    sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
-    echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
-    cat ../charts/$target_folder/Chart.yaml
-
-    # Editing TestKube's dependency Chart.yaml for $target_folder:
-    sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
-    echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
-    grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
-
-else
-    echo "Executors will be updated"
-    executor_name="artillery curl cypress ginkgo gradle init jmeter jmeterd k6 kubepug maven playwright postman scraper soapui tracetest zap logs-sidecar"
-    for executor in $executor_name; do
-      sed -i "s/\(\"image\":.*$executor.*:\)[^\"]*\(\"\)/\1$VERSION_FULL\2/" ../charts/testkube-api/executors.json
-      echo -e "\nChecking if TestKube's executors.json $executor executor has been updated:\n"
-      grep -iE image ../charts/testkube-api/executors.json | grep $executor
-    done
-
-    target_folder=$(echo "$target_folder" | tr '[:upper:]' '[:lower:]')
-
-    # Editing $target_folder Chart, and its App versions:
-    sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
-    sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/Chart.yaml
-    echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
-    cat ../charts/$target_folder/Chart.yaml
-
-    # Editing TestKube's dependency Chart.yaml for $target_folder:
-    sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
-    echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
-    grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
-fi
+# Editing TestKube's dependency Chart.yaml for $target_folder:
+sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
+echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
+grep -iE -A 1 "name: $target_folder" ../charts/testkube/Chart.yaml
 
 # Editing TestKube's main chart version:
-sed -i "s/^version:.*/version: $NEW_VERSION/" ../charts/testkube/Chart.yaml
+sed -i  "s/^version:.*/version: $NEW_VERSION/" ../charts/testkube/Chart.yaml
 echo -e "\nChecking if testkube's main Chart.yaml version has been updated:\n"
 grep -iE "^version" ../charts/testkube/Chart.yaml
 
-# Commiting and pushing changes to main
+## Commiting and pushing changes to main
 git add -A
 git commit -m "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
 git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts main
-
-# Update Chart.yaml file in develop branch
-git fetch origin develop
-git checkout develop
-git checkout main --  ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
-git add ../charts/testkube/Chart.yaml ../charts/$target_folder/Chart.yaml
-git commit -m "Update Chart.yaml files"
-git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts develop
 

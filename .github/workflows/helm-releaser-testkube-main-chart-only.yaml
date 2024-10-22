@@ -1,19 +1,14 @@
 name: Releasing Testkube main helm chart
 
-concurrency: demo_cluster
+concurrency: develop_cluster
 
 on:
   push:
     paths:
       - "charts/testkube**"
-      - "scripts/main_chart_releaser.sh"
-      - "charts/testkube/values-demo.yaml"
-      - ".github/workflows/helm-releaser-testkube-main-chart-only.yaml"
       - "!charts/testkube/Chart.yaml"
       - "!charts/testkube-api/Chart.yaml"
-      - "!charts/testkube-dashboard/Chart.yaml"
       - "!charts/testkube-operator/Chart.yaml"
-      - "!charts/testkube-api/executors.json"
     branches:
       - main
 
@@ -186,23 +181,15 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      - uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      # Configure Docker to use the gcloud command-line tool as a credential
-      # helper for authentication
-      - run: |-
-          gcloud --quiet auth configure-docker
-
-      # Get the GKE credentials so we can deploy to the cluster
-      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v2
         with:
-          cluster_name: ${{ env.GKE_CLUSTER_NAME_DEV }}
-          location: ${{ env.GKE_ZONE_DEV }}
-          credentials: ${{ secrets.GKE_SA_KEY }}
+          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
+          location: ${{ env.GKE_ZONE }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -217,7 +204,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube --create-namespace --values ./charts/testkube/values-demo.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube-integration --create-namespace --values ./charts/testkube/values-stage.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false --set testkube-operator.enabled=false
 
   notify_slack_if_deploy_dev_succeeds:
     runs-on: ubuntu-latest
@@ -369,23 +356,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy-to-testkube-dev-gke
     steps:
-      # Setup gcloud CLI
-      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      - uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      # Configure Docker to use the gcloud command-line tool as a credential
-      # helper for authentication
-      - run: |-
-          gcloud --quiet auth configure-docker
-
-      # Get the GKE credentials so we can deploy to the cluster
-      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v2
         with:
-          cluster_name: ${{ env.GKE_CLUSTER_NAME_DEV }}
-          location: ${{ env.GKE_ZONE_DEV }}
-          credentials: ${{ secrets.GKE_SA_KEY }}
+          cluster_name: ${{ env.GKE_CLUSTER_NAME }}
+          location: ${{ env.GKE_ZONE }}
 
       - name: Install testkube kubectl plugin
         run: bash < <(curl -sSLf https://get.testkube.io )

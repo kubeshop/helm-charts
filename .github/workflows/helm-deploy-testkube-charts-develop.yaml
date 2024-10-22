@@ -31,18 +31,15 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+      - uses: google-github-actions/auth@v2
         with:
-          service_account_key: ${{ secrets.GKE_SA_KEY }}
-          project_id: ${{ secrets.GKE_PROJECT }}
-      - run: |-
-          gcloud --quiet auth configure-docker
+          credentials_json: ${{ secrets.GKE_SA_KEY }}
 
-      - uses: google-github-actions/get-gke-credentials@fb08709ba27618c31c09e014e1d8364b02e5042e
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: ${{ env.GKE_CLUSTER_NAME }}
           location: ${{ env.GKE_ZONE }}
-          credentials: ${{ secrets.GKE_SA_KEY }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -150,7 +147,7 @@ jobs:
           kubectl testkube create test -f ./test/postman/TestKube-Sanity.postman_collection.json --name sanity --type postman/collection -v api_uri=http://testkube-api-server:8088 -v test_api_uri=http://testkube-api-server:8088 -v test_type=postman/collection -v test_name=fill-me -v execution_name=fill-me
 
       - name: Run Postman sanity tests
-        run: kubectl testkube run test sanity -f --git-branch develop
+        run: kubectl testkube run test sanity -f --git-branch main
 
       - name: (Re)create Dashboard E2E tests (from CRD)
         working-directory: ./testkube-repo
@@ -169,7 +166,7 @@ jobs:
           kubectl testkube create testsuite -f ./test/suites/staging-testsuite.json --name staging-testsuite
 
       - name: Run staging testsuite
-        run: kubectl testkube run testsuite staging-testsuite -f --git-branch develop
+        run: kubectl testkube run testsuite staging-testsuite -f --git-branch main
 
   notify_slack_if_test_suite_succeeds:
     runs-on: ubuntu-latest

@@ -342,7 +342,7 @@ testkube-api:
   disableSecretCreation: false
   defaultStorageClassName: ""
   enableK8sEvents: true
-  containerEnv: ""
+  dockerImageVersion: ""
 
   testkubeLogs:
     grpcAddress: "testkube-logs:9090"
