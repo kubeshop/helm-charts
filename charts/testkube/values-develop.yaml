@@ -324,19 +324,6 @@ testkube-logs:
   nodeSelector: {}
 testkube-operator:
   priorityClassName: "highest-priority"
-  ##Proxy Image parameters
-  ## image.registry Proxy image registry
-  ## image.repository Proxy image name
-  ## image.tag Proxy image tag
-  ## image.pullPolicy Proxy Image pull policy
-  proxy:
-    image:
-      registry: gcr.io
-      repository: kubebuilder/kube-rbac-proxy
-      tag: "v0.8.0"
-    ## Proxy Container Port
-    containerPort: 8443
-
   useArgoCDSync: true
   purgeExecutions: false
 
