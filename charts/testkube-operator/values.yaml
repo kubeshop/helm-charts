@@ -63,20 +63,19 @@ image:
 args:
   - --logtostderr=true
 
-##Proxy Image parameters
-## image.registry Proxy image registry
-## image.repository Proxy image name
-## image.tag Proxy image tag
-## image.pullPolicy Proxy Image pull policy
-## image.pullSecret Proxy Image pull k8s secret name for private registries
+# Proxy settings
 proxy:
+  # Proxy Image parameters
   image:
-    registry: gcr.io
-    repository: kubebuilder/kube-rbac-proxy
-    tag: "v0.15.0"
-    pullPolicy: IfNotPresent
+    # -- Testkube Operator rbac-proxy image registry
+    registry: quay.io
+    # -- Testkube Operator rbac-proxy image repository
+    repository: brancz/kube-rbac-proxy
+    # -- Testkube Operator rbac-proxy image tag
+    tag: "v0.18.1"
+    # -- Testkube Operator rbac-proxy k8s secret for private registries
     pullSecrets: []
-  ## Resources limits and requests for kube-rbac-proxy container
+  # -- Testkube Operator rbac-proxy resource settings
   resources: {}
 
 ## Testkube API full name
