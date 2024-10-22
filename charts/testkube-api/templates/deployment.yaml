@@ -72,6 +72,8 @@ spec:
             {{- end }}
             - name: APISERVER_PORT
               value: "{{ .Values.service.port }}"
+            - name: GRPCSERVER_PORT
+              value: "{{ .Values.service.grpcPort }}"
             - name: POSTMANEXECUTOR_URI
               value: "{{ .Values.postmanExecutorURI }}"
             - name: TESTKUBE_ANALYTICS_ENABLED
@@ -222,6 +224,9 @@ spec:
           ports:
             - name: http
               containerPort: 8088
+              protocol: TCP
+            - name: grpc
+              containerPort: 8089
               protocol: TCP
           livenessProbe:
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}

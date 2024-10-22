@@ -547,6 +547,8 @@ testkube-api:
     type: ClusterIP
     # -- HTTP Port
     port: 8088
+    # -- gRPC Port
+    grpcPort: 8089
     # -- Service Annotations
     annotations: {}
     # -- Service labels
