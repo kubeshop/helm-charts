@@ -10741,6 +10741,59 @@ spec:
                         - status
                         - totalDurationMs
                       type: object
+                    runningContext:
+                      description: running context for the test workflow execution (Pro edition only)
+                      properties:
+                        actor:
+                          description: running context actor for test workflow execution
+                          properties:
+                            email:
+                              description: actor email
+                              type: string
+                            executionId:
+                              description: test workflow execution id
+                              type: string
+                            executionPath:
+                              description: all test workflow execution ids starting from the root
+                              type: string
+                            name:
+                              description: actor name
+                              type: string
+                            type:
+                              description: supported actors for test workflow running context
+                              enum:
+                                - cron
+                                - testtrigger
+                                - user
+                                - testworkflow
+                                - testworkflowexecution
+                                - program
+                              type: string
+                          required:
+                            - type
+                          type: object
+                        interface:
+                          description: running context interface for test workflow execution
+                          properties:
+                            name:
+                              description: interface name
+                              type: string
+                            type:
+                              description: supported interfaces for test workflow running context
+                              enum:
+                                - cli
+                                - ui
+                                - api
+                                - ci/cd
+                                - internal
+                              type: string
+                          required:
+                            - type
+                          type: object
+                      required:
+                        - actor
+                        - interface
+                      type: object
                     scheduledAt:
                       description: when the execution has been scheduled to run
                       format: date-time
