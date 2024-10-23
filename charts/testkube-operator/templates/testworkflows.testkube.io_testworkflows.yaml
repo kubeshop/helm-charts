@@ -10763,7 +10763,7 @@ spec:
                               description: supported actors for test workflow running context
                               enum:
                                 - cron
-                                - testrigger
+                                - testtrigger
                                 - user
                                 - testworkflow
                                 - testworkflowexecution
