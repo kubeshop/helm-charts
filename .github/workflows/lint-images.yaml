@@ -1,0 +1,19 @@
+name: Lint images
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint-images:
+    name: Lint images
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run image check script
+        run: bash scripts/image_check.sh
