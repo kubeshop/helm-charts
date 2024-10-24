@@ -146,7 +146,7 @@ nats:
   # container:
   #   image:
   #     repository: nats
-  #     tag: 2.10.9-alpine
+  #     tag: 2.10.22-alpine
   #     pullPolicy:
   #     registry:
   # NATS Box container settings
@@ -161,7 +161,7 @@ nats:
     # container:
     #   image:
     #     repository: natsio/nats-box
-    #     tag: 0.14.1
+    #     tag: 0.14.5
     #     pullPolicy:
     #     registry:
     # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
@@ -186,7 +186,7 @@ nats:
     # -- Uncomment to override the NATS Server Config Reloader image options
     # image:
     #   repository: natsio/nats-server-config-reloader
-    #   tag: 0.14.1
+    #   tag: 0.16.0
     #   pullPolicy:
     #   registry:
 
