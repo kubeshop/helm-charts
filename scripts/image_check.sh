@@ -3,6 +3,9 @@
 REPO=myownrepo.com/prefix
 AGENT_IMAGES=images.txt
 
+# Build the dependencies
+helm dependency build ../charts/testkube
+
 # Get images for the agent chart
 helm template test ../charts/testkube --skip-crds --set global.imageRegistry="$REPO" --set mongodb.enabled=false --set testkube-api.minio.enabled=false --set testkube-dashboard.enabled=false --set global.testWorkflows.createOfficialTemplates=false | grep "image:" | grep -v "{" | sed 's/"//g' | sed 's/docker.io\///g' | awk '{ print $2 }' | awk 'NF && !seen[$0]++' | sort > "$AGENT_IMAGES"
 
