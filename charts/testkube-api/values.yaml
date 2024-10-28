@@ -675,10 +675,6 @@ testConnection:
 livenessProbe:
   initialDelaySeconds: 30
 
-## Testkube API Readiness probe
-readinessProbe:
-  initialDelaySeconds: 45
-
 ## Testkube API HTTP body size limit
 ## httpBodyLimit: 1073741824
 

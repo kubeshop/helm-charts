@@ -228,14 +228,22 @@ spec:
             - name: grpc
               containerPort: 8089
               protocol: TCP
-          livenessProbe:
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          startupProbe:
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            timeoutSeconds: 3
+            failureThreshold: 20
             httpGet:
               path: /health
               port: {{ .Values.service.port }}
               scheme: HTTP
           readinessProbe:
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             httpGet:
               path: /health
               port: {{ .Values.service.port }}
