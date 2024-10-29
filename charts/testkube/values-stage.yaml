@@ -144,6 +144,7 @@ testkube-api:
   service:
     type: ClusterIP
     port: 8088
+    grpcPort: 8089
   minio:
     enabled: true
     tolerations: []
@@ -275,8 +276,6 @@ testkube-api:
       scheme: HTTP
     ## Amount of request failures before the container receives a terminate signal
     failureThreshold: 3
-    ## Time to wait after the initial deployment before performing first probe
-    initialDelaySeconds: 60
     ## How often (in seconds) to perform the probes. This value sends one probe every 30 seconds
     periodSeconds: 30
     ## Minimum consecutive successes for the probe to be considered successful after having failed

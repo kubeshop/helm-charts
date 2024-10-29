@@ -20,8 +20,12 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.port }}
-      protocol: TCP
-      name: http
+  - port: {{ .Values.service.port }}
+    targetPort: {{ .Values.service.port }}
+    protocol: TCP
+    name: http
+  - port: {{ .Values.service.grpcPort }}
+    targetPort: {{ .Values.service.grpcPort }}
+    protocol: TCP
+    name: grpc
   selector: {{- include "testkube-api.selectorLabels" . | nindent 4 }}
