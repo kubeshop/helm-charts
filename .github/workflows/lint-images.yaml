@@ -11,7 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run image check script
-        run: bash ./image_check.sh
+      - name: Check that global.imageRegistry is applied to all images
+        run: bash ./image_registry_check.sh
+        working-directory: ./scripts
+
+      - name: Check that global.imagePullSecrets are applied to all images
+        run: bash ./image_pull_secrets_check.sh
         working-directory: ./scripts
 

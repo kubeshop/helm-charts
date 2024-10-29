@@ -33,3 +33,6 @@ Chart.lock
 **/charts/*.tgz
 
 .monokle
+
+# Scripts output
+scripts/*.txt
