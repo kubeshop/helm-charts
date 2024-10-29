@@ -244,10 +244,10 @@ spec:
   {{`{{- if .ServiceAccountName }}`}}
   serviceAccountName: {{`{{ .ServiceAccountName }}`}}
   {{`{{- end }}`}}
-  {{`{{- if gt (len .ImagePullSecrets) 0 }}`}}
+  {{ with .Values.global.imagePullSecrets }}
   imagePullSecrets:
-  {{`{{- range $secret := .ImagePullSecrets }}`}}
-  - name: {{`{{ $secret -}}`}}
-  {{`{{- end }}`}}
-  {{`{{- end }}`}}
+  {{- range . }}
+  - name: {{ . | quote }}
+  {{- end }}
+  {{- end }}
 {{- end }}
