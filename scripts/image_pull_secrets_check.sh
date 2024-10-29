@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # Build the dependencies
-# TODO
-#helm dependency build ../charts/testkube
+helm dependency build ../charts/testkube
 
 # Count the number of container segments
 COUNT=$(helm template test ../charts/testkube --skip-crds --set mongodb.enabled=false --set testkube-api.minio.enabled=false --set testkube-dashboard.enabled=false --set global.testWorkflows.createOfficialTemplates=false | grep "containers:" | wc -l)
