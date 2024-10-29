@@ -1,9 +1,0 @@
-myownrepo.com/prefix/brancz/kube-rbac-proxy:v0.18.1
-myownrepo.com/prefix/kubeshop/kube-webhook-certgen:0.0.4
-myownrepo.com/prefix/kubeshop/testkube-api-server:2.1.48
-myownrepo.com/prefix/kubeshop/testkube-operator:2.1.20
-myownrepo.com/prefix/kubeshop/testkube-tw-init:2.1.48
-myownrepo.com/prefix/kubeshop/testkube-tw-toolkit:2.1.48
-myownrepo.com/prefix/rancher/kubectl:v1.23.7
-nats:2.10.22-alpine
-natsio/nats-server-config-reloader:0.16.0

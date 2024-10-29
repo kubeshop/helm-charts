@@ -1,8 +1,6 @@
 {{/*
 Override the nats.image template to use .global.imageRegistry instead of their
 .global.image.registry.
-
-TODO(emil): do the same for global.imagePullSecrets
 */}}
 {{- define "nats.image" }}
 {{- $image := printf "%s:%s" .repository .tag }}
