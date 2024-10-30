@@ -24,7 +24,7 @@ while IFS= read -r image; do
     echo "*******************"
     echo "DOCKER SCOUT OUTPUT"
     echo "==================="
-    docker scout cves $image --platform linux/amd64 --exit-code --only-severity critical 
+    docker scout cves $image --platform linux/amd64 --exit-code --only-severity critical
     ec=$?
     echo "==================="
 
