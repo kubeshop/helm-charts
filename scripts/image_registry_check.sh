@@ -3,6 +3,9 @@
 REPO=myownrepo.com/prefix
 AGENT_IMAGES=images.txt
 
+# Add repos
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
 # Build the dependencies
 helm dependency build ../charts/testkube
 

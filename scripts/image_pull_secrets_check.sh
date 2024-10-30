@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Add repos
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
 # Build the dependencies
 helm dependency build ../charts/testkube
 
