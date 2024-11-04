@@ -3508,6 +3508,14 @@ spec:
                               type: string
                             description: annotations to attach to the cron job
                             type: object
+                          config:
+                            additionalProperties:
+                              anyOf:
+                                - type: integer
+                                - type: string
+                              x-kubernetes-int-or-string: true
+                            description: configuration to pass for the workflow
+                            type: object
                           cron:
                             description: cron schedule to run a test workflow
                             type: string
