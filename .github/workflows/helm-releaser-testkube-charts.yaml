@@ -206,7 +206,7 @@ jobs:
       # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube-integration --create-namespace --values ./charts/testkube/values-stage.yaml --debug --set testkube-api.cliIngress.oauth.clientID=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_ID }} --set testkube-api.cliIngress.oauth.clientSecret=${{ secrets.TESTKUBE_DEMO_OAUTH_CLIENT_SECRET }} --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false --set testkube-operator.enabled=false
+          helm upgrade --install --atomic --timeout 180s testkube helm-charts/testkube --namespace testkube-integration --create-namespace --values ./charts/testkube/values-stage.yaml --debug --set mongodb.livenessProbe.enabled=false --set mongodb.readinessProbe.enabled=false --set testkube-operator.enabled=false
 
   notify_slack_if_deploy_dev_succeeds:
     runs-on: ubuntu-latest

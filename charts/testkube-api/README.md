@@ -29,17 +29,6 @@ A Helm chart for Testkube api
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` |  |
 | cdeventsTarget | string | `""` |  |
-| cliIngress.annotations | object | `{}` |  |
-| cliIngress.enabled | bool | `false` |  |
-| cliIngress.hosts | list | `[]` |  |
-| cliIngress.labels | object | `{}` |  |
-| cliIngress.oauth.clientID | string | `""` |  |
-| cliIngress.oauth.clientSecret | string | `""` |  |
-| cliIngress.oauth.provider | string | `"github"` |  |
-| cliIngress.oauth.scopes | string | `""` |  |
-| cliIngress.path | string | `"/results/(v\\d/.*)"` |  |
-| cliIngress.tls | list | `[]` |  |
-| cliIngress.tlsenabled | bool | `false` |  |
 | cloud.envId | string | `""` |  |
 | cloud.existingSecret.envId | string | `""` |  |
 | cloud.existingSecret.key | string | `""` |  |

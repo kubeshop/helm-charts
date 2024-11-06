@@ -627,32 +627,6 @@ uiIngress:
   #     - testkube.example.com
   #   secretName: testkube-cert-secret
 
-## cliIngress parameters
-cliIngress:
-  ## Use cliIngress
-  enabled: false
-  ## Labels to add to the Ingress
-  labels: {}
-  ## Annotations to add to the Ingress
-  annotations: {}
-  ## Parameters to check oauth token (by default github one)
-  oauth:
-    clientID: ""
-    clientSecret: ""
-    provider: "github"
-    scopes: ""
-  ## The Path to Nginx.
-  path: /results/(v\d/.*)
-  ## Hostnames must be provided if Ingress is enabled.
-  hosts: []
-  # - testkube.example.com
-  tlsenabled: false
-  # Placing a host in the TLS config will indicate a certificate should be created
-  tls: []
-  # - hosts:
-  #     - testkube.example.com
-  #   secretName: testkube-cert-secret
-
 ## Prometheus monitoring
 prometheus:
   ## Toggle whether to install ServiceMonitor
