@@ -219,16 +219,6 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.additionalVolumes | list | `[]` | Additional volumes to be added |
 | testkube-api.analyticsEnabled | bool | `true` | Enable analytics for Testkube |
 | testkube-api.cdeventsTarget | string | `""` | target for cdevents emission via http(s) |
-| testkube-api.cliIngress.annotations | object | `{}` | Additional annotations for the Ingress resource. |
-| testkube-api.cliIngress.enabled | bool | `false` | Use ingress |
-| testkube-api.cliIngress.hosts | list | `["testkube.example.com"]` | Hostnames must be provided if Ingress is enabled. |
-| testkube-api.cliIngress.oauth.clientID | string | `""` | OAuth Client ID |
-| testkube-api.cliIngress.oauth.clientSecret | string | `""` | OAuth Client Secret |
-| testkube-api.cliIngress.oauth.provider | string | `"github"` | OAuth Provider |
-| testkube-api.cliIngress.oauth.scopes | string | `""` | OAuth Scopes |
-| testkube-api.cliIngress.path | string | `"/results/(v\\d/.*)"` |  |
-| testkube-api.cliIngress.tls | list | `[]` | Placing a host in the TLS config will indicate a certificate should be created |
-| testkube-api.cliIngress.tlsenabled | bool | `false` | Toggle whether to enable TLS on the ingress |
 | testkube-api.cloud.key | string | `""` | Testkube Clouc License Key (for Environment) |
 | testkube-api.cloud.tls.certificate.caFile | string | `"/tmp/agent-cert/ca.crt"` | Default path for ca file |
 | testkube-api.cloud.tls.certificate.certFile | string | `"/tmp/agent-cert/cert.crt"` | Default path for certificate file |

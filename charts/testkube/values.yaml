@@ -610,46 +610,6 @@ testkube-api:
     #     - testkube.example.com
     #   secretName: testkube-cert-secret
 
-  # cliIngress parameters
-  cliIngress:
-    # -- Use ingress
-    enabled: false
-    # -- Additional annotations for the Ingress resource.
-    annotations: {}
-    # e.g. annotations for NGINX Ingress Controller:
-    #   kubernetes.io/ingress.class: nginx
-    #   nginx.ingress.kubernetes.io/rewrite-target: /$1
-    #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    #   nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    #   nginx.ingress.kubernetes.io/configuration-snippet: |
-    #     more_set_headers "X-CLI-Ingress: true";
-    # for websockets
-    #   nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    #   nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-
-    # parameters to check oauth token (by default github one)
-    oauth:
-      # -- OAuth Client ID
-      clientID: ""
-      # -- OAuth Client Secret
-      clientSecret: ""
-      # -- OAuth Provider
-      provider: "github"
-      # -- OAuth Scopes
-      scopes: ""
-    path: /results/(v\d/.*)
-    # -- Hostnames must be provided if Ingress is enabled.
-    hosts:
-      - testkube.example.com
-    # -- Toggle whether to enable TLS on the ingress
-    tlsenabled: false
-    # -- Placing a host in the TLS config will indicate a certificate should be created
-    tls:
-      []
-      # - hosts:
-      #     - testkube.example.com
-    #   secretName: testkube-cert-secret
-
   # Storage for Testkube API using MinIO
   storage:
     # -- MinIO endpoint
