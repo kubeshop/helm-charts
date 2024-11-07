@@ -28,3 +28,6 @@ args:
 - -gatewayz
 {{- end }}
 - http://localhost:{{ .Values.config.monitor.port }}/
+
+securityContext:
+  {{- include "nats.containerSecurityContext" $ | nindent 6 }}

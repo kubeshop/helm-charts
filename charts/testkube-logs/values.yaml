@@ -21,6 +21,10 @@ global:
   affinity: {}
   # -- Tolerations to add to all deployed pods
   tolerations: []
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 
 debug: true
 

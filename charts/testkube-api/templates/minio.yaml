@@ -153,9 +153,9 @@ spec:
           resources: {{ toYaml .Values.minio.resources | nindent 12 }}
           {{- end }}
           securityContext:
-            {{- toYaml .Values.minio.securityContext | nindent 12 }}
+            {{ include "minio.containerSecurityContext" . | trim }}
       securityContext:
-        {{- toYaml .Values.minio.podSecurityContext | nindent 8 }}
+        {{ include "minio.podSecurityContext" . | trim }}
       {{- if  .Values.minio.serviceAccountName }}
       serviceAccountName: {{ .Values.minio.serviceAccountName }}
       {{- end }}

@@ -25,6 +25,10 @@ global:
     additionalVolumes: []
     ## Additional volume mounts to be added to the Testkube API container and Test Jobs containers
     additionalVolumeMounts: []
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
   features:
     logsV2: false
     whitelistedContainers: init,logs,scraper

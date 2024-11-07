@@ -59,7 +59,8 @@ spec:
             - --namespace
             - {{ include "testkube-operator.namespace" . }}
             - --ignore-not-found
-          securityContext: {{- toYaml .Values.webhook.migrate.securityContext | nindent 12 }}
+          securityContext:
+            {{ include "webhook.migrate.containerSecurityContext" . | trim }}
           {{- if .Values.webhook.migrate.resources }}
           resources: {{ toYaml .Values.webhook.migrate.resources | nindent 12 }}
           {{- end }}
@@ -82,16 +83,15 @@ spec:
             - tls.crt
             - --ca-name
             - ca.crt
-          securityContext: {{- toYaml .Values.webhook.patch.createSecretJob.securityContext | nindent 12 }}
+          securityContext:
+            {{ include "webhook.create.containerSecurityContext" . | trim }}
           {{- if .Values.webhook.patch.createSecretJob.resources }}
           resources: {{ toYaml .Values.webhook.patch.createSecretJob.resources | nindent 12 }}
           {{- end }}
       restartPolicy: OnFailure
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
-      {{- if .Values.webhook.patch.podSecurityContext }}
       securityContext:
-        {{- toYaml .Values.webhook.patch.podSecurityContext | nindent 8 }}
-      {{- end }}
+        {{ include "webhook.podSecurityContext" . | trim }}
       {{- if .Values.webhook.patch.affinity }}
       affinity:
       {{- toYaml .Values.webhook.patch.affinity | nindent 8 }}

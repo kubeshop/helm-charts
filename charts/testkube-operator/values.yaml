@@ -16,6 +16,10 @@ global:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  # -- Global security Context for all containers
+  containerSecurityContext: {}
+  # -- Global security Context for all pods
+  podSecurityContext: {}
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)

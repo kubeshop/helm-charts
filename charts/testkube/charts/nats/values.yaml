@@ -17,6 +17,10 @@ global:
 
   # global labels will be applied to all resources deployed by the chart
   labels: {}
+  # -- Security Context for all pods
+  podSecurityContext: {}
+  # -- Security Context for all containers
+  containerSecurityContext: {}
 
 ################################################################################
 # Common options

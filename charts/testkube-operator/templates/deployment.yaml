@@ -51,7 +51,7 @@ spec:
         - containerPort: 9443
           name: https
         securityContext:
-          {{- toYaml .Values.securityContext | nindent 10 }}
+          {{ include "testkube-operator.containerSecurityContext" . | trim }}
       - name: manager
         args:
         - --health-probe-bind-address=:{{ .Values.healthcheckPort }}
@@ -122,13 +122,13 @@ spec:
         resources: {{ toYaml .Values.resources | nindent 10 }}
         {{- end }}
         securityContext:
-          {{- toYaml .Values.securityContext | nindent 10 }}
+          {{ include "testkube-operator.containerSecurityContext" . | trim }}
         volumeMounts:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ include "testkube-operator.podSecurityContext" . | trim }}
       serviceAccountName: {{ include "testkube-operator.serviceAccountName" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:

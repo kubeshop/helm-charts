@@ -164,7 +164,7 @@ spec:
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
           {{- end }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{ include "testkube-logs.containerSecurityContext" . | trim }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -183,7 +183,7 @@ spec:
               readOnly: true
           {{- end }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{ include "testkube-logs.podSecurityContext" . | trim }}
       {{- if .Values.tls.certSecret.enabled }}
       volumes:
         - name: {{ .Values.tls.certSecret.name }}

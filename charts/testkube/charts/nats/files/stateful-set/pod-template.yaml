@@ -69,3 +69,6 @@ spec:
   - {{ merge (dict "topologyKey" $k "labelSelector" (dict "matchLabels" (include "nats.selectorLabels" $ | fromYaml))) $v | toYaml | nindent 4 }}
   {{- end }}
   {{- end}}
+
+  securityContext:
+    {{- include "nats.podSecurityContext" $ | nindent 6 }}
