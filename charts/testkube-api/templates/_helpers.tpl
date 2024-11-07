@@ -431,7 +431,7 @@ Define containerSecurityContext
 {{- end }}
 
 {{/*
-Define podSecurityContext
+Define podSecurityContext for MinIo
 */}}
 {{- define "minio.podSecurityContext" -}}
 {{- if .Values.global.podSecurityContext }}
@@ -442,7 +442,7 @@ Define podSecurityContext
 {{- end }}
 
 {{/*
-Define containerSecurityContext
+Define containerSecurityContext for MinIo
 */}}
 {{- define "minio.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
