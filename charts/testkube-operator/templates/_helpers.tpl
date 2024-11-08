@@ -166,7 +166,7 @@ Define containerSecurityContext for migrate container
 */}}
 {{- define "webhook.migrate.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.webhook.migrate.securityContext }}
 {{- end }}
@@ -177,9 +177,9 @@ Define containerSecurityContext for create cert secret container
 */}}
 {{- define "webhook.create.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
-{{- toYaml .Values.webhook.patch.createSecretJob.securityContext  }}
+{{- toYaml .Values.webhook.patch.createSecretJob.securityContext }}
 {{- end }}
 {{- end }}
 
@@ -188,7 +188,7 @@ Define containerSecurityContext for patch container
 */}}
 {{- define "webhook.patch.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.webhook.patch.patchWebhookJob.securityContext  }}
 {{- end }}

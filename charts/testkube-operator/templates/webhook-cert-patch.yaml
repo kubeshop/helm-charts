@@ -63,15 +63,13 @@ spec:
             - --patch-mutating=false
             - --crd-api-groups
             - tests.testkube.io,executor.testkube.io
-          securityContext:
-            {{ include "webhook.patch.containerSecurityContext" . | trim }}
+          securityContext: {{ include "webhook.patch.containerSecurityContext" . | nindent 12 }}
           {{- if .Values.webhook.patch.patchWebhookJob.resources }}
           resources: {{ toYaml .Values.webhook.patch.patchWebhookJob.resources | nindent 12 }}
           {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ .Values.webhook.patch.serviceAccount.name }}
-      securityContext:
-        {{ include "webhook.podSecurityContext" . | trim }}
+      securityContext: {{ include "webhook.podSecurityContext" . | nindent 8 }}
       {{- if .Values.webhook.patch.affinity }}
       affinity:
       {{- toYaml .Values.webhook.patch.affinity | nindent 8 }}

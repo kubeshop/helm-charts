@@ -424,7 +424,7 @@ Define containerSecurityContext
 */}}
 {{- define "testkube-api.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.securityContext }}
 {{- end }}
@@ -446,7 +446,7 @@ Define containerSecurityContext for MinIo
 */}}
 {{- define "minio.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.minio.securityContext }}
 {{- end }}

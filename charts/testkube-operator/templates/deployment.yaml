@@ -50,8 +50,7 @@ spec:
         ports:
         - containerPort: 9443
           name: https
-        securityContext:
-          {{ include "testkube-operator.containerSecurityContext" . | trim }}
+        securityContext: {{ include "testkube-operator.containerSecurityContext" . | nindent 10 }}
       - name: manager
         args:
         - --health-probe-bind-address=:{{ .Values.healthcheckPort }}
@@ -121,14 +120,12 @@ spec:
         {{- if .Values.resources }}
         resources: {{ toYaml .Values.resources | nindent 10 }}
         {{- end }}
-        securityContext:
-          {{ include "testkube-operator.containerSecurityContext" . | trim }}
+        securityContext: {{ include "testkube-operator.containerSecurityContext" . | nindent 10 }}
         volumeMounts:
         - mountPath: /tmp/k8s-webhook-server/serving-certs
           name: cert
           readOnly: true
-      securityContext:
-        {{ include "testkube-operator.podSecurityContext" . | trim }}
+      securityContext: {{ include "testkube-operator.podSecurityContext" . | nindent 8 }}
       serviceAccountName: {{ include "testkube-operator.serviceAccountName" . }}
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       volumes:

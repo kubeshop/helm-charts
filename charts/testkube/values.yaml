@@ -45,9 +45,13 @@ global:
     # -- Additional volume mounts to be added to the Testkube API container and Test Jobs containers
     additionalVolumeMounts: []
   # -- Security Context for all pods
-  podSecurityContext: {}
+  podSecurityContext:
+    seccompProfile:
+      type: RuntimeDefault
   # -- Security Context for all containers
-  containerSecurityContext: {}
+  containerSecurityContext:
+    capabilities:
+      add: [ "NET_ADMIN", "SYS_TIME" ]
   # -- Test Workflows configuration
   testWorkflows:
     # -- Create TestWorkflowTemplates to easily use the service account

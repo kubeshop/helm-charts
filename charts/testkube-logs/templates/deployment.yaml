@@ -163,8 +163,7 @@ spec:
           {{- if .Values.extraEnvVars }}
             {{ include "global.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 | trim }}
           {{- end }}
-          securityContext:
-            {{ include "testkube-logs.containerSecurityContext" . | trim }}
+          securityContext: {{ include "testkube-logs.containerSecurityContext" . | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -182,8 +181,7 @@ spec:
               name: {{ .Values.tls.certSecret.name }}
               readOnly: true
           {{- end }}
-      securityContext:
-        {{ include "testkube-logs.podSecurityContext" . | trim }}
+      securityContext: {{ include "testkube-logs.podSecurityContext" . | nindent 8 }}
       {{- if .Values.tls.certSecret.enabled }}
       volumes:
         - name: {{ .Values.tls.certSecret.name }}

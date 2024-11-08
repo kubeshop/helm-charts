@@ -112,7 +112,7 @@ Define containerSecurityContext
 */}}
 {{- define "testkube-logs.containerSecurityContext" -}}
 {{- if .Values.global.containerSecurityContext }}
-{{- toYaml .Values.global.containerSecurityContext}}
+{{- toYaml .Values.global.containerSecurityContext }}
 {{- else }}
 {{- toYaml .Values.securityContext }}
 {{- end }}
