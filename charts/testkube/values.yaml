@@ -45,9 +45,11 @@ global:
     # -- Additional volume mounts to be added to the Testkube API container and Test Jobs containers
     additionalVolumeMounts: []
   # -- Security Context for all pods
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
   # -- Security Context for all containers
-  containerSecurityContext: {}
+  containerSecurityContext:
+    runAsNonRoot: true
   # -- Test Workflows configuration
   testWorkflows:
     # -- Create TestWorkflowTemplates to easily use the service account
