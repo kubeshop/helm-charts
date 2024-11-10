@@ -42,3 +42,6 @@ spec:
     secret:
       secretName: {{ .secretName | quote }}
   {{- end }}
+
+  securityContext:
+  {{- include "nats.podSecurityContext" $ | nindent 6 }}

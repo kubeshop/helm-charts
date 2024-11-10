@@ -127,3 +127,69 @@ Define testkube operator namespace
 {{- default .Release.Namespace }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "testkube-operator.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "testkube-operator.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext}}
+{{- else }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define podSecurityContext for Webhook Cert Job
+*/}}
+{{- define "webhook.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.webhook.patch.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext for migrate container
+*/}}
+{{- define "webhook.migrate.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext }}
+{{- else }}
+{{- toYaml .Values.webhook.migrate.securityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext for create cert secret container
+*/}}
+{{- define "webhook.create.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext }}
+{{- else }}
+{{- toYaml .Values.webhook.patch.createSecretJob.securityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext for patch container
+*/}}
+{{- define "webhook.patch.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext }}
+{{- else }}
+{{- toYaml .Values.webhook.patch.patchWebhookJob.securityContext  }}
+{{- end }}
+{{- end }}

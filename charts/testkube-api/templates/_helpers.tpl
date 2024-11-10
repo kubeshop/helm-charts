@@ -407,3 +407,47 @@ Define TESTKUBE_WATCHER_NAMESPACES variable
 {{- printf "" }}
 {{- end }}
 {{- end }}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "testkube-api.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "testkube-api.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext }}
+{{- else }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define podSecurityContext for MinIo
+*/}}
+{{- define "minio.podSecurityContext" -}}
+{{- if .Values.global.podSecurityContext }}
+{{ toYaml .Values.global.podSecurityContext }}
+{{- else }}
+{{ toYaml .Values.minio.podSecurityContext }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext for MinIo
+*/}}
+{{- define "minio.containerSecurityContext" -}}
+{{- if .Values.global.containerSecurityContext }}
+{{- toYaml .Values.global.containerSecurityContext }}
+{{- else }}
+{{- toYaml .Values.minio.securityContext }}
+{{- end }}
+{{- end }}

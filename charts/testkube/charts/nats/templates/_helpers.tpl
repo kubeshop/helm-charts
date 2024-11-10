@@ -280,3 +280,25 @@ output: string with following format rules
     "${1}")
   -}}
 {{- end -}}
+
+{{/*
+Define podSecurityContext
+*/}}
+{{- define "nats.podSecurityContext" -}}
+{{- with .Values.global.podSecurityContext }}
+{{ toYaml . }}
+{{- else }}
+{{ toYaml .Values.podSecurityContext  }}
+{{- end }}
+{{- end }}
+
+{{/*
+Define containerSecurityContext
+*/}}
+{{- define "nats.containerSecurityContext" -}}
+{{- with .Values.global.containerSecurityContext }}
+{{- toYaml . }}
+{{- else }}
+{{- toYaml .Values.containerSecurityContext }}
+{{- end }}
+{{- end }}

@@ -288,10 +288,8 @@ spec:
             {{- with .Values.global.volumes.additionalVolumeMounts }}
             {{- toYaml . | nindent 12 -}}
             {{- end }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+          securityContext: {{ include "testkube-api.containerSecurityContext" . | nindent 12 }}
+      securityContext: {{ include "testkube-api.podSecurityContext" . | nindent 8 }}
       volumes:
         - name: testkube-tmp
           emptyDir: {}
