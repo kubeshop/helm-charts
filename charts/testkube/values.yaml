@@ -159,6 +159,7 @@ nats:
       runAsNonRoot: true
       runAsUser: 1001
       runAsGroup: 1001
+      fsGroup: 1001
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
