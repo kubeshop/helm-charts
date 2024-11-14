@@ -45,8 +45,7 @@ global:
     # -- Additional volume mounts to be added to the Testkube API container and Test Jobs containers
     additionalVolumeMounts: []
   # -- Security Context for all pods
-  podSecurityContext:
-    runAsNonRoot: true
+  podSecurityContext: {}
   # -- Security Context for all containers
   containerSecurityContext: {}
   # -- Test Workflows configuration
@@ -155,6 +154,11 @@ nats:
   #     tag: 2.10.24-alpine
   #     pullPolicy:
   #     registry:
+  # -- NATS Pod Security Context
+  podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
