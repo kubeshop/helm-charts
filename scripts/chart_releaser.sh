@@ -73,6 +73,6 @@ grep -iE "^version" ../charts/testkube/Chart.yaml
 
 ## Commiting and pushing changes to main
 git add -A
-git commit -m "Tag: $VERSION_FULL; $target_folder CI/CD. Bumped helm chart, app and docker image tag versions."
+git commit -m "Tag: $VERSION_FULL; $target_folder docker image was updated; bumping chart versions."
 git push --set-upstream https://kubeshop-bot:$GH_TOKEN@github.com/kubeshop/helm-charts main
 
