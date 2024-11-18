@@ -38,7 +38,6 @@ jobs:
       - name: Update main Chart.yaml
         run: |
           export RELEASE_VERSION=${{ github.event.client_payload.RELEASE_VERSION }}
-          export SERVICE=${{ github.event.client_payload.SERVICE }}
 
           cd ./scripts
           chmod +x main_chart_releaser.sh
