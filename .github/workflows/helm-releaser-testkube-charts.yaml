@@ -1,20 +1,14 @@
 name: Releasing Helm charts.
 
-concurrency: develop_cluster
-
 on:
-  push:
-    paths:
-      - "charts/testkube/Chart.yaml"
-      - "charts/testkube-api/Chart.yaml"
-      - "charts/testkube-operator/Chart.yaml"
-    branches:
-      - main
+  repository_dispatch:
+    types:
+      [release-testkube-api-charts, release-testkube-operator-charts]
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_DEVELOP }} # Add your cluster name here.
-  GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }} # Add your cluster zone here.
+  GKE_CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME_DEVELOP }}
+  GKE_ZONE: ${{ secrets.GKE_ZONE_DEVELOP }}
 
 jobs:
   release_charts:
@@ -40,6 +34,14 @@ jobs:
         run: |
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+
+      - name: Update main Chart.yaml
+        run: |
+          export RELEASE_VERSION=${{ github.event.client_payload.RELEASE_VERSION }}
+
+          cd ./scripts
+          chmod +x main_chart_releaser.sh
+          ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
