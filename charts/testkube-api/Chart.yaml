@@ -2,8 +2,8 @@ apiVersion: v2
 name: testkube-api
 description: A Helm chart for Testkube api
 type: application
-version: 2.1.65
-appVersion: 2.1.65
+version: 2.1.66
+appVersion: 2.1.66
 dependencies:
   - name: global
     version: 0.1.2
