@@ -247,7 +247,7 @@ jobs:
 #          SLACK_FOOTER: "Kubeshop --> TestKube"
 
   update_release_notes:
-    needs: notify_slack_if_release_succeeds
+ #   needs: notify_slack_if_release_succeeds
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
