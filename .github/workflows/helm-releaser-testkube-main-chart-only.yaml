@@ -244,7 +244,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -253,6 +253,8 @@ jobs:
         run: |
           latest_tag=$(git describe --abbrev=0 --tags)
           echo "::set-output name=latest_tag::${latest_tag}"
+
+          echo $latest_tag
 
       - name: Get Previous Tag
         id: get_previous_tag
