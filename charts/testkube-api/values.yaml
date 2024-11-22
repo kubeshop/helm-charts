@@ -143,6 +143,8 @@ cloud:
   orgId: ""
   ## Environment ID
   envId: ""
+  ## runnerId for centralized runners 
+  runnerId: ""
   ## true if migration from OSS
   migrate: ""
   tls:
