@@ -433,8 +433,14 @@ testkube-api:
     url: "agent.testkube.io:443"
     ## URL of the Cloud UI
     uiUrl: ""
-    # -- Testkube Clouc License Key (for Environment)
+    # -- Agent Token
     key: ""
+    ## -- Organization ID
+    orgId: ""
+    ## -- Environment ID
+    envId: ""
+    ## -- true if migration from OSS
+    migrate: ""
     tls:
       # -- Toggle should the connection to Agent API in Cloud/Enterprise use secure GRPC (GRPCS) (if false, it will use insecure GRPC)
       enabled: true

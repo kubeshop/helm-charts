@@ -137,7 +137,7 @@ cloud:
   url: "agent.testkube.io:443"
   ## URL of the Cloud UI
   uiUrl: ""
-  ## License Key
+  ## Agent Token
   key: ""
   ## Organization ID
   orgId: ""
