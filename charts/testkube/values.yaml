@@ -112,7 +112,8 @@ mongodb:
   #      effect: NoSchedule
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- MongoDB Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
   # For OpenShift clusters use the following settings:
   #  fsGroup: 1000670000
 
@@ -153,6 +154,12 @@ nats:
   #     tag: 2.10.22-alpine
   #     pullPolicy:
   #     registry:
+  # -- NATS Pod Security Context
+  podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
@@ -568,7 +575,8 @@ testkube-api:
     resources: {}
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     # -- MinIO Pod Security Context
-    podSecurityContext: {}
+    podSecurityContext:
+      runAsNonRoot: true
     # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- Security Context for MinIO container
     securityContext: {}
@@ -846,7 +854,11 @@ testkube-api:
     tolerations: []
 
   # -- Testkube API Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for testkube-api container
@@ -949,7 +961,8 @@ testkube-operator:
     initialDelaySeconds: 3
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   # -- Testkube Operator Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
   # -- Security Context for manager Container
   securityContext:
     # -- Make root filesystem of the container read-only
@@ -1074,7 +1087,8 @@ testkube-operator:
       labels: {}
       # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
       # -- kube-webhook-certgen Job Security Context
-      podSecurityContext: {}
+      podSecurityContext:
+        runAsNonRoot: true
 
       # Testkube Operator Service Account parameters
       serviceAccount:
