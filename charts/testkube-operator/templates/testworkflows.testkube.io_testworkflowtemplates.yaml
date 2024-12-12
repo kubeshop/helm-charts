@@ -2756,9 +2756,6 @@ spec:
                                         type: object
                                     type: object
                                     x-kubernetes-map-type: atomic
-                                  shared:
-                                    description: Specify whether the pvc should be shared between test workflow pods
-                                    type: boolean
                                   storageClassName:
                                     description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
                                     type: string
@@ -4008,9 +4005,6 @@ spec:
                             type: object
                         type: object
                         x-kubernetes-map-type: atomic
-                      shared:
-                        description: Specify whether the pvc should be shared between test workflow pods
-                        type: boolean
                       storageClassName:
                         description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
                         type: string
@@ -4742,9 +4736,6 @@ spec:
                                   type: object
                               type: object
                               x-kubernetes-map-type: atomic
-                            shared:
-                              description: Specify whether the pvc should be shared between test workflow pods
-                              type: boolean
                             storageClassName:
                               description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
                               type: string
@@ -7741,9 +7732,6 @@ spec:
                                         type: object
                                     type: object
                                     x-kubernetes-map-type: atomic
-                                  shared:
-                                    description: Specify whether the pvc should be shared between test workflow pods
-                                    type: boolean
                                   storageClassName:
                                     description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
                                     type: string
@@ -10758,9 +10746,6 @@ spec:
                                         type: object
                                     type: object
                                     x-kubernetes-map-type: atomic
-                                  shared:
-                                    description: Specify whether the pvc should be shared between test workflow pods
-                                    type: boolean
                                   storageClassName:
                                     description: 'Storage class name specifies the name of a StorageClass. More info: https://kubernetes.io/docs/concepts/storage/storage-classes/'
                                     type: string
