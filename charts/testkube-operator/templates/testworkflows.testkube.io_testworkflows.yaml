@@ -2779,6 +2779,9 @@ spec:
                                   volumeMode:
                                     description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
                                     type: string
+                                  volumeName:
+                                    description: 'Volume name is used to identify the volume'
+                                    type: string
                                 type: object
                               description: list of accompanying permanent volume claims
                               type: object
@@ -4085,6 +4088,9 @@ spec:
                       volumeMode:
                         description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
                         type: string
+                      volumeName:
+                        description: 'Volume name is used to identify the volume'
+                        type: string
                     type: object
                   description: list of accompanying permanent volume claims
                   type: object
@@ -4815,6 +4821,9 @@ spec:
                               type: string
                             volumeMode:
                               description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
+                              type: string
+                            volumeName:
+                              description: 'Volume name is used to identify the volume'
                               type: string
                           type: object
                         description: list of accompanying permanent volume claims
@@ -7848,6 +7857,9 @@ spec:
                                     type: string
                                   volumeMode:
                                     description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
+                                    type: string
+                                  volumeName:
+                                    description: 'Volume name is used to identify the volume'
                                     type: string
                                 type: object
                               description: list of accompanying permanent volume claims
@@ -10936,6 +10948,9 @@ spec:
                                     type: string
                                   volumeMode:
                                     description: 'Volume mode indicates the consumption of the volume as either a filesystem or block device. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#volume-mode'
+                                    type: string
+                                  volumeName:
+                                    description: 'Volume name is used to identify the volume'
                                     type: string
                                 type: object
                               description: list of accompanying permanent volume claims
