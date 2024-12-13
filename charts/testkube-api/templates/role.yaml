@@ -533,6 +533,7 @@ rules:
       - create
       - get
       - delete
+      - deletecollection
 
 ---
 
@@ -860,6 +861,7 @@ rules:
       - create
       - get
       - delete
+      - deletecollection
 
 ---
 
