@@ -943,6 +943,7 @@ rules:
       - pods
       - configmaps
       - secrets
+      - persistentvolumeclaims
     verbs:
       - get
       - watch
@@ -952,7 +953,6 @@ rules:
       - create
       - delete
       - deletecollection
-      - persistentvolumeclaims
   - apiGroups:
       - ""
     resources:
