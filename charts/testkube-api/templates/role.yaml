@@ -533,6 +533,7 @@ rules:
       - create
       - get
       - delete
+      - deletecollection
 
 ---
 
@@ -708,6 +709,7 @@ rules:
       - pods
       - configmaps
       - secrets
+      - persistentvolumeclaims
     verbs:
       - get
       - watch
@@ -860,6 +862,7 @@ rules:
       - create
       - get
       - delete
+      - deletecollection
 
 ---
 
@@ -940,6 +943,7 @@ rules:
       - pods
       - configmaps
       - secrets
+      - persistentvolumeclaims
     verbs:
       - get
       - watch
