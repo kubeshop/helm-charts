@@ -35,6 +35,36 @@ spec:
           spec:
             description: WebhookSpec defines the desired state of Webhook
             properties:
+              config:
+                additionalProperties:
+                  description: webhook configuration value
+                  properties:
+                    private:
+                      description: private value stored in secret to use in webhook
+                        template
+                      properties:
+                        key:
+                          description: object key
+                          type: string
+                        name:
+                          description: object name
+                          type: string
+                        namespace:
+                          description: object kubernetes namespace
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                    public:
+                      description: public value to use in webhook template
+                      type: string
+                  type: object
+                description: webhook configuration
+                type: object
+              disabled:
+                description: disable the webhook
+                type: boolean
               events:
                 description: Events declare list if events on which webhook should
                   be called
@@ -81,6 +111,28 @@ spec:
                   OnStateChange will trigger the webhook only when the result of the current execution differs from the previous result of the same test/test suite/workflow
                   Deprecated: field is not used
                 type: boolean
+              parameters:
+                additionalProperties:
+                  description: webhook parameter schema
+                  properties:
+                    default:
+                      description: default parameter value
+                      type: string
+                    description:
+                      description: description for the property
+                      type: string
+                    example:
+                      description: example value for the parameter
+                      type: string
+                    pattern:
+                      description: regular expression to match
+                      type: string
+                    required:
+                      description: whether parameter is required
+                      type: boolean
+                  type: object
+                description: webhook parameters
+                type: object
               payloadObjectField:
                 description: will load the generated payload for notification inside
                   the object
@@ -98,9 +150,15 @@ spec:
                 description: Uri is address where webhook should be made (golang template
                   supported)
                 type: string
-              disabled:
-                description: disable the webhook
-                type: boolean
+              webhookTemplateRef:
+                description: webhook template reference
+                properties:
+                  name:
+                    description: webhook template name to include
+                    type: string
+                required:
+                - name
+                type: object
             type: object
           status:
             description: WebhookStatus defines the observed state of Webhook
