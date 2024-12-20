@@ -101,6 +101,64 @@ spec:
               disabled:
                 description: disable the webhook
                 type: boolean
+              webhookConfig:
+                additionalProperties:
+                  description: webhook parameter schema
+                  properties:
+                    default:
+                      description: default parameter value
+                      type: string
+                    description:
+                      description: description for the property
+                      type: string
+                    example:
+                      description: example value for the parameter
+                      type: string
+                    pattern:
+                      description: regular expression to match
+                      type: string
+                    required:
+                      description: whether parameter is required
+                      type: boolean
+                  type: object
+                description: webhook parameter configuration
+                type: object
+              webhookTemplateRef:
+                description: webhook template reference
+                properties:
+                  config:
+                    additionalProperties:
+                      description: webhook configuration value
+                      properties:
+                        private:
+                          description: private value stored in secret to use in webhook
+                            template
+                          properties:
+                            key:
+                              description: object key
+                              type: string
+                            name:
+                              description: object name
+                              type: string
+                            namespace:
+                              description: object kubernetes namespace
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                        public:
+                          description: public value to use in webhook template
+                          type: string
+                      type: object
+                    description: ' webhook config to use in webhook template'
+                    type: object
+                  name:
+                    description: webhook template name to include
+                    type: string
+                required:
+                - name
+                type: object
             type: object
           status:
             description: WebhookStatus defines the observed state of Webhook
