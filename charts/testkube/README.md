@@ -69,7 +69,18 @@ testkube-api:
       enabled: true
       skipVerify: true
 ```
+To use external NATS server, it's possible to configure:
 
+```yaml
+testkube-api:
+  nats:
+    enabled: false
+    uri: nats://some-nats-address:4222
+    # or providing URI with Kubernetes secret:
+    # secretName: example-secret
+    # secretKey: example-key
+
+```
 #### MinIO/S3
 
 Currently, Testkube doesn't support provisioning MinIO with TLS. However, if you use an external MinIO (or any S3-compatible storage)
