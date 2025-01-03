@@ -163,9 +163,10 @@ Define API environment in agent mode
 {{- end}}
 - name: "NATS_EMBEDDED"
   value: "{{ .Values.nats.embedded }}"
-{{- if .Values.nats.enabled }}
 - name: NATS_URI
-  {{- if .Values.nats.secretName }}
+  {{- if .Values.nats.uri }}
+  value: {{ .Values.nats.uri }}
+  {{- else if .Values.nats.secretName }}
   valueFrom:
     secretKeyRef:
       name: {{ .Values.nats.secretName }}
@@ -183,7 +184,6 @@ Define API environment in agent mode
 {{- if .Values.nats.tls.mountCACertificate }}
 - name: "NATS_CA_FILE"
   value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.caFile }}"
-{{- end }}
 {{- end }}
 {{- end }}
 - name: "SCRAPPERENABLED"
@@ -265,9 +265,10 @@ Define API environment in standalone mode
   value: "{{ .Values.mongodb.allowDiskUse }}"
 - name: "NATS_EMBEDDED"
   value: "{{ .Values.nats.embedded }}"
-{{- if .Values.nats.enabled }}
 - name: NATS_URI
-  {{- if .Values.nats.secretName }}
+  {{- if .Values.nats.uri }}
+  value: {{ .Values.nats.uri }}
+  {{- else if .Values.nats.secretName }}
   valueFrom:
     secretKeyRef:
       name: {{ .Values.nats.secretName }}
@@ -285,7 +286,6 @@ Define API environment in standalone mode
 {{- if .Values.nats.tls.mountCACertificate }}
 - name: "NATS_CA_FILE"
   value: "{{ .Values.nats.tls.certSecret.baseMountPath }}/{{ .Values.nats.tls.certSecret.caFile }}"
-{{- end }}
 {{- end }}
 {{- end }}
 - name: "STORAGE_ENDPOINT"
