@@ -318,14 +318,5 @@ testConnection:
   ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
 
-## NATS parameters
-## ref: https://github.com/nats-io/nats-server
-nats:
-  ## Deploy NATS server to the cluster
-  enabled: true
-  ## load URI from secrets
-  # secretName: XXX
-  # secretKey: XXX
-
 ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
 cronJobTemplate: ""
