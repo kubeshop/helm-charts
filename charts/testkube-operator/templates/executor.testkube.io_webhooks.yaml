@@ -39,7 +39,7 @@ spec:
                 additionalProperties:
                   description: webhook configuration value
                   properties:
-                    private:
+                    secret:
                       description: private value stored in secret to use in webhook
                         template
                       properties:
@@ -56,7 +56,7 @@ spec:
                       - key
                       - name
                       type: object
-                    public:
+                    value:
                       description: public value to use in webhook template
                       type: string
                   type: object
