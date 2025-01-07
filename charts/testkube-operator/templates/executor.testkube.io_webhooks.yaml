@@ -106,6 +106,9 @@ spec:
                   type: string
                 description: webhook headers (golang template supported)
                 type: object
+              isTemplate:
+                description: whether webhook is used as a template
+                type: boolean
               onStateChange:
                 description: |-
                   OnStateChange will trigger the webhook only when the result of the current execution differs from the previous result of the same test/test suite/workflow
