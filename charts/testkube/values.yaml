@@ -153,6 +153,12 @@ nats:
   #     tag: 2.10.22-alpine
   #     pullPolicy:
   #     registry:
+  # -- NATS Pod Security Context
+  podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
   # NATS Box container settings
   # TODO remove this container after tests on dev and stage
   # nats-box is A lightweight container with NATS utilities. It's not needed for nats server
@@ -846,7 +852,11 @@ testkube-api:
     tolerations: []
 
   # -- Testkube API Pod Security Context
-  podSecurityContext: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 1001
+    runAsGroup: 1001
+    fsGroup: 1001
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   # -- Security Context for testkube-api container
