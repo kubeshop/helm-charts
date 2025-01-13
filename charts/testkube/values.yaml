@@ -909,7 +909,7 @@ testkube-operator:
       # -- Testkube Operator rbac-proxy image repository
       repository: brancz/kube-rbac-proxy
       # -- Testkube Operator rbac-proxy image tag
-      tag: "v0.18.1"
+      tag: "master-2024-12-13-af1a90b6"
       # -- Testkube Operator rbac-proxy k8s secret for private registries
       pullSecrets: []
     # -- Testkube Operator rbac-proxy resource settings
