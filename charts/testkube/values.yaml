@@ -150,7 +150,7 @@ nats:
   # container:
   #   image:
   #     repository: nats
-  #     tag: 2.10.22-alpine
+  #     tag: 2.10.24-alpine
   #     pullPolicy:
   #     registry:
   # NATS Box container settings
