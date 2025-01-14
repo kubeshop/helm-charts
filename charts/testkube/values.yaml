@@ -496,7 +496,7 @@ testkube-api:
     # -- Use NATS
     enabled: true
     # -- NATS URI
-    uri: "nats://testkube-nats:4222"
+    # uri: "nats://testkube-nats:4222"
     tls:
       # -- Toggle whether to enable TLS in NATS client
       enabled: false
