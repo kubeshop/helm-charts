@@ -31,13 +31,17 @@ Return the proper Docker Image Registry Secret Names evaluating values as templa
 {{- if $global.imagePullSecrets }}
 imagePullSecrets:
 {{- range $global.imagePullSecrets }}
-  - name: {{ . }}
+{{- if typeIsLike "map[string]interface {}" . }}
+- name: {{ .name | quote }}
+{{- else }}
+- name: {{ . | quote  }}
+{{- end }}
 {{- end }}
 {{- else -}}
 {{- if $path }}
 imagePullSecrets:
 {{- range $path }}
-  - name: {{ . }}
+- name: {{ . }}
 {{- end }}
 {{- end }}
 {{- end }}

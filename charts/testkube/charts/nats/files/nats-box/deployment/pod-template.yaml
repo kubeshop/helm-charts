@@ -13,7 +13,11 @@ spec:
   {{- with (default .Values.global.image.pullSecretNames .Values.global.imagePullSecrets) }}
   imagePullSecrets:
   {{- range . }}
-  - name: {{ . | quote }}
+  {{- if typeIsLike "map[string]interface {}" . }}
+  - name: {{ .name | quote }}
+  {{- else }}
+  - name: {{ . | quote  }}
+  {{- end }}
   {{- end }}
   {{- end }}
 
