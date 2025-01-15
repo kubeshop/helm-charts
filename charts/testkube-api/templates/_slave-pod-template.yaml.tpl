@@ -244,10 +244,14 @@ spec:
   {{`{{- if .ServiceAccountName }}`}}
   serviceAccountName: {{`{{ .ServiceAccountName }}`}}
   {{`{{- end }}`}}
-  {{ with .Values.global.imagePullSecrets }}
+  {{- with (default .Values.imagePullSecrets .Values.global.imagePullSecrets) }}
   imagePullSecrets:
-  {{- range . }}
-  - name: {{ . | quote }}
-  {{- end }}
-  {{- end }}
+    {{- range . }}
+    {{- if typeIsLike "map[string]interface {}" . }}
+  - name: {{ .name | quote }}
+    {{- else }}
+  - name: {{ . | quote  }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
 {{- end }}
