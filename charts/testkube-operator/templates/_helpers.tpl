@@ -155,9 +155,9 @@ Define podSecurityContext for Webhook Cert Job
 */}}
 {{- define "webhook.podSecurityContext" -}}
 {{- if .Values.global.podSecurityContext }}
-{{ toYaml .Values.global.podSecurityContext }}
+{{- toYaml .Values.global.podSecurityContext }}
 {{- else }}
-{{ toYaml .Values.webhook.patch.podSecurityContext }}
+{{- toYaml .Values.webhook.patch.podSecurityContext }}
 {{- end }}
 {{- end }}
 
