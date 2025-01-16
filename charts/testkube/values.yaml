@@ -1052,8 +1052,15 @@ testkube-operator:
       # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
       # -- Security Context for webhook migrate Container
       securityContext:
-        # -- Make root filesystem of the container read-only
-        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        capabilities:
+          drop: ["ALL"]
+        seccompProfile:
+          type: RuntimeDefault
 
       # -- Number of retries before considering a Job as failed
       backoffLimit: 1
@@ -1104,8 +1111,15 @@ testkube-operator:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
         # -- Security Context for webhook create container
         securityContext:
-          # -- Make root filesystem of the container read-only
-          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 1001
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
         # -- kube-webhook-certgen create secret Job resource settings
         resources: {}
 
@@ -1113,9 +1127,7 @@ testkube-operator:
       patchWebhookJob:
         # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
         # -- Security Context for webhook patch container
-        securityContext:
-          # -- Make root filesystem of the container read-only
-          readOnlyRootFilesystem: true
+        securityContext: {}
         # -- kube-webhook-certgen patch webhook Job resource settings
         resources: {}
 

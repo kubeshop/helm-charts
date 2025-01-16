@@ -178,14 +178,16 @@ webhook:
     ## Configure Security Context for Migrate Container
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
-    securityContext: {}
-#      readOnlyRootFilesystem: true
-#      allowPrivilegeEscalation: false
-#      seccompProfile:
-#        type: RuntimeDefault
-#      capabilities:
-#        drop:
-#          - ALL
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
     ## Number of retries before considering a Job as failed
     backoffLimit: 1
     ## Resources limits and requests
@@ -215,19 +217,19 @@ webhook:
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
     ##
     podSecurityContext: {}
-#      runAsUser: 1000670000
-#      runAsNonRoot: true
 
     createSecretJob:
       ## Create Secret job container security context
-      securityContext: {}
-#        readOnlyRootFilesystem: true
-#        allowPrivilegeEscalation: false
-#        seccompProfile:
-#          type: RuntimeDefault
-#        capabilities:
-#          drop:
-#            - ALL
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
+        capabilities:
+          drop: ["ALL"]
+        seccompProfile:
+          type: RuntimeDefault
       ## Create Secret resource requests and limits
       resources: {}
 
