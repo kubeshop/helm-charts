@@ -145,6 +145,32 @@ rules:
   - patch
   - update
 - apiGroups:
+  - executor.testkube.io
+  resources:
+  - webhooktemplates
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - executor.testkube.io
+  resources:
+  - webhooktemplates/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - executor.testkube.io
+  resources:
+  - webhooktemplates/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - tests.testkube.io
   resources:
   - testsources
