@@ -138,7 +138,6 @@ spec:
                   type: object
                   required:
                   - name
-                description: webhook parameters
                 type: array
               payloadObjectField:
                 description: will load the generated payload for notification inside
