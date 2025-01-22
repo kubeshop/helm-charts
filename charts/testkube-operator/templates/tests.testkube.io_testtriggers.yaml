@@ -124,6 +124,8 @@ spec:
                 - deployment-image-update
                 - deployment-env-update
                 - deployment-containers-modified
+                - deployment-generation-modified
+                - deployment-resource-modified
                 - event-start-test
                 - event-end-test-success
                 - event-end-test-failed
