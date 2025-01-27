@@ -62,6 +62,8 @@ global:
       name: global-template
       # -- Is the global template sourced externally? (otherwise it's created from spec below)
       external: false
+      # -- Should the global template sourced inline instead of CRD? (otherwise its resource is created from spec below)
+      inline: false
       # -- Specification for the global template
       spec: {}
       # spec:
@@ -433,7 +435,9 @@ testkube-api:
     url: "agent.testkube.io:443"
     ## URL of the Cloud UI
     uiUrl: ""
-    # -- Agent Token
+    ## Public Agent ID
+    agentId: ""
+    ## Agent Token / Secret Key
     key: ""
     ## -- Organization ID
     orgId: ""
@@ -470,6 +474,60 @@ testkube-api:
     name: "testkube-image-cache"
     # -- TTL for image pull secrets cache (set to 0 to disable)
     ttl: 30m
+
+  ## Enable the new architecture
+  next:
+    ## Enable next architecture
+    enabled: true
+    ## Enable storing resources in the Control Plane
+    cloudStorage: false
+
+    ## Configure legacy agent connection.
+    # - tkcagnt_*** - Super Agent
+    legacyAgent:
+      enabled: true
+
+    ## Configure webhooks in this installation.
+    # - tkcagnt_*** - Super Agent
+    webhooks:
+      ## Should it emit the webhooks
+      enabled: true
+
+    ## Configure test triggers in this installation.
+    # - tkcagnt_*** - Super Agent
+    testTriggers:
+      ## Should it emit the test triggers
+      enabled: true
+
+    # Configure the Test Workflows runner in this installation.
+    # - tkcagnt_*** - Super Agent
+    # - tkcrun_***  - Runner Agent
+    runner:
+      ## Should it be enabled
+      enabled: true
+
+    # Configure GitOps to synchronise the resources between Kubernetes cluster and Control Plane.
+    # - tkcagnt_*** - Super Agent
+    # - tkcsync_*** - GitOps Agent
+    gitops:
+      ## Should it be enabled
+      enabled: true
+      ## Should it copy data from Control Plane to Kubernetes
+      syncCloudToKubernetes: false
+      ## Should it copy data from Kubernetes to Control Plane
+      syncKubernetesToCloud: true
+      ## Define the naming patterns for resources in different sources
+      namePatterns:
+        ## Name pattern for resources in the Control Plane
+        cloud: "{name}"
+        ## Name pattern for resources in the Kubernetes cluster
+        kubernetes: "{name}"
+
+    # Configure the legacy Tests and Test Suites execution
+    # - tkcagnt_*** - Super Agent
+    legacyTests:
+      ## Should it be enabled
+      enabled: true
 
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.

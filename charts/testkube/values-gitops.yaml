@@ -1,0 +1,47 @@
+global:
+  testWorkflows:
+    createServiceAccountTemplates: false
+    createOfficialTemplates: false
+    globalTemplate:
+      enabled: false
+
+testkube-api:
+  cloud:
+    url: "agent.testkube.io:443"
+    key: ""
+    agentId: ""
+    orgId: ""
+    envId: ""
+
+  enableK8sEvents: false
+
+  nats:
+    enabled: false
+    embedded: true
+
+  next:
+    cloudStorage: true
+    gitops:
+      syncCloudToKubernetes: false
+      syncKubernetesToCloud: true
+      namePatterns:
+        cloud: "{name}"
+        kubernetes: "{name}"
+
+    # Disable unnecessary modules
+    legacyAgent:
+      enabled: false
+    webhooks:
+      enabled: false
+    testTriggers:
+      enabled: false
+    runner:
+      enabled: false
+    legacyTests:
+      enabled: false
+
+mongodb:
+  enabled: false
+
+testkube-operator:
+  enabled: false
