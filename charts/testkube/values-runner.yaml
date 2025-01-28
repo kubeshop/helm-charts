@@ -39,7 +39,7 @@ testkube-api:
       enabled: false
     gitops:
       syncCloudToKubernetes: false
-      syncKubernetesToCloud: false
+      syncKubernetesToCloud: true
     legacyTests:
       enabled: false
 

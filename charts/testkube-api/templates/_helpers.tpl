@@ -97,11 +97,11 @@ Define API image
 Define API environment in agent mode
 */}}
 {{- define "testkube-api.env-agent-mode" -}}
-- name: TESTKUBE_PRO_AGENT_ID
-  value: "{{ .Values.cloud.agentId }}"
 {{- if .Values.cloud.key -}}
 - name: TESTKUBE_PRO_API_KEY
   value:  "{{ .Values.cloud.key }}"
+- name: TESTKUBE_PRO_AGENT_ID
+  value: "{{ .Values.cloud.agentId }}"
 {{- else if .Values.cloud.existingSecret.key -}}
 - name: TESTKUBE_PRO_API_KEY
   valueFrom:
@@ -137,7 +137,6 @@ Define API environment in agent mode
 {{- end }}
 - name: TESTKUBE_PRO_SKIP_VERIFY
   value:  "{{ if hasKey .Values.global.tls "skipVerify" }}{{ .Values.global.tls.skipVerify }}{{ else }}{{ .Values.cloud.tls.skipVerify }}{{ end }}"
-
 {{- if .Values.cloud.orgId }}
 - name: TESTKUBE_PRO_ORG_ID
   value:  "{{ .Values.cloud.orgId }}"

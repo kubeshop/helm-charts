@@ -14,6 +14,7 @@ testkube-api:
     envId: ""
 
   next:
+    enabled: true
     cloudStorage: true
     legacyAgent:
       enabled: true
@@ -31,3 +32,12 @@ testkube-api:
       enabled: true
     runner:
       enabled: true
+
+  minio:
+    enabled: false
+
+mongodb:
+  enabled: false
+
+testkube-operator:
+  enabled: false

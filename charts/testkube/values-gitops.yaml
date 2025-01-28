@@ -19,6 +19,9 @@ testkube-api:
     enabled: false
     embedded: true
 
+  minio:
+    enabled: false
+
   next:
     cloudStorage: true
     gitops:
