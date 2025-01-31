@@ -1,4 +1,4 @@
-{{- if and .Values.global.testWorkflows.globalTemplate.enabled (not .Values.global.testWorkflows.globalTemplate.external) }}
+{{- if and .Values.global.testWorkflows.globalTemplate.enabled (not (or .Values.global.testWorkflows.globalTemplate.external .Values.global.testWorkflows.globalTemplate.inline)) }}
 apiVersion: testworkflows.testkube.io/v1
 kind: TestWorkflowTemplate
 metadata:

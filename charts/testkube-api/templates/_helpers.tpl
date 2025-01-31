@@ -100,6 +100,8 @@ Define API environment in agent mode
 {{- if .Values.cloud.key -}}
 - name: TESTKUBE_PRO_API_KEY
   value:  "{{ .Values.cloud.key }}"
+- name: TESTKUBE_PRO_AGENT_ID
+  value: "{{ .Values.cloud.agentId }}"
 {{- else if .Values.cloud.existingSecret.key -}}
 - name: TESTKUBE_PRO_API_KEY
   valueFrom:
