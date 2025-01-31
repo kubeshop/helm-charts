@@ -173,9 +173,9 @@ next:
     ## Define the naming patterns for resources in different sources
     namePatterns:
       ## Name pattern for resources in the Control Plane
-      cloud: "{name}"
+      cloud: "<name>"
       ## Name pattern for resources in the Kubernetes cluster
-      kubernetes: "{name}"
+      kubernetes: "<name>"
 
   # Configure the legacy Tests and Test Suites execution
   # - tkcagnt_*** - Super Agent
