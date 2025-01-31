@@ -38,6 +38,7 @@ global:
     globalTemplate:
       enabled: false
       external: false
+      inline: false
       name: global-template
       spec: {}
 
@@ -130,6 +131,64 @@ scraperContainerResources: {}
 ## Resource requests and limits for Main Container
 containerResources: {}
 
+## Enable the new architecture
+next:
+  ## Enable next architecture
+  enabled: true
+  ## Enable storing resources in the Control Plane
+  cloudStorage: false
+
+  ## Configure legacy agent connection.
+  # - tkcagnt_*** - Super Agent
+  legacyAgent:
+    enabled: true
+
+  ## Configure webhooks in this installation.
+  # - tkcagnt_*** - Super Agent
+  webhooks:
+    ## Should it emit the webhooks
+    enabled: true
+
+  ## Configure test triggers in this installation.
+  # - tkcagnt_*** - Super Agent
+  testTriggers:
+    ## Should it emit the test triggers
+    enabled: true
+
+  # Configure the Test Workflows runner in this installation.
+  # - tkcagnt_*** - Super Agent
+  # - tkcrun_***  - Runner Agent
+  runner:
+    ## Should it be enabled
+    enabled: true
+
+  # Configure GitOps to synchronise the resources between Kubernetes cluster and Control Plane.
+  # - tkcagnt_*** - Super Agent
+  # - tkcsync_*** - GitOps Agent
+  gitops:
+    ## Should it copy data from Control Plane to Kubernetes
+    syncCloudToKubernetes: false
+    ## Should it copy data from Kubernetes to Control Plane
+    syncKubernetesToCloud: true
+    ## Define the naming patterns for resources in different sources
+    namePatterns:
+      ## Name pattern for resources in the Control Plane
+      cloud: "<name>"
+      ## Name pattern for resources in the Kubernetes cluster
+      kubernetes: "<name>"
+
+  # Configure the legacy Tests and Test Suites execution
+  # - tkcagnt_*** - Super Agent
+  legacyTests:
+    ## Should it be enabled
+    enabled: true
+
+  ## Configure controlling API in this installation
+  # - tkcagnt_*** - Super Agent
+  api:
+    ## Should it enable controller API
+    enabled: true
+
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
@@ -137,7 +196,9 @@ cloud:
   url: "agent.testkube.io:443"
   ## URL of the Cloud UI
   uiUrl: ""
-  ## Agent Token
+  ## Public Agent ID
+  agentId: ""
+  ## Agent Token / Secret Key
   key: ""
   ## Organization ID
   orgId: ""
@@ -611,6 +672,8 @@ minio:
     matchLabels: []
     ## Scrape interval
     interval: 15s
+    ## SampleLimit defines per-scrape limit on number of scraped samples that will be accepted.
+    #sampleLimit: 1000
 
 ## uiIngress parameters
 uiIngress:

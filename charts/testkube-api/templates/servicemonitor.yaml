@@ -11,6 +11,9 @@ metadata:
     {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
+  {{- if .Values.prometheus.sampleLimit }}
+  sampleLimit: {{ .Values.prometheus.sampleLimit }}
+  {{- end }}
   endpoints:
   {{- if .Values.prometheus.interval }}
   - interval: {{ .Values.prometheus.interval }}
