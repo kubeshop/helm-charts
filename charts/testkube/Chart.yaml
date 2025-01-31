@@ -2,7 +2,7 @@ apiVersion: v2
 name: testkube
 description: Testkube is an open-source platform that simplifies the deployment and management of automated testing infrastructure.
 type: application
-version: 2.1.133
+version: 2.1.134
 dependencies:
   - name: testkube-operator
     version: 2.1.88
