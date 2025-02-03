@@ -40,7 +40,7 @@ global:
       external: false
       inline: false
       name: global-template
-      spec: {}
+      spec: null
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
