@@ -65,7 +65,7 @@ global:
       # -- Should the global template sourced inline instead of CRD? (otherwise its resource is created from spec below)
       inline: false
       # -- Specification for the global template
-      spec: {}
+      spec: null
       # spec:
       #   pod:
       #     imagePullSecrets:

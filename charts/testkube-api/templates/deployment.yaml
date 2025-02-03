@@ -203,7 +203,11 @@ spec:
             {{- if .Values.global.testWorkflows.globalTemplate.enabled }}
             {{- if .Values.global.testWorkflows.globalTemplate.inline }}
             - name: TESTKUBE_GLOBAL_WORKFLOW_TEMPLATE_INLINE
+              {{- if and .Values.global.testWorkflows.globalTemplate.spec (kindIs "map" .Values.global.testWorkflows.globalTemplate.spec) }}
               value: {{ toJson .Values.global.testWorkflows.globalTemplate.spec | quote }}
+              {{- else }}
+              value: {{ toJson (fromYaml .Values.global.testWorkflows.globalTemplate.spec) | quote }}
+              {{- end }}
             {{- else }}
             - name: TESTKUBE_GLOBAL_WORKFLOW_TEMPLATE_NAME
               value: "{{ .Values.global.testWorkflows.globalTemplate.name }}"
