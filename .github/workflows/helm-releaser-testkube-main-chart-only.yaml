@@ -3,6 +3,8 @@ name: Releasing Testkube main helm chart
 concurrency: develop_cluster
 
 on:
+  workflow_dispatch:
+
   push:
     paths:
       - "charts/testkube**"
@@ -22,6 +24,7 @@ env:
 jobs:
   release_charts:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout
