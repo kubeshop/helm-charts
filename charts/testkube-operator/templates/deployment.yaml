@@ -1,3 +1,4 @@
+{{- if .Values.enabled }}
 apiVersion: {{ include "global.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
@@ -143,3 +144,4 @@ spec:
       nodeSelector:
       {{- toYaml .Values.global.nodeSelector | nindent 8 }}
       {{- end }}
+{{- end }}
