@@ -61,3 +61,5 @@ load and preview all of them:
 - load the project folder into Monokle
 - select and preview each of the Helm charts as described at [Working with Helm](https://kubeshop.github.io/monokle/helm/)
 
+
+
