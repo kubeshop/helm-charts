@@ -18,7 +18,7 @@ dependencies:
     version: 1.2.6-3
     repository: "file://./charts/nats"
   - name: testkube-api
-    version: 2.1.88
+    version: 2.1.89
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-api"
   - name: testkube-logs
