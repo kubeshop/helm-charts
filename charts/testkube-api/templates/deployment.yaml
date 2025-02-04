@@ -158,10 +158,7 @@ spec:
             - name: TESTKUBE_CLUSTER_NAME
               value: "{{ .Values.clusterName }}"
             - name: TESTKUBE_HELMCHART_VERSION
-              valueFrom:
-                configMapKeyRef:
-                  name: testkube-global-config
-                  key: helmchartVersion
+              value: "{{ .Chart.Version }}"
             - name: ENABLE_SECRETS_ENDPOINT
               value: "{{ .Values.enableSecretsEndpoint }}"
             - name: DISABLE_MONGO_MIGRATIONS
