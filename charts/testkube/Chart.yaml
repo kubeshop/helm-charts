@@ -5,7 +5,7 @@ type: application
 version: 2.1.139
 dependencies:
   - name: testkube-operator
-    version: 2.1.88
+    version: 2.1.89
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
     condition: testkube-operator.enabled
