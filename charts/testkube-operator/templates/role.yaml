@@ -1,4 +1,4 @@
-{{ if .Values.rbac.create }}
+{{ if and .Values.enabled .Values.rbac.create }}
 ---
 
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
@@ -493,7 +493,7 @@ rules:
       - watch
       - deletecollection
 
-{{- if and .Values.webhook.enabled .Values.webhook.patch.enabled }}
+{{- if and .Values.enabled (and .Values.webhook.enabled .Values.webhook.patch.enabled) }}
 ---
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole

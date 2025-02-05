@@ -25,6 +25,9 @@ global:
 ## Kubernetes version (using Helm capabilities if not set)
 kubeVersion: ""
 
+## Should install the Operator
+enabled: true
+
 ## Should we install CRDS - when they can be installed from other Testkube instance
 installCRD: true
 
