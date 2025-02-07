@@ -98,7 +98,7 @@ A Helm chart for the testkube-operator (installs needed CRDs only for now)
 | webhook.patch.image.pullPolicy | string | `"IfNotPresent"` |  |
 | webhook.patch.image.pullSecrets | list | `[]` |  |
 | webhook.patch.image.registry | string | `"docker.io"` |  |
-| webhook.patch.image.repository | string | `"dpejcev/kube-webhook-certgen"` |  |
+| webhook.patch.image.repository | string | `"kubeshop/kube-webhook-certgen"` |  |
 | webhook.patch.image.tag | string | `"1.0.11"` |  |
 | webhook.patch.labels | object | `{}` |  |
 | webhook.patch.nodeSelector."kubernetes.io/os" | string | `"linux"` |  |

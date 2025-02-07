@@ -205,7 +205,7 @@ webhook:
     image:
       registry: docker.io
       repository: kubeshop/kube-webhook-certgen
-      tag: 0.0.4
+      tag: 0.0.7
       pullPolicy: IfNotPresent
       pullSecrets: []
     ## Annotations to add to the patch Job
