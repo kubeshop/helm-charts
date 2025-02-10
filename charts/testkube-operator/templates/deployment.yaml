@@ -37,25 +37,10 @@ spec:
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
       containers:
-      - name: kube-rbac-proxy
-        args:
-        - --secure-listen-address=0.0.0.0:8443
-        - --upstream=http://127.0.0.1:8080/
-        - --v=10
-        {{- toYaml .Values.args | nindent 8 }}
-        image: {{ include "global.images.image" (dict "imageRoot" .Values.proxy.image "global" .Values.global) }}
-        imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
-        {{- if .Values.proxy.resources }}
-        resources: {{ toYaml .Values.proxy.resources | nindent 10 }}
-        {{- end }}
-        ports:
-        - containerPort: 9443
-          name: https
-        securityContext: {{ include "testkube-operator.containerSecurityContext" . | nindent 10 }}
       - name: manager
         args:
         - --health-probe-bind-address=:{{ .Values.healthcheckPort }}
-        - --metrics-bind-address=127.0.0.1:8080
+        - --metrics-bind-address=:{{ .Values.metricsServerPort }}
         - --leader-elect
         command:
         - /manager
@@ -75,7 +60,7 @@ spec:
         {{- if not .Values.webhook.enabled }}
         - name: ENABLE_WEBHOOKS
           value: "false"
-        {{- end }} 
+        {{- end }}
         {{- if .Values.useArgoCDSync }}
         - name: APISERVER_USE_ARGOCD_SYNC
           value: "true"
@@ -92,7 +77,7 @@ spec:
           value: "true"
         {{- end }}
         ports:
-        - containerPort: 9443
+        - containerPort: {{ .Values.webhookServerPort }}
           name: webhook-server
           protocol: TCP
         livenessProbe:

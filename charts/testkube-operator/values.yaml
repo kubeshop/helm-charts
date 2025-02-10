@@ -88,7 +88,11 @@ proxy:
 ## Testkube API full name
 apiFullname: "testkube-api-server"
 ## Testkube API port
-apiPort: 8088
+apiPort: 8443
+## Testkube Operator webhook server port
+webhookServerPort: 9443
+## Testkube Operator metrics server port
+metricsServerPort: 8443
 ## Testkube Operator healthcheck port
 healthcheckPort: 8081
 # use ArgoCD sync owner references
