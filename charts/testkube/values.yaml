@@ -977,7 +977,11 @@ testkube-operator:
   apiFullname: "testkube-api-server"
   # -- Testkube API port
   apiPort: 8088
-  # -- Testkube Operator healthcheck port
+  ## Testkube Operator webhook server port
+  webhookServerPort: 9443
+  ## Testkube Operator metrics server port
+  metricsServerPort: 8443
+  ## Testkube Operator healthcheck port
   healthcheckPort: 8081
   # -- Use ArgoCD sync owner references
   useArgoCDSync: false
