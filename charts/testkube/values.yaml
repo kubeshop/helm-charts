@@ -1123,7 +1123,7 @@ testkube-operator:
         # -- patch job image name
         repository: kubeshop/kube-webhook-certgen
         # -- patch job image tag
-        tag: 0.0.4
+        tag: 0.0.7
         # -- patch job image pull policy
         pullPolicy: Always
         # -- patch job k8s secret for private registries
