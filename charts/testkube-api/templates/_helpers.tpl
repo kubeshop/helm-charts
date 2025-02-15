@@ -97,27 +97,32 @@ Define API image
 Define API environment in agent mode
 */}}
 {{- define "testkube-api.env-agent-mode" -}}
-{{- if .Values.cloud.key -}}
+{{- $proKey := .Values.global.pro.key | default .Values.cloud.key }}
+{{- $proSecretKey := .Values.global.pro.existingSecret.key | default .Values.cloud.existingSecret.key }}
+{{- $proSecretName := .Values.global.pro.existingSecret.name | default .Values.cloud.existingSecret.name }}
+{{- if $proKey -}}
 - name: TESTKUBE_PRO_API_KEY
-  value:  "{{ .Values.cloud.key }}"
-{{- else if .Values.cloud.existingSecret.key -}}
+  value:  "{{ $proKey }}"
+{{- else if $proSecretKey -}}
 - name: TESTKUBE_PRO_API_KEY
   valueFrom:
     secretKeyRef:
-      key: {{ .Values.cloud.existingSecret.key }}
-      name: {{ .Values.cloud.existingSecret.name }}
+      key: {{ $proSecretKey }}
+      name: {{ $proSecretName }}
 {{- end -}}
-{{- if .Values.cloud.url }}
+{{- $cloudUrl := .Values.global.pro.url | default .Values.cloud.url -}}
+{{- if $cloudUrl }}
 - name: TESTKUBE_CLOUD_URL
-  value:  {{ tpl .Values.cloud.url $ | quote }}
+  value:  {{ tpl $cloudUrl $ | quote }}
 - name: TESTKUBE_PRO_URL
-  value:  {{ tpl .Values.cloud.url $ | quote }}
+  value:  {{ tpl $cloudUrl $ | quote }}
 {{- end }}
-{{- if .Values.cloud.uiUrl}}
+{{- $cloudUiUrl := .Values.global.pro.uiUrl | default .Values.cloud.uiUrl -}}
+{{- if $cloudUiUrl }}
 - name: TESTKUBE_CLOUD_UI_URL
-  value: {{ tpl .Values.cloud.uiUrl $ | quote }}
+  value: {{ tpl $cloudUiUrl $ | quote }}
 - name: TESTKUBE_PRO_UI_URL
-  value: {{ tpl .Values.cloud.uiUrl $ | quote }}
+  value: {{ tpl $cloudUiUrl $ | quote }}
 {{- end}}
 {{- if not .Values.cloud.tls.enabled }}
 - name: TESTKUBE_PRO_TLS_INSECURE
@@ -156,7 +161,7 @@ Define API environment in agent mode
     secretKeyRef:
       key: {{ .Values.cloud.existingSecret.envId }}
       name: {{ .Values.cloud.existingSecret.name }}
-{{- end}}
+{{- end }}
 {{- if .Values.cloud.migrate }}
 - name: TESTKUBE_PRO_MIGRATE
   value:  "{{ .Values.cloud.migrate }}"
