@@ -4,7 +4,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.15.0
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: testworkflows.testworkflows.testkube.io
 spec:
   group: testworkflows.testkube.io
@@ -101,6 +101,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -139,6 +140,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -157,6 +159,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -167,6 +170,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -204,16 +208,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -272,6 +287,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -303,6 +320,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -341,6 +359,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -369,6 +388,7 @@ spec:
                                 enum:
                                   - basic
                                   - header
+                                  - github
                                 type: string
                               cone:
                                 description: enable cone mode for sparse checkout with paths
@@ -395,6 +415,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -433,6 +454,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -452,6 +474,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -490,6 +513,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -512,6 +536,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -550,6 +575,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -690,10 +716,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -721,10 +750,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -760,10 +792,13 @@ spec:
                                           referenced object inside the same namespace.
                                         properties:
                                           name:
+                                            default: ""
                                             description: |-
                                               Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
                                               More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                              TODO: Add other useful fields. apiVersion, kind, uid?
                                             type: string
                                         type: object
                                         x-kubernetes-map-type: atomic
@@ -817,6 +852,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -855,6 +891,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -945,11 +982,13 @@ spec:
                                             items:
                                               type: string
                                             type: array
+                                            x-kubernetes-list-type: atomic
                                         required:
                                           - key
                                           - operator
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     matchLabels:
                                       additionalProperties:
                                         type: string
@@ -1124,10 +1163,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -1155,10 +1197,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -1194,10 +1239,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -1251,6 +1299,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -1289,6 +1338,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -1379,11 +1429,13 @@ spec:
                                                 items:
                                                   type: string
                                                 type: array
+                                                x-kubernetes-list-type: atomic
                                             required:
                                               - key
                                               - operator
                                             type: object
                                           type: array
+                                          x-kubernetes-list-type: atomic
                                         matchLabels:
                                           additionalProperties:
                                             type: string
@@ -1448,6 +1500,8 @@ spec:
                               until:
                                 description: 'until when it should retry (defaults to: "passed")'
                                 type: string
+                            required:
+                              - count
                             type: object
                           run:
                             description: run specific container in the current step
@@ -1476,6 +1530,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -1514,6 +1569,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -1532,6 +1588,7 @@ spec:
                                     configMapRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -1542,6 +1599,7 @@ spec:
                                     secretRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -1579,16 +1637,27 @@ spec:
                                 properties:
                                   allowPrivilegeEscalation:
                                     type: boolean
+                                  appArmorProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
                                   capabilities:
                                     properties:
                                       add:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       drop:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                     type: object
                                   privileged:
                                     type: boolean
@@ -1650,6 +1719,8 @@ spec:
                                       type: string
                                     readOnly:
                                       type: boolean
+                                    recursiveReadOnly:
+                                      type: string
                                     subPath:
                                       type: string
                                     subPathExpr:
@@ -1718,6 +1789,8 @@ spec:
                           until:
                             description: 'until when it should retry (defaults to: "passed")'
                             type: string
+                        required:
+                          - count
                         type: object
                       run:
                         description: run specific container in the current step
@@ -1746,6 +1819,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -1784,6 +1858,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -1802,6 +1877,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -1812,6 +1888,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -1849,16 +1926,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -1920,6 +2008,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -1964,6 +2054,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -2002,6 +2093,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -2030,6 +2122,7 @@ spec:
                                       enum:
                                         - basic
                                         - header
+                                        - github
                                       type: string
                                     cone:
                                       description: enable cone mode for sparse checkout with paths
@@ -2056,6 +2149,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2094,6 +2188,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2113,6 +2208,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2151,6 +2247,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2173,6 +2270,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2211,6 +2309,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -2262,6 +2361,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -2300,6 +2400,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -2318,6 +2419,7 @@ spec:
                                   configMapRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -2328,6 +2430,7 @@ spec:
                                   secretRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -2374,6 +2477,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     options:
                                       items:
                                         properties:
@@ -2383,10 +2487,12 @@ spec:
                                             type: string
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     searches:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 dnsPolicy:
                                   type: string
@@ -2397,8 +2503,11 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       ip:
                                         type: string
+                                    required:
+                                      - ip
                                     type: object
                                   type: array
                                 hostname:
@@ -2412,10 +2521,13 @@ spec:
                                       referenced object inside the same namespace.
                                     properties:
                                       name:
+                                        default: ""
                                         description: |-
                                           Name of the referent.
+                                          This field is effectively required, but due to backwards compatibility is
+                                          allowed to be empty. Instances of this type with an empty value here are
+                                          almost certainly wrong.
                                           More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                          TODO: Add other useful fields. apiVersion, kind, uid?
                                         type: string
                                     type: object
                                     x-kubernetes-map-type: atomic
@@ -2448,13 +2560,10 @@ spec:
                                     properties:
                                       name:
                                         type: string
-                                      source:
-                                        properties:
-                                          resourceClaimName:
-                                            type: string
-                                          resourceClaimTemplateName:
-                                            type: string
-                                        type: object
+                                      resourceClaimName:
+                                        type: string
+                                      resourceClaimTemplateName:
+                                        type: string
                                     required:
                                       - name
                                     type: object
@@ -2470,6 +2579,15 @@ spec:
                                   type: array
                                 securityContext:
                                   properties:
+                                    appArmorProfile:
+                                      properties:
+                                        localhostProfile:
+                                          type: string
+                                        type:
+                                          type: string
+                                      required:
+                                        - type
+                                      type: object
                                     fsGroup:
                                       format: int64
                                       type: integer
@@ -2483,6 +2601,8 @@ spec:
                                     runAsUser:
                                       format: int64
                                       type: integer
+                                    seLinuxChangePolicy:
+                                      type: string
                                     seLinuxOptions:
                                       properties:
                                         level:
@@ -2508,6 +2628,9 @@ spec:
                                         format: int64
                                         type: integer
                                       type: array
+                                      x-kubernetes-list-type: atomic
+                                    supplementalGroupsPolicy:
+                                      type: string
                                     sysctls:
                                       items:
                                         properties:
@@ -2520,6 +2643,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     windowsOptions:
                                       properties:
                                         gmsaCredentialSpec:
@@ -2566,6 +2690,7 @@ spec:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   dataSource:
                                     properties:
                                       apiGroup:
@@ -2595,18 +2720,6 @@ spec:
                                     type: object
                                   resources:
                                     properties:
-                                      claims:
-                                        items:
-                                          properties:
-                                            name:
-                                              type: string
-                                          required:
-                                            - name
-                                          type: object
-                                        type: array
-                                        x-kubernetes-list-map-keys:
-                                          - name
-                                        x-kubernetes-list-type: map
                                       limits:
                                         additionalProperties:
                                           anyOf:
@@ -2637,11 +2750,13 @@ spec:
                                               items:
                                                 type: string
                                               type: array
+                                              x-kubernetes-list-type: atomic
                                           required:
                                             - key
                                             - operator
                                           type: object
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       matchLabels:
                                         additionalProperties:
                                           type: string
@@ -2649,6 +2764,8 @@ spec:
                                     type: object
                                     x-kubernetes-map-type: atomic
                                   storageClassName:
+                                    type: string
+                                  volumeAttributesClassName:
                                     type: string
                                   volumeMode:
                                     type: string
@@ -2664,6 +2781,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 failureThreshold:
                                   format: int32
@@ -2674,6 +2792,7 @@ spec:
                                       format: int32
                                       type: integer
                                     service:
+                                      default: ""
                                       type: string
                                   required:
                                     - port
@@ -2694,6 +2813,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     path:
                                       type: string
                                     port:
@@ -2761,16 +2881,27 @@ spec:
                               properties:
                                 allowPrivilegeEscalation:
                                   type: boolean
+                                appArmorProfile:
+                                  properties:
+                                    localhostProfile:
+                                      type: string
+                                    type:
+                                      type: string
+                                  required:
+                                    - type
+                                  type: object
                                 capabilities:
                                   properties:
                                     add:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     drop:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 privileged:
                                   type: boolean
@@ -2868,6 +2999,8 @@ spec:
                                     type: string
                                   readOnly:
                                     type: boolean
+                                  recursiveReadOnly:
+                                    type: string
                                   subPath:
                                     type: string
                                   subPathExpr:
@@ -3037,6 +3170,7 @@ spec:
                                   key:
                                     type: string
                                   name:
+                                    default: ""
                                     type: string
                                   optional:
                                     type: boolean
@@ -3075,6 +3209,7 @@ spec:
                                   key:
                                     type: string
                                   name:
+                                    default: ""
                                     type: string
                                   optional:
                                     type: boolean
@@ -3093,6 +3228,7 @@ spec:
                           configMapRef:
                             properties:
                               name:
+                                default: ""
                                 type: string
                               optional:
                                 type: boolean
@@ -3103,6 +3239,7 @@ spec:
                           secretRef:
                             properties:
                               name:
+                                default: ""
                                 type: string
                               optional:
                                 type: boolean
@@ -3140,16 +3277,27 @@ spec:
                       properties:
                         allowPrivilegeEscalation:
                           type: boolean
+                        appArmorProfile:
+                          properties:
+                            localhostProfile:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                            - type
+                          type: object
                         capabilities:
                           properties:
                             add:
                               items:
                                 type: string
                               type: array
+                              x-kubernetes-list-type: atomic
                             drop:
                               items:
                                 type: string
                               type: array
+                              x-kubernetes-list-type: atomic
                           type: object
                         privileged:
                           type: boolean
@@ -3208,6 +3356,8 @@ spec:
                             type: string
                           readOnly:
                             type: boolean
+                          recursiveReadOnly:
+                            type: string
                           subPath:
                             type: string
                           subPathExpr:
@@ -3239,6 +3389,7 @@ spec:
                                   key:
                                     type: string
                                   name:
+                                    default: ""
                                     type: string
                                   optional:
                                     type: boolean
@@ -3277,6 +3428,7 @@ spec:
                                   key:
                                     type: string
                                   name:
+                                    default: ""
                                     type: string
                                   optional:
                                     type: boolean
@@ -3305,6 +3457,7 @@ spec:
                           enum:
                             - basic
                             - header
+                            - github
                           type: string
                         cone:
                           description: enable cone mode for sparse checkout with paths
@@ -3331,6 +3484,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3369,6 +3523,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3388,6 +3543,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3426,6 +3582,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3448,6 +3605,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3486,6 +3644,7 @@ spec:
                                 key:
                                   type: string
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -3605,6 +3764,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: atomic
                         options:
                           items:
                             properties:
@@ -3614,10 +3774,12 @@ spec:
                                 type: string
                             type: object
                           type: array
+                          x-kubernetes-list-type: atomic
                         searches:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: atomic
                       type: object
                     dnsPolicy:
                       type: string
@@ -3628,8 +3790,11 @@ spec:
                             items:
                               type: string
                             type: array
+                            x-kubernetes-list-type: atomic
                           ip:
                             type: string
+                        required:
+                          - ip
                         type: object
                       type: array
                     hostname:
@@ -3643,10 +3808,13 @@ spec:
                           referenced object inside the same namespace.
                         properties:
                           name:
+                            default: ""
                             description: |-
                               Name of the referent.
+                              This field is effectively required, but due to backwards compatibility is
+                              allowed to be empty. Instances of this type with an empty value here are
+                              almost certainly wrong.
                               More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                              TODO: Add other useful fields. apiVersion, kind, uid?
                             type: string
                         type: object
                         x-kubernetes-map-type: atomic
@@ -3679,13 +3847,10 @@ spec:
                         properties:
                           name:
                             type: string
-                          source:
-                            properties:
-                              resourceClaimName:
-                                type: string
-                              resourceClaimTemplateName:
-                                type: string
-                            type: object
+                          resourceClaimName:
+                            type: string
+                          resourceClaimTemplateName:
+                            type: string
                         required:
                           - name
                         type: object
@@ -3701,6 +3866,15 @@ spec:
                       type: array
                     securityContext:
                       properties:
+                        appArmorProfile:
+                          properties:
+                            localhostProfile:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                            - type
+                          type: object
                         fsGroup:
                           format: int64
                           type: integer
@@ -3714,6 +3888,8 @@ spec:
                         runAsUser:
                           format: int64
                           type: integer
+                        seLinuxChangePolicy:
+                          type: string
                         seLinuxOptions:
                           properties:
                             level:
@@ -3739,6 +3915,9 @@ spec:
                             format: int64
                             type: integer
                           type: array
+                          x-kubernetes-list-type: atomic
+                        supplementalGroupsPolicy:
+                          type: string
                         sysctls:
                           items:
                             properties:
@@ -3751,6 +3930,7 @@ spec:
                               - value
                             type: object
                           type: array
+                          x-kubernetes-list-type: atomic
                         windowsOptions:
                           properties:
                             gmsaCredentialSpec:
@@ -3797,6 +3977,7 @@ spec:
                         items:
                           type: string
                         type: array
+                        x-kubernetes-list-type: atomic
                       dataSource:
                         properties:
                           apiGroup:
@@ -3826,18 +4007,6 @@ spec:
                         type: object
                       resources:
                         properties:
-                          claims:
-                            items:
-                              properties:
-                                name:
-                                  type: string
-                              required:
-                                - name
-                              type: object
-                            type: array
-                            x-kubernetes-list-map-keys:
-                              - name
-                            x-kubernetes-list-type: map
                           limits:
                             additionalProperties:
                               anyOf:
@@ -3868,11 +4037,13 @@ spec:
                                   items:
                                     type: string
                                   type: array
+                                  x-kubernetes-list-type: atomic
                               required:
                                 - key
                                 - operator
                               type: object
                             type: array
+                            x-kubernetes-list-type: atomic
                           matchLabels:
                             additionalProperties:
                               type: string
@@ -3880,6 +4051,8 @@ spec:
                         type: object
                         x-kubernetes-map-type: atomic
                       storageClassName:
+                        type: string
+                      volumeAttributesClassName:
                         type: string
                       volumeMode:
                         type: string
@@ -3918,6 +4091,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -3956,6 +4130,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -3984,6 +4159,7 @@ spec:
                                 enum:
                                   - basic
                                   - header
+                                  - github
                                 type: string
                               cone:
                                 description: enable cone mode for sparse checkout with paths
@@ -4010,6 +4186,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4048,6 +4225,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4067,6 +4245,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4105,6 +4284,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4127,6 +4307,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4165,6 +4346,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -4216,6 +4398,7 @@ spec:
                                     key:
                                       type: string
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -4254,6 +4437,7 @@ spec:
                                     key:
                                       type: string
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -4272,6 +4456,7 @@ spec:
                             configMapRef:
                               properties:
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -4282,6 +4467,7 @@ spec:
                             secretRef:
                               properties:
                                 name:
+                                  default: ""
                                   type: string
                                 optional:
                                   type: boolean
@@ -4328,6 +4514,7 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                                x-kubernetes-list-type: atomic
                               options:
                                 items:
                                   properties:
@@ -4337,10 +4524,12 @@ spec:
                                       type: string
                                   type: object
                                 type: array
+                                x-kubernetes-list-type: atomic
                               searches:
                                 items:
                                   type: string
                                 type: array
+                                x-kubernetes-list-type: atomic
                             type: object
                           dnsPolicy:
                             type: string
@@ -4351,8 +4540,11 @@ spec:
                                   items:
                                     type: string
                                   type: array
+                                  x-kubernetes-list-type: atomic
                                 ip:
                                   type: string
+                              required:
+                                - ip
                               type: object
                             type: array
                           hostname:
@@ -4366,10 +4558,13 @@ spec:
                                 referenced object inside the same namespace.
                               properties:
                                 name:
+                                  default: ""
                                   description: |-
                                     Name of the referent.
+                                    This field is effectively required, but due to backwards compatibility is
+                                    allowed to be empty. Instances of this type with an empty value here are
+                                    almost certainly wrong.
                                     More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                    TODO: Add other useful fields. apiVersion, kind, uid?
                                   type: string
                               type: object
                               x-kubernetes-map-type: atomic
@@ -4402,13 +4597,10 @@ spec:
                               properties:
                                 name:
                                   type: string
-                                source:
-                                  properties:
-                                    resourceClaimName:
-                                      type: string
-                                    resourceClaimTemplateName:
-                                      type: string
-                                  type: object
+                                resourceClaimName:
+                                  type: string
+                                resourceClaimTemplateName:
+                                  type: string
                               required:
                                 - name
                               type: object
@@ -4424,6 +4616,15 @@ spec:
                             type: array
                           securityContext:
                             properties:
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               fsGroup:
                                 format: int64
                                 type: integer
@@ -4437,6 +4638,8 @@ spec:
                               runAsUser:
                                 format: int64
                                 type: integer
+                              seLinuxChangePolicy:
+                                type: string
                               seLinuxOptions:
                                 properties:
                                   level:
@@ -4462,6 +4665,9 @@ spec:
                                   format: int64
                                   type: integer
                                 type: array
+                                x-kubernetes-list-type: atomic
+                              supplementalGroupsPolicy:
+                                type: string
                               sysctls:
                                 items:
                                   properties:
@@ -4474,6 +4680,7 @@ spec:
                                     - value
                                   type: object
                                 type: array
+                                x-kubernetes-list-type: atomic
                               windowsOptions:
                                 properties:
                                   gmsaCredentialSpec:
@@ -4520,6 +4727,7 @@ spec:
                               items:
                                 type: string
                               type: array
+                              x-kubernetes-list-type: atomic
                             dataSource:
                               properties:
                                 apiGroup:
@@ -4549,18 +4757,6 @@ spec:
                               type: object
                             resources:
                               properties:
-                                claims:
-                                  items:
-                                    properties:
-                                      name:
-                                        type: string
-                                    required:
-                                      - name
-                                    type: object
-                                  type: array
-                                  x-kubernetes-list-map-keys:
-                                    - name
-                                  x-kubernetes-list-type: map
                                 limits:
                                   additionalProperties:
                                     anyOf:
@@ -4591,11 +4787,13 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                     required:
                                       - key
                                       - operator
                                     type: object
                                   type: array
+                                  x-kubernetes-list-type: atomic
                                 matchLabels:
                                   additionalProperties:
                                     type: string
@@ -4603,6 +4801,8 @@ spec:
                               type: object
                               x-kubernetes-map-type: atomic
                             storageClassName:
+                              type: string
+                            volumeAttributesClassName:
                               type: string
                             volumeMode:
                               type: string
@@ -4618,6 +4818,7 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                                x-kubernetes-list-type: atomic
                             type: object
                           failureThreshold:
                             format: int32
@@ -4628,6 +4829,7 @@ spec:
                                 format: int32
                                 type: integer
                               service:
+                                default: ""
                                 type: string
                             required:
                               - port
@@ -4648,6 +4850,7 @@ spec:
                                     - value
                                   type: object
                                 type: array
+                                x-kubernetes-list-type: atomic
                               path:
                                 type: string
                               port:
@@ -4715,16 +4918,27 @@ spec:
                         properties:
                           allowPrivilegeEscalation:
                             type: boolean
+                          appArmorProfile:
+                            properties:
+                              localhostProfile:
+                                type: string
+                              type:
+                                type: string
+                            required:
+                              - type
+                            type: object
                           capabilities:
                             properties:
                               add:
                                 items:
                                   type: string
                                 type: array
+                                x-kubernetes-list-type: atomic
                               drop:
                                 items:
                                   type: string
                                 type: array
+                                x-kubernetes-list-type: atomic
                             type: object
                           privileged:
                             type: boolean
@@ -4822,6 +5036,8 @@ spec:
                               type: string
                             readOnly:
                               type: boolean
+                            recursiveReadOnly:
+                              type: string
                             subPath:
                               type: string
                             subPathExpr:
@@ -4895,6 +5111,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -4933,6 +5150,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -4951,6 +5169,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -4961,6 +5180,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -4998,16 +5218,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -5066,6 +5297,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -5097,6 +5330,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -5135,6 +5369,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -5163,6 +5398,7 @@ spec:
                                 enum:
                                   - basic
                                   - header
+                                  - github
                                 type: string
                               cone:
                                 description: enable cone mode for sparse checkout with paths
@@ -5189,6 +5425,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5227,6 +5464,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5246,6 +5484,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5284,6 +5523,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5306,6 +5546,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5344,6 +5585,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -5484,10 +5726,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -5515,10 +5760,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -5554,10 +5802,13 @@ spec:
                                           referenced object inside the same namespace.
                                         properties:
                                           name:
+                                            default: ""
                                             description: |-
                                               Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
                                               More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                              TODO: Add other useful fields. apiVersion, kind, uid?
                                             type: string
                                         type: object
                                         x-kubernetes-map-type: atomic
@@ -5611,6 +5862,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -5649,6 +5901,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -5739,11 +5992,13 @@ spec:
                                             items:
                                               type: string
                                             type: array
+                                            x-kubernetes-list-type: atomic
                                         required:
                                           - key
                                           - operator
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     matchLabels:
                                       additionalProperties:
                                         type: string
@@ -5918,10 +6173,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -5949,10 +6207,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -5988,10 +6249,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -6045,6 +6309,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -6083,6 +6348,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -6173,11 +6439,13 @@ spec:
                                                 items:
                                                   type: string
                                                 type: array
+                                                x-kubernetes-list-type: atomic
                                             required:
                                               - key
                                               - operator
                                             type: object
                                           type: array
+                                          x-kubernetes-list-type: atomic
                                         matchLabels:
                                           additionalProperties:
                                             type: string
@@ -6242,6 +6510,8 @@ spec:
                               until:
                                 description: 'until when it should retry (defaults to: "passed")'
                                 type: string
+                            required:
+                              - count
                             type: object
                           run:
                             description: run specific container in the current step
@@ -6270,6 +6540,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6308,6 +6579,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6326,6 +6598,7 @@ spec:
                                     configMapRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -6336,6 +6609,7 @@ spec:
                                     secretRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -6373,16 +6647,27 @@ spec:
                                 properties:
                                   allowPrivilegeEscalation:
                                     type: boolean
+                                  appArmorProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
                                   capabilities:
                                     properties:
                                       add:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       drop:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                     type: object
                                   privileged:
                                     type: boolean
@@ -6444,6 +6729,8 @@ spec:
                                       type: string
                                     readOnly:
                                       type: boolean
+                                    recursiveReadOnly:
+                                      type: string
                                     subPath:
                                       type: string
                                     subPathExpr:
@@ -6512,6 +6799,8 @@ spec:
                           until:
                             description: 'until when it should retry (defaults to: "passed")'
                             type: string
+                        required:
+                          - count
                         type: object
                       run:
                         description: run specific container in the current step
@@ -6540,6 +6829,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -6578,6 +6868,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -6596,6 +6887,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -6606,6 +6898,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -6643,16 +6936,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -6714,6 +7018,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -6758,6 +7064,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -6796,6 +7103,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -6824,6 +7132,7 @@ spec:
                                       enum:
                                         - basic
                                         - header
+                                        - github
                                       type: string
                                     cone:
                                       description: enable cone mode for sparse checkout with paths
@@ -6850,6 +7159,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6888,6 +7198,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6907,6 +7218,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6945,6 +7257,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -6967,6 +7280,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -7005,6 +7319,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -7056,6 +7371,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -7094,6 +7410,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -7112,6 +7429,7 @@ spec:
                                   configMapRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -7122,6 +7440,7 @@ spec:
                                   secretRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -7168,6 +7487,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     options:
                                       items:
                                         properties:
@@ -7177,10 +7497,12 @@ spec:
                                             type: string
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     searches:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 dnsPolicy:
                                   type: string
@@ -7191,8 +7513,11 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       ip:
                                         type: string
+                                    required:
+                                      - ip
                                     type: object
                                   type: array
                                 hostname:
@@ -7206,10 +7531,13 @@ spec:
                                       referenced object inside the same namespace.
                                     properties:
                                       name:
+                                        default: ""
                                         description: |-
                                           Name of the referent.
+                                          This field is effectively required, but due to backwards compatibility is
+                                          allowed to be empty. Instances of this type with an empty value here are
+                                          almost certainly wrong.
                                           More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                          TODO: Add other useful fields. apiVersion, kind, uid?
                                         type: string
                                     type: object
                                     x-kubernetes-map-type: atomic
@@ -7242,13 +7570,10 @@ spec:
                                     properties:
                                       name:
                                         type: string
-                                      source:
-                                        properties:
-                                          resourceClaimName:
-                                            type: string
-                                          resourceClaimTemplateName:
-                                            type: string
-                                        type: object
+                                      resourceClaimName:
+                                        type: string
+                                      resourceClaimTemplateName:
+                                        type: string
                                     required:
                                       - name
                                     type: object
@@ -7264,6 +7589,15 @@ spec:
                                   type: array
                                 securityContext:
                                   properties:
+                                    appArmorProfile:
+                                      properties:
+                                        localhostProfile:
+                                          type: string
+                                        type:
+                                          type: string
+                                      required:
+                                        - type
+                                      type: object
                                     fsGroup:
                                       format: int64
                                       type: integer
@@ -7277,6 +7611,8 @@ spec:
                                     runAsUser:
                                       format: int64
                                       type: integer
+                                    seLinuxChangePolicy:
+                                      type: string
                                     seLinuxOptions:
                                       properties:
                                         level:
@@ -7302,6 +7638,9 @@ spec:
                                         format: int64
                                         type: integer
                                       type: array
+                                      x-kubernetes-list-type: atomic
+                                    supplementalGroupsPolicy:
+                                      type: string
                                     sysctls:
                                       items:
                                         properties:
@@ -7314,6 +7653,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     windowsOptions:
                                       properties:
                                         gmsaCredentialSpec:
@@ -7360,6 +7700,7 @@ spec:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   dataSource:
                                     properties:
                                       apiGroup:
@@ -7389,18 +7730,6 @@ spec:
                                     type: object
                                   resources:
                                     properties:
-                                      claims:
-                                        items:
-                                          properties:
-                                            name:
-                                              type: string
-                                          required:
-                                            - name
-                                          type: object
-                                        type: array
-                                        x-kubernetes-list-map-keys:
-                                          - name
-                                        x-kubernetes-list-type: map
                                       limits:
                                         additionalProperties:
                                           anyOf:
@@ -7431,11 +7760,13 @@ spec:
                                               items:
                                                 type: string
                                               type: array
+                                              x-kubernetes-list-type: atomic
                                           required:
                                             - key
                                             - operator
                                           type: object
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       matchLabels:
                                         additionalProperties:
                                           type: string
@@ -7443,6 +7774,8 @@ spec:
                                     type: object
                                     x-kubernetes-map-type: atomic
                                   storageClassName:
+                                    type: string
+                                  volumeAttributesClassName:
                                     type: string
                                   volumeMode:
                                     type: string
@@ -7458,6 +7791,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 failureThreshold:
                                   format: int32
@@ -7468,6 +7802,7 @@ spec:
                                       format: int32
                                       type: integer
                                     service:
+                                      default: ""
                                       type: string
                                   required:
                                     - port
@@ -7488,6 +7823,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     path:
                                       type: string
                                     port:
@@ -7555,16 +7891,27 @@ spec:
                               properties:
                                 allowPrivilegeEscalation:
                                   type: boolean
+                                appArmorProfile:
+                                  properties:
+                                    localhostProfile:
+                                      type: string
+                                    type:
+                                      type: string
+                                  required:
+                                    - type
+                                  type: object
                                 capabilities:
                                   properties:
                                     add:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     drop:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 privileged:
                                   type: boolean
@@ -7662,6 +8009,8 @@ spec:
                                     type: string
                                   readOnly:
                                     type: boolean
+                                  recursiveReadOnly:
+                                    type: string
                                   subPath:
                                     type: string
                                   subPathExpr:
@@ -7790,6 +8139,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -7828,6 +8178,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -7846,6 +8197,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -7856,6 +8208,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -7893,16 +8246,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -7961,6 +8325,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -7992,6 +8358,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -8030,6 +8397,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -8058,6 +8426,7 @@ spec:
                                 enum:
                                   - basic
                                   - header
+                                  - github
                                 type: string
                               cone:
                                 description: enable cone mode for sparse checkout with paths
@@ -8084,6 +8453,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8122,6 +8492,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8141,6 +8512,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8179,6 +8551,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8201,6 +8574,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8239,6 +8613,7 @@ spec:
                                       key:
                                         type: string
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -8379,10 +8754,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -8410,10 +8788,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -8449,10 +8830,13 @@ spec:
                                           referenced object inside the same namespace.
                                         properties:
                                           name:
+                                            default: ""
                                             description: |-
                                               Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
                                               More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                              TODO: Add other useful fields. apiVersion, kind, uid?
                                             type: string
                                         type: object
                                         x-kubernetes-map-type: atomic
@@ -8506,6 +8890,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -8544,6 +8929,7 @@ spec:
                                                   key:
                                                     type: string
                                                   name:
+                                                    default: ""
                                                     type: string
                                                   optional:
                                                     type: boolean
@@ -8634,11 +9020,13 @@ spec:
                                             items:
                                               type: string
                                             type: array
+                                            x-kubernetes-list-type: atomic
                                         required:
                                           - key
                                           - operator
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     matchLabels:
                                       additionalProperties:
                                         type: string
@@ -8813,10 +9201,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -8844,10 +9235,13 @@ spec:
                                                   referenced object inside the same namespace.
                                                 properties:
                                                   name:
+                                                    default: ""
                                                     description: |-
                                                       Name of the referent.
+                                                      This field is effectively required, but due to backwards compatibility is
+                                                      allowed to be empty. Instances of this type with an empty value here are
+                                                      almost certainly wrong.
                                                       More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                      TODO: Add other useful fields. apiVersion, kind, uid?
                                                     type: string
                                                 type: object
                                                 x-kubernetes-map-type: atomic
@@ -8883,10 +9277,13 @@ spec:
                                               referenced object inside the same namespace.
                                             properties:
                                               name:
+                                                default: ""
                                                 description: |-
                                                   Name of the referent.
+                                                  This field is effectively required, but due to backwards compatibility is
+                                                  allowed to be empty. Instances of this type with an empty value here are
+                                                  almost certainly wrong.
                                                   More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                  TODO: Add other useful fields. apiVersion, kind, uid?
                                                 type: string
                                             type: object
                                             x-kubernetes-map-type: atomic
@@ -8940,6 +9337,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -8978,6 +9376,7 @@ spec:
                                                       key:
                                                         type: string
                                                       name:
+                                                        default: ""
                                                         type: string
                                                       optional:
                                                         type: boolean
@@ -9068,11 +9467,13 @@ spec:
                                                 items:
                                                   type: string
                                                 type: array
+                                                x-kubernetes-list-type: atomic
                                             required:
                                               - key
                                               - operator
                                             type: object
                                           type: array
+                                          x-kubernetes-list-type: atomic
                                         matchLabels:
                                           additionalProperties:
                                             type: string
@@ -9137,6 +9538,8 @@ spec:
                               until:
                                 description: 'until when it should retry (defaults to: "passed")'
                                 type: string
+                            required:
+                              - count
                             type: object
                           run:
                             description: run specific container in the current step
@@ -9165,6 +9568,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9203,6 +9607,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9221,6 +9626,7 @@ spec:
                                     configMapRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -9231,6 +9637,7 @@ spec:
                                     secretRef:
                                       properties:
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -9268,16 +9675,27 @@ spec:
                                 properties:
                                   allowPrivilegeEscalation:
                                     type: boolean
+                                  appArmorProfile:
+                                    properties:
+                                      localhostProfile:
+                                        type: string
+                                      type:
+                                        type: string
+                                    required:
+                                      - type
+                                    type: object
                                   capabilities:
                                     properties:
                                       add:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       drop:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                     type: object
                                   privileged:
                                     type: boolean
@@ -9339,6 +9757,8 @@ spec:
                                       type: string
                                     readOnly:
                                       type: boolean
+                                    recursiveReadOnly:
+                                      type: string
                                     subPath:
                                       type: string
                                     subPathExpr:
@@ -9407,6 +9827,8 @@ spec:
                           until:
                             description: 'until when it should retry (defaults to: "passed")'
                             type: string
+                        required:
+                          - count
                         type: object
                       run:
                         description: run specific container in the current step
@@ -9435,6 +9857,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -9473,6 +9896,7 @@ spec:
                                         key:
                                           type: string
                                         name:
+                                          default: ""
                                           type: string
                                         optional:
                                           type: boolean
@@ -9491,6 +9915,7 @@ spec:
                                 configMapRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -9501,6 +9926,7 @@ spec:
                                 secretRef:
                                   properties:
                                     name:
+                                      default: ""
                                       type: string
                                     optional:
                                       type: boolean
@@ -9538,16 +9964,27 @@ spec:
                             properties:
                               allowPrivilegeEscalation:
                                 type: boolean
+                              appArmorProfile:
+                                properties:
+                                  localhostProfile:
+                                    type: string
+                                  type:
+                                    type: string
+                                required:
+                                  - type
+                                type: object
                               capabilities:
                                 properties:
                                   add:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   drop:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                 type: object
                               privileged:
                                 type: boolean
@@ -9609,6 +10046,8 @@ spec:
                                   type: string
                                 readOnly:
                                   type: boolean
+                                recursiveReadOnly:
+                                  type: string
                                 subPath:
                                   type: string
                                 subPathExpr:
@@ -9653,6 +10092,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -9691,6 +10131,7 @@ spec:
                                               key:
                                                 type: string
                                               name:
+                                                default: ""
                                                 type: string
                                               optional:
                                                 type: boolean
@@ -9719,6 +10160,7 @@ spec:
                                       enum:
                                         - basic
                                         - header
+                                        - github
                                       type: string
                                     cone:
                                       description: enable cone mode for sparse checkout with paths
@@ -9745,6 +10187,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9783,6 +10226,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9802,6 +10246,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9840,6 +10285,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9862,6 +10308,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9900,6 +10347,7 @@ spec:
                                             key:
                                               type: string
                                             name:
+                                              default: ""
                                               type: string
                                             optional:
                                               type: boolean
@@ -9951,6 +10399,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -9989,6 +10438,7 @@ spec:
                                           key:
                                             type: string
                                           name:
+                                            default: ""
                                             type: string
                                           optional:
                                             type: boolean
@@ -10007,6 +10457,7 @@ spec:
                                   configMapRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -10017,6 +10468,7 @@ spec:
                                   secretRef:
                                     properties:
                                       name:
+                                        default: ""
                                         type: string
                                       optional:
                                         type: boolean
@@ -10063,6 +10515,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     options:
                                       items:
                                         properties:
@@ -10072,10 +10525,12 @@ spec:
                                             type: string
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     searches:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 dnsPolicy:
                                   type: string
@@ -10086,8 +10541,11 @@ spec:
                                         items:
                                           type: string
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       ip:
                                         type: string
+                                    required:
+                                      - ip
                                     type: object
                                   type: array
                                 hostname:
@@ -10101,10 +10559,13 @@ spec:
                                       referenced object inside the same namespace.
                                     properties:
                                       name:
+                                        default: ""
                                         description: |-
                                           Name of the referent.
+                                          This field is effectively required, but due to backwards compatibility is
+                                          allowed to be empty. Instances of this type with an empty value here are
+                                          almost certainly wrong.
                                           More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                          TODO: Add other useful fields. apiVersion, kind, uid?
                                         type: string
                                     type: object
                                     x-kubernetes-map-type: atomic
@@ -10137,13 +10598,10 @@ spec:
                                     properties:
                                       name:
                                         type: string
-                                      source:
-                                        properties:
-                                          resourceClaimName:
-                                            type: string
-                                          resourceClaimTemplateName:
-                                            type: string
-                                        type: object
+                                      resourceClaimName:
+                                        type: string
+                                      resourceClaimTemplateName:
+                                        type: string
                                     required:
                                       - name
                                     type: object
@@ -10159,6 +10617,15 @@ spec:
                                   type: array
                                 securityContext:
                                   properties:
+                                    appArmorProfile:
+                                      properties:
+                                        localhostProfile:
+                                          type: string
+                                        type:
+                                          type: string
+                                      required:
+                                        - type
+                                      type: object
                                     fsGroup:
                                       format: int64
                                       type: integer
@@ -10172,6 +10639,8 @@ spec:
                                     runAsUser:
                                       format: int64
                                       type: integer
+                                    seLinuxChangePolicy:
+                                      type: string
                                     seLinuxOptions:
                                       properties:
                                         level:
@@ -10197,6 +10666,9 @@ spec:
                                         format: int64
                                         type: integer
                                       type: array
+                                      x-kubernetes-list-type: atomic
+                                    supplementalGroupsPolicy:
+                                      type: string
                                     sysctls:
                                       items:
                                         properties:
@@ -10209,6 +10681,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     windowsOptions:
                                       properties:
                                         gmsaCredentialSpec:
@@ -10255,6 +10728,7 @@ spec:
                                     items:
                                       type: string
                                     type: array
+                                    x-kubernetes-list-type: atomic
                                   dataSource:
                                     properties:
                                       apiGroup:
@@ -10284,18 +10758,6 @@ spec:
                                     type: object
                                   resources:
                                     properties:
-                                      claims:
-                                        items:
-                                          properties:
-                                            name:
-                                              type: string
-                                          required:
-                                            - name
-                                          type: object
-                                        type: array
-                                        x-kubernetes-list-map-keys:
-                                          - name
-                                        x-kubernetes-list-type: map
                                       limits:
                                         additionalProperties:
                                           anyOf:
@@ -10326,11 +10788,13 @@ spec:
                                               items:
                                                 type: string
                                               type: array
+                                              x-kubernetes-list-type: atomic
                                           required:
                                             - key
                                             - operator
                                           type: object
                                         type: array
+                                        x-kubernetes-list-type: atomic
                                       matchLabels:
                                         additionalProperties:
                                           type: string
@@ -10338,6 +10802,8 @@ spec:
                                     type: object
                                     x-kubernetes-map-type: atomic
                                   storageClassName:
+                                    type: string
+                                  volumeAttributesClassName:
                                     type: string
                                   volumeMode:
                                     type: string
@@ -10353,6 +10819,7 @@ spec:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 failureThreshold:
                                   format: int32
@@ -10363,6 +10830,7 @@ spec:
                                       format: int32
                                       type: integer
                                     service:
+                                      default: ""
                                       type: string
                                   required:
                                     - port
@@ -10383,6 +10851,7 @@ spec:
                                           - value
                                         type: object
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     path:
                                       type: string
                                     port:
@@ -10450,16 +10919,27 @@ spec:
                               properties:
                                 allowPrivilegeEscalation:
                                   type: boolean
+                                appArmorProfile:
+                                  properties:
+                                    localhostProfile:
+                                      type: string
+                                    type:
+                                      type: string
+                                  required:
+                                    - type
+                                  type: object
                                 capabilities:
                                   properties:
                                     add:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                     drop:
                                       items:
                                         type: string
                                       type: array
+                                      x-kubernetes-list-type: atomic
                                   type: object
                                 privileged:
                                   type: boolean
@@ -10557,6 +11037,8 @@ spec:
                                     type: string
                                   readOnly:
                                     type: boolean
+                                  recursiveReadOnly:
+                                    type: string
                                   subPath:
                                     type: string
                                   subPathExpr:
