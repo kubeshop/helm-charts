@@ -10749,6 +10749,9 @@ spec:
                             executionPath:
                               description: all test workflow execution ids starting from the root
                               type: string
+                            executionReference:
+                              description: reference test workflow execution id
+                              type: string
                             name:
                               description: actor name
                               type: string
