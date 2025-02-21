@@ -144,3 +144,26 @@ subjects:
     namespace: {{ include "testkube-operator.namespace" . }}
 {{- end }}
 {{- end -}}
+
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Name }}-namespaces-rolebinding
+  labels:
+  {{- if .Values.global.labels }}
+  {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+  {{- end }}
+  {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Name }}-namespaces-role
+subjects:
+- kind: ServiceAccount
+  name: {{ include "testkube-operator.serviceAccountName" . }}
+  namespace: {{ include "testkube-operator.namespace" . }}

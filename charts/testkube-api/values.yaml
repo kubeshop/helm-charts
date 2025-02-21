@@ -189,6 +189,13 @@ next:
     ## Should it enable controller API
     enabled: true
 
+ 
+  ## Configure cron jobs in this installation.
+  # - tkcagnt_*** - Super Agent
+  cronJobs:
+    ## Should it manage cron jobs
+    enabled: true
+
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
