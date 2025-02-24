@@ -436,7 +436,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.apiFullname | string | `"testkube-api-server"` | Testkube API full name |
 | testkube-operator.apiPort | int | `8088` | Testkube API port |
 | testkube-operator.cronJobTemplate | string | `""` |  |
-| testkube-operator.disableCronJobs | bool | `false` | Disable cron jobss for test workflows |
+| testkube-operator.disableCronJobs | bool | `false` | Disable cron jobs for test workflows |
 | testkube-operator.enabled | bool | `true` |  |
 | testkube-operator.extraEnvVars | list | `[]` | Extra environment variables to be set on deployment |
 | testkube-operator.fullnameOverride | string | `"testkube-operator"` | Testkube Operator fullname override |
