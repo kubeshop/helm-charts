@@ -78,6 +78,10 @@ spec:
         - name: APISERVER_PURGE_EXECUTIONS
           value: "true"
         {{- end }}
+        {{- if .Values.disableCronJobs }}        
+        - name: APISERVER_CONFIG
+          value: {{ include "testkube-api.fullname" . }}
+        {{- end }}
         ports:
         - containerPort: {{ .Values.webhookServerPort }}
           name: webhook-server
