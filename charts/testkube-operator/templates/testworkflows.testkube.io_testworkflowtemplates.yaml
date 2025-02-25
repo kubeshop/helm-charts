@@ -1743,7 +1743,6 @@ spec:
                             type: string
                           timeout:
                             description: maximum time this step may take
-                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                             type: string
                           transfer:
                             description: instructions for transferring files
@@ -2941,7 +2940,6 @@ spec:
                               type: string
                             timeout:
                               description: maximum time until reaching readiness
-                              pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                               type: string
                             transfer:
                               description: instructions for transferring files
@@ -2990,7 +2988,6 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: maximum time this step may take
-                        pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                         type: string
                       workingDir:
                         description: working directory to use for this step
@@ -4921,7 +4918,6 @@ spec:
                         type: string
                       timeout:
                         description: maximum time until reaching readiness
-                        pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                         type: string
                       transfer:
                         description: instructions for transferring files
@@ -6659,7 +6655,6 @@ spec:
                             type: string
                           timeout:
                             description: maximum time this step may take
-                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                             type: string
                           transfer:
                             description: instructions for transferring files
@@ -7857,7 +7852,6 @@ spec:
                               type: string
                             timeout:
                               description: maximum time until reaching readiness
-                              pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                               type: string
                             transfer:
                               description: instructions for transferring files
@@ -7906,7 +7900,6 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: maximum time this step may take
-                        pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                         type: string
                       workingDir:
                         description: working directory to use for this step
@@ -9613,7 +9606,6 @@ spec:
                             type: string
                           timeout:
                             description: maximum time this step may take
-                            pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                             type: string
                           transfer:
                             description: instructions for transferring files
@@ -10811,7 +10803,6 @@ spec:
                               type: string
                             timeout:
                               description: maximum time until reaching readiness
-                              pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                               type: string
                             transfer:
                               description: instructions for transferring files
@@ -10860,7 +10851,6 @@ spec:
                         x-kubernetes-preserve-unknown-fields: true
                       timeout:
                         description: maximum time this step may take
-                        pattern: ^((0|[1-9][0-9]*)h)?((0|[1-9][0-9]*)m)?((0|[1-9][0-9]*)s)?((0|[1-9][0-9]*)ms)?$
                         type: string
                       workingDir:
                         description: working directory to use for this step
