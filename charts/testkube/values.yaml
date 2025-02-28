@@ -370,6 +370,9 @@ testkube-api:
     # -- Testkube API k8s secret for private registries
     pullSecrets: []
 
+  ## Sets a specific tag for the executors to the last built version
+  executorsTag: 2.1.99
+
   # Test Workflows toolkit image parameters
   imageTwToolkit:
     # -- Test Workflows image registry
