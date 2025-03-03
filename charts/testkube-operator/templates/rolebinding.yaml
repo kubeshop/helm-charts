@@ -143,7 +143,6 @@ subjects:
     name: {{ include "testkube-operator.webhook.serviceAccountName" . }}
     namespace: {{ include "testkube-operator.namespace" . }}
 {{- end }}
-{{- end -}}
 
 ---
 
@@ -167,3 +166,5 @@ subjects:
 - kind: ServiceAccount
   name: {{ include "testkube-operator.serviceAccountName" . }}
   namespace: {{ include "testkube-operator.namespace" . }}
+
+{{- end -}}
