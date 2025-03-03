@@ -10,6 +10,9 @@ metadata:
   annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
+{{- if .Values.next.enabled }}
+  enable-cron-jobs: "{{ .Values.next.cronJobs.enabled }}"
+{{- end }}
   executors.json: |-
 {{ include "testkube-api.executors" . | indent 4 }}
   job-container-template.yml: |-
