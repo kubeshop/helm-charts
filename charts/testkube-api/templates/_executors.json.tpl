@@ -4,7 +4,7 @@
     "name": "tracetest-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-tracetest-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-tracetest-executor:{{ .Values.image.executorsTag }}",
       "command": [
         "tracetest"
       ],
@@ -40,7 +40,7 @@
     "name": "zap-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-zap-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-zap-executor:{{ .Values.executorsTag }}",
       "command": [
         "<pythonScriptPath>"
       ],
@@ -70,7 +70,7 @@
     "name": "playwright-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-playwright-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-playwright-executor:{{ .Values.executorsTag }}",
       "command": [
         "<depManager>"
       ],
@@ -99,7 +99,7 @@
     "name": "jmeter-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeter-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-jmeter-executor:{{ .Values.executorsTag }}",
       "command": [
         "<entryPoint>"
       ],
@@ -139,12 +139,12 @@
     "name": "jmeterd-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-jmeterd-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-jmeterd-executor:{{ .Values.executorsTag }}",
       "command": [
         "<entryPoint>"
       ],
       "slaves": {
-        "image": "kubeshop/testkube-jmeterd-slave:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        "image": "kubeshop/testkube-jmeterd-slave:{{ .Values.executorsTag }}"
       },
       "args": [
         "-n",
@@ -182,7 +182,7 @@
     "name": "ginkgo-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-ginkgo-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-ginkgo-executor:{{ .Values.executorsTag }}",
       "command": [
         "ginkgo"
       ],
@@ -222,7 +222,7 @@
     "name": "maven-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-maven-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-maven-executor:{{ .Values.executorsTag }}",
       "command": [
         "mvn"
       ],
@@ -255,7 +255,7 @@
     "name": "gradle-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-gradle-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-gradle-executor:{{ .Values.executorsTag }}",
       "command": [
         "gradle"
       ],
@@ -287,7 +287,7 @@
     "name": "kubepug-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-kubepug-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-kubepug-executor:{{ .Values.executorsTag }}",
       "command": [
         "kubepug"
       ],
@@ -320,7 +320,7 @@
     "name": "soapui-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-soapui-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-soapui-executor:{{ .Values.executorsTag }}",
       "command": [
         "/bin/sh",
         "/usr/local/SmartBear/EntryPoint.sh"
@@ -351,7 +351,7 @@
     "name": "k6-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-k6-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-k6-executor:{{ .Values.executorsTag }}",
       "command": [
         "k6"
       ],
@@ -383,7 +383,7 @@
     "name": "cypress-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-cypress-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-cypress-executor:{{ .Values.executorsTag }}",
       "command": [
         "./node_modules/cypress/bin/cypress"
       ],
@@ -419,7 +419,7 @@
     "name": "curl-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-curl-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-curl-executor:{{ .Values.executorsTag }}",
       "command": [
         "curl"
       ],
@@ -449,7 +449,7 @@
     "name": "postman-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-postman-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-postman-executor:{{ .Values.executorsTag }}",
       "command": [
         "newman"
       ],
@@ -486,7 +486,7 @@
     "name": "artillery-executor",
     "executor": {
       "executorType": "job",
-      "image": "kubeshop/testkube-artillery-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-artillery-executor:{{ .Values.executorsTag }}",
       "command": [
         "artillery"
       ],
@@ -521,7 +521,7 @@
     "name": "scraper-executor",
     "executor": {
       "executorType": "scraper",
-      "image": "kubeshop/testkube-scraper-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-scraper-executor:{{ .Values.executorsTag }}",
       "types": []
     }
   },
@@ -529,7 +529,7 @@
     "name": "init-executor",
     "executor": {
       "executorType": "init",
-      "image": "kubeshop/testkube-init-executor:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-init-executor:{{ .Values.executorsTag }}",
       "types": []
     }
   },
@@ -537,7 +537,7 @@
     "name": "logs-sidecar",
     "executor": {
       "executorType": "sidecar",
-      "image": "kubeshop/testkube-logs-sidecar:{{ .Values.image.tag | default .Chart.AppVersion }}",
+      "image": "kubeshop/testkube-logs-sidecar:{{ .Values.executorsTag }}",
       "types": []
     }
   }
