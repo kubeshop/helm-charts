@@ -194,7 +194,7 @@ next:
   # - tkcagnt_*** - Super Agent
   cronJobs:
     ## Should it manage cron jobs
-    enabled: false
+    enabled: true
 
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
