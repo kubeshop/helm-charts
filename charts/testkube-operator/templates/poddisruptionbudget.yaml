@@ -1,4 +1,4 @@
-{{- if and .Values.global.podDisruptionBudget.enabled .Values.podDisruptionBudget.enabled }}
+{{- if or .Values.global.podDisruptionBudget.enabled .Values.podDisruptionBudget.enabled }}
 {{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: policy/v1
 {{- else -}}
