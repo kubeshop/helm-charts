@@ -20,6 +20,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Global pdb
+  podDisruptionBudget:
+    enabled: false
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -327,3 +330,11 @@ testConnection:
 
 ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
 cronJobTemplate: ""
+
+## Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+podDisruptionBudget:
+  enabled: false
+  # -- (int/percentage) Number or percentage of pods that must remain available.
+  minAvailable: ""
+  # -- (int/percentage) Number or percentage of pods that can be unavailable.
+  maxUnavailable: ""

@@ -23,6 +23,9 @@ global:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  # -- PodDisruptionBudget for all Testkube services, except for MongoDB, where it must be enabled specifically.
+  podDisruptionBudget:
+    enabled: false
   ## Features map for the whole chart
   features:
     # -- Toggle whether to enable V2 log support
@@ -94,6 +97,13 @@ mongodb:
     requests:
       cpu: 150m
       memory: 100Mi
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  pdb:
+    create: true
+    # -- Minimum number/percentage of pods that must still be available after the eviction
+    minAvailable: ""
+    # -- Maximum number/percentage of pods that may be made unavailable after the eviction
+    maxUnavailable: ""
   # Image built with ZCube tool so that it can be run on ARM nodes: https://github.com/ZCube/bitnami-compat/tree/main/patches
   # Currently Bitnami doesn't support ARM: https://github.com/bitnami/charts/issues/7305
   image:
@@ -275,6 +285,13 @@ testkube-logs:
   # -- Test Connection pod
   testConnection:
     enabled: false
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
 
 # Testkube API parameters
 testkube-api:
@@ -431,6 +448,14 @@ testkube-api:
     create: true
     # -- Annotations to add to the service account
     annotations: {}
+
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
 
   # Testkube Agent settings
   cloud:
@@ -601,6 +626,13 @@ testkube-api:
     # Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
     # -- Affinity for pod assignment.
     affinity: {}
+    podDisruptionBudget:
+      # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+      enabled: false
+      # -- (int/percentage) Number or percentage of pods that must remain available.
+      minAvailable: ""
+      # -- (int/percentage) Number or percentage of pods that can be unavailable.
+      maxUnavailable: ""
     # -- Minio image from DockerHub
     image:
       registry: docker.io
@@ -960,6 +992,14 @@ testkube-operator:
     digest: ""
     # -- Operator k8s secret for private registries
     pullSecrets: []
+
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  podDisruptionBudget:
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
 
   # Testkube Operator rbac-proxy settings
   proxy:

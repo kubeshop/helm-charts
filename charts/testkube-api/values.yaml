@@ -13,6 +13,8 @@ global:
   nodeSelector: {}
   affinity: {}
   tolerations: []
+  podDisruptionBudget:
+    enabled: false
   ## Global TLS settings
   tls:
     ## Toggle whether to globally skip certificate verification
@@ -620,6 +622,13 @@ minio:
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   ## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
   affinity: {}
+  podDisruptionBudget:
+    # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+    enabled: false
+    # -- (int/percentage) Number or percentage of pods that must remain available.
+    minAvailable: ""
+    # -- (int/percentage) Number or percentage of pods that can be unavailable.
+    maxUnavailable: ""
   ## Minio image from DockerHub
   image:
     registry: docker.io
@@ -748,3 +757,11 @@ livenessProbe:
 ## Might need further increase if observing "431 Request Header Fields Too Large from api server"
 ##  See https://github.com/kubeshop/testkube/pull/2871#issuecomment-1341116696
 httpReadBufferSize: 8192
+
+## Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+podDisruptionBudget:
+  enabled: false
+  # -- (int/percentage) Number or percentage of pods that must remain available.
+  minAvailable: ""
+  # -- (int/percentage) Number or percentage of pods that can be unavailable.
+  maxUnavailable: ""
