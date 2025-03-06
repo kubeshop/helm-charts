@@ -299,7 +299,7 @@ spec:
     matchLabels:
       app: testkube-minio-{{ .Release.Namespace }}
       {{- if .Values.minio.matchLabels }}
-      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 4 }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 6 }}
       {{- end }}
   {{- end }}
 {{- end }}
