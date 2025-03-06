@@ -23,6 +23,9 @@ global:
       operator: Equal
       value: arm64
       effect: NoSchedule
+  # -- PodDisruptionBudget for all Testkube services, except for MongoDB, where it must be enabled specifically.
+  podDisruptionBudget:
+    enabled: false
   ## Features map for the whole chart
   features:
     # -- Toggle whether to enable V2 log support
@@ -286,9 +289,9 @@ testkube-logs:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
 
 # Testkube API parameters
 testkube-api:
@@ -450,9 +453,9 @@ testkube-api:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
 
   # Testkube Agent settings
   cloud:
@@ -627,9 +630,9 @@ testkube-api:
       # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
       enabled: false
       # -- (int/percentage) Number or percentage of pods that must remain available.
-      minAvailable:
+      minAvailable: ""
       # -- (int/percentage) Number or percentage of pods that can be unavailable.
-      maxUnavailable:
+      maxUnavailable: ""
     # -- Minio image from DockerHub
     image:
       registry: docker.io
@@ -994,9 +997,9 @@ testkube-operator:
   podDisruptionBudget:
     enabled: false
     # -- (int/percentage) Number or percentage of pods that must remain available.
-    minAvailable:
+    minAvailable: ""
     # -- (int/percentage) Number or percentage of pods that can be unavailable.
-    maxUnavailable:
+    maxUnavailable: ""
 
   # Testkube Operator rbac-proxy settings
   proxy:

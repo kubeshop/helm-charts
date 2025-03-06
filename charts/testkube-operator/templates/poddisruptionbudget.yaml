@@ -1,4 +1,4 @@
-{{- if .Values.podDisruptionBudget.enabled }}
+{{- if and .Values.global.pdb.enabled .Values.podDisruptionBudget.enabled }}
 {{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: policy/v1
 {{- else -}}
@@ -10,11 +10,11 @@ metadata:
   labels:
 {{ include "testkube-operator.labels" . | indent 4 }}
 spec:
-  {{- with .Values.podDisruptionBudget.minAvailable }}
-  minAvailable: {{ . }}
+  {{- if .Values.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.podDisruptionBudget.minAvailable }}
   {{- end }}
-  {{- with .Values.podDisruptionBudget.maxUnavailable }}
-  maxUnavailable: {{ . }}
+  {{- if or .Values.podDisruptionBudget.maxUnavailable (not .Values.podDisruptionBudget.minAvailable) }}
+  maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable | default 1  }}
   {{- end }}
   selector:
     matchLabels:

@@ -274,7 +274,7 @@ spec:
       {{- end }}
 {{- end }}
 ---
-{{- if .Values.minio.podDisruptionBudget.enabled }}
+{{- if or .Values.global.podDisruptionBudget.enabled .Values.minio.podDisruptionBudget.enabled }}
 {{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: policy/v1
 {{- else -}}
@@ -289,11 +289,11 @@ metadata:
     app.kubernetes.io/name: minio
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
-  {{- with .Values.minio.podDisruptionBudget.minAvailable }}
-  minAvailable: {{ . }}
+  {{- if .Values.minio.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.minio.podDisruptionBudget.minAvailable }}
   {{- end }}
-  {{- with .Values.minio.podDisruptionBudget.maxUnavailable }}
-  maxUnavailable: {{ . }}
+  {{- if or .Values.minio.podDisruptionBudget.maxUnavailable (not .Values.minio.podDisruptionBudget.minAvailable) }}
+  maxUnavailable: {{ .Values.minio.podDisruptionBudget.maxUnavailable | default 1  }}
   {{- end }}
   selector:
     matchLabels:
