@@ -80,7 +80,7 @@ spec:
         {{- end }}
         {{- if .Values.disableCronJobs }}        
         - name: APISERVER_CONFIG
-          value: {{ include "testkube-api.fullname" . }}
+          value: {{ .Values.apiFullname }}
         {{- end }}
         ports:
         - containerPort: {{ .Values.webhookServerPort }}
