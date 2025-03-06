@@ -273,5 +273,33 @@ spec:
       {{- include "global.tplvalues.render" ( dict "value" .Values.minio.serviceMonitor.matchLabels  "context" $ ) | nindent 6 }}
       {{- end }}
 {{- end }}
-
+---
+{{- if .Values.minio.podDisruptionBudget.enabled }}
+{{- if semverCompare ">=1.21-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: policy/v1
+{{- else -}}
+apiVersion: policy/v1beta1
+{{- end }}
+kind: PodDisruptionBudget
+metadata:
+  name: testkube-minio
+  labels:
+  {{ include "global.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  {{- with .Values.minio.podDisruptionBudget.minAvailable }}
+  minAvailable: {{ . }}
+  {{- end }}
+  {{- with .Values.minio.podDisruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: testkube-minio-{{ .Release.Namespace }}
+      {{- if .Values.minio.matchLabels }}
+      {{- include "global.tplvalues.render" ( dict "value" .Values.minio.matchLabels "context" $ ) | nindent 4 }}
+      {{- end }}
+  {{- end }}
 {{- end }}
