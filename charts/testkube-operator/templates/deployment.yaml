@@ -78,7 +78,7 @@ spec:
         - name: APISERVER_PURGE_EXECUTIONS
           value: "true"
         {{- end }}
-        {{- if .Values.disableCronJobs }}        
+        {{- if .Values.agentCronJobs }}        
         - name: APISERVER_CONFIG
           value: {{ .Values.apiFullname }}
         {{- end }}

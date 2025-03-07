@@ -17,7 +17,7 @@ A Helm chart for the testkube-operator (installs needed CRDs only for now)
 | affinity | object | `{}` |  |
 | apiFullname | string | `"testkube-api-server"` |  |
 | apiPort | int | `8088` |  |
-| disableCronJobs | bool | `true` |  |
+| agentCronJobs | bool | `true` |  |
 | useArgoCDSync| bool | `false` |  |
 | extraEnvVars | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
