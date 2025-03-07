@@ -993,7 +993,7 @@ testkube-operator:
   useArgoCDSync: false
   # -- Purge executions on CRD deletion
   purgeExecutions: false
-  # aegnt cron jobs for scheduling test, suites, workflows
+  # agent cron jobs for scheduling test, suites, workflows
   agentCronJobs: true
 
   # Service Account parameters
