@@ -541,4 +541,28 @@ rules:
   - update
 {{- end }}
 
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Name }}-namespaces-role
+  labels:
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.global.annotations }}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  namespace: {{ include "testkube-operator.namespace" . }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - watch
+
 {{- end -}}
