@@ -880,16 +880,15 @@ testkube-api:
   #    enabled: true
   # -- Execution namespaces for Testkube API to only run tests
   # In this case, a Role and a RoleBinding will be created for each specified namespace.
-  executionNamespaces: []
-
+  executionNamespaces:
   # -- Namespace for test execution
-  #  - namespace: default
+    - namespace: default
   # -- Whether to generate RBAC for testkube api server or use manually provided
-  #    generateAPIServerRBAC: true
+      generateAPIServerRBAC: true
   # -- Job service account name for test jobs
-  #    jobServiceAccountName: tests-job-default
+      jobServiceAccountName: tests-job-default
   # -- Whether to generate RBAC for test job or use manually provided
-  #    generateTestJobRBAC: true
+      generateTestJobRBAC: true
 
   # -- default storage class name for PVC volumes
   defaultStorageClassName: ""
