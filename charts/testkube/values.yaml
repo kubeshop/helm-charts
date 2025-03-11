@@ -471,6 +471,16 @@ testkube-api:
     orgId: ""
     ## -- Environment ID
     envId: ""
+    ## Retrieve cloud information from existing secret
+    existingSecret:
+      ## Name of the secret. If set, this will be used instead of the above values
+      name: ""
+      ## Key for the License Key
+      key: ""
+      ## Key for the Organization ID
+      orgId: ""
+      ## Key for the Environment ID
+      envId: ""
     ## -- true if migration from OSS
     migrate: ""
     tls:
