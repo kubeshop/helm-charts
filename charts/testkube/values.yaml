@@ -1024,6 +1024,8 @@ testkube-operator:
   webhookServerPort: 9443
   # -- Testkube Operator metrics server port
   metricsServerPort: 8443
+  # -- Testkube Operator insecure metrics server port
+  #metricsServerPortInsecure: 8080
   # -- Testkube Operator healthcheck port
   healthcheckPort: 8081
   # -- Use ArgoCD sync owner references
