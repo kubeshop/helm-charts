@@ -250,6 +250,8 @@ spec:
               value: "{{ .Values.next.gitops.namePatterns.kubernetes }}"
             - name: DISABLE_DEFAULT_AGENT
               value: "{{ not .Values.next.legacyAgent.enabled }}"
+            - name: ENABLE_CRON_JOBS
+              value: "{{ .Values.next.cronJobs.enabled }}"           
             {{- end }}
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}

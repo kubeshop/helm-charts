@@ -567,6 +567,12 @@ testkube-api:
       ## Should it be enabled
       enabled: true
 
+    ## Configure cron jobs in this installation.
+    # - tkcagnt_*** - Super Agent
+    cronJobs:
+      ## Should it manage cron jobs
+      enabled: false
+
   # ref: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm
   # -- Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
   tolerations: []
@@ -1042,6 +1048,8 @@ testkube-operator:
   useArgoCDSync: false
   # -- Purge executions on CRD deletion
   purgeExecutions: false
+  # -- Agent cron jobs for scheduling test, suites, workflows
+  agentCronJobs: false
 
   # Service Account parameters
   serviceAccount:

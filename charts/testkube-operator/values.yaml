@@ -104,6 +104,8 @@ healthcheckPort: 8081
 useArgoCDSync: false
 # purge executions on CRD deletion
 purgeExecutions: false
+# agent cron jobs for scheduling test, suites, workflows
+agentCronJobs: false
 
 ## Service Account parameters
 serviceAccount:
