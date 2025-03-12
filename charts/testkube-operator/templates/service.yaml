@@ -20,6 +20,11 @@ spec:
   - name: https
     port: {{ .Values.metricsServerPort }}
     targetPort: https
+  {{- if .Values.metricsServerPortInsecure }}
+  - name: http
+    port: {{ .Values.metricsServerPortInsecure }}
+    targetPort: http
+  {{- end }}
   selector:
     control-plane: controller-manager
 

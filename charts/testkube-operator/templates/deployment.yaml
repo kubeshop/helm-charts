@@ -44,6 +44,10 @@ spec:
         - --webhook-cert-path=/tmp/k8s-webhook-server/serving-certs
         - --metrics-cert-path=/tmp/k8s-webhook-server/serving-certs
         - --leader-elect
+        {{- if .Values.metricsServerPortInsecure }}
+        - --metrics-bind-address=:{{ .Values.metricsServerPortInsecure }}
+        - --metrics-secure=false
+        {{- end }}
         command:
         - /manager
         image: {{ include "testkube-operator.image" . }}

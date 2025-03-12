@@ -25,6 +25,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Global pdb
+  podDisruptionBudget:
+    enabled: false
 
 debug: true
 
@@ -265,3 +268,11 @@ storage:
   scrapperEnabled: true
   # -- Toggle whether to compress artifacts in Testkube API
   compressArtifacts: true
+
+## Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+podDisruptionBudget:
+  enabled: true
+  # -- (int/percentage) Number or percentage of pods that must remain available.
+  minAvailable: ""
+  # -- (int/percentage) Number or percentage of pods that can be unavailable.
+  maxUnavailable: ""

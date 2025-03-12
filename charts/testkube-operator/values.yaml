@@ -20,6 +20,9 @@ global:
   containerSecurityContext: {}
   # -- Global security Context for all pods
   podSecurityContext: {}
+  # -- Global pdb
+  podDisruptionBudget:
+    enabled: false
 
 ### @section Common parameters
 ## Kubernetes version (using Helm capabilities if not set)
@@ -93,6 +96,8 @@ apiPort: 8088
 webhookServerPort: 9443
 # -- Testkube Operator metrics server port
 metricsServerPort: 8443
+# -- Testkube Operator insecure metrics server port
+#metricsServerPortInsecure: 8080
 # -- Testkube Operator healthcheck port
 healthcheckPort: 8081
 # use ArgoCD sync owner references
@@ -329,3 +334,11 @@ testConnection:
 
 ## Pass a custom cronJobTemplate to the Testkube Operator Deployment
 cronJobTemplate: ""
+
+## Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+podDisruptionBudget:
+  enabled: false
+  # -- (int/percentage) Number or percentage of pods that must remain available.
+  minAvailable: ""
+  # -- (int/percentage) Number or percentage of pods that can be unavailable.
+  maxUnavailable: ""
