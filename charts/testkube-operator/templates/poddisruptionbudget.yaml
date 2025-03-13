@@ -18,5 +18,5 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "testkube-operator.selectorLabels" . | nindent 6 }}
+      control-plane: controller-manager
 {{- end }}
