@@ -90,6 +90,14 @@ spec:
         - containerPort: {{ .Values.webhookServerPort }}
           name: webhook-server
           protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        {{- if .Values.metricsServerPortInsecure }}
+        - containerPort: {{ .Values.metricsServerPortInsecure }}
+          name: http
+          protocol: TCP
+        {{- end }}
         livenessProbe:
           httpGet:
             path: /healthz
