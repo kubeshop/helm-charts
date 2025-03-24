@@ -388,7 +388,7 @@ testkube-api:
     pullSecrets: []
 
   ## Sets a specific tag for the executors to the last built version
-  executorsTag: 2.1.99
+  executorsTag: 2.1.123
 
   # Test Workflows toolkit image parameters
   imageTwToolkit:
