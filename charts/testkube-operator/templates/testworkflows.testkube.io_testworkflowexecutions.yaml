@@ -4,7 +4,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.15.0
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: testworkflowexecutions.testworkflows.testkube.io
 spec:
   group: testworkflows.testkube.io
@@ -69,8 +69,7 @@ spec:
                               description: test workflow execution id
                               type: string
                             executionPath:
-                              description: all test workflow execution ids starting
-                                from the root
+                              description: all test workflow execution ids starting from the root
                               type: string
                             executionReference:
                               description: reference test workflow execution id
@@ -107,7 +106,7 @@ spec:
                                 - internal
                               type: string
                           required:
-                          - type
+                            - type
                           type: object
                       required:
                         - actor
@@ -117,6 +116,26 @@ spec:
                       additionalProperties:
                         type: string
                       description: test workflow execution tags
+                      type: object
+                    target:
+                      description: Targets helps decide on which runner the execution is scheduled.
+                      properties:
+                        match:
+                          additionalProperties:
+                            items:
+                              type: string
+                            type: array
+                          type: object
+                        not:
+                          additionalProperties:
+                            items:
+                              type: string
+                            type: array
+                          type: object
+                        replicate:
+                          items:
+                            type: string
+                          type: array
                       type: object
                     testWorkflowExecutionName:
                       description: test workflow execution name started the test workflow execution
@@ -128,10 +147,13 @@ spec:
                     referenced object inside the same namespace.
                   properties:
                     name:
+                      default: ""
                       description: |-
                         Name of the referent.
+                        This field is effectively required, but due to backwards compatibility is
+                        allowed to be empty. Instances of this type with an empty value here are
+                        almost certainly wrong.
                         More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?
                       type: string
                   type: object
                   x-kubernetes-map-type: atomic
@@ -186,7 +208,7 @@ spec:
                     reports:
                       description: generated reports from the steps, like junit
                       items:
-                        description: TestWorkflowStepReport contains report of TestWorkflow
+                        description: TestWorkflowReport contains report of TestWorkflow
                         properties:
                           file:
                             description: file path to full report in artifact storage
@@ -198,7 +220,7 @@ spec:
                             description: step reference
                             type: string
                           summary:
-                            description: TestWorkflowStepReportSummary contains report summary of TestWorkflow
+                            description: TestWorkflowReportSummary contains report summary of TestWorkflow
                             properties:
                               duration:
                                 description: total duration of all test cases in milliseconds
@@ -229,6 +251,55 @@ spec:
                       type: array
                     resolvedWorkflow:
                       x-kubernetes-preserve-unknown-fields: true
+                    resourceAggregations:
+                      description: resource metrics aggregations (min, max, avg, stddev)
+                      properties:
+                        global:
+                          additionalProperties:
+                            additionalProperties:
+                              description: TestWorkflowExecutionResourceAggregations contains resource metrics aggregations
+                              properties:
+                                avg:
+                                  type: number
+                                max:
+                                  type: number
+                                min:
+                                  type: number
+                                stddev:
+                                  type: number
+                                total:
+                                  type: number
+                              type: object
+                            type: object
+                          type: object
+                        step:
+                          items:
+                            properties:
+                              aggregations:
+                                additionalProperties:
+                                  additionalProperties:
+                                    description: TestWorkflowExecutionResourceAggregations contains resource metrics aggregations
+                                    properties:
+                                      avg:
+                                        type: number
+                                      max:
+                                        type: number
+                                      min:
+                                        type: number
+                                      stddev:
+                                        type: number
+                                      total:
+                                        type: number
+                                    type: object
+                                  type: object
+                                description: resource metrics aggregations grouped by measurement and field
+                                type: object
+                              ref:
+                                description: step reference
+                                type: string
+                            type: object
+                          type: array
+                      type: object
                     result:
                       description: TestWorkflowResult contains result of TestWorkflow
                       properties:
@@ -369,8 +440,7 @@ spec:
                               description: test workflow execution id
                               type: string
                             executionPath:
-                              description: all test workflow execution ids starting
-                                from the root
+                              description: all test workflow execution ids starting from the root
                               type: string
                             executionReference:
                               description: reference test workflow execution id
@@ -379,7 +449,7 @@ spec:
                               description: actor name
                               type: string
                             type:
-                              description: supported actors for test workflow running context'
+                              description: supported actors for test workflow running context
                               enum:
                                 - cron
                                 - testtrigger
