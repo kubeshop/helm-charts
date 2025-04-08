@@ -105,7 +105,7 @@ useArgoCDSync: false
 # purge executions on CRD deletion
 purgeExecutions: false
 # agent cron jobs for scheduling test, suites, workflows
-agentCronJobs: false
+agentCronJobs: true
 
 ## Service Account parameters
 serviceAccount:
