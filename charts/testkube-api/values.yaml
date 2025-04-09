@@ -194,7 +194,6 @@ next:
     ## Should it enable controller API
     enabled: true
 
- 
   ## Configure cron jobs in this installation.
   # - tkcagnt_*** - Super Agent
   cronJobs:
@@ -755,7 +754,11 @@ testConnection:
 
 ## Testkube API Liveness probe
 livenessProbe:
+  enabled: true
   initialDelaySeconds: 30
+
+readinessProbe:
+  enabled: true
 
 ## Testkube API HTTP body size limit
 ## httpBodyLimit: 1073741824
