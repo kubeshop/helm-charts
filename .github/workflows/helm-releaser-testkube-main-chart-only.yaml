@@ -153,6 +153,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: main
 
       - name: Install Helm
         uses: azure/setup-helm@v3
@@ -169,6 +170,7 @@ jobs:
           repository: kubeshop/testkube-cloud-charts
           event-type: trigger-workflow-testkube-agent-main
           client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
+
   update_release_notes:
     needs: notify_slack_if_release_succeeds
     runs-on: ubuntu-latest
