@@ -91,6 +91,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -1520,6 +1522,8 @@ spec:
                               env:
                                 items:
                                   properties:
+                                    global:
+                                      type: boolean
                                     name:
                                       type: string
                                     value:
@@ -1808,6 +1812,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -2350,6 +2356,8 @@ spec:
                             env:
                               items:
                                 properties:
+                                  global:
+                                    type: boolean
                                   name:
                                     type: string
                                   value:
@@ -3157,6 +3165,8 @@ spec:
                     env:
                       items:
                         properties:
+                          global:
+                            type: boolean
                           name:
                             type: string
                           value:
@@ -4405,6 +4415,8 @@ spec:
                       env:
                         items:
                           properties:
+                            global:
+                              type: boolean
                             name:
                               type: string
                             value:
@@ -5117,6 +5129,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -6546,6 +6560,8 @@ spec:
                               env:
                                 items:
                                   properties:
+                                    global:
+                                      type: boolean
                                     name:
                                       type: string
                                     value:
@@ -6834,6 +6850,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -7376,6 +7394,8 @@ spec:
                             env:
                               items:
                                 properties:
+                                  global:
+                                    type: boolean
                                   name:
                                     type: string
                                   value:
@@ -8142,6 +8162,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -9571,6 +9593,8 @@ spec:
                               env:
                                 items:
                                   properties:
+                                    global:
+                                      type: boolean
                                     name:
                                       type: string
                                     value:
@@ -9859,6 +9883,8 @@ spec:
                           env:
                             items:
                               properties:
+                                global:
+                                  type: boolean
                                 name:
                                   type: string
                                 value:
@@ -10401,6 +10427,8 @@ spec:
                             env:
                               items:
                                 properties:
+                                  global:
+                                    type: boolean
                                   name:
                                     type: string
                                   value:
