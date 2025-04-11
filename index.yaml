@@ -4253,6 +4253,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2025-04-11T13:14:25.453110544Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.1.140
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-3
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.1.139
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 7db0cd3957dbb4bcbeb50cbfcd4f3582be8397eb841a5509e0176400953994cd
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-2.1.215/testkube-2.1.215.tgz
+    version: 2.1.215
+  - apiVersion: v2
     created: "2025-04-11T12:58:50.358689477Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -63386,6 +63419,21 @@ entries:
     version: 0.2.0
   testkube-operator:
   - apiVersion: v2
+    appVersion: 2.1.140
+    created: "2025-04-11T13:14:25.611409583Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: A Helm chart for the testkube-operator (installs needed CRDs only
+      for now)
+    digest: f937f9b8037ca6536763d20bccd0c57fa573c29275cf19a4870bc0c84aad9081
+    name: testkube-operator
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-2.1.140/testkube-operator-2.1.140.tgz
+    version: 2.1.140
+  - apiVersion: v2
     appVersion: 2.1.114
     created: "2025-03-13T13:56:13.650165139Z"
     dependencies:
@@ -68480,4 +68528,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-11T12:58:50.5023895Z"
+generated: "2025-04-11T13:14:25.618435077Z"
