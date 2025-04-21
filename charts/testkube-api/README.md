@@ -20,6 +20,7 @@ A Helm chart for Testkube api
 | additionalVolumeMounts | list | `[]` |  |
 | additionalVolumes | list | `[]` |  |
 | affinity | object | `{}` |  |
+| allowLowSecurityFields |  bool | `false` |  |
 | analyticsEnabled | bool | `true` |  |
 | autoscaling.annotations | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
