@@ -345,6 +345,9 @@ enableK8sEvents: true
 ## docker image version of Testkube Agent
 dockerImageVersion: ""
 
+## allow to use low securiy fields for test workflow pod and container configurations
+allowLowSecurityFields: false
+
 # Testkube log server parameters
 testkubeLogs:
   # -- GRPC address

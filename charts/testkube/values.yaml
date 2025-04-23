@@ -910,7 +910,7 @@ testkube-api:
   # -- default storage class name for PVC volumes
   defaultStorageClassName: ""
 
-  # storageRequest is the requested storage for PVC utilized for artifact requests.
+  # -- storageRequest is the requested storage for PVC utilized for artifact requests.
   storageRequest: "1Gi"
 
   # -- enable k8s events for testkube events
@@ -918,6 +918,9 @@ testkube-api:
 
   # -- docker image versionof Testkube Agent
   dockerImageVersion: ""
+
+  # -- allow to use low securiy fields for test workflow pod and container configurations
+  allowLowSecurityFields: false
 
   # Testkube log server parameters
   testkubeLogs:
