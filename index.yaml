@@ -4253,6 +4253,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2025-04-25T14:47:27.1528558Z"
+    dependencies:
+    - condition: testkube-operator.enabled
+      name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.1.146
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-3
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.1.147
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: f10ade43bca03db70aa7505a222e912660cb60212eac1a6c7c4ca79d589901e2
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-2.1.229/testkube-2.1.229.tgz
+    version: 2.1.229
+  - apiVersion: v2
     created: "2025-04-23T14:46:25.44040816Z"
     dependencies:
     - condition: testkube-operator.enabled
@@ -66224,6 +66257,21 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/testkube-operator-0.5.8-testing/testkube-operator-0.5.8-testing.tgz
     version: 0.5.8-testing
+  testkube-runner:
+  - apiVersion: v2
+    appVersion: 2.1.147
+    created: "2025-04-25T14:47:27.265735113Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: 70e12d2ae010ef117258e7e3d6186fefe1e3f464392a6fd54668ea90d6593f00
+    name: testkube-runner
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-runner-2.1.0/testkube-runner-2.1.0.tgz
+    version: 2.1.0
   tracetest:
   - apiVersion: v2
     appVersion: v1.7.1
@@ -69099,4 +69147,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-23T14:46:25.546822289Z"
+generated: "2025-04-25T14:47:27.271987907Z"
