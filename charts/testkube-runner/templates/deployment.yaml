@@ -284,6 +284,8 @@ spec:
             # Constants
             - name: "SLACK_CONFIG"
               value: "[]"
+            - name: "ENABLE_K8S_EVENTS"
+              value: "false"
             - name: "DISABLE_TEST_TRIGGERS"
               value: "true"
             - name: "DISABLE_WEBHOOKS"
