@@ -61,6 +61,14 @@ sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/$target_folder/
 echo -e "\nChecking changes made to Chart.yaml of $target_folder\n"
 cat ../charts/$target_folder/Chart.yaml
 
+# If target_folder is testkube-api, update testkube-runner chart as well
+if [ "$target_folder" = "testkube-api" ]; then
+    sed -i "s/^version: .*$/version: $VERSION_FULL/" ../charts/testkube-runner/Chart.yaml
+    sed -i "s/^appVersion: .*$/appVersion: $VERSION_FULL/" ../charts/testkube-runner/Chart.yaml
+    echo -e "\nChecking changes made to Chart.yaml of testkube-runner\n"
+    cat ../charts/testkube-runner/Chart.yaml
+fi
+
 # Editing TestKube's dependency Chart.yaml for $target_folder:
 sed -i "/name: $target_folder/{n;s/^.*version.*/    version: $VERSION_FULL/}" ../charts/testkube/Chart.yaml
 echo -e "\nChecking if TestKube's Chart.yaml dependencies has been updated:\n"
