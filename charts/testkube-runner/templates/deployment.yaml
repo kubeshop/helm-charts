@@ -82,7 +82,7 @@ spec:
         - name: nats
           emptyDir: {}
         {{- if .Values.cloud.tls.customCa.secretRef.name }}
-        - name: customCa
+        - name: custom-ca
           secret:
             defaultMode: 420
             secretName: {{ .Values.cloud.tls.customCa.secretRef.name }}
@@ -149,7 +149,7 @@ spec:
             - name: nats
               mountPath: /app/nats
             {{- if .Values.cloud.tls.customCa.secretRef.name }}
-            - name: customCa
+            - name: custom-ca
               mountPath: /etc/testkube/certs/testkube-custom-ca.pem
               readOnly: true
               subPath: "{{ .Values.cloud.tls.customCa.secretRef.key }}"
