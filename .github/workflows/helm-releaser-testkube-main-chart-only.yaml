@@ -11,6 +11,7 @@ on:
       - "!charts/testkube/Chart.yaml"
       - "!charts/testkube-api/Chart.yaml"
       - "!charts/testkube-operator/Chart.yaml"
+      - "!charts/testkube-runner/**"
     branches:
       - main
 
