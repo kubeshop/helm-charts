@@ -161,8 +161,10 @@ jobs:
         with:
           version: v3.10.0
 
-      - name: Get charts version
-        run: echo agent-version=$(helm show chart ./charts/testkube | grep -E "^version:" | awk '{print $2}')  >> $GITHUB_ENV
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: |
+          echo agent-version=$(git tag -l | grep -E "^testkube-[0-9]+\.[0-9]+\.[0-9]+$" | sed 's/^testkube-//' | sort -V | tail -n 1) >> $GITHUB_ENV
 
       - name: Repository dispatch
         uses: peter-evans/repository-dispatch@v2
