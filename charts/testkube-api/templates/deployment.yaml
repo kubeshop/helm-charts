@@ -255,6 +255,8 @@ spec:
             {{- end }}
             - name: ALLOW_LOW_SECURITY_FIELDS
               value: "{{ .Values.allowLowSecurityFields }}"
+            - name: ENABLE_K8S_CONTROLLERS
+              value: "{{ .Values.next.controllers.enabled }}"
           image: {{ include "testkube-api.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
