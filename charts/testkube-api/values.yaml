@@ -200,6 +200,12 @@ next:
     ## Should it manage cron jobs
     enabled: true
 
+  ## Configure control of TestKube custom resources in this installation.
+  # - tkcagnt_*** - Super Agent
+  controllers:
+    ## Should it manage Kubernetes resources
+    enabled: true
+
 ## Testkube API Deployment parameters
 ## Running Testkube in Agent mode
 cloud:
