@@ -3697,6 +3697,9 @@ spec:
                                   type: string
                                 type: array
                             type: object
+                          timezone:
+                            description: cron timezone
+                            type: string
                         required:
                           - cron
                         type: object
