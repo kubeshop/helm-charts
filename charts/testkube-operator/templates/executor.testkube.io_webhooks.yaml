@@ -35,6 +35,9 @@ spec:
           spec:
             description: WebhookSpec defines the desired state of Webhook
             properties:
+              attachJunitSummary:
+                description: whether webhook is attaching junit summary
+                type: boolean
               config:
                 additionalProperties:
                   description: webhook configuration value
