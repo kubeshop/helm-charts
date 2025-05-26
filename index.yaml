@@ -4253,6 +4253,38 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2025-05-26T14:50:07.278239246Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.1.146
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-3
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.1.154
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: a4404922becc8683a007585f1948b2a5ca5a2b6d2f016d235481123c9bb56a9c
+    name: testkube
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-2.1.241/testkube-2.1.241.tgz
+    version: 2.1.241
+  - apiVersion: v2
     created: "2025-05-23T13:07:13.125805977Z"
     dependencies:
     - name: testkube-operator
@@ -53595,6 +53627,20 @@ entries:
     version: 0.6.26
   testkube-api:
   - apiVersion: v2
+    appVersion: 2.1.154
+    created: "2025-05-26T14:50:07.429489232Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: A Helm chart for Testkube api
+    digest: 78e7742ecf2359b21a2b155ca5b889c77f63be90eddd672c8919803475d27fae
+    name: testkube-api
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-api-2.1.154/testkube-api-2.1.154.tgz
+    version: 2.1.154
+  - apiVersion: v2
     appVersion: 2.1.153
     created: "2025-05-21T08:37:04.421702958Z"
     dependencies:
@@ -66704,6 +66750,20 @@ entries:
     version: 0.5.8-testing
   testkube-runner:
   - apiVersion: v2
+    appVersion: 2.1.154
+    created: "2025-05-26T14:50:07.512057282Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: 9c6b1ed39909b370ead1b6ccfcf7e5d98a48fae12bfb3254df2165dceb85f5de
+    name: testkube-runner
+    type: application
+    urls:
+    - https://github.com/kubeshop/helm-charts/releases/download/testkube-runner-2.1.154/testkube-runner-2.1.154.tgz
+    version: 2.1.154
+  - apiVersion: v2
     appVersion: 2.1.153
     created: "2025-05-21T08:37:04.592153453Z"
     dependencies:
@@ -69676,4 +69736,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-23T13:07:13.131444729Z"
+generated: "2025-05-26T14:50:07.518165935Z"
