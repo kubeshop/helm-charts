@@ -162,7 +162,7 @@ nats:
   # container:
   #   image:
   #     repository: nats
-  #     tag: 2.10.24-alpine
+  #     tag: 2.11.3-alpine
   #     pullPolicy:
   #     registry:
   # NATS Box container settings
@@ -202,7 +202,7 @@ nats:
     # -- Uncomment to override the NATS Server Config Reloader image options
     # image:
     #   repository: natsio/nats-server-config-reloader
-    #   tag: 0.16.0
+    #   tag: 0.17.2
     #   pullPolicy:
     #   registry:
 

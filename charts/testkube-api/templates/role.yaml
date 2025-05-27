@@ -75,7 +75,13 @@ rules:
       - get
       - watch
       - list
-
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+    verbs:
+      - delete
+      - deletecollection
 ---
 
 # permissions for end users to edit tests.
@@ -943,6 +949,13 @@ rules:
     - get
     - watch
     - list
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+    verbs:
+      - delete
+      - deletecollection
 {{- end }}
 
 {{- if $rangeItem.generateTestJobRBAC }}
