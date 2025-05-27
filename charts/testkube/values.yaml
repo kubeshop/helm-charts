@@ -991,8 +991,8 @@ testkube-operator:
   # -- Testkube Operator name override
   nameOverride: testkube-operator
 
-  # -- should the CRDs be installed
-  installCRD: true
+  # -- should the CRDs be installed. Deprecated, please use `--skip-crds` instead to avoid duplicate CRD errors.
+  installCRD: false
 
   # -- Number of Testkube Operator Pod replicas
   replicaCount: 1
