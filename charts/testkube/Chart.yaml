@@ -8,6 +8,7 @@ dependencies:
     version: 2.1.154
     #repository: https://kubeshop.github.io/helm-charts
     repository: "file://../testkube-operator"
+    condition: testkube-operator.enabled
   - name: mongodb
     condition: mongodb.enabled
     version: 13.10.1

@@ -980,7 +980,7 @@ testkube-api:
 
 testkube-operator:
   ## deploy Operator chart
-  enabled: false
+  enabled: true
   ## namespace to deploy Testkube Operator. Default is .Release.Namespace
   namespace: ""
   # should roles and roles bindings be created
