@@ -323,8 +323,6 @@ spec:
           {{- if .Values.runner.register.token }}
             - name: TESTKUBE_PRO_AGENT_REGISTRATION_TOKEN
               value: "{{ .Values.runner.register.token }}"
-            - name: TESTKUBE_PRO_ENV_ID
-              value: "{{ .Values.runner.envId }}"
             - name: ENABLE_SECRETS_ENDPOINT
               value: "true"
             - name: SELF_REGISTRATION_SECRET

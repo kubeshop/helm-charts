@@ -14,8 +14,6 @@ runner:
   id: ""
   ## Organization ID
   orgId: ""
-  ## Environment ID
-  envId: ""
   ## Secret Key
   secret: ""
   ## Retrieve credential information from an existing secret
