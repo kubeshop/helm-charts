@@ -321,8 +321,6 @@ spec:
 
             # Self registration
           {{- if .Values.runner.register.token }}
-            - name: TESTKUBE_PRO_API_URL
-              value: "{{ .Values.runner.register.url }}"
             - name: TESTKUBE_PRO_AGENT_REGISTRATION_TOKEN
               value: "{{ .Values.runner.register.token }}"
             - name: TESTKUBE_PRO_ENV_ID

@@ -30,7 +30,6 @@ runner:
     secretKey: "secret"
   ## Self-registration using API token
   register:
-    url: "api.testkube.io:443"
     ## Control Plane API token
     token: ""
     ## Whether to register as a Floating runner
