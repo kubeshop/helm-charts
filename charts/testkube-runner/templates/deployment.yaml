@@ -330,11 +330,11 @@ spec:
             - name: SELF_REGISTRATION_SECRET
               value: "self-registration"
             - name: SECRET_CREATION_PREFIX
-              value: "testkube-"
+              value: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}-"
             - name: FLOATING_RUNNER
               value: "{{ .Values.runner.register.floating }}"
           envFrom:
             - secretRef:
-                name: testkube-self-registration
+                name: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}-self-registration"
                 optional: true
           {{- end }}
