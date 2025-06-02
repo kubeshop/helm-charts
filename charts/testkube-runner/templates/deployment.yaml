@@ -323,6 +323,8 @@ spec:
           {{- if .Values.runner.register.token }}
             - name: TESTKUBE_PRO_AGENT_REGISTRATION_TOKEN
               value: "{{ .Values.runner.register.token }}"
+            - name: RUNNER_NAME
+              value: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}"
             - name: ENABLE_SECRETS_ENDPOINT
               value: "true"
             - name: SELF_REGISTRATION_SECRET
