@@ -65,6 +65,7 @@ rules:
     - create
     - delete
     - deletecollection
+    - patch
 - apiGroups:
     - ""
   resources:
@@ -123,6 +124,7 @@ rules:
   - create
   - delete
   - deletecollection
+  - patch
 - apiGroups:
   - ""
   resources:
