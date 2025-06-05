@@ -202,7 +202,7 @@ nats:
     # -- Uncomment to override the NATS Server Config Reloader image options
     # image:
     #   repository: natsio/nats-server-config-reloader
-    #   tag: 0.17.2
+    #   tag: 0.17.3
     #   pullPolicy:
     #   registry:
 
