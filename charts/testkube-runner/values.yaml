@@ -26,6 +26,12 @@ runner:
     orgIdKey: "orgId"
     ## Key for the Secret Key
     secretKey: "secret"
+  ## Self-registration using API token
+  register:
+    ## Control Plane API token
+    token: ""
+    ## Whether to register as a Floating runner
+    floating: false
 
 ## Global TestWorkflowTemplate that will be automatically included for all executions
 globalTemplate:

@@ -180,10 +180,12 @@ spec:
                   name: "{{ .Values.runner.secretRef.name }}"
                   key: "{{ .Values.runner.secretRef.secretKey }}"
             {{- else }}
+            {{- if not .Values.runner.register.token }}
             - name: "TESTKUBE_PRO_AGENT_ID"
               value: "{{ .Values.runner.id }}"
             - name: "TESTKUBE_PRO_API_KEY"
               value: "{{ .Values.runner.secret }}"
+            {{- end }}
             - name: "TESTKUBE_PRO_ORG_ID"
               value: "{{ .Values.runner.orgId }}"
             {{- end }}
@@ -316,3 +318,23 @@ spec:
             {{- if .Values.pod.extraEnvVars }}
             {{ toYaml .Values.pod.extraEnvVars | nindent 12 | trim }}
             {{- end }}
+
+            # Self registration
+          {{- if .Values.runner.register.token }}
+            - name: TESTKUBE_PRO_AGENT_REGISTRATION_TOKEN
+              value: "{{ .Values.runner.register.token }}"
+            - name: RUNNER_NAME
+              value: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}"
+            - name: ENABLE_SECRETS_ENDPOINT
+              value: "true"
+            - name: SELF_REGISTRATION_SECRET
+              value: "self-registration"
+            - name: SECRET_CREATION_PREFIX
+              value: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}-"
+            - name: FLOATING_RUNNER
+              value: "{{ .Values.runner.register.floating }}"
+          envFrom:
+            - secretRef:
+                name: "{{ include "testkube-runner.fullname" . }}-{{ now | date "20060102150405" }}-self-registration"
+                optional: true
+          {{- end }}
