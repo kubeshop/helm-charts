@@ -174,7 +174,7 @@ next:
     ## Should it copy data from Control Plane to Kubernetes
     syncCloudToKubernetes: false
     ## Should it copy data from Kubernetes to Control Plane
-    syncKubernetesToCloud: true
+    syncKubernetesToCloud: false
     ## Define the naming patterns for resources in different sources
     namePatterns:
       ## Name pattern for resources in the Control Plane
