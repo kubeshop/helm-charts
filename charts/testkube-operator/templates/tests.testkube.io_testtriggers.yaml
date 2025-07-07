@@ -181,6 +181,8 @@ spec:
                 - event-end-testworkflow-success
                 - event-end-testworkflow-failed
                 - event-end-testworkflow-aborted
+                - event-end-testworkflow-canceled
+                - event-end-testworkflow-not-passed
                 - event-created
                 - event-updated
                 - event-deleted
