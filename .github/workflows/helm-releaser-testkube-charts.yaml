@@ -4,6 +4,9 @@ on:
   repository_dispatch:
     types:
       [release-testkube-api-charts, release-testkube-operator-charts]
+  push:
+    branches:
+      - ci/publish-to-registry
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -43,247 +46,311 @@ jobs:
           chmod +x main_chart_releaser.sh
           ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+      - name: Extract Helm Chart version
+        uses: mikefarah/yq@master
         with:
-          charts_dir: charts
-          mark_as_latest: true
-        env:
-          CR_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
-          CR_SKIP_EXISTING: true
+          cmd: yq '.version' charts/testkube/Chart.yaml
 
-  notify_slack_if_helm_chart_release_fails:
-    runs-on: ubuntu-latest
-    needs: release_charts
-    if: always() && (needs.release_charts.result == 'failure')
-    steps:
-      - name: Slack Notification if Helm Release action failed
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm Chart release action failed :boom:!
-          SLACK_USERNAME: GitHub
-          SLACK_LINK_NAMES: true
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_FOOTER: "Kubeshop --> TestKube"
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-  refreshing_gh_pages:
-    needs: release_charts
-    runs-on: ubuntu-latest
-    steps:
-      - name: Triggering refresh for GH-pages to make just released charts available
+      - name: Publish Helm Chart
         run: |
-          curl -s --fail --request POST \
-            --url https://api.github.com/repos/kubeshop/helm-charts/pages/builds \
-            --header "Authorization: Bearer $USER_TOKEN"
-        env:
-          # You must create a personal token with repo access as GitHub does
-          # not yet support server-to-server page builds.
-          USER_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+          REGISTRY=registry-1.docker.io
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | helm registry login ${REGISTRY} --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          helm dependency build charts/testkube
+          helm package charts/testkube
+          helm push testkube-agent-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY}/kubeshop
 
-  checking_that_ghpages_updated:
-    needs: refreshing_gh_pages
-    runs-on: ubuntu-latest
-    steps:
-      - name: Making sure that they are abvailable now.
-        run: |
-          status=""
-          counter=0
-          while [[ $status != \"built\" ]]
-          do
-              status=$(curl -s \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/kubeshop/helm-charts/pages/builds/latest \
-              --header "Authorization: Bearer $USER_TOKEN" | jq .status)
-              echo "Checking latest GH pages build status --> $status"
-              sleep 5
-
-              counter=$(expr $counter + 1)
-              if [[ $status == \"errored\" ]] || [[ $counter == 120 ]]; then
-                echo "Something went wrong. Please check GH's pages issues."
-                exit 1
-              fi
-          done
-        env:
-          # You must create a personal token with repo access as GitHub does
-          # not yet support server-to-server page builds.
-          USER_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
-
-  notify_slack_if_release_succeeds:
-    runs-on: ubuntu-latest
-    needs: checking_that_ghpages_updated
-    steps:
-      - name: Slack Notification if the helm release pipeline succeeded.
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.checking_that_ghpages_updated.result }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release succeed and GH pages got updated :party_blob:!
-          SLACK_USERNAME: GitHub
-          SLACK_LINK_NAMES: true
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_FOOTER: "Kubeshop --> TestKube"
-
-  notify_slack_if_gh_pages_update_failed:
-    runs-on: ubuntu-latest
-    needs: checking_that_ghpages_updated
-    if: always() && (needs.checking_that_ghpages_updated.result == 'failure')
-    steps:
-      - name: Slack Notification if the helm release GH Pages failed.
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: testkube-logs
-          SLACK_COLOR: ${{ needs.checking_that_ghpages_updated.result }} # or a specific color like 'good' or '#ff00ff'
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_TITLE: Helm chart release failed on GH pages update! :boom:!
-          SLACK_USERNAME: GitHub
-          SLACK_LINK_NAMES: true
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_FOOTER: "Kubeshop --> TestKube"
-
-  get_agent_version:
-    name: Pass Testkube OSS chart version to cloud-charts repo
-    needs: notify_slack_if_release_succeeds
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+#  update_index:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Install Helm
+#        uses: azure/setup-helm@v3
+#        with:
+#          version: v3.10.0
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Install Helm
-        uses: azure/setup-helm@v3
-        with:
-          version: v3.10.0
-
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: |
-          echo agent-version=$(git tag -l | grep -E "^testkube-[0-9]+\.[0-9]+\.[0-9]+$" | sed 's/^testkube-//' | sort -V | tail -n 1) >> $GITHUB_ENV
-
-      - name: Repository dispatch
-        uses: peter-evans/repository-dispatch@v2
-        with:
+          ref: "gh-pages"
           token: ${{ secrets.CI_BOT_TOKEN }}
-          repository: kubeshop/testkube-cloud-charts
-          event-type: trigger-workflow-testkube-agent-main
-          client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
 
-  update_release_notes:
-    needs: notify_slack_if_release_succeeds
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get Latest Tag
-        id: get_latest_tag
-        run: |
-          latest_tag=$(git tag -l | grep -E "^testkube-[0-9]+\.[0-9]+\.[0-9]+$" | sort -V | tail -n 1)
-          echo "::set-output name=latest_tag::${latest_tag}"
-
-          echo $latest_tag
-
-      - name: Get Previous Tag
-        id: get_previous_tag
-        run: |
-          previous_tag=$(git describe --abbrev=0 --tags ${TAG}^)
-          echo "::set-output name=previous_tag::${previous_tag}"
-
-          echo $previous_tag
-        env:
-          TAG: ${{ steps.get_latest_tag.outputs.latest_tag }}
-
-      - name: Generate Changelog
-        id: generate_changelog
-        env:
-          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
-        run: |
-          #!/bin/bash
-
-          PREVIOUS_TAG=${{ steps.get_previous_tag.outputs.previous_tag }}
-          CURRENT_TAG=${{ steps.get_latest_tag.outputs.latest_tag }}
-
-          echo $PREVIOUS_TAG
-          echo $CURRENT_TAG
-
-          MERGED_PRS=$(git log --merges --pretty=format:"- %h: %s (#%b) (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
-          echo $MERGED_PRS
-
-          if [ -n "$MERGED_PRS" ]; then
-            echo "# Changelog" > CHANGELOG.md
-
-            FEATURE_PRS=""
-            FIX_PRS=""
-            OTHER_PRS=""
-            DOCS_PRS=""
-
-            while IFS= read -r pr; do
-              sha=$(echo "$pr" | awk '{print $1 " " $2}')
-              pr_number=$(echo "$pr" | awk -F'#' '{print "#" $2}' | awk '{print $1}')
-              pr_title=$(echo "$pr" | awk -F'[(]|[)]' '{sub(/^#/, "", $2); print $2}')
-              author=$(echo "$pr" | awk -F'[()]' '{print "(" $4 ")"}')
-
-              if [[ "$pr_title" == *"feat"* ]]; then
-                  FEATURE_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
-                  echo "New features"
-                  echo $FEATURE_PRS
-              elif [[ "$pr_title" == *"fix"* ]]; then
-                  FIX_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
-                  echo "Bug fixes"
-                  echo $FIX_PRS
-              elif [[ "$pr_title" == *"docs"* ]]; then
-                  DOCS_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
-                  echo "Documentation updates"
-                  echo $DOCS_PRS
-              else
-                  OTHER_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
-                  echo "Other changes"
-                  echo $OTHER_PRS
-              fi
-            done < <(echo "$MERGED_PRS")
-
-            if [ -n "$FEATURE_PRS" ]; then
-              echo "## Features" >> CHANGELOG.md
-              echo -e "$FEATURE_PRS" >> CHANGELOG.md
-              echo "" >> CHANGELOG.md
-            fi
-
-            if [ -n "$FIX_PRS" ]; then
-              echo "## Bug Fixes" >> CHANGELOG.md
-              echo -e "$FIX_PRS" >> CHANGELOG.md
-              echo "" >> CHANGELOG.md
-            fi
-
-            if [ -n "$DOCS_PRS" ]; then
-              echo "## Documentation Updates" >> CHANGELOG.md
-              echo -e "$DOCS_PRS" >> CHANGELOG.md
-              echo "" >> CHANGELOG.md
-            fi
-
-            if [ -n "$OTHER_PRS" ]; then
-              echo "## Other Changes" >> CHANGELOG.md
-              echo -e "$OTHER_PRS" >> CHANGELOG.md
-              echo "" >> CHANGELOG.md
-            fi
-
-            echo "Printing changelog"
-            cat CHANGELOG.md
-            echo "Updating release"
-
-            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
-
-          else
-            echo "No merged pull requests found. Adding commits"
-            COMMIT_CHANGELOG=$(git log --pretty=format:"- %s %h (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
-            echo "# Commit Changelog" > CHANGELOG.md
-            echo "" >> CHANGELOG.md
-            echo "${COMMIT_CHANGELOG}" >> CHANGELOG.md
-
-            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
+      - id: update-index
+        name: Pull charts and update index
+        run: |          
+          # Testkube Agent
+          chart_name=testkube
+          chart_version=${{ steps.helm-version.outputs.result }} 
+          
+          ## Update index
+          # Download published asset
+          mkdir ./download
+          helm pull "oci://registry-1.docker.io/kubeshop/${chart_name}" --version "${chart_version}" --destination ./download
+          # Rebuild index
+          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          # Replace .tgz in URL with OCI tag
+          sed -i "s|oci://registry-1.docker.io/kubeshop/$chart_name-$chart_version.tgz|oci://registry-1.docker.io/kubeshop/$chart_name:$chart_version|" ./download/index.yaml
+          
+          # Check index integrity
+          if [[ $(stat -c%s  index.yaml) -gt $(stat -c%s ./download/index.yaml) ]]; then
+            echo "New index.yaml file is shorter than the current one"
+            exit 1
           fi
+          # Check repo can be loaded
+          if ! helm repo add cache file://./download/ ; then
+            echo "New index.yaml file can't be used as a file"
+            exit 1
+          else
+            # Remove the repo
+            helm repo remove cache
+          fi
+          cp ./download/index.yaml index.yaml
+          
+          # Remove chart files
+          rm -rf ./download
+          
+          # Avoid overriding index branch when remote commit does not match our checkout commit
+          current_commit_id=$(git rev-parse gh-pages)
+          
+          # Push changes
+#          git add index.yaml && git commit -m "Update index.yaml"
+#          git push origin gh-pages --force-with-lease=index:${current_commit_id}
+
+
+#  notify_slack_if_helm_chart_release_fails:
+#    runs-on: ubuntu-latest
+#    needs: release_charts
+#    if: always() && (needs.release_charts.result == 'failure')
+#    steps:
+#      - name: Slack Notification if Helm Release action failed
+#        uses: rtCamp/action-slack-notify@v2
+#        env:
+#          SLACK_CHANNEL: testkube-logs
+#          SLACK_COLOR: ${{ needs.release_charts.result }} # or a specific color like 'good' or '#ff00ff'
+#          SLACK_ICON: https://github.com/rtCamp.png?size=48
+#          SLACK_TITLE: Helm Chart release action failed :boom:!
+#          SLACK_USERNAME: GitHub
+#          SLACK_LINK_NAMES: true
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#          SLACK_FOOTER: "Kubeshop --> TestKube"
+#
+#  refreshing_gh_pages:
+#    needs: release_charts
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Triggering refresh for GH-pages to make just released charts available
+#        run: |
+#          curl -s --fail --request POST \
+#            --url https://api.github.com/repos/kubeshop/helm-charts/pages/builds \
+#            --header "Authorization: Bearer $USER_TOKEN"
+#        env:
+#          # You must create a personal token with repo access as GitHub does
+#          # not yet support server-to-server page builds.
+#          USER_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+#
+#  checking_that_ghpages_updated:
+#    needs: refreshing_gh_pages
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Making sure that they are abvailable now.
+#        run: |
+#          status=""
+#          counter=0
+#          while [[ $status != \"built\" ]]
+#          do
+#              status=$(curl -s \
+#              -H "Accept: application/vnd.github.v3+json" \
+#              https://api.github.com/repos/kubeshop/helm-charts/pages/builds/latest \
+#              --header "Authorization: Bearer $USER_TOKEN" | jq .status)
+#              echo "Checking latest GH pages build status --> $status"
+#              sleep 5
+#
+#              counter=$(expr $counter + 1)
+#              if [[ $status == \"errored\" ]] || [[ $counter == 120 ]]; then
+#                echo "Something went wrong. Please check GH's pages issues."
+#                exit 1
+#              fi
+#          done
+#        env:
+#          # You must create a personal token with repo access as GitHub does
+#          # not yet support server-to-server page builds.
+#          USER_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+#
+#  notify_slack_if_release_succeeds:
+#    runs-on: ubuntu-latest
+#    needs: checking_that_ghpages_updated
+#    steps:
+#      - name: Slack Notification if the helm release pipeline succeeded.
+#        uses: rtCamp/action-slack-notify@v2
+#        env:
+#          SLACK_CHANNEL: testkube-logs
+#          SLACK_COLOR: ${{ needs.checking_that_ghpages_updated.result }} # or a specific color like 'good' or '#ff00ff'
+#          SLACK_ICON: https://github.com/rtCamp.png?size=48
+#          SLACK_TITLE: Helm chart release succeed and GH pages got updated :party_blob:!
+#          SLACK_USERNAME: GitHub
+#          SLACK_LINK_NAMES: true
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#          SLACK_FOOTER: "Kubeshop --> TestKube"
+#
+#  notify_slack_if_gh_pages_update_failed:
+#    runs-on: ubuntu-latest
+#    needs: checking_that_ghpages_updated
+#    if: always() && (needs.checking_that_ghpages_updated.result == 'failure')
+#    steps:
+#      - name: Slack Notification if the helm release GH Pages failed.
+#        uses: rtCamp/action-slack-notify@v2
+#        env:
+#          SLACK_CHANNEL: testkube-logs
+#          SLACK_COLOR: ${{ needs.checking_that_ghpages_updated.result }} # or a specific color like 'good' or '#ff00ff'
+#          SLACK_ICON: https://github.com/rtCamp.png?size=48
+#          SLACK_TITLE: Helm chart release failed on GH pages update! :boom:!
+#          SLACK_USERNAME: GitHub
+#          SLACK_LINK_NAMES: true
+#          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#          SLACK_FOOTER: "Kubeshop --> TestKube"
+#
+#  get_agent_version:
+#    name: Pass Testkube OSS chart version to cloud-charts repo
+#    needs: notify_slack_if_release_succeeds
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Install Helm
+#        uses: azure/setup-helm@v3
+#        with:
+#          version: v3.10.0
+#
+#      - name: Get Latest Tag
+#        id: get_latest_tag
+#        run: |
+#          echo agent-version=$(git tag -l | grep -E "^testkube-[0-9]+\.[0-9]+\.[0-9]+$" | sed 's/^testkube-//' | sort -V | tail -n 1) >> $GITHUB_ENV
+#
+#      - name: Repository dispatch
+#        uses: peter-evans/repository-dispatch@v2
+#        with:
+#          token: ${{ secrets.CI_BOT_TOKEN }}
+#          repository: kubeshop/testkube-cloud-charts
+#          event-type: trigger-workflow-testkube-agent-main
+#          client-payload: '{"agentVersion": "${{ env.agent-version }}"}'
+#
+#  update_release_notes:
+#    needs: notify_slack_if_release_succeeds
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      - name: Get Latest Tag
+#        id: get_latest_tag
+#        run: |
+#          latest_tag=$(git tag -l | grep -E "^testkube-[0-9]+\.[0-9]+\.[0-9]+$" | sort -V | tail -n 1)
+#          echo "::set-output name=latest_tag::${latest_tag}"
+#
+#          echo $latest_tag
+#
+#      - name: Get Previous Tag
+#        id: get_previous_tag
+#        run: |
+#          previous_tag=$(git describe --abbrev=0 --tags ${TAG}^)
+#          echo "::set-output name=previous_tag::${previous_tag}"
+#
+#          echo $previous_tag
+#        env:
+#          TAG: ${{ steps.get_latest_tag.outputs.latest_tag }}
+#
+#      - name: Generate Changelog
+#        id: generate_changelog
+#        env:
+#          GH_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
+#        run: |
+#          #!/bin/bash
+#
+#          PREVIOUS_TAG=${{ steps.get_previous_tag.outputs.previous_tag }}
+#          CURRENT_TAG=${{ steps.get_latest_tag.outputs.latest_tag }}
+#
+#          echo $PREVIOUS_TAG
+#          echo $CURRENT_TAG
+#
+#          MERGED_PRS=$(git log --merges --pretty=format:"- %h: %s (#%b) (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
+#          echo $MERGED_PRS
+#
+#          if [ -n "$MERGED_PRS" ]; then
+#            echo "# Changelog" > CHANGELOG.md
+#
+#            FEATURE_PRS=""
+#            FIX_PRS=""
+#            OTHER_PRS=""
+#            DOCS_PRS=""
+#
+#            while IFS= read -r pr; do
+#              sha=$(echo "$pr" | awk '{print $1 " " $2}')
+#              pr_number=$(echo "$pr" | awk -F'#' '{print "#" $2}' | awk '{print $1}')
+#              pr_title=$(echo "$pr" | awk -F'[(]|[)]' '{sub(/^#/, "", $2); print $2}')
+#              author=$(echo "$pr" | awk -F'[()]' '{print "(" $4 ")"}')
+#
+#              if [[ "$pr_title" == *"feat"* ]]; then
+#                  FEATURE_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+#                  echo "New features"
+#                  echo $FEATURE_PRS
+#              elif [[ "$pr_title" == *"fix"* ]]; then
+#                  FIX_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+#                  echo "Bug fixes"
+#                  echo $FIX_PRS
+#              elif [[ "$pr_title" == *"docs"* ]]; then
+#                  DOCS_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+#                  echo "Documentation updates"
+#                  echo $DOCS_PRS
+#              else
+#                  OTHER_PRS+="\n ${sha} ${pr_title} ${pr_number} ${author}"
+#                  echo "Other changes"
+#                  echo $OTHER_PRS
+#              fi
+#            done < <(echo "$MERGED_PRS")
+#
+#            if [ -n "$FEATURE_PRS" ]; then
+#              echo "## Features" >> CHANGELOG.md
+#              echo -e "$FEATURE_PRS" >> CHANGELOG.md
+#              echo "" >> CHANGELOG.md
+#            fi
+#
+#            if [ -n "$FIX_PRS" ]; then
+#              echo "## Bug Fixes" >> CHANGELOG.md
+#              echo -e "$FIX_PRS" >> CHANGELOG.md
+#              echo "" >> CHANGELOG.md
+#            fi
+#
+#            if [ -n "$DOCS_PRS" ]; then
+#              echo "## Documentation Updates" >> CHANGELOG.md
+#              echo -e "$DOCS_PRS" >> CHANGELOG.md
+#              echo "" >> CHANGELOG.md
+#            fi
+#
+#            if [ -n "$OTHER_PRS" ]; then
+#              echo "## Other Changes" >> CHANGELOG.md
+#              echo -e "$OTHER_PRS" >> CHANGELOG.md
+#              echo "" >> CHANGELOG.md
+#            fi
+#
+#            echo "Printing changelog"
+#            cat CHANGELOG.md
+#            echo "Updating release"
+#
+#            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
+#
+#          else
+#            echo "No merged pull requests found. Adding commits"
+#            COMMIT_CHANGELOG=$(git log --pretty=format:"- %s %h (@%an)" $PREVIOUS_TAG..$CURRENT_TAG)
+#            echo "# Commit Changelog" > CHANGELOG.md
+#            echo "" >> CHANGELOG.md
+#            echo "${COMMIT_CHANGELOG}" >> CHANGELOG.md
+#
+#            gh release edit $CURRENT_TAG --notes-file CHANGELOG.md
+#          fi
