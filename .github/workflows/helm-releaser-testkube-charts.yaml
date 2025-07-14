@@ -38,13 +38,13 @@ jobs:
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
 
-      - name: Update main Chart.yaml
-        run: |
-          export RELEASE_VERSION=${{ github.event.client_payload.RELEASE_VERSION }}
-
-          cd ./scripts
-          chmod +x main_chart_releaser.sh
-          ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
+#      - name: Update main Chart.yaml
+#        run: |
+#          export RELEASE_VERSION=${{ github.event.client_payload.RELEASE_VERSION }}
+#
+#          cd ./scripts
+#          chmod +x main_chart_releaser.sh
+#          ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
 
       - name: Extract Helm Chart version
         uses: mikefarah/yq@master
