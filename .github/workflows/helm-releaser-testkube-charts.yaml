@@ -85,8 +85,6 @@ jobs:
           chart_name=testkube
           chart_version=${{ steps.helm-version.outputs.result }} 
           
-          echo ${chart_name}
-          
           ## Update index
           # Download published asset
           mkdir ./download
