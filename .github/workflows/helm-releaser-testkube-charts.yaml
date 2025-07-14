@@ -64,6 +64,7 @@ jobs:
           echo ${{ secrets.DOCKERHUB_TOKEN }} | helm registry login ${REGISTRY} --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           helm dependency build charts/testkube
           helm package charts/testkube
+          mv testkube-${{ steps.helm-version.outputs.result }}.tgz testkube-agent-${{ steps.helm-version.outputs.result }}.tgz
           helm push testkube-agent-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY}/kubeshop
 
 #  update_index:
