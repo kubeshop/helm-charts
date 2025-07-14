@@ -47,6 +47,7 @@ jobs:
 #          ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
 
       - name: Extract Helm Chart version
+        id: helm-version
         uses: mikefarah/yq@master
         with:
           cmd: yq '.version' charts/testkube/Chart.yaml
