@@ -66,13 +66,14 @@ jobs:
           helm package charts/testkube
           helm push testkube-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY}/kubeshop
 
-#  update_index:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Install Helm
-#        uses: azure/setup-helm@v3
-#        with:
-#          version: v3.10.0
+  update_index:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
       - uses: actions/checkout@v4
         with:
           ref: "gh-pages"
@@ -116,7 +117,7 @@ jobs:
           current_commit_id=$(git rev-parse gh-pages)
           
           # Push changes
-#          git add index.yaml && git commit -m "Update index.yaml"
+          git add index.yaml && git commit -m "Update index.yaml"
 #          git push origin gh-pages --force-with-lease=index:${current_commit_id}
 
 
