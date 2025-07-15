@@ -39,13 +39,6 @@ jobs:
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
           helm plugin add https://github.com/zoobab/helm_file_repo
 
-#      - name: Update main Chart.yaml
-#        run: |
-#          export RELEASE_VERSION=${{ github.event.client_payload.RELEASE_VERSION }}
-#
-#          cd ./scripts
-#          chmod +x main_chart_releaser.sh
-#          ./chart_releaser.sh --helm-chart-folder testkube-${{ github.event.client_payload.SERVICE }}
 
       - name: Extract Helm Chart version
         id: helm-version
@@ -66,14 +59,6 @@ jobs:
           helm dependency build charts/testkube
           helm package charts/testkube
           helm push testkube-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY}/kubeshop
-
-#  update_index:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Install Helm
-#        uses: azure/setup-helm@v3
-#        with:
-#          version: v3.10.0
 
       - uses: actions/checkout@v4
         with:
@@ -96,7 +81,11 @@ jobs:
           # Replace .tgz in URL with OCI tag
           sed -i "s|oci://registry-1.docker.io/kubeshop/$chart_name-$chart_version.tgz|oci://registry-1.docker.io/kubeshop/$chart_name:$chart_version|" ./download/index.yaml
           
-
+          # Check index integrity
+          if [[ $(stat -c%s  index.yaml) -gt $(stat -c%s ./download/index.yaml) ]]; then
+            echo "New index.yaml file is shorter than the current one"
+            exit 1
+          fi
           # Check repo can be loaded
           if ! helm repo add cache file://./download/ ; then
             echo "New index.yaml file can't be used as a file"
