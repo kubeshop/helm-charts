@@ -6,13 +6,12 @@ on:
   workflow_dispatch:
 
   push:
-    paths:
-      - ".github/workflows/**"
-      - "charts/testkube**"
-      - "!charts/testkube/Chart.yaml"
-      - "!charts/testkube-api/Chart.yaml"
-      - "!charts/testkube-operator/Chart.yaml"
-      - "!charts/testkube-runner/**"
+#    paths:
+#      - "charts/testkube**"
+#      - "!charts/testkube/Chart.yaml"
+#      - "!charts/testkube-api/Chart.yaml"
+#      - "!charts/testkube-operator/Chart.yaml"
+#      - "!charts/testkube-runner/**"
     branches:
       - main
       - ci/publish-to-registry
