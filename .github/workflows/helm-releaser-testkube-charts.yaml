@@ -37,6 +37,7 @@ jobs:
         run: |
           helm repo add helm-charts https://kubeshop.github.io/helm-charts
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+          helm plugin add https://github.com/zoobab/helm_file_repo
 
 #      - name: Update main Chart.yaml
 #        run: |
