@@ -7,7 +7,7 @@ on:
 
   push:
     paths:
-      - ".github/workflows/helm-releaser-testkube-main-chart-only.yaml"
+      - ".github/workflows/**"
       - "charts/testkube**"
       - "!charts/testkube/Chart.yaml"
       - "!charts/testkube-api/Chart.yaml"
