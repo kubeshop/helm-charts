@@ -95,11 +95,7 @@ jobs:
           # Replace .tgz in URL with OCI tag
           sed -i "s|oci://registry-1.docker.io/kubeshop/$chart_name-$chart_version.tgz|oci://registry-1.docker.io/kubeshop/$chart_name:$chart_version|" ./download/index.yaml
           
-#          # Check index integrity
-#          if [[ $(stat -c%s  index.yaml) -gt $(stat -c%s ./download/index.yaml) ]]; then
-#            echo "New index.yaml file is shorter than the current one"
-#            exit 1
-#          fi
+
           # Check repo can be loaded
           if ! helm repo add cache file://./download/ ; then
             echo "New index.yaml file can't be used as a file"
