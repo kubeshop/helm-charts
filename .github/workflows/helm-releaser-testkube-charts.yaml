@@ -4,9 +4,6 @@ on:
   repository_dispatch:
     types:
       [release-testkube-api-charts, release-testkube-operator-charts]
-  push:
-    branches:
-      - ci/publish-to-registry
 
 jobs:
   release_charts:
