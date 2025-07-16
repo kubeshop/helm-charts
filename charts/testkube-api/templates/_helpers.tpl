@@ -269,11 +269,7 @@ Define API environment in standalone mode
 {{- end }}
 {{- if .Values.postgresql.enabled }}
 - name: API_POSTGRES_DSN
-  {{- if .Values.postgresql.dsn }}
   value: "{{ .Values.postgresql.dsn }}"
-  {{- else }}
-  value: "postgres://{{ .Values.postgresql.auth.username }}:{{ .Values.postgresql.auth.password }}@{{ .Values.postgresql.fullnameOverride }}:{{ .Values.postgresql.service.ports.postgresql }}/{{ .Values.postgresql.auth.database }}?sslmode=disabled"
-  {{- end }}
 {{- end }}
 - name: "NATS_EMBEDDED"
   value: "{{ .Values.nats.embedded }}"

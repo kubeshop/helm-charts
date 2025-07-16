@@ -175,9 +175,9 @@ postgresql:
   # -- PostgreSQL auth settings   
   auth:
     enablePostgresUser: true
-    postgresPassword: "postgres#1234"
+    postgresPassword: "postgres1234"
     username: "testkube"
-    password: "postgres#5432"
+    password: "postgres5432"
     database: "backend"
 
   # -- PostgreSQL primary configuration
@@ -220,6 +220,7 @@ postgresql:
 
     # -- PostgreSQL configuration
     configuration: |
+      listen_addresses = '*'
       unix_socket_directories = '/var/run/postgresql'
       shared_preload_libraries = 'pg_stat_statements'
       max_connections = 100
