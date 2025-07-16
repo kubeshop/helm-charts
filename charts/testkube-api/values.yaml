@@ -591,7 +591,8 @@ mongodb:
 postgresql:
   ## Deploy PostgreSQL server to the cluster
   enabled: false
-  dsn: "postgres://postgres@testkube-postgresql:5432/backend?sslmode=disabled"
+  ## Define dsn connection string
+  # dsn: "postgres://postgres@testkube-postgresql:5432/backend?sslmode=disabled"
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server
