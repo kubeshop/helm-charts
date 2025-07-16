@@ -11503,6 +11503,27 @@ spec:
                     - workflow
                   type: object
               type: object
+            workflowStatus:
+              description: TestWorkflowStatusInfo contains workflow status information that is not part of the Kubernetes status subresource
+              properties:
+                health:
+                  description: TestWorkflowExecutionHealth provides health information about a test workflow
+                  properties:
+                    flipRate:
+                      description: Fraction of status changes among consecutive executions without recency weighting (value between 0.0 and 1.0).
+                      type: number
+                    overallHealth:
+                      description: Combined health score, computed as passRate * (1 - flipRate) (value between 0.0 and 1.0).
+                      type: number
+                    passRate:
+                      description: Recency-weighted fraction of executions that passed (value between 0.0 and 1.0).
+                      type: number
+                  required:
+                    - flipRate
+                    - overallHealth
+                    - passRate
+                  type: object
+              type: object
           required:
             - spec
           type: object
