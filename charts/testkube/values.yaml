@@ -160,13 +160,6 @@ postgresql:
   # -- PostgreSQL architecture
   architecture: standalone
 
-  # -- PostgreSQL service settings
-  service:
-    type: NodePort
-    ports:
-      postgresql: 5432
-    clusterIP: ""
-
   # -- Enable external images
   global:
     security:
@@ -183,19 +176,19 @@ postgresql:
   # -- PostgreSQL primary configuration
   primary:
     # -- PostgreSQL security contexts
-    podSecurityContext:
-      enabled: true
-      fsGroup: 1001
+    podSecurityContext: {}
+    #  enabled: true
+    #  fsGroup: 1001
 
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1001
-      runAsNonRoot: true
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        drop:
-          - ALL
+    containerSecurityContext: {}
+    #  enabled: true
+    #  runAsUser: 1001
+    #  runAsNonRoot: true
+    #  readOnlyRootFilesystem: true
+    #  allowPrivilegeEscalation: false
+    #  capabilities:
+    #    drop:
+    #      - ALL
 
     # -- PostgreSQL resource settings
     resources:
@@ -231,6 +224,13 @@ postgresql:
       - name: BITNAMI_DEBUG
         value: "true"
  
+    # -- PostgreSQL service settings
+    service:
+      type: NodePort
+      ports:
+        postgresql: 5432
+      clusterIP: ""
+
     # -- Settings for readiness and liveness probes
     livenessProbe:
       enabled: true
