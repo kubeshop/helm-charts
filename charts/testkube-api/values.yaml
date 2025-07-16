@@ -320,6 +320,9 @@ enableSecretsEndpoint: false
 ## disable running MongoDB migrations on API start
 disableMongoMigrations: false
 
+## disable running PostgreSQL migrations on API start
+disablePostgresMigrations: false
+
 ## disable secret creation for tests and test sources
 disableSecretCreation: false
 
@@ -547,6 +550,8 @@ service:
 
 ##MongoDB parameters
 mongodb:
+  ## Deploy MongoDB server to the cluster
+  enabled: true
   dsn: "mongodb://testkube-mongodb:27017"
   ## or use dsn in secrets
   # secretName: testkube-secrets
@@ -581,6 +586,12 @@ mongodb:
   # dbType: docdb
   # allowTLS will be checked for docdb; on true: docdb ca certs will be downloaded and used
   # allowTLS: true
+
+##PostgreSQL parameters
+postgresql:
+  ## Deploy PostgreSQL server to the cluster
+  enabled: false
+  dsn: "postgres://postgres@testkube-postgresql:5432/backend?sslmode=disabled"
 
 ## NATS parameters
 ## ref: https://github.com/nats-io/nats-server

@@ -150,6 +150,121 @@ mongodb:
     failureThreshold: 6
     successThreshold: 1
 
+# PostgreSQL parameters
+# For more configuration parameters of PostgreSQL chart please look here: https://github.com/bitnami/charts/tree/main/bitnami/postgresql#parameters
+postgresql:
+  # -- Toggle whether to install PostgreSQL
+  enabled: false
+  # -- PostgreSQL fullname override
+  fullnameOverride: "testkube-postgresql"
+  # -- PostgreSQL architecture
+  architecture: standalone
+
+  # -- PostgreSQL service settings
+  service:
+    type: NodePort
+    ports:
+      postgresql: 5432
+    clusterIP: ""
+
+  # -- Enable external images
+  global:
+    security:
+      allowInsecureImages: true
+
+  # -- PostgreSQL auth settings   
+  auth:
+    enablePostgresUser: true
+    postgresPassword: "postgres#1234"
+    username: "testkube"
+    password: "postgres#5432"
+    database: "backend"
+
+  # -- PostgreSQL primary configuration
+  primary:
+    # -- PostgreSQL security contexts
+    podSecurityContext:
+      enabled: true
+      fsGroup: 1001
+
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1001
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
+
+    # -- PostgreSQL resource settings
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 150m
+
+    # -- PostgreSQL persistence
+    persistence:
+      enabled: true
+      size: 1Gi
+      storageClass: ""
+
+    # -- PostgreSQL extra volumes for writable directories
+    extraVolumes:
+      - name: postgresql-run
+        emptyDir: {}
+
+    extraVolumeMounts:
+      - name: postgresql-run
+        mountPath: /var/run/postgresql
+
+    # -- PostgreSQL configuration
+    configuration: |
+      unix_socket_directories = '/var/run/postgresql'
+      shared_preload_libraries = 'pg_stat_statements'
+      max_connections = 100
+      shared_buffers = 128MB
+
+    # -- PostgreSQL enable debug mode
+    extraEnvVars:
+      - name: BITNAMI_DEBUG
+        value: "true"
+ 
+    # -- Settings for readiness and liveness probes
+    livenessProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 6
+      successThreshold: 1
+
+    # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+    pdb:
+      create: true
+      # -- Minimum number/percentage of pods that must still be available after the eviction
+      minAvailable: ""
+      # -- Maximum number/percentage of pods that may be made unavailable after the eviction
+      maxUnavailable: ""
+
+  # -- Enable a [pod distruption budget](https://kubernetes.io/docs/tasks/run-application/configure-pdb/) to help dealing with [disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/).
+  image:
+    # -- PostgreSQL image registry
+    registry: docker.io
+    # -- PostgreSQL image repository
+    repository: zcube/bitnami-compat-postgresql
+    # -- PostgreSQL image tag
+    tag: 15.2.0-debian-11-r64
+    # -- PostgreSQL image pull Secret
+    pullSecrets: []
+
 ## NATS chart parameter
 ## Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster.
 ## More info: https://cloud.google.com/kubernetes-engine/docs/how-to/prepare-arm-workloads-for-deployment#node-affinity-multi-arch-arm

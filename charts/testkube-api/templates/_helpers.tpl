@@ -198,6 +198,7 @@ Define API environment in agent mode
 Define API environment in standalone mode
 */}}
 {{- define "testkube-api.env-standalone-mode" -}}
+{{- if .Values.mongodb.enabled }}
 - name: API_MONGO_DSN
   {{- if .Values.mongodb.secretName }}
   valueFrom:
@@ -265,6 +266,11 @@ Define API environment in standalone mode
 {{- end }}
 - name: API_MONGO_ALLOW_DISK_USE
   value: "{{ .Values.mongodb.allowDiskUse }}"
+{{- end }}
+{{- if .Values.postgresql.enabled }}
+- name: API_POSTGRES_DSN
+  value: "{{ .Values.postgresql.dsn }}"
+{{- end }}
 - name: "NATS_EMBEDDED"
   value: "{{ .Values.nats.embedded }}"
 - name: NATS_URI
