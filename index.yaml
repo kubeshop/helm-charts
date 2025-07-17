@@ -4223,6 +4223,38 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    created: "2025-07-17T10:37:34.224692542Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.1.154
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: https://charts.bitnami.com/bitnami
+      version: 13.10.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-3
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.1.163
+    - condition: global.features.logsV2
+      name: testkube-logs
+      repository: file://../testkube-logs
+      version: 0.2.0
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 657f8c19e36bcc343514666723474bc443125d417c393e1b8f8e0d4867d4cc95
+    name: testkube
+    type: application
+    urls:
+    - oci://registry-1.docker.io/kubeshop/testkube:2.1.255
+    version: 2.1.255
+  - apiVersion: v2
     created: "2025-07-15T08:53:38.606178249Z"
     dependencies:
     - name: testkube-operator
@@ -70263,4 +70295,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2025-07-15T08:53:38.588000971Z"
+generated: "2025-07-17T10:37:34.205655629Z"
