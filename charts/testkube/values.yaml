@@ -307,6 +307,8 @@ testkube-api:
   # Multinamespace feature. Disabled by default
   multinamespace:
     enabled: false
+  # Toggle to enable debug mode
+  enableDebugMode: false
 
   # jobPodAnnotations adds annotations to the pods spawned to execute tests using
   # prebuilt and container executors.
