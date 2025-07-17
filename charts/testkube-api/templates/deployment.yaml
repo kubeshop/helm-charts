@@ -257,7 +257,7 @@ spec:
               value: "{{ .Values.allowLowSecurityFields }}"
             - name: ENABLE_K8S_CONTROLLERS
               value: "{{ .Values.next.controllers.enabled }}"
-            {{- if .Values.debug.enableDebugMode }}
+            {{- if .Values.enableDebugMode }}
             - name: DEBUG
               value: "true"
             {{- end }}
