@@ -532,6 +532,9 @@ podSecurityContext: {}
 ##
 securityContext: {}
 
+## Toggle to enable debug mode
+enableDebugMode: false
+
 ## Service parameters
 service:
   ## Adapter service type
