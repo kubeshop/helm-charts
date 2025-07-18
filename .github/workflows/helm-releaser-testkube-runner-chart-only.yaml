@@ -37,6 +37,12 @@ jobs:
       - name: Install helm file plugin
         run: helm plugin add https://github.com/zoobab/helm_file_repo
 
+      - name: Extract Helm Chart version
+        id: helm-version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.version' charts/testkube/Chart.yaml
+
 #      - name: Update runner Chart.yaml
 #        run: |
 #          cd ./scripts
