@@ -3,7 +3,7 @@ name: Releasing Testkube runner helm chart
 concurrency: develop_cluster
 
 on:
-  workflow_dispatch:
+#  workflow_dispatch:
 
   push:
 #    paths:
