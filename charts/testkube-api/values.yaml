@@ -648,7 +648,7 @@ minio:
   image:
     registry: docker.io
     repository: minio/minio
-    tag: 2023.2.27
+    tag: RELEASE.2025-07-18T21-56-31Z
     pullPolicy: IfNotPresent
     pullSecrets: []
   ## ServiceAccount name to use for Minio

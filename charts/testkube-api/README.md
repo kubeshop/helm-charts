@@ -129,7 +129,7 @@ A Helm chart for Testkube api
 | minio.image.pullSecrets | list | `[]` |  |
 | minio.image.registry | string | `"docker.io"` |  |
 | minio.image.repository | string | `"minio/minio"` |  |
-| minio.image.tag | string | `"2023.2.27"` |  |
+| minio.image.tag | string | `"RELEASE.2025-07-18T21-56-31Z"` |  |
 | minio.livenessProbe.initialDelaySeconds | int | `3` |  |
 | minio.livenessProbe.periodSeconds | int | `10` |  |
 | minio.matchLabels | list | `[]` |  |
