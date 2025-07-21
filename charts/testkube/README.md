@@ -201,7 +201,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | mongodb.service | object | `{"clusterIP":"","nodePort":true,"port":"27017","portName":"mongodb"}` | MongoDB service settings |
 | nats.config.jetstream.enabled | bool | `true` | Toggle whether to enable JetStream (should not be disabled as Testkube uses Jetstream features) |
 | nats.config.merge.max_payload | string | `"<< 8MB >>"` |  |
-| nats.natsBox | object | `{"enabled":false}` | Uncomment to override the NATS Server image options container:   image:     repository: nats     tag: 2.10.9-alpine     pullPolicy:     registry: NATS Box container settings TODO remove this container after tests on dev and stage nats-box is A lightweight container with NATS utilities. It's not needed for nats server change it to natsBox:   enabled: false |
+| nats.natsBox | object | `{"enabled":false}` | Uncomment to override the NATS Server image options container:   image:     repository: nats     tag: 2.11.6-alpine     pullPolicy:     registry: NATS Box container settings TODO remove this container after tests on dev and stage nats-box is A lightweight container with NATS utilities. It's not needed for nats server change it to natsBox:   enabled: false |
 | nats.reloader.enabled | bool | `true` |  |
 | preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
 | preUpgradeHook.enabled | bool | `true` | Upgrade hook is enabled |
@@ -293,7 +293,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.minio.extraEnvVars | list | `[]` | Minio extra vars |
 | testkube-api.minio.extraVolumeMounts | list | `[]` |  |
 | testkube-api.minio.extraVolumes | list | `[]` |  |
-| testkube-api.minio.image | object | `{"pullSecrets":[],"registry":"docker.io","repository":"minio/minio","tag":"RELEASE.2023-09-16T01-01-47Z"}` | Minio image from DockerHub |
+| testkube-api.minio.image | object | `{"pullSecrets":[],"registry":"docker.io","repository":"minio/minio","tag":"RELEASE.2025-07-18T21-56-31Z"}` | Minio image from DockerHub |
 | testkube-api.minio.minioRootPassword | string | `"minio123"` | Root password |
 | testkube-api.minio.minioRootUser | string | `"minio"` | Root username |
 | testkube-api.minio.nodeSelector | object | `{}` | Node labels for pod assignment. |

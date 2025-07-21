@@ -162,7 +162,7 @@ nats:
   # container:
   #   image:
   #     repository: nats
-  #     tag: 2.11.3-alpine
+  #     tag: 2.11.6-alpine
   #     pullPolicy:
   #     registry:
   # NATS Box container settings
@@ -177,7 +177,7 @@ nats:
     # container:
     #   image:
     #     repository: natsio/nats-box
-    #     tag: 0.14.5
+    #     tag: 0.18.0
     #     pullPolicy:
     #     registry:
     # -- NATS Box tolerations settings. Uncomment to schedule a multi-arch image to any available architecture type in a GCP Standard cluster.
@@ -202,7 +202,7 @@ nats:
     # -- Uncomment to override the NATS Server Config Reloader image options
     # image:
     #   repository: natsio/nats-server-config-reloader
-    #   tag: 0.17.3
+    #   tag: 0.18.2
     #   pullPolicy:
     #   registry:
 
@@ -661,7 +661,7 @@ testkube-api:
     image:
       registry: docker.io
       repository: minio/minio
-      tag: RELEASE.2023-09-16T01-01-47Z
+      tag: RELEASE.2025-06-13T11-33-47Z
       pullSecrets: []
     # -- ServiceAccount name to use for Minio
     serviceAccountName: ""
