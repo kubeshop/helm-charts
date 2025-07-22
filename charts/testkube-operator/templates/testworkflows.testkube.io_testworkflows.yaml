@@ -11337,7 +11337,9 @@ spec:
                   type: array
               type: object
             status:
-              description: test workflow status
+              description: |-
+                TestWorkflowStatusSummary contains information about the TestWorkflow status.
+                It includes details about the latest execution and health of the TestWorkflow.
               properties:
                 health:
                   description: TestWorkflowExecutionHealth provides health information about a test workflow
@@ -11355,6 +11357,169 @@ spec:
                     - flipRate
                     - overallHealth
                     - passRate
+                  type: object
+                latestExecution:
+                  description: (Deprecated) LatestExecution maintained for backward compatibility, never actively used
+                  properties:
+                    id:
+                      description: unique execution identifier
+                      type: string
+                    name:
+                      description: execution name
+                      type: string
+                    number:
+                      description: sequence number for the execution
+                      format: int32
+                      type: integer
+                    result:
+                      description: TestWorkflowResultSummary defines TestWorkflow result summary
+                      properties:
+                        duration:
+                          description: Go-formatted (human-readable) duration
+                          type: string
+                        durationMs:
+                          description: Duration in milliseconds
+                          format: int32
+                          type: integer
+                        finishedAt:
+                          description: when the pod has been completed
+                          format: date-time
+                          type: string
+                        pausedMs:
+                          description: Pause duration in milliseconds
+                          format: int32
+                          type: integer
+                        predictedStatus:
+                          description: TestWorkflowStatus has status of TestWorkflow
+                          enum:
+                            - queued
+                            - running
+                            - paused
+                            - passed
+                            - failed
+                            - aborted
+                          type: string
+                        queuedAt:
+                          description: when the pod was created
+                          format: date-time
+                          type: string
+                        startedAt:
+                          description: when the pod has been successfully assigned
+                          format: date-time
+                          type: string
+                        status:
+                          description: TestWorkflowStatus has status of TestWorkflow
+                          enum:
+                            - queued
+                            - running
+                            - paused
+                            - passed
+                            - failed
+                            - aborted
+                          type: string
+                        totalDuration:
+                          description: Go-formatted (human-readable) duration (incl. pause)
+                          type: string
+                        totalDurationMs:
+                          description: Duration in milliseconds (incl. pause)
+                          format: int32
+                          type: integer
+                      required:
+                        - durationMs
+                        - pausedMs
+                        - predictedStatus
+                        - status
+                        - totalDurationMs
+                      type: object
+                    runningContext:
+                      description: running context for the test workflow execution (Pro edition only)
+                      properties:
+                        actor:
+                          description: running context actor for test workflow execution
+                          properties:
+                            email:
+                              description: actor email
+                              type: string
+                            executionId:
+                              description: test workflow execution id
+                              type: string
+                            executionPath:
+                              description: all test workflow execution ids starting from the root
+                              type: string
+                            executionReference:
+                              description: reference test workflow execution id
+                              type: string
+                            name:
+                              description: actor name
+                              type: string
+                            type:
+                              description: supported actors for test workflow running context
+                              enum:
+                                - cron
+                                - testtrigger
+                                - user
+                                - testworkflow
+                                - testworkflowexecution
+                                - program
+                              type: string
+                          required:
+                            - type
+                          type: object
+                        interface:
+                          description: running context interface for test workflow execution
+                          properties:
+                            name:
+                              description: interface name
+                              type: string
+                            type:
+                              description: supported interfaces for test workflow running context
+                              enum:
+                                - cli
+                                - ui
+                                - api
+                                - ci/cd
+                                - internal
+                              type: string
+                          required:
+                            - type
+                          type: object
+                      required:
+                        - actor
+                        - interface
+                      type: object
+                    scheduledAt:
+                      description: when the execution has been scheduled to run
+                      format: date-time
+                      type: string
+                    statusAt:
+                      description: when the execution result's status has changed last time (queued, passed, failed)
+                      format: date-time
+                      type: string
+                    tags:
+                      additionalProperties:
+                        type: string
+                      description: test workflow execution tags
+                      type: object
+                    workflow:
+                      description: TestWorkflowSummary fas TestWorkflow summary
+                      properties:
+                        annotations:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        labels:
+                          additionalProperties:
+                            type: string
+                          type: object
+                        name:
+                          type: string
+                        namespace:
+                          type: string
+                      type: object
+                  required:
+                    - id
+                    - name
+                    - workflow
                   type: object
               type: object
           required:
