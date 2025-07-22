@@ -11337,10 +11337,29 @@ spec:
                   type: array
               type: object
             status:
-              description: test workflow status
+              description: |-
+                TestWorkflowStatusSummary contains information about the TestWorkflow status.
+                It includes details about the latest execution and health of the TestWorkflow.
               properties:
+                health:
+                  description: TestWorkflowExecutionHealth provides health information about a test workflow
+                  properties:
+                    flipRate:
+                      description: Fraction of status changes among consecutive executions without recency weighting (value between 0.0 and 1.0).
+                      type: number
+                    overallHealth:
+                      description: Combined health score, computed as passRate * (1 - flipRate) (value between 0.0 and 1.0).
+                      type: number
+                    passRate:
+                      description: Recency-weighted fraction of executions that passed (value between 0.0 and 1.0).
+                      type: number
+                  required:
+                    - flipRate
+                    - overallHealth
+                    - passRate
+                  type: object
                 latestExecution:
-                  description: TestWorkflowExecutionSummary contains TestWorkflow execution summary
+                  description: (Deprecated) LatestExecution maintained for backward compatibility, never actively used
                   properties:
                     id:
                       description: unique execution identifier
