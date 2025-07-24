@@ -61,6 +61,7 @@ A Helm chart for Testkube api
 | dashboardUri | string | `""` |  |
 | defaultStorageClassName | string | `""` | Whether to generate RBAC for test job or use manually provided    generateTestJobRBAC: true # default storage class name for PVC volumes |
 | disableMongoMigrations | bool | `false` |  |
+| disablePostgresMigrations | bool | `false` |  |
 | disableSecretCreation | bool | `false` |  |
 | dnsPolicy | string | `""` |  |
 | dockerImageVersion | string | `""` |  |
@@ -156,6 +157,7 @@ A Helm chart for Testkube api
 | minio.tolerations | list | `[]` |  |
 | mongodb.allowDiskUse | bool | `true` |  |
 | mongodb.dsn | string | `"mongodb://testkube-mongodb:27017"` |  |
+| mongodb.enabled | bool | `true` |  |
 | multinamespace.enabled | bool | `false` |  |
 | nameOverride | string | `""` |  |
 | nats.embedded | bool | `false` |  |
@@ -174,6 +176,8 @@ A Helm chart for Testkube api
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | podStartTimeout | string | `"30m"` | Testkube timeout for pod start |
+| postgresql.dsn | string | `"postgres://testkube:postgres5432@testkube-postgresql:5432/backend?sslmode=disable"` |  |
+| postgresql.enabled | bool | `false` |  |
 | priorityClassName | string | `""` |  |
 | prometheus.enabled | bool | `false` |  |
 | prometheus.interval | string | `"15s"` |  |
