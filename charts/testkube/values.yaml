@@ -218,11 +218,6 @@ postgresql:
       shared_preload_libraries = 'pg_stat_statements'
       max_connections = 100
       shared_buffers = 128MB
-
-    # -- PostgreSQL enable debug mode
-    extraEnvVars:
-      - name: BITNAMI_DEBUG
-        value: "true"
  
     # -- PostgreSQL service settings
     service:
