@@ -154,6 +154,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | file://../testkube-operator | testkube-operator | 2.0.0 |
 | https://charts.bitnami.com/bitnami | mongodb | 13.10.1 |
 | https://nats-io.github.io/k8s/helm/charts/ | nats | 1.1.7 |
+| https://charts.bitnami.com/bitnami | postgresql | 16.3.0 |
 
 ## Values
 
@@ -203,6 +204,39 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | nats.config.merge.max_payload | string | `"<< 8MB >>"` |  |
 | nats.natsBox | object | `{"enabled":false}` | Uncomment to override the NATS Server image options container:   image:     repository: nats     tag: 2.11.6-alpine     pullPolicy:     registry: NATS Box container settings TODO remove this container after tests on dev and stage nats-box is A lightweight container with NATS utilities. It's not needed for nats server change it to natsBox:   enabled: false |
 | nats.reloader.enabled | bool | `true` |  |
+| postgresql.architecture | string | `"standalone"` | PostgreSQL architecture |
+| postgresql.auth.enabledPostgresUser | bool | `true` | Enable "postgres" admin user for PostgreSQL |
+| postgresql.auth.database | string | `backend` | Name for a custom database to create in PostgreSQL |
+| postgresql.auth.password | string | `postgres5432` | Password for the custom user to create in PostgreSQL |
+| postgresql.auth.postgresPassword | string | `postgres1234` | Password for the "postgres" admin user in PostgreSQL |
+| postgresql.fullnameOverride | string | `"testkube-postgresql"` | PostgeSQL fullname override |
+| postgresql.enabled | bool | `false` | Toggle whether to install PostgreSQL |
+| postgresql.global.security.allowInsecureImages | bool | `true` | Allows skipping image verification for PostgreSQL |
+| postgresql.image.pullSecrets | list | `[]` | PostgreSQL image pull Secret |
+| postgresql.image.registry | string | `"docker.io"` | PostgreSQL image registry |
+| postgresql.image.repository | string | `"zcube/bitnami-compat-postgresql"` | PostgreSQL image repository |
+| postgresql.image.tag | string | `"15.2.0-debian-11-r64"` | PostgreSQL image tag |
+| postgresql.primary.configuration | string | `""` | Configuration for PostgreSQL |
+| postgresql.primary.containerSecurityContext | object | `{}` | Security Context for PostgreSQL container |
+| postgresql.primary.extraVolumes| list | `[{"name": "postgresql-run", "emptyDir": {}}]` | PostgreSQL extra volumes for writable directories
+| postgresql.primary.extraVolumeMounts| list | `[{"name": "postgresql-run", "mountPath": "/var/run/postgresql"}]` | PostgreSQL extra volume mounts for writable directories
+| postgresql.primary.livenessProbe.enabled | bool | `true` | Settings for liveness probes |
+| postgresql.primary.livenessProbe.failureThreshold | int | `6` |  |
+| postgresql.primary.livenessProbe.initialDelaySeconds | int | `30` |  |
+| postgresql.primary.livenessProbe.periodSeconds | int | `10` |  |
+| postgresql.primary.livenessProbe.timeoutSeconds | int | `5` |  |
+| postgresql.primary.readinessProbe.enabled | bool | `true` | Settings for readiness probes |
+| postgresql.primary.readinessProbe.failureThreshold | int | `6` |  |
+| postgresql.primary.readinessProbe.initialDelaySeconds | int | `5` |  |
+| postgresql.primary.readinessProbe.periodSeconds | int | `10` |  |
+| postgresql.primary.readinessProbe.timeoutSeconds | int | `5` |  |
+| postgresql.primary.readinessProbe.successThreshold | int | `6` |  |
+| postgresql.primary.resources | object | `{"requests":{"cpu":"150m","memory":"100Mi"}}` | PostgreSQL resource settings |
+| postgresql.primary.persistence.enabled | bool | `true` | Enable persistence for PostgreSQL |
+| postgresql.primary.persistence.size | string | `1Gi` | Size for PostgreSQL volume |
+| postgresql.primary.persistence.storageClass | string | `""` | Storage Class for PostgreSQL |
+| postgresql.primary.podSecurityContext | object | `{}` | PostgreSQL Pod Security Context |
+| postgresql.primary.service | object | `{"clusterIP":"","ports":{"postgresql": 5432},"type":"NodePort"}` | PostgreSQL service settings |
 | preUpgradeHook | object | `{"annotations":{},"enabled":true,"image":{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"},"labels":{},"name":"mongodb-upgrade","nodeSelector":{},"podAnnotations":{},"podSecurityContext":{},"resources":{},"securityContext":{},"serviceAccount":{"create":true},"tolerations":[],"ttlSecondsAfterFinished":100}` | MongoDB pre-upgrade parameters |
 | preUpgradeHook.enabled | bool | `true` | Upgrade hook is enabled |
 | preUpgradeHook.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
@@ -218,9 +252,9 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | preUpgradeHookNATS.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
 | preUpgradeHookNATS.name | string | `"nats-upgrade"` | Upgrade hook name |
 | preUpgradeHookNATS.nodeSelector | object | `{}` | Node labels for pod assignment. |
-| preUpgradeHookNATS.podSecurityContext | object | `{}` | MongoDB Upgrade Pod Security Context |
+| preUpgradeHookNATS.podSecurityContext | object | `{}` | NATS Upgrade Pod Security Context |
 | preUpgradeHookNATS.resources | object | `{}` | Specify resource limits and requests |
-| preUpgradeHookNATS.securityContext | object | `{}` | Security Context for MongoDB Upgrade kubectl container |
+| preUpgradeHookNATS.securityContext | object | `{}` | Security Context for NATS Upgrade kubectl container |
 | preUpgradeHookNATS.serviceAccount | object | `{"create":true}` | Create SA for upgrade hook |
 | preUpgradeHookNATS.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.additionalJobVolumeMounts | list | `[]` | Additional volume mounts to be added to the Test Jobs |
@@ -314,6 +348,7 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-api.minio.tolerations | list | `[]` | Tolerations to schedule a workload to nodes with any architecture type. Required for deployment to GKE cluster. |
 | testkube-api.mongodb.allowDiskUse | bool | `true` | Allow or prohibit writing temporary files on disk when a pipeline stage exceeds the 100 megabyte limit. |
 | testkube-api.mongodb.dsn | string | `"mongodb://testkube-mongodb:27017"` | MongoDB DSN |
+| testkube-api.mongodb.enabled | bool | `true` | use MongoDB |
 | testkube-api.multinamespace.enabled | bool | `false` |  |
 | testkube-api.nameOverride | string | `"api-server"` | Testkube API name override |
 | testkube-api.nats.embedded | bool | `false` | Start NATS embedded server in api binary instead of separate deployment |
@@ -456,6 +491,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.podAnnotations | object | `{}` |  |
 | testkube-operator.podLabels | object | `{}` |  |
 | testkube-operator.podSecurityContext | object | `{}` | Testkube Operator Pod Security Context |
+| testkube-api.postgresql.dsn | string | `"postgres://testkube:postgres5432@testkube-postgresql:5432/backend?sslmode=disable"` | PostgreSQL DSN |
+| testkube-api.postgresql.enabled | bool | `false` | use PostgreSQL |
 | testkube-operator.preUpgrade.annotations | object | `{}` |  |
 | testkube-operator.preUpgrade.enabled | bool | `true` | Upgrade hook is enabled |
 | testkube-operator.preUpgrade.image | object | `{"pullPolicy":"IfNotPresent","pullSecrets":[],"registry":"docker.io","repository":"bitnami/kubectl","tag":"1.28.2"}` | Specify image |
