@@ -12,13 +12,6 @@ on:
     branches:
       - main
 
-env:
-  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
-  GKE_CLUSTER_NAME_DEV: ${{ secrets.GKE_CLUSTER_NAME_DEV }} # Add your cluster name here.
-  GKE_ZONE_DEV: ${{ secrets.GKE_ZONE_DEV }} # Add your cluster zone here.
-  DEPLOYMENT_NAME: testkube # Add your deployment name here.
-
-
 jobs:
   release_charts:
     runs-on: ubuntu-latest
@@ -35,20 +28,81 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - name: Install helm file plugin
+        run: helm plugin add https://github.com/zoobab/helm_file_repo
+
+      - name: Extract Helm Chart version
+        id: helm-version
+        uses: mikefarah/yq@master
+        with:
+          cmd: yq '.version' charts/testkube-runner/Chart.yaml
+
       - name: Update runner Chart.yaml
         run: |
           cd ./scripts
           chmod +x runner_chart_releaser.sh
           ./runner_chart_releaser.sh --runner-chart true
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
         with:
-          charts_dir: charts
-          mark_as_latest: true
-        env:
-          CR_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
-          CR_SKIP_EXISTING: true
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Publish Helm Chart
+        run: |
+          REGISTRY=registry-1.docker.io
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | helm registry login ${REGISTRY} --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          helm dependency build charts/testkube-runner
+          helm package charts/testkube-runner
+          helm push testkube-runner-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY}/kubeshop
+
+      - uses: actions/checkout@v4
+        with:
+          ref: "gh-pages"
+          token: ${{ secrets.CI_BOT_TOKEN }}
+
+      - id: update-index
+        name: Pull charts and update index
+        run: |
+          # Testkube Runner
+          chart_name=testkube-runner
+          chart_version=${{ steps.helm-version.outputs.result }} 
+
+          ## Update index
+          # Download published asset
+          mkdir ./download
+          helm pull "oci://registry-1.docker.io/kubeshop/${chart_name}" --version "${chart_version}" --destination ./download
+          # Rebuild index
+          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          # Replace .tgz in URL with OCI tag
+          sed -i "s|oci://registry-1.docker.io/kubeshop/$chart_name-$chart_version.tgz|oci://registry-1.docker.io/kubeshop/$chart_name:$chart_version|" ./download/index.yaml
+
+          # Check repo can be loaded
+          if ! helm repo add cache file://./download/ ; then
+            echo "New index.yaml file can't be used as a file"
+            exit 1
+          else
+            # Remove the repo
+            helm repo remove cache
+          fi
+          cp ./download/index.yaml index.yaml
+
+          # Remove chart files
+          rm -rf ./download
+
+          # Avoid overriding index branch when remote commit does not match our checkout commit
+          current_commit_id=$(git rev-parse gh-pages)
+
+          # Push changes
+          git add index.yaml && git commit -m "Update index.yaml"
+          git push origin gh-pages --force-with-lease=index:${current_commit_id}
+  
 
   notify_slack_if_helm_chart_release_fails:
     runs-on: ubuntu-latest
