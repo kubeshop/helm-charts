@@ -427,6 +427,9 @@ affinity: {}
 ## Specify priorityClassName for Testkube API Deployment
 priorityClassName: ""
 
+## Specify terminationGracePeriodSeconds for Testkube API Deployment
+terminationGracePeriodSeconds: ""  
+
 ## Specify hostNetwork for Testkube API Deployment
 hostNetwork: ""
 
