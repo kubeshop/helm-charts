@@ -1,10 +1,10 @@
 {{- if .Values.installCRD }}
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: testsuiteexecutions.tests.testkube.io
 spec:
   group: tests.testkube.io
@@ -22,14 +22,19 @@ spec:
           API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation
-              of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this
-              object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
             type: string
           metadata:
             type: object
@@ -155,9 +160,13 @@ spec:
                                   description: The key to select.
                                   type: string
                                 name:
-                                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                    TODO: Add other useful fields. apiVersion, kind,
-                                    uid?'
+                                  default: ""
+                                  description: |-
+                                    Name of the referent.
+                                    This field is effectively required, but due to backwards compatibility is
+                                    allowed to be empty. Instances of this type with an empty value here are
+                                    almost certainly wrong.
+                                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                   type: string
                                 optional:
                                   description: Specify whether the ConfigMap or its
@@ -166,12 +175,11 @@ spec:
                               required:
                               - key
                               type: object
+                              x-kubernetes-map-type: atomic
                             fieldRef:
-                              description: 'Selects a field of the pod: supports metadata.name,
-                                metadata.namespace, `metadata.labels[''<KEY>'']`,
-                                `metadata.annotations[''<KEY>'']`, spec.nodeName,
-                                spec.serviceAccountName, status.hostIP, status.podIP,
-                                status.podIPs.'
+                              description: |-
+                                Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                                spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
                               properties:
                                 apiVersion:
                                   description: Version of the schema the FieldPath
@@ -184,11 +192,11 @@ spec:
                               required:
                               - fieldPath
                               type: object
+                              x-kubernetes-map-type: atomic
                             resourceFieldRef:
-                              description: 'Selects a resource of the container: only
-                                resources limits and requests (limits.cpu, limits.memory,
-                                limits.ephemeral-storage, requests.cpu, requests.memory
-                                and requests.ephemeral-storage) are currently supported.'
+                              description: |-
+                                Selects a resource of the container: only resources limits and requests
+                                (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
                               properties:
                                 containerName:
                                   description: 'Container name: required for volumes,
@@ -208,6 +216,7 @@ spec:
                               required:
                               - resource
                               type: object
+                              x-kubernetes-map-type: atomic
                             secretKeyRef:
                               description: Selects a key of a secret in the pod's
                                 namespace
@@ -217,9 +226,13 @@ spec:
                                     be a valid secret key.
                                   type: string
                                 name:
-                                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                    TODO: Add other useful fields. apiVersion, kind,
-                                    uid?'
+                                  default: ""
+                                  description: |-
+                                    Name of the referent.
+                                    This field is effectively required, but due to backwards compatibility is
+                                    allowed to be empty. Instances of this type with an empty value here are
+                                    almost certainly wrong.
+                                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                   type: string
                                 optional:
                                   description: Specify whether the Secret or its key
@@ -228,6 +241,7 @@ spec:
                               required:
                               - key
                               type: object
+                              x-kubernetes-map-type: atomic
                           type: object
                       type: object
                     type: object
@@ -254,9 +268,9 @@ spec:
                 format: int64
                 type: integer
               latestExecution:
-                description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                  of cluster Important: Run "make" to regenerate code after modifying
-                  this file'
+                description: |-
+                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
+                  Important: Run "make" to regenerate code after modifying this file
                 properties:
                   disableWebhooks:
                     description: whether webhooks should be disabled for this execution
@@ -275,8 +289,9 @@ spec:
                   envs:
                     additionalProperties:
                       type: string
-                    description: 'Environment variables passed to executor. Deprecated:
-                      use Basic Variables instead'
+                    description: |-
+                      Environment variables passed to executor.
+                      Deprecated: use Basic Variables instead
                     type: object
                   executeStepResults:
                     description: batch steps execution results
@@ -454,7 +469,8 @@ spec:
                                         type: string
                                     type: object
                                   disableWebhooks:
-                                    description: whether webhooks should be called on execution
+                                    description: whether webhooks should be disabled
+                                      for this execution
                                     type: boolean
                                   duration:
                                     description: test duration
@@ -470,8 +486,9 @@ spec:
                                   envs:
                                     additionalProperties:
                                       type: string
-                                    description: 'Environment variables passed to
-                                      executor. Deprecated: use Basic Variables instead'
+                                    description: |-
+                                      Environment variables passed to executor.
+                                      Deprecated: use Basic Variables instead
                                     type: object
                                   executePostRunScriptBeforeScraping:
                                     description: execute post run script before scraping
@@ -619,7 +636,8 @@ spec:
                                         type: object
                                     type: object
                                   sourceScripts:
-                                    description: run scripts using source command (container executor only)
+                                    description: run scripts using source command
+                                      (container executor only)
                                     type: boolean
                                   startTime:
                                     description: test start time
@@ -677,10 +695,13 @@ spec:
                                                   description: The key to select.
                                                   type: string
                                                 name:
-                                                  description: 'Name of the referent.
+                                                  default: ""
+                                                  description: |-
+                                                    Name of the referent.
+                                                    This field is effectively required, but due to backwards compatibility is
+                                                    allowed to be empty. Instances of this type with an empty value here are
+                                                    almost certainly wrong.
                                                     More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                    TODO: Add other useful fields.
-                                                    apiVersion, kind, uid?'
                                                   type: string
                                                 optional:
                                                   description: Specify whether the
@@ -689,12 +710,11 @@ spec:
                                               required:
                                               - key
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             fieldRef:
-                                              description: 'Selects a field of the
-                                                pod: supports metadata.name, metadata.namespace,
-                                                `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`,
-                                                spec.nodeName, spec.serviceAccountName,
-                                                status.hostIP, status.podIP, status.podIPs.'
+                                              description: |-
+                                                Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                                                spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
                                               properties:
                                                 apiVersion:
                                                   description: Version of the schema
@@ -708,13 +728,11 @@ spec:
                                               required:
                                               - fieldPath
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             resourceFieldRef:
-                                              description: 'Selects a resource of
-                                                the container: only resources limits
-                                                and requests (limits.cpu, limits.memory,
-                                                limits.ephemeral-storage, requests.cpu,
-                                                requests.memory and requests.ephemeral-storage)
-                                                are currently supported.'
+                                              description: |-
+                                                Selects a resource of the container: only resources limits and requests
+                                                (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
                                               properties:
                                                 containerName:
                                                   description: 'Container name: required
@@ -737,6 +755,7 @@ spec:
                                               required:
                                               - resource
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                             secretKeyRef:
                                               description: Selects a key of a secret
                                                 in the pod's namespace
@@ -747,10 +766,13 @@ spec:
                                                     secret key.
                                                   type: string
                                                 name:
-                                                  description: 'Name of the referent.
+                                                  default: ""
+                                                  description: |-
+                                                    Name of the referent.
+                                                    This field is effectively required, but due to backwards compatibility is
+                                                    allowed to be empty. Instances of this type with an empty value here are
+                                                    almost certainly wrong.
                                                     More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                                    TODO: Add other useful fields.
-                                                    apiVersion, kind, uid?'
                                                   type: string
                                                 optional:
                                                   description: Specify whether the
@@ -759,6 +781,7 @@ spec:
                                               required:
                                               - key
                                               type: object
+                                              x-kubernetes-map-type: atomic
                                           type: object
                                       type: object
                                     type: object
@@ -1023,7 +1046,8 @@ spec:
                                   type: string
                               type: object
                             disableWebhooks:
-                              description: whether webhooks should be called on execution
+                              description: whether webhooks should be disabled for
+                                this execution
                               type: boolean
                             duration:
                               description: test duration
@@ -1039,8 +1063,9 @@ spec:
                             envs:
                               additionalProperties:
                                 type: string
-                              description: 'Environment variables passed to executor.
-                                Deprecated: use Basic Variables instead'
+                              description: |-
+                                Environment variables passed to executor.
+                                Deprecated: use Basic Variables instead
                               type: object
                             executePostRunScriptBeforeScraping:
                               description: execute post run script before scraping
@@ -1187,7 +1212,8 @@ spec:
                                   type: object
                               type: object
                             sourceScripts:
-                              description: run scripts using source command (container executor only)
+                              description: run scripts using source command (container
+                                executor only)
                               type: boolean
                             startTime:
                               description: test start time
@@ -1244,10 +1270,13 @@ spec:
                                             description: The key to select.
                                             type: string
                                           name:
-                                            description: 'Name of the referent. More
-                                              info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                              TODO: Add other useful fields. apiVersion,
-                                              kind, uid?'
+                                            default: ""
+                                            description: |-
+                                              Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
+                                              More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                             type: string
                                           optional:
                                             description: Specify whether the ConfigMap
@@ -1256,12 +1285,11 @@ spec:
                                         required:
                                         - key
                                         type: object
+                                        x-kubernetes-map-type: atomic
                                       fieldRef:
-                                        description: 'Selects a field of the pod:
-                                          supports metadata.name, metadata.namespace,
-                                          `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`,
-                                          spec.nodeName, spec.serviceAccountName,
-                                          status.hostIP, status.podIP, status.podIPs.'
+                                        description: |-
+                                          Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                                          spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
                                         properties:
                                           apiVersion:
                                             description: Version of the schema the
@@ -1275,12 +1303,11 @@ spec:
                                         required:
                                         - fieldPath
                                         type: object
+                                        x-kubernetes-map-type: atomic
                                       resourceFieldRef:
-                                        description: 'Selects a resource of the container:
-                                          only resources limits and requests (limits.cpu,
-                                          limits.memory, limits.ephemeral-storage,
-                                          requests.cpu, requests.memory and requests.ephemeral-storage)
-                                          are currently supported.'
+                                        description: |-
+                                          Selects a resource of the container: only resources limits and requests
+                                          (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
                                         properties:
                                           containerName:
                                             description: 'Container name: required
@@ -1301,6 +1328,7 @@ spec:
                                         required:
                                         - resource
                                         type: object
+                                        x-kubernetes-map-type: atomic
                                       secretKeyRef:
                                         description: Selects a key of a secret in
                                           the pod's namespace
@@ -1311,10 +1339,13 @@ spec:
                                               key.
                                             type: string
                                           name:
-                                            description: 'Name of the referent. More
-                                              info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                              TODO: Add other useful fields. apiVersion,
-                                              kind, uid?'
+                                            default: ""
+                                            description: |-
+                                              Name of the referent.
+                                              This field is effectively required, but due to backwards compatibility is
+                                              allowed to be empty. Instances of this type with an empty value here are
+                                              almost certainly wrong.
+                                              More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                             type: string
                                           optional:
                                             description: Specify whether the Secret
@@ -1323,6 +1354,7 @@ spec:
                                         required:
                                         - key
                                         type: object
+                                        x-kubernetes-map-type: atomic
                                     type: object
                                 type: object
                               type: object
@@ -1409,9 +1441,13 @@ spec:
                                   description: The key to select.
                                   type: string
                                 name:
-                                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                    TODO: Add other useful fields. apiVersion, kind,
-                                    uid?'
+                                  default: ""
+                                  description: |-
+                                    Name of the referent.
+                                    This field is effectively required, but due to backwards compatibility is
+                                    allowed to be empty. Instances of this type with an empty value here are
+                                    almost certainly wrong.
+                                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                   type: string
                                 optional:
                                   description: Specify whether the ConfigMap or its
@@ -1420,12 +1456,11 @@ spec:
                               required:
                               - key
                               type: object
+                              x-kubernetes-map-type: atomic
                             fieldRef:
-                              description: 'Selects a field of the pod: supports metadata.name,
-                                metadata.namespace, `metadata.labels[''<KEY>'']`,
-                                `metadata.annotations[''<KEY>'']`, spec.nodeName,
-                                spec.serviceAccountName, status.hostIP, status.podIP,
-                                status.podIPs.'
+                              description: |-
+                                Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                                spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
                               properties:
                                 apiVersion:
                                   description: Version of the schema the FieldPath
@@ -1438,11 +1473,11 @@ spec:
                               required:
                               - fieldPath
                               type: object
+                              x-kubernetes-map-type: atomic
                             resourceFieldRef:
-                              description: 'Selects a resource of the container: only
-                                resources limits and requests (limits.cpu, limits.memory,
-                                limits.ephemeral-storage, requests.cpu, requests.memory
-                                and requests.ephemeral-storage) are currently supported.'
+                              description: |-
+                                Selects a resource of the container: only resources limits and requests
+                                (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
                               properties:
                                 containerName:
                                   description: 'Container name: required for volumes,
@@ -1462,6 +1497,7 @@ spec:
                               required:
                               - resource
                               type: object
+                              x-kubernetes-map-type: atomic
                             secretKeyRef:
                               description: Selects a key of a secret in the pod's
                                 namespace
@@ -1471,9 +1507,13 @@ spec:
                                     be a valid secret key.
                                   type: string
                                 name:
-                                  description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                                    TODO: Add other useful fields. apiVersion, kind,
-                                    uid?'
+                                  default: ""
+                                  description: |-
+                                    Name of the referent.
+                                    This field is effectively required, but due to backwards compatibility is
+                                    allowed to be empty. Instances of this type with an empty value here are
+                                    almost certainly wrong.
+                                    More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
                                   type: string
                                 optional:
                                   description: Specify whether the Secret or its key
@@ -1482,6 +1522,7 @@ spec:
                               required:
                               - key
                               type: object
+                              x-kubernetes-map-type: atomic
                           type: object
                       type: object
                     type: object
@@ -1496,10 +1537,4 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 {{- end }}
