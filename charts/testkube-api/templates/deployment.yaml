@@ -36,6 +36,7 @@ spec:
     spec:
       {{- include "global.images.renderPullSecrets" (dict "global" .Values.global "secretPath" .Values.image.pullSecrets) | nindent 6 }}
       serviceAccountName: {{ include "testkube-api.serviceAccountName" . }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
