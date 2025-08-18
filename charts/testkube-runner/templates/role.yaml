@@ -153,3 +153,105 @@ rules:
 {{- end }}
 {{- end }}
 {{- end }}
+
+---
+
+# Allow Agent to access leases for triggers functionality
+{{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: "triggers-lease-access-{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- if .Values.global.labels }}
+    {{- toYaml .Values.global.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.global.annotations }}
+    {{- toYaml .Values.global.annotations | nindent 4 }}
+    {{- end }}
+rules:
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "create", "update"]
+{{- end }}
+
+---
+
+# Allow Agent to watch resources for triggers functionality
+{{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRole
+metadata:
+  name: "watchers-role-{{ .Release.Name }}"
+  labels:
+    {{- if .Values.global.labels }}
+    {{- toYaml .Values.global.labels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations:
+    {{- toYaml .Values.global.annotations | nindent 4 }}
+  {{- end }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - events
+      - namespaces
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "apps"
+    resources:
+      - deployments
+      - daemonsets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "networking.k8s.io"
+      - "extensions"
+    resources:
+      - ingresses
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "tests.testkube.io"
+    resources:
+      - testtriggers
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "executor.testkube.io"
+    resources:
+      - webhooks
+      - webhooktemplates
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "testworkflows.testkube.io"
+    resources:
+      - testworkflows
+    verbs:
+      - get
+      - list
+      - watch
+{{- end }}
+
+---
+
+

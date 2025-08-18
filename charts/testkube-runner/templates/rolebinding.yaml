@@ -29,6 +29,37 @@ roleRef:
 
 ---
 
+# Apply triggers lease access role
+{{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: "triggers-lease-access-rb-{{ .Release.Name }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- if .Values.global.labels }}
+    {{- toYaml .Values.global.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.global.annotations }}
+    {{- toYaml .Values.global.annotations | nindent 4 }}
+    {{- end }}
+subjects:
+- kind: ServiceAccount
+  namespace: "{{ .Release.Namespace }}"
+  {{- if .Values.pod.serviceAccount.name }}
+  name: "{{ .Values.pod.serviceAccount.name }}"
+  {{- else }}
+  name: "agent-sa-{{ .Release.Name }}"
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: "triggers-lease-access-{{ .Release.Name }}"
+{{- end }}
+
+---
+
 # Apply execution in default namespace role
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
@@ -167,4 +198,34 @@ roleRef:
   name: "exec-role-{{ .Release.Name }}"
 {{- end }}
 {{- end }}
+{{- end }}
+
+---
+
+# Apply watchers cluster role for triggers functionality
+{{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: ClusterRoleBinding
+metadata:
+  name: "watchers-role-rb-{{ .Release.Name }}"
+  labels:
+    {{- if .Values.global.labels }}
+    {{- toYaml .Values.global.labels | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations:
+    {{- toYaml .Values.global.annotations | nindent 4 }}
+  {{- end }}
+subjects:
+- kind: ServiceAccount
+  namespace: "{{ .Release.Namespace }}"
+  {{- if .Values.pod.serviceAccount.name }}
+  name: "{{ .Values.pod.serviceAccount.name }}"
+  {{- else }}
+  name: "agent-sa-{{ .Release.Name }}"
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "watchers-role-{{ .Release.Name }}"
 {{- end }}
