@@ -44,6 +44,11 @@ globalTemplate:
   #     imagePullSecrets:
   #     - name: regcred
 
+## Listener configuration for triggers
+listener:
+  ## Enable listener functionality
+  enabled: false
+
 execution:
   default:
     ## Default namespace to run executions
