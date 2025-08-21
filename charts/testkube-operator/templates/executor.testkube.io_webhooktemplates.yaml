@@ -1,10 +1,10 @@
 {{- if .Values.installCRD }}
+---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.15.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: webhooktemplates.executor.testkube.io
 spec:
   group: executor.testkube.io
@@ -139,9 +139,9 @@ spec:
                     required:
                       description: whether parameter is required
                       type: boolean
-                  type: object
                   required:
                   - name
+                  type: object
                 type: array
               payloadObjectField:
                 description: will load the generated payload for notification inside
@@ -170,10 +170,4 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 {{- end }}
