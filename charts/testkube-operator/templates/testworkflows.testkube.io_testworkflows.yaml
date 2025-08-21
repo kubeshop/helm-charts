@@ -1042,6 +1042,9 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          after:
+                            description: steps to run at the end of the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           artifacts:
                             description: scrape artifacts from the volumes
                             properties:
@@ -1531,6 +1534,8 @@ spec:
                           paused:
                             description: pause the step initially
                             type: boolean
+                          pvcs:
+                            x-kubernetes-preserve-unknown-fields: true
                           retry:
                             description: policy for retrying the step
                             properties:
@@ -1778,6 +1783,12 @@ spec:
                                 description: override default working directory in the image (empty string to default WORKDIR for the image)
                                 type: string
                             type: object
+                          services:
+                            description: list of accompanying services to start
+                            x-kubernetes-preserve-unknown-fields: true
+                          setup:
+                            description: steps for setting up the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
@@ -1785,6 +1796,9 @@ spec:
                           shell:
                             description: script to run in a default shell for the container
                             type: string
+                          steps:
+                            description: steps to execute in the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           template:
                             description: single template to run in this step
                             properties:
@@ -1813,6 +1827,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          use:
+                            description: templates to include at a top-level of workflow
+                            x-kubernetes-preserve-unknown-fields: true
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
                       paused:
@@ -6152,6 +6169,9 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          after:
+                            description: steps to run at the end of the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           artifacts:
                             description: scrape artifacts from the volumes
                             properties:
@@ -6641,6 +6661,8 @@ spec:
                           paused:
                             description: pause the step initially
                             type: boolean
+                          pvcs:
+                            x-kubernetes-preserve-unknown-fields: true
                           retry:
                             description: policy for retrying the step
                             properties:
@@ -6888,6 +6910,12 @@ spec:
                                 description: override default working directory in the image (empty string to default WORKDIR for the image)
                                 type: string
                             type: object
+                          services:
+                            description: list of accompanying services to start
+                            x-kubernetes-preserve-unknown-fields: true
+                          setup:
+                            description: steps for setting up the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
@@ -6895,6 +6923,9 @@ spec:
                           shell:
                             description: script to run in a default shell for the container
                             type: string
+                          steps:
+                            description: steps to execute in the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           template:
                             description: single template to run in this step
                             properties:
@@ -6923,6 +6954,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          use:
+                            description: templates to include at a top-level of workflow
+                            x-kubernetes-preserve-unknown-fields: true
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
                       paused:
@@ -9228,6 +9262,9 @@ spec:
                       parallel:
                         description: instructions for parallel execution
                         properties:
+                          after:
+                            description: steps to run at the end of the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           artifacts:
                             description: scrape artifacts from the volumes
                             properties:
@@ -9717,6 +9754,8 @@ spec:
                           paused:
                             description: pause the step initially
                             type: boolean
+                          pvcs:
+                            x-kubernetes-preserve-unknown-fields: true
                           retry:
                             description: policy for retrying the step
                             properties:
@@ -9964,6 +10003,12 @@ spec:
                                 description: override default working directory in the image (empty string to default WORKDIR for the image)
                                 type: string
                             type: object
+                          services:
+                            description: list of accompanying services to start
+                            x-kubernetes-preserve-unknown-fields: true
+                          setup:
+                            description: steps for setting up the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           shards:
                             description: parameters that should be distributed across sharded instances
                             type: object
@@ -9971,6 +10016,9 @@ spec:
                           shell:
                             description: script to run in a default shell for the container
                             type: string
+                          steps:
+                            description: steps to execute in the workflow
+                            x-kubernetes-preserve-unknown-fields: true
                           template:
                             description: single template to run in this step
                             properties:
@@ -9999,6 +10047,9 @@ spec:
                               type: object
                               x-kubernetes-preserve-unknown-fields: true
                             type: array
+                          use:
+                            description: templates to include at a top-level of workflow
+                            x-kubernetes-preserve-unknown-fields: true
                         type: object
                         x-kubernetes-preserve-unknown-fields: true
                       paused:
