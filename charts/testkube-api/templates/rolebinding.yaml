@@ -500,6 +500,30 @@ subjects:
     name: {{ include "testkube-api.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
 
+---
+
+{{- if .Values.next.testTriggers.enabled }}
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: triggers-lease-access-rb-{{ .Release.Name }}
+  labels: {{- include "testkube-api.labels" . | nindent 4 }}
+    {{- if .Values.global.labels }}
+    {{- include "global.tplvalues.render" ( dict "value" .Values.global.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.global.annotations}}
+  annotations: {{- include "global.tplvalues.render" ( dict "value" .Values.global.annotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: triggers-lease-access-{{ .Release.Name }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "testkube-api.serviceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}
+
 {{- if .Values.executionNamespaces }}
 {{- range .Values.executionNamespaces }}
 {{- $rangeItem := . -}}
