@@ -146,8 +146,8 @@ spec:
                     format: int32
                     type: integer
                 type: object
-              contentSpec:
-                description: What content should be watched
+              contentSelector:
+                description: ContentSelector identifies which content should be watched
                 properties:
                   git:
                     description: git repository details
@@ -561,6 +561,7 @@ spec:
                 - ingress
                 - event
                 - configmap
+                - content
                 type: string
               resourceSelector:
                 description: ResourceSelector identifies which Kubernetes Objects
