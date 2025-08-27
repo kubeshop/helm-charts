@@ -146,6 +146,317 @@ spec:
                     format: int32
                     type: integer
                 type: object
+              contentSpec:
+                description: What content should be watched
+                properties:
+                  git:
+                    description: git repository details
+                    properties:
+                      authType:
+                        description: authorization type for the credentials
+                        enum:
+                        - basic
+                        - header
+                        - github
+                        type: string
+                      paths:
+                        description: paths to fetch
+                        items:
+                          type: string
+                        type: array
+                      revision:
+                        description: branch, commit or a tag name to fetch
+                        type: string
+                      sshKey:
+                        description: plain text SSH private key to fetch with
+                        type: string
+                      sshKeyFrom:
+                        description: external SSH private key to fetch with
+                        properties:
+                          configMapKeyRef:
+                            description: Selects a key of a ConfigMap.
+                            properties:
+                              key:
+                                description: The key to select.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the ConfigMap or its
+                                  key must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          fieldRef:
+                            description: |-
+                              Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                              spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+                            properties:
+                              apiVersion:
+                                description: Version of the schema the FieldPath is
+                                  written in terms of, defaults to "v1".
+                                type: string
+                              fieldPath:
+                                description: Path of the field to select in the specified
+                                  API version.
+                                type: string
+                            required:
+                            - fieldPath
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          resourceFieldRef:
+                            description: |-
+                              Selects a resource of the container: only resources limits and requests
+                              (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+                            properties:
+                              containerName:
+                                description: 'Container name: required for volumes,
+                                  optional for env vars'
+                                type: string
+                              divisor:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                description: Specifies the output format of the exposed
+                                  resources, defaults to "1"
+                                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                x-kubernetes-int-or-string: true
+                              resource:
+                                description: 'Required: resource to select'
+                                type: string
+                            required:
+                            - resource
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          secretKeyRef:
+                            description: Selects a key of a secret in the pod's namespace
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                      token:
+                        description: plain text token to fetch with
+                        type: string
+                      tokenFrom:
+                        description: external token to fetch with
+                        properties:
+                          configMapKeyRef:
+                            description: Selects a key of a ConfigMap.
+                            properties:
+                              key:
+                                description: The key to select.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the ConfigMap or its
+                                  key must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          fieldRef:
+                            description: |-
+                              Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                              spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+                            properties:
+                              apiVersion:
+                                description: Version of the schema the FieldPath is
+                                  written in terms of, defaults to "v1".
+                                type: string
+                              fieldPath:
+                                description: Path of the field to select in the specified
+                                  API version.
+                                type: string
+                            required:
+                            - fieldPath
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          resourceFieldRef:
+                            description: |-
+                              Selects a resource of the container: only resources limits and requests
+                              (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+                            properties:
+                              containerName:
+                                description: 'Container name: required for volumes,
+                                  optional for env vars'
+                                type: string
+                              divisor:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                description: Specifies the output format of the exposed
+                                  resources, defaults to "1"
+                                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                x-kubernetes-int-or-string: true
+                              resource:
+                                description: 'Required: resource to select'
+                                type: string
+                            required:
+                            - resource
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          secretKeyRef:
+                            description: Selects a key of a secret in the pod's namespace
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                      uri:
+                        description: uri for the Git repository
+                        type: string
+                      username:
+                        description: plain text username to fetch with
+                        type: string
+                      usernameFrom:
+                        description: external username to fetch with
+                        properties:
+                          configMapKeyRef:
+                            description: Selects a key of a ConfigMap.
+                            properties:
+                              key:
+                                description: The key to select.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the ConfigMap or its
+                                  key must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          fieldRef:
+                            description: |-
+                              Selects a field of the pod: supports metadata.name, metadata.namespace, `metadata.labels['<KEY>']`, `metadata.annotations['<KEY>']`,
+                              spec.nodeName, spec.serviceAccountName, status.hostIP, status.podIP, status.podIPs.
+                            properties:
+                              apiVersion:
+                                description: Version of the schema the FieldPath is
+                                  written in terms of, defaults to "v1".
+                                type: string
+                              fieldPath:
+                                description: Path of the field to select in the specified
+                                  API version.
+                                type: string
+                            required:
+                            - fieldPath
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          resourceFieldRef:
+                            description: |-
+                              Selects a resource of the container: only resources limits and requests
+                              (limits.cpu, limits.memory, limits.ephemeral-storage, requests.cpu, requests.memory and requests.ephemeral-storage) are currently supported.
+                            properties:
+                              containerName:
+                                description: 'Container name: required for volumes,
+                                  optional for env vars'
+                                type: string
+                              divisor:
+                                anyOf:
+                                - type: integer
+                                - type: string
+                                description: Specifies the output format of the exposed
+                                  resources, defaults to "1"
+                                pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                                x-kubernetes-int-or-string: true
+                              resource:
+                                description: 'Required: resource to select'
+                                type: string
+                            required:
+                            - resource
+                            type: object
+                            x-kubernetes-map-type: atomic
+                          secretKeyRef:
+                            description: Selects a key of a secret in the pod's namespace
+                            properties:
+                              key:
+                                description: The key of the secret to select from.  Must
+                                  be a valid secret key.
+                                type: string
+                              name:
+                                default: ""
+                                description: |-
+                                  Name of the referent.
+                                  This field is effectively required, but due to backwards compatibility is
+                                  allowed to be empty. Instances of this type with an empty value here are
+                                  almost certainly wrong.
+                                  More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                                type: string
+                              optional:
+                                description: Specify whether the Secret or its key
+                                  must be defined
+                                type: boolean
+                            required:
+                            - key
+                            type: object
+                            x-kubernetes-map-type: atomic
+                        type: object
+                    type: object
+                type: object
               delay:
                 description: Delay is a duration string which specifies how long should
                   the test be delayed after a trigger is matched
