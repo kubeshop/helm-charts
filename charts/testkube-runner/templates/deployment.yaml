@@ -163,6 +163,10 @@ spec:
           securityContext: {{ include "testkube-runner.containerSecurityContext" . | nindent 12 }}
           env:
             # Runner configuration
+            {{- if not .Values.runner.enabled }}
+            - name: "DISABLE_RUNNER"
+              value: "true"
+            {{- end }}
             {{- if .Values.runner.secretRef.name }}
             - name: "TESTKUBE_PRO_AGENT_ID"
               valueFrom:

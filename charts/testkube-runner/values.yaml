@@ -10,6 +10,8 @@ global:
     enabled: false
 
 runner:
+  ## Enable or disable the runner
+  enabled: true
   ## Agent ID
   id: ""
   ## Organization ID
