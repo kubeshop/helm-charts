@@ -183,6 +183,11 @@ spec:
                 secretKeyRef:
                   name: "{{ .Values.runner.secretRef.name }}"
                   key: "{{ .Values.runner.secretRef.secretKey }}"
+            - name: "TESTKUBE_PRO_ENV_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ .Values.runner.secretRef.name }}"
+                  key: "{{ .Values.runner.secretRef.envIdKey }}"
             {{- else }}
             {{- if not .Values.runner.register.token }}
             - name: "TESTKUBE_PRO_AGENT_ID"
@@ -192,6 +197,8 @@ spec:
             {{- end }}
             - name: "TESTKUBE_PRO_ORG_ID"
               value: "{{ .Values.runner.orgId }}"
+            - name: "TESTKUBE_PRO_ENV_ID"
+              value: "{{ .Values.runner.envId }}"
             {{- end }}
             - name: "TESTKUBE_PRO_URL"
               value: "{{ .Values.cloud.url }}"

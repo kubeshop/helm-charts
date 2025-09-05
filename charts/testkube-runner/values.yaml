@@ -16,6 +16,8 @@ runner:
   id: ""
   ## Organization ID
   orgId: ""
+  ## Environment ID
+  envId: ""
   ## Secret Key
   secret: ""
   ## Retrieve credential information from an existing secret
@@ -26,6 +28,8 @@ runner:
     idKey: "id"
     ## Key for the Organization ID
     orgIdKey: "orgId"
+    ## Key for the Environment ID
+    envIdKey: "envId"
     ## Key for the Secret Key
     secretKey: "secret"
   ## Self-registration using API token
