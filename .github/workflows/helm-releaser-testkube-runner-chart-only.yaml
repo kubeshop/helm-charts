@@ -94,11 +94,11 @@ jobs:
           ## Update index
           # Download published asset
           mkdir ./download
-          helm pull "oci://registry-1.docker.io/kubeshop/${chart_name}" --version "${chart_version}" --destination ./download
+          helm pull "oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/${chart_name}" --version "${chart_version}" --destination ./download
           # Rebuild index
-          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
-          sed -i "s|oci://registry-1.docker.io/kubeshop/$chart_name-$chart_version.tgz|oci://registry-1.docker.io/kubeshop/$chart_name:$chart_version|" ./download/index.yaml
+          sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/$chart_name-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/$chart_name:$chart_version|" ./download/index.yaml
 
           # Check repo can be loaded
           if ! helm repo add cache file://./download/ ; then
