@@ -105,3 +105,10 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 {{- join "," $processedLines -}}
 {{- end }}
+
+{{/*
+Define TESTKUBE_WATCHER_NAMESPACES variable
+*/}}
+{{- define "testkube-runner.watcher-namespaces" -}}
+{{ join "," (concat (list .Release.Namespace) .Values.listener.additionalNamespaces) }}
+{{- end }}
