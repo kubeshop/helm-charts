@@ -77,7 +77,7 @@ jobs:
           
            # push to Google Artifact Registry (OCI)
           REGISTRY_GAR=${{ env.GAR_LOCATION }}-docker.pkg.dev
-          helm push testkube-runner-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY_GAR}/${{ env.GAR_PROJECT_ID }}/${{ env.CHARTS_REPOSITORY }}
+          helm push testkube-runner-${{ steps.helm-version.outputs.result }}.tgz oci://${REGISTRY_GAR}/${{ env.GAR_PROJECT_ID }}/${{ env.GAR_REPOSITORY }}
 
       - uses: actions/checkout@v4
         with:
