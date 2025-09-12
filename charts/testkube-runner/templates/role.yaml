@@ -179,6 +179,9 @@ rules:
 
 ---
 
+# TODO: reduce this to a Role instead of ClusterRole and incorporate
+# .Values.listener.additionalNamespaces
+
 # Allow Agent to watch resources for triggers functionality
 {{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
 apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}

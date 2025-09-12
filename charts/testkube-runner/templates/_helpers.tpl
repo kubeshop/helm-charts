@@ -95,3 +95,20 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ toYaml .Values.pod.securityContext }}
 {{- end }}
 {{- end }}
+
+{{- define "testkube-runner.eventLabels" -}}
+{{- $yamlString := toYaml .Values.listener.eventLabels }}
+{{- $lines := split "\n" (trim $yamlString) }}
+{{- $processedLines := list }}
+{{- range $line := $lines }}
+{{- $processedLines = append $processedLines (regexReplaceAll ": " $line ":") }}
+{{- end }}
+{{- join "," $processedLines -}}
+{{- end }}
+
+{{/*
+Define TESTKUBE_WATCHER_NAMESPACES variable
+*/}}
+{{- define "testkube-runner.watcher-namespaces" -}}
+{{ join "," (concat (list .Release.Namespace) .Values.listener.additionalNamespaces) }}
+{{- end }}
