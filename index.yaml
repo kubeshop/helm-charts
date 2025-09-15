@@ -67821,6 +67821,20 @@ entries:
     version: 0.5.8-testing
   testkube-runner:
   - apiVersion: v2
+    appVersion: 2.2.5
+    created: "2025-09-15T10:15:48.504167071Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.1.3
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: c2582705d3af36c62347db72aa5b43c89b833ac13be575c9771799ed33433446
+    name: testkube-runner
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.2.11
+    version: 2.2.11
+  - apiVersion: v2
     appVersion: 2.1.163
     created: "2025-07-18T11:20:02.432623039Z"
     dependencies:
@@ -70933,4 +70947,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-15T08:01:13.710772135Z"
+generated: "2025-09-15T10:15:48.503079574Z"
