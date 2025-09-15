@@ -322,6 +322,12 @@ spec:
               value: "true"
             - name: "FEATURE_CLOUD_STORAGE"
               value: "true"
+            {{- if .Values.listener.eventLabels }}
+            - name: "EVENT_LABELS"
+              value: "{{ include "testkube-runner.eventLabels" . }}"
+            {{- end }}
+            - name: TESTKUBE_WATCHER_NAMESPACES
+              value: "{{ include "testkube-runner.watcher-namespaces" . | nindent 12 | trim }}"
             {{- end }}
             # - name: "FEATURE_CLOUD_STORAGE"
             #   value: "true"
