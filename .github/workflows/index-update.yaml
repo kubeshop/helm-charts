@@ -1,0 +1,76 @@
+name: "[Index] Sync index.yaml with OCI releases"
+on:
+  workflow_dispatch:
+    inputs:
+      chart_version:
+        description: "The version of the Helm Chart."
+        required: true
+        type: string
+jobs:
+  update-index:
+    runs-on: depot-ubuntu-22.04
+    name: Update index
+    steps:
+      - name: Install helm
+        run: |
+          HELM_TARBALL="helm-v3.8.1-linux-amd64.tar.gz"
+          curl -SsLfO "https://get.helm.sh/${HELM_TARBALL}" && sudo tar xf "$HELM_TARBALL" --strip-components 1 -C /usr/local/bin
+          # Install file plugin
+          helm plugin add https://github.com/zoobab/helm_file_repo
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: "gh-pages"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - id: update-index
+        name: Pull charts and update index
+        run: |
+          # Configure git
+          git config --global user.name "testkube-cloud-ci-bot"
+          git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+
+          # Inputs
+          chart_version=${{ inputs.chart_version }} 
+
+          ## Update index for "testkube" chart
+          # Download published asset
+          mkdir ./download
+          helm pull "oci://registry-1.docker.io/kubeshop/testkube" --version "${chart_version}" --destination ./download
+          # Rebuild index
+          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          # Replace .tgz in URL with OCI tag
+          sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:$chart_version|" ./download/index.yaml
+
+          ## Update index for "testkube-runner" chart
+          # Download published asset
+          mkdir ./download
+          helm pull "oci://registry-1.docker.io/kubeshop/testkube-runner" --version "${chart_version}" --destination ./download
+          # Rebuild index
+          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          # Replace .tgz in URL with OCI tag
+          sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:$chart_version|" ./download/index.yaml
+
+
+          # Check index integrity
+          if [[ $(stat -c%s  index.yaml) -gt $(stat -c%s ./download/index.yaml) ]]; then
+            echo "New index.yaml file is shorter than the current one"
+            exit 1
+          fi
+          # Check repo can be loaded
+          if ! helm repo add cache file://./download/ ; then
+            echo "New index.yaml file can't be used as a file"
+            exit 1
+          else
+            # Remove the repo
+            helm repo remove cache
+          fi
+          cp ./download/index.yaml index.yaml
+
+          # Remove chart files
+          rm -rf ./download
+
+          # Avoid overriding index branch when remote commit does not match our checkout commit
+          current_commit_id=$(git rev-parse gh-pages)
+
+          # Push changes
+          git add index.yaml && git commit -m "Update index.yaml"
+          git push origin gh-pages --force-with-lease=index:${current_commit_id}
