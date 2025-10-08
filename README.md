@@ -1,3 +1,6 @@
+> [!NOTE]  
+> This repository contains Helm Charts that are no longer maintained. The Testkube Helm Charts have been merged into [kubeshop/testkube](https://github.com/kubeshop/testkube). This repository has not been archived so that we can keep the Helm Registry index up to date for backwards compatibility.
+
 ![Kubeshop Projects](https://raw.githubusercontent.com/kubeshop/testkube/main/assets/squishies.png)
 
 <!-- ![Known Vulnerabilities](https://snyk.io/test/github/kubeshop/helm-charts/badge.svg) -->
