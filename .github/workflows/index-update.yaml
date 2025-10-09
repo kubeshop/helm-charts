@@ -27,13 +27,13 @@ jobs:
           # Configure git
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          mkdir ./download
 
           # Inputs
           chart_version=${{ inputs.chart_version }} 
 
           ## Update index for "testkube" chart
           # Download published asset
-          mkdir ./download
           helm pull "oci://registry-1.docker.io/kubeshop/testkube" --version "${chart_version}" --destination ./download
           # Rebuild index
           helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
@@ -42,7 +42,6 @@ jobs:
 
           ## Update index for "testkube-runner" chart
           # Download published asset
-          mkdir ./download
           helm pull "oci://registry-1.docker.io/kubeshop/testkube-runner" --version "${chart_version}" --destination ./download
           # Rebuild index
           helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
