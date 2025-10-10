@@ -36,7 +36,7 @@ jobs:
           # Download published asset
           helm pull "oci://registry-1.docker.io/kubeshop/testkube" --version "${chart_version}" --destination ./download
           # Rebuild index
-          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
           sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:$chart_version|" ./download/index.yaml
 
@@ -44,7 +44,7 @@ jobs:
           # Download published asset
           helm pull "oci://registry-1.docker.io/kubeshop/testkube-runner" --version "${chart_version}" --destination ./download
           # Rebuild index
-          helm repo index --url oci://registry-1.docker.io/kubeshop --merge index.yaml ./download
+          helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
           sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:$chart_version|" ./download/index.yaml
 
