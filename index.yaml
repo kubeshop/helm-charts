@@ -4253,7 +4253,7 @@ entries:
     name: testkube
     type: application
     urls:
-    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-2.4.0.tgz
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.4.0
     version: 2.4.0
   - apiVersion: v2
     appVersion: 2.4.0-preview.1
