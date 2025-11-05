@@ -25,6 +25,31 @@ rules:
     - patch
     - update
     - delete
+
+---
+
+apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: "{{ include "testkube-runner.fullname" . }}-lease-access"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- if .Values.global.labels }}
+    {{- toYaml .Values.global.labels | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.global.annotations }}
+    {{- toYaml .Values.global.annotations | nindent 4 }}
+    {{- end }}
+rules:
+- apiGroups:
+    - coordination.k8s.io
+  resources:
+    - leases
+  verbs:
+    - get
+    - create
+    - update
 {{- end }}
 
 ---
@@ -156,29 +181,6 @@ rules:
 
 ---
 
-# Allow Agent to access leases for triggers functionality
-{{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
-apiVersion: {{ include "global.capabilities.rbac.apiVersion" . }}
-kind: Role
-metadata:
-  name: "triggers-lease-access-{{ .Release.Name }}"
-  namespace: "{{ .Release.Namespace }}"
-  labels:
-    {{- if .Values.global.labels }}
-    {{- toYaml .Values.global.labels | nindent 4 }}
-    {{- end }}
-  annotations:
-    {{- if .Values.global.annotations }}
-    {{- toYaml .Values.global.annotations | nindent 4 }}
-    {{- end }}
-rules:
-- apiGroups: ["coordination.k8s.io"]
-  resources: ["leases"]
-  verbs: ["get", "create", "update"]
-{{- end }}
-
----
-
 # Allow Agent to watch resources for triggers functionality
 {{- if and .Values.pod.serviceAccount.autoCreate .Values.listener.enabled }}
 {{- $watchAll := .Values.listener.watchAllNamespaces }}
@@ -225,5 +227,3 @@ metadata:
 {{- end }}
 
 ---
-
-
