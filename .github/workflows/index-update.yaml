@@ -38,7 +38,7 @@ jobs:
           # Rebuild index
           helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
-          sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:$chart_version|" ./download/index.yaml
+          sed -i 's|oci://us-east1-docker\.pkg\.dev/testkube-cloud-372110/testkube/testkube-\([0-9a-z._-]\+\)\.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:\1|g' ./download/index.yaml
 
           ## Update index for "testkube-runner" chart
           # Download published asset
@@ -46,7 +46,7 @@ jobs:
           # Rebuild index
           helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
-          sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:$chart_version|" ./download/index.yaml
+          sed -i 's|oci://us-east1-docker\.pkg\.dev/testkube-cloud-372110/testkube/testkube-runner-\([0-9a-z._-]\+\)\.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:\1|g' ./download/index.yaml
 
 
           # Check index integrity
