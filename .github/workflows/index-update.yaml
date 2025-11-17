@@ -34,21 +34,14 @@ jobs:
 
           ## Update index for "testkube" chart
           # Download published asset
-          helm pull "oci://registry-1.docker.io/kubeshop/testkube" --version "${chart_version}" --destination ./download
+          helm pull "oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube" --version "${chart_version}" --destination ./download
+          helm pull "oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner" --version "${chart_version}" --destination ./download
           # Rebuild index
           helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
           # Replace .tgz in URL with OCI tag
           sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:$chart_version|" ./download/index.yaml
-
-          ## Update index for "testkube-runner" chart
-          # Download published asset
-          helm pull "oci://registry-1.docker.io/kubeshop/testkube-runner" --version "${chart_version}" --destination ./download
-          # Rebuild index
-          helm repo index --url oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube --merge index.yaml ./download
-          # Replace .tgz in URL with OCI tag
           sed -i "s|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner-$chart_version.tgz|oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:$chart_version|" ./download/index.yaml
-
-
+  
           # Check index integrity
           if [[ $(stat -c%s  index.yaml) -gt $(stat -c%s ./download/index.yaml) ]]; then
             echo "New index.yaml file is shorter than the current one"
