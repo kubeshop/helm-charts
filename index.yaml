@@ -4256,6 +4256,39 @@ entries:
     - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.6.0-preview.0
     version: 2.6.0-preview.0
   - apiVersion: v2
+    appVersion: 2.5.7
+    created: "2026-01-23T08:10:58.973405922Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.x.x-x
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 8.0.15-0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 0.1.0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-4
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.x.x-x
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 34352e3c4633f54d5f5d231b177a7087ee07c08070caac79c2584fe24b275606
+    name: testkube
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.5.7
+    version: 2.5.7
+  - apiVersion: v2
     appVersion: 2.5.6
     created: "2026-01-13T12:57:06.200489244Z"
     dependencies:
@@ -68507,6 +68540,20 @@ entries:
     - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.6.0-preview.0
     version: 2.6.0-preview.0
   - apiVersion: v2
+    appVersion: 2.5.7
+    created: "2026-01-23T08:10:58.973913526Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: 5d9465c81f2991e62d62578089002b494f9198473e6c10de88ddffcc58554d90
+    name: testkube-runner
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.5.7
+    version: 2.5.7
+  - apiVersion: v2
     appVersion: 2.5.6
     created: "2026-01-13T12:57:06.200972953Z"
     dependencies:
@@ -71871,4 +71918,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-13T12:57:06.187147827Z"
+generated: "2026-01-23T08:10:58.959237267Z"
