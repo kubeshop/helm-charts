@@ -16,10 +16,12 @@ jobs:
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
           
-          # Create .nojekyll to disable Jekyll processing
-          touch .nojekyll
-          
-          # Add and commit
-          git add .nojekyll
-          git commit -m "Add .nojekyll to disable Jekyll processing and fix pages-build-deployment error"
-          git push origin gh-pages
+          # Create .nojekyll to disable Jekyll processing if it doesn't exist
+          if [ ! -f .nojekyll ]; then
+            touch .nojekyll
+            git add .nojekyll
+            git commit -m "Add .nojekyll to disable Jekyll processing and fix pages-build-deployment error"
+            git push origin gh-pages
+          else
+            echo ".nojekyll already exists, no action needed"
+          fi
