@@ -27,6 +27,12 @@ jobs:
           # Configure git
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          
+          # Create .nojekyll to disable Jekyll processing if it doesn't exist
+          if [ ! -f .nojekyll ]; then
+            touch .nojekyll
+          fi
+          
           mkdir ./download
 
           # Inputs
@@ -63,6 +69,8 @@ jobs:
           # Avoid overriding index branch when remote commit does not match our checkout commit
           current_commit_id=$(git rev-parse gh-pages)
 
-          # Push changes
-          git add index.yaml && git commit -m "Update index.yaml"
+          # Push changes (add .nojekyll only if it exists and was modified)
+          git add index.yaml
+          [ -f .nojekyll ] && git add .nojekyll || true
+          git commit -m "Update index.yaml"
           git push origin gh-pages --force-with-lease=index:${current_commit_id}
