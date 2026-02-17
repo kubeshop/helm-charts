@@ -27,6 +27,10 @@ jobs:
           # Configure git
           git config --global user.name "testkube-cloud-ci-bot"
           git config --global user.email "testkube-cloud-ci-bot@users.noreply.github.com"
+          
+          # Create .nojekyll to disable Jekyll processing
+          touch .nojekyll
+          
           mkdir ./download
 
           # Inputs
@@ -64,5 +68,5 @@ jobs:
           current_commit_id=$(git rev-parse gh-pages)
 
           # Push changes
-          git add index.yaml && git commit -m "Update index.yaml"
+          git add index.yaml .nojekyll && git commit -m "Update index.yaml"
           git push origin gh-pages --force-with-lease=index:${current_commit_id}
