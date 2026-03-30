@@ -4223,6 +4223,39 @@ entries:
     version: 0.0.1
   testkube:
   - apiVersion: v2
+    appVersion: 2.8.1
+    created: "2026-03-30T10:27:46.405571812Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.x.x-x
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 8.2.5-0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 18.2-0
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-4
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.x.x-x
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: c9a3649b9ac81d45bee3c12dd70fa77f2e63297bc8f68e8b34ff55ed7e7cce1a
+    name: testkube
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.8.1
+    version: 2.8.1
+  - apiVersion: v2
     appVersion: 2.8.0
     created: "2026-03-26T14:59:43.908556339Z"
     dependencies:
@@ -68889,6 +68922,23 @@ entries:
     version: 0.5.8-testing
   testkube-runner:
   - apiVersion: v2
+    appVersion: 2.8.1
+    created: "2026-03-30T10:27:46.410926933Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    - name: testkube-crds
+      repository: file://../testkube-crds
+      version: 0.1.0
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: 1861df4c0c54fcb0d1a1b04796321619bc59879c3e5f77205f9e4c05fbd3ab63
+    name: testkube-runner
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.8.1
+    version: 2.8.1
+  - apiVersion: v2
     appVersion: 2.8.0
     created: "2026-03-26T14:59:43.913718349Z"
     dependencies:
@@ -72444,4 +72494,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2026-03-26T14:59:43.894286254Z"
+generated: "2026-03-30T10:27:46.392631748Z"
