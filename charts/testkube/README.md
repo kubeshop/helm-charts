@@ -557,8 +557,8 @@ kubectl label --overwrite crds scripts.tests.testkube.io app.kubernetes.io/manag
 | testkube-operator.webhook.patch.image.pullPolicy | string | `"Always"` | patch job image pull policy |
 | testkube-operator.webhook.patch.image.pullSecrets | list | `[]` | patch job k8s secret for private registries |
 | testkube-operator.webhook.patch.image.registry | string | `"docker.io"` | patch job image registry |
-| testkube-operator.webhook.patch.image.repository | string | `"dpejcev/kube-webhook-certgen"` | patch job image name |
-| testkube-operator.webhook.patch.image.version | string | `"1.0.11"` | patch job image tag |
+| testkube-operator.webhook.patch.image.repository | string | `"kubeshop/kube-webhook-certgen"` | patch job image name |
+| testkube-operator.webhook.patch.image.version | string | `"0.0.7"` | patch job image tag |
 | testkube-operator.webhook.patch.labels | object | `{}` | Pod specific labels |
 | testkube-operator.webhook.patch.nodeSelector | object | `{}` | Node labels for pod assignment |
 | testkube-operator.webhook.patch.patchWebhookJob.resources | object | `{}` | kube-webhook-certgen patch webhook Job resource settings |
