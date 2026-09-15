@@ -4349,6 +4349,48 @@ entries:
     - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.14.0-preview.0
     version: 2.14.0-preview.0
   - apiVersion: v2
+    appVersion: 2.13.2
+    created: "2026-09-15T01:22:43.337978393Z"
+    dependencies:
+    - name: testkube-operator
+      repository: file://../testkube-operator
+      version: 2.x.x-x
+    - condition: mongodb.enabled
+      name: mongodb
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 8.3.8-0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube
+      version: 18.6-0
+    - condition: cloudnative-pg.enabled
+      name: cloudnative-pg
+      repository: https://cloudnative-pg.github.io/charts
+      version: 0.29.0
+    - alias: postgresqlOperatorCluster
+      condition: postgresqlOperatorCluster.enabled
+      name: cluster
+      repository: https://cloudnative-pg.github.io/charts
+      version: 0.8.1
+    - condition: testkube-api.nats.enabled
+      name: nats
+      repository: file://./charts/nats
+      version: 1.2.6-4
+    - name: testkube-api
+      repository: file://../testkube-api
+      version: 2.x.x-x
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    description: Testkube is an open-source platform that simplifies the deployment
+      and management of automated testing infrastructure.
+    digest: 7da6d2215cd9dfdb3b85c89c526a09d066981bed4c8bd46e5fec47eae7a56961
+    name: testkube
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube:2.13.2
+    version: 2.13.2
+  - apiVersion: v2
     appVersion: 2.13.2-rc.0
     created: "2026-08-27T20:36:15.202039894Z"
     dependencies:
@@ -70131,6 +70173,23 @@ entries:
     - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.14.0-preview.0
     version: 2.14.0-preview.0
   - apiVersion: v2
+    appVersion: 2.13.2
+    created: "2026-09-15T01:22:43.343467136Z"
+    dependencies:
+    - name: global
+      repository: file://../global
+      version: 0.x.x-x
+    - name: testkube-crds
+      repository: file://../testkube-crds
+      version: 0.1.0
+    description: A Helm chart for the Testkube's Runner Agent
+    digest: 8baf56bb65646ac5508037e362305fd8ae1c6022aaf03dc5ebee8ebad9047eb0
+    name: testkube-runner
+    type: application
+    urls:
+    - oci://us-east1-docker.pkg.dev/testkube-cloud-372110/testkube/testkube-runner:2.13.2
+    version: 2.13.2
+  - apiVersion: v2
     appVersion: 2.13.2-rc.0
     created: "2026-08-27T20:36:15.207618451Z"
     dependencies:
@@ -74128,4 +74187,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-11T11:08:19.67603834Z"
+generated: "2026-09-15T01:22:43.319039737Z"
