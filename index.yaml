@@ -4224,7 +4224,7 @@ entries:
   testkube:
   - apiVersion: v2
     appVersion: 2.14.0-rc.1
-    created: "2026-09-11T11:08:19.698150985Z"
+    created: "2026-09-21T08:10:19.751574336Z"
     dependencies:
     - name: testkube-operator
       repository: file://../testkube-operator
@@ -4258,7 +4258,7 @@ entries:
       version: 0.x.x-x
     description: Testkube is an open-source platform that simplifies the deployment
       and management of automated testing infrastructure.
-    digest: 31a88c86b2926c962517dee378d290f56de570c41f0a542b28d2f9ef101ae8c9
+    digest: 3e45c2c5d3a12f85a54a2b81aca371cddd5ec593dc2f32e7ae9d9c0b1abbdd69
     name: testkube
     type: application
     urls:
@@ -70123,7 +70123,7 @@ entries:
   testkube-runner:
   - apiVersion: v2
     appVersion: 2.14.0-rc.1
-    created: "2026-09-11T11:08:19.70447439Z"
+    created: "2026-09-21T08:10:19.757441015Z"
     dependencies:
     - name: global
       repository: file://../global
@@ -70132,7 +70132,7 @@ entries:
       repository: file://../testkube-crds
       version: 0.1.0
     description: A Helm chart for the Testkube's Runner Agent
-    digest: a9e60789cb9943e86bced8c2cad1e10a8ca26b1d3bae931b0a47d0657e0162e3
+    digest: 92ffc99d19130dca4657df6041c045f3a1a76be5e523e9f9e710ed14acbba46d
     name: testkube-runner
     type: application
     urls:
@@ -74187,4 +74187,4 @@ entries:
     urls:
     - https://github.com/kubeshop/helm-charts/releases/download/tracetest-0.1.0/tracetest-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-15T01:22:43.319039737Z"
+generated: "2026-09-21T08:10:19.732000732Z"
